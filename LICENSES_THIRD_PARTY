@@ -1,0 +1,35 @@
+Current module contains source code of third-party.
+
+- Current file has the only scope to tell:
+    - what are the copyrights of the third-party code
+    - what kind of license they use
+    - where their licensed code is located
+
+- List of third party code:
+    - Copyright (c) 2016 STMicroelectronics.
+        - license
+            - SPDX-License-Identifier: BSD-3-Clause
+        - folder location
+            - src/v_00/Drivers/STM32F7xx_HAL_Driver/LICENSE.txt
+    - Copyright (c) 2016 STMicroelectronics.
+        - license
+            -  SPDX-License-Identifier: Apache-2.0
+        - folder license location
+            - src/v_00/Drivers/CMSIS/Device/ST/STM32F7xx/LICENSE.txt
+    - Copyright (c) 2016 STMicroelectronics.
+        - license
+            -  SPDX-License-Identifier: Apache-2.0
+        - folder license location
+            - src/v_[xx excludig 00]/Drivers/BSP/STM32F769I-Discovery/LICENSE.txt
+    - Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+        - license
+            - SPDX-License-Identifier: Apache-2.0
+        - folder
+            - src/v_[xx]/Drivers/CMSIS/Include
+    - Copyright (C) 2019 Amazon.com, Inc. or its affiliates.
+        - license
+            - SPDX-License-Identifier: MIT
+                - see https://www.freertos.org/a00114.html
+        - folder location
+            - src/v_xx/Middlewares/Third_Party/FreeRTOS
+
