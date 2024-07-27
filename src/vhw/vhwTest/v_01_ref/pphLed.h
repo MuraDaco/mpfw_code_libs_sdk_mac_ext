@@ -35,9 +35,16 @@
 #include "vhwUnit.h"
 #include "mcuPinPort.h"
 
-#define DEF_PPH_LED(name)            pphLed_t pph_##name;
-#define DEF_PPH_LED_2(name)            pphLed_t pph_##name(&mcu_##name);
-#define DEF_PPH_LED_DEVICE(name, id) pphLed_t pph_##id##_##name(id);
+#define DEF_PPH_LED(name)             pphLed_t pph_##name(&mcu_##name);
+#define DEF_PPH_LED_DEVICE(name, id)    pphLed_t pph_##id##_##name(id);
+
+#define DEF_PPH_LED_2(name)                pphLed_t pph_##name;
+//#define DEF_PPH_LED_DEVICE(name, id)     pphLed_t pph_##id##_##name(id);
+
+#define DEF_H___PPH_LED(name)           MCU_##name  pphLed_t                 pph_##name;
+#define DEF_CPP_PPH_LED(name)           MCU_##name  pphLed_t PPH_CLASS_DEF:: pph_##name;
+#define OBJ_PPH_LED(name)                                    PPH_CLASS_DEF:: pph_##name
+
 
 class pphLed_t : public vhwUnit_t {
 

@@ -37,7 +37,7 @@
 #include "vhwPphTbl.h"
 
 
-void vhwManager_t::init (uint8_t p_mcuId) {
+void vhwManager_t::init ([[maybe_unused]] uint8_t p_mcuId) {
     // vhwUnit_t*** l_ptrPtrUnitArray = vhwPphMcuPinPortWiredTbl_t_t::UnitPtrArray;
     // uint8_t l_pinPort = 0;
     // uint8_t* l_testPort;

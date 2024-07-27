@@ -51,6 +51,11 @@ typedef struct __point__ {
     uint8_t y;
 } point_t;
 
+typedef struct __dimension__ {
+    uint8_t width;
+    uint8_t height;
+} dimension_t;
+
 typedef struct __box__ {
     // height & width
     uint8_t height;

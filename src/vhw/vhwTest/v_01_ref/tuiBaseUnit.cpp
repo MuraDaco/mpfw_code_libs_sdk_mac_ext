@@ -33,15 +33,76 @@
 
 event_t* tuiBaseUnit_t::g_eventArray = nullptr;
 
+uint8_t tuiBaseUnit_t::g_currentSelCnt = 0;
+
+tuiBaseUnit_t*  tuiBaseUnit_t::g_poSelected;
+tuiBaseUnit_t*  tuiBaseUnit_t::g_pSelectedOld;
+WINDOW*         tuiBaseUnit_t::g_ncursWinSelected;
+WINDOW*         tuiBaseUnit_t::g_ncursWinSelectedOld;
+
 
 tuiBaseUnit_t::tuiBaseUnit_t (zone_t* p_zoneList) :
-    g_zoneList      {p_zoneList}
+     g_pBox           {nullptr}
+    ,g_zoneList      {p_zoneList}
 {}
 
-tuiBaseUnit_t::tuiBaseUnit_t (box_t* p_box, zone_t* p_zoneList) :
-     g_box              {p_box}
+tuiBaseUnit_t::tuiBaseUnit_t (box_t* p_pBox, zone_t* p_zoneList) :
+     g_pBox             {p_pBox}
     ,g_zoneList         {p_zoneList}
 {}
+
+bool tuiBaseUnit_t::loop       	(void)  {
+    //if(g_pSelectedOld != g_poSelected)   {
+    //    g_pSelectedOld->deSelect();
+    //    if(g_ncursWinSelectedOld != g_ncursWinSelected) {
+    //        wrefresh(g_ncursWinSelectedOld);
+    //        g_ncursWinSelectedOld = g_ncursWinSelected;
+    //    } else {
+    //        wrefresh(g_ncursWinSelected);
+    //    }
+    //    g_pSelectedOld = g_poSelected;
+    //}
+
+    return true;	
+}
+
+void tuiBaseUnit_t::deSelectSelected         (tuiBaseUnit_t* p_pSelected)    {
+    // de-select the previous element
+    g_poSelected->deSelect();
+    g_poSelected = p_pSelected;
+    g_currentSelCnt++;
+    p_pSelected->g_selCnt = g_currentSelCnt;
+}
+
+bool tuiBaseUnit_t::bTstSelCnts    (uint8_t p_selCnt1, uint8_t p_selCnt2)  {
+    bool l_result = false;
+    if(p_selCnt2 != g_currentSelCnt)  {
+        if(p_selCnt1 < p_selCnt2)   {
+            l_result = true;
+        }
+    } else {
+        l_result = true;
+    }
+
+    return l_result;
+}
+
+//void tuiBaseUnit_t::setSelected         (WINDOW* p_ncursWinSelected, tuiBaseUnit_t* p_pSelected)    {
+//    g_poSelected->deSelect();
+//    if(g_ncursWinSelectedOld != g_ncursWinSelected) {
+//        wrefresh(g_ncursWinSelected);
+//        g_ncursWinSelectedOld = g_ncursWinSelected;
+//    } else {
+//        wrefresh(g_ncursWinSelected);
+//    }
+//    g_poSelected = p_pSelected;
+//}
+
+void tuiBaseUnit_t::setNcursWindow      (WINDOW* p_ncursWinSelected)    {
+    g_ncursWinSelectedOld = g_ncursWinSelected;
+    g_ncursWinSelected    = p_ncursWinSelected;
+}
+
 
 
 void tuiBaseUnit_t::SetEventArrayOfWindow   	(void)      {
@@ -52,8 +113,8 @@ bool tuiBaseUnit_t::bMouseClickInsideBounds (point_t p_mouseXY)      {
     bool l_result = false;
 
     if(
-        ((g_box->xStart <= p_mouseXY.x) && (p_mouseXY.x < (g_box->xStart+g_box->width ))) &&
-        ((g_box->yStart <= p_mouseXY.y) && (p_mouseXY.y < (g_box->yStart+g_box->height)))
+        ((g_pBox->xStart <= p_mouseXY.x) && (p_mouseXY.x < (g_pBox->xStart+g_pBox->width ))) &&
+        ((g_pBox->yStart <= p_mouseXY.y) && (p_mouseXY.y < (g_pBox->yStart+g_pBox->height)))
     ) {
         l_result = true;
         //select();

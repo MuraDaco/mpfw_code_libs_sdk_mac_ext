@@ -22,37 +22,32 @@
 //  *******************************************************************************
 
 /*
- * tuiWin.h
+ * tuiDigitalInOut.h
  *
  *  Created on: Jul, 16th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_WIN_H
-#define TUI_WIN_H
+#ifndef TUI_DIGITAL_IN_OUT_H
+#define TUI_DIGITAL_IN_OUT_H
 
 #include "tuiBaseUnit.h"
+#include "dtyUint8.h"
 
-class tuiWin_t : public tuiBaseUnit_t  {
+
+class tuiDigitalInOut_t : public tuiBaseUnit_t  {
 
 public:
-
-    typedef struct __element__	{
-    	tuiBaseUnit_t*	element;
-    	uint8_t	        flag;
-    } element_t;
-
-    tuiWin_t        (box_t* p_box);
-    tuiWin_t        (box_t* p_box, element_t* p_elementList);
-    tuiWin_t        (box_t* p_box, zone_t*    p_zoneList);
-    tuiWin_t        (box_t* p_box, zone_t*    p_zoneList, element_t* p_elementList);
-    tuiWin_t        (const char* p_strName, box_t* p_box, zone_t*    p_zoneList, element_t* p_elementList);
+    tuiDigitalInOut_t       (point_t p_Origin                               );
+    tuiDigitalInOut_t       (                   dtyUint8_t* p_pDtyStatus    );
+    tuiDigitalInOut_t       (point_t p_Origin,  dtyUint8_t* p_pDtyStatus    );
+    tuiDigitalInOut_t       (const char* p_strName, point_t p_Origin,  dtyUint8_t* p_pDtyStatus    );
 
     void init               (void* p_poFather) 				override;
     bool loop       	    (void)							override;
-    void eventOn            (void) override;
     void select             (void) override;
     void deSelect           (void) override;
+    void eventOn            (void) override;
 
 
 private:
@@ -75,24 +70,18 @@ private:
     static event_t g_eventArray[];
     // --------------------- Events handler section - END
 
-    // --------------------- Element pointers section - START
-    // pointer to the list of uiBase objects belonging to one
-    // or more objects of the current class
-    element_t*	g_elementList;
-    element_t*  g_pLastElement;
-    element_t*  g_pCurrentElement;
-    bool g_bElementList;
-    //[[maybe_unused]] tuiBaseUnit_t*	g_ptrFather;
-    // --------------------- Element pointers section - END
-
     // --------------------- Object pointers section - START
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
-    static tuiWin_t*	g_po;
+    static tuiDigitalInOut_t*	g_po;
     tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
     // --------------------- Object pointers section - END
 
 
+    // --------------------- Data section - START
+    dtyUint8_t* g_pDtyStatus;
+    // --------------------- Data section - END
+    
     // --------------------- Sensitive zone section - START
     static void zone_hndl_1  (void);
     static void zone_hndl_2  (void);
@@ -104,12 +93,11 @@ private:
     // - but it is good for code optimization because it simplifies the code
     // --------------------- Sensitive zone section - END
 
-
-    // --------------------- ncurses section - START
-    WINDOW* g_ncursWin;
-    // --------------------- ncurses section - END
+    point_t g_boxOrigin;
+    static dimension_t g_boxDim;
+    box_t g_box;
 
 };
 
 
-#endif 	// TUI_WIN_H
+#endif 	// TUI_DIGITAL_IN_OUT_H

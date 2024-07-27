@@ -22,18 +22,19 @@
 //  *******************************************************************************
 
 /*
- * uyTypesDefs.h
+ * vhwPphTbl_Mod_Led.cpp
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Jun, 27 2024
  *      Author: Marco Dau
+
  */
- 
-#ifndef UY_TYPES_DEFS_H
-#define UY_TYPES_DEFS_H
 
-typedef void (* func_t)     (void);
-typedef void (* funcCallback_t)     (void);
 
-typedef void (* event_t)    (void);
+#include <iostream>
 
-#endif 	// UY_TYPES_DEFS_H
+#include "mcuPinPortDefineConfig.h"
+#include "pphLed.h"
+
+extern DEF_H___PPH_LED   (LED_A)
+extern DEF_H___PPH_LED   (LED_B)
+extern DEF_H___PPH_LED   (LED_C)

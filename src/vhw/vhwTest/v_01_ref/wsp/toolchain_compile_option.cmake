@@ -32,7 +32,7 @@ target_compile_options(${EXECUTABLE} PRIVATE
     -fdata-sections 
     #-ffreestanding 
     -fno-builtin 
-    $<$<COMPILE_LANG_AND_ID:CXX,GNU>: -fno-rtti -fno-exceptions -std=gnu++14>
+    $<$<COMPILE_LANG_AND_ID:CXX,GNU>: -fno-rtti -fno-exceptions -std=gnu++20>
     -fno-rtti 
     #-fno-exceptions    
     #-fwide-exec-charset

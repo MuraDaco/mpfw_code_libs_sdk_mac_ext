@@ -33,6 +33,7 @@
 
 #include "tuiGraphicTypes.h"
 #include "uyTypesDefs.h"
+#include <ncurses.h>
 
 class tuiBaseUnit_t  {
 
@@ -43,26 +44,20 @@ public:
     } zone_t;
 
     tuiBaseUnit_t (zone_t* p_zoneList);
-    tuiBaseUnit_t (box_t* p_box, zone_t* p_zoneList);
-    virtual void init       	([[maybe_unused]] void* p_poFather)											{				};
+    tuiBaseUnit_t (box_t* p_pBox, zone_t* p_zoneList);
+    virtual void init       	([[maybe_unused]] void* p_poFather)				{				};
+    virtual bool loop       	(void)											;
     // virtual void EventOn    	([[maybe_unused]] uiBase* p_pFather)            {				};
     virtual void eventOn    	(void)                                  		{				};
     virtual void select     	(void)											{				};
     virtual void deSelect   	(void)											{				};
+    bool bMouseClickInsideBounds    (point_t p_mouseXY);
+
     virtual void SetEventArrayOfWindow   	(void);
     virtual bool bDisplayable	(void)											{return true;	};
-
-    bool bMouseClickInsideBounds    (point_t p_mouseXY);
     bool bCheckSensitiveZone        (point_t p_mouseXY);
 
 
-    // // --------------------- Events handler section - START
-	// // ..................... Events handler: functions
-    // template <uint8_t keycode>
-    // static void vEventHndlKey	(void);
-	// ..................... Events handler: array
-    static event_t* g_eventArray;
-    // --------------------- Events handler section - END
 
     // // --------------------- Pointers section - START
     // // pointer to the list of uiBase objects belonging to one
@@ -72,10 +67,29 @@ public:
     // // --------------------- Pointers section - END
 
 protected:
-    //static eventHndl_t eventArray[];
+
+    // // --------------------- Events handler section - START
+	// // ..................... Events handler: functions
+    // template <uint8_t keycode>
+    // static void vEventHndlKey	(void);
+	// ..................... Events handler: array
+    static event_t* g_eventArray;
+    // --------------------- Events handler section - END
+
     tuiBaseUnit_t* g_pFather;
-    box_t*  g_box;
+    box_t*  g_pBox;
     zone_t* g_zoneList;
+
+    static void deSelectSelected(tuiBaseUnit_t* p_pSelected);
+    static bool bTstSelCnts(uint8_t p_selCnt1, uint8_t p_selCnt2);
+    static tuiBaseUnit_t* g_poSelected;
+    static uint8_t g_currentSelCnt;
+    uint8_t     g_selCnt;
+    static tuiBaseUnit_t* g_pSelectedOld;
+    static void setNcursWindow(WINDOW* p_ncursWinSelected);
+    static WINDOW* g_ncursWinSelected;
+    static WINDOW* g_ncursWinSelectedOld;
+
 };
 
 

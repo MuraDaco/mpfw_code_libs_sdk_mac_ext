@@ -35,12 +35,12 @@
 #include "vhwUnit.h"
 #include "mcuPortDef.h"
 
-#define DEF_MCU_PIN_PORT_DEVICE_CONFIG(name, id, config)                mcuPinPort_t mcu_##id##_##name       (id, MCU_##name##_PORT,        MCU_##name##_PIN,       mcuPinPort_t::config);
-#define DEF_MCU_PIN_PORT_PTR(name, config)                              mcuPinPort_t mcu_##name              (    MCU_##name##_PORT_PTR,    MCU_##name##_PIN,       mcuPinPort_t::config);
-#define DEF_MCU_PIN_PORT(name, config)                                  mcuPinPort_t mcu_##name              (    MCU_##name##_PORT_PTR,    MCU_##name##_PIN,       mcuPinPort_t::config);
-#define DEF_MCU_PIN_PORT_INTERRUPT(name, hndl, config)                  mcuPinPort_t mcu_##name              (    MCU_##name##_PORT_PTR,    MCU_##name##_PIN, hndl, mcuPinPort_t::config);
-#define DEF_MCU_PIN_PORT_DEVICE(name, id, config)                       mcuPinPort_t mcu_##id##_##name##_##config       (id, MCU_##id##_##name##_##config##_PORT_PTR,    MCU_##id##_##name##_##config##_PIN,       mcuPinPort_t::config);
-#define DEF_MCU_PIN_PORT_INTERRUPT_DEVICE(name, hndl, id, config)       mcuPinPort_t mcu_##id##_##name       (id, MCU_##name##_PORT_PTR,    MCU_##name##_PIN, hndl, mcuPinPort_t::config);
+#define DEF_MCU_PIN_PORT_DEVICE_CONFIG(name, id, config)                mcuPinPort_t mcu_##id##_##name              (id, MCU_##name##_PORT,                         MCU_##name##_PIN,                           mcuPinPort_t::config);
+#define DEF_MCU_PIN_PORT_PTR(name, config)                              mcuPinPort_t mcu_##name                     (    MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                           mcuPinPort_t::config);
+#define DEF_MCU_PIN_PORT(name, config)                                  mcuPinPort_t mcu_##name                     (    MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                           mcuPinPort_t::config);
+#define DEF_MCU_PIN_PORT_INTERRUPT(name, hndl, config)                  mcuPinPort_t mcu_##name                     (    MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                   hndl,   mcuPinPort_t::config);
+#define DEF_MCU_PIN_PORT_DEVICE(name, id, config)                       mcuPinPort_t mcu_##id##_##name##_##config   (id, MCU_##id##_##name##_##config##_PORT_PTR,   MCU_##id##_##name##_##config##_PIN,         mcuPinPort_t::config);
+#define DEF_MCU_PIN_PORT_INTERRUPT_DEVICE(name, hndl, id, config)       mcuPinPort_t mcu_##id##_##name              (id, MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                   hndl,   mcuPinPort_t::config);
 
 #define pinSet          *g_ptrPort = *g_ptrPort | (1 << g_pin)
 #define pinClr          *g_ptrPort = *g_ptrPort & ~(1 << g_pin)
@@ -72,6 +72,27 @@ public:
         k_modePort_t mode;
     } gpio_config_struct_t;
 
+    typedef struct gpio_base_struct
+    {
+        uint8_t     mcuId;
+        uint8_t*    ptrPort;
+        uint8_t     pin;
+        const gpio_config_struct_t& config;
+    } gpio_base_struct_t;
+
+    typedef struct gpio_conf2_struct
+    {
+        uint8_t*    ptrPort;
+        uint8_t     pin;
+    } gpio_config2_struct_t;
+
+    typedef struct gpio_conf3_struct
+    {
+        uint8_t     mcuId;
+        uint8_t*    ptrPort;
+        uint8_t     pin;
+    } gpio_config3_struct_t;
+
     static constexpr gpio_config_struct_t din       = {mcuPinPort_t::k_typePort_digital ,mcuPinPort_t::k_modePort_input  };
     static constexpr gpio_config_struct_t dout      = {mcuPinPort_t::k_typePort_digital ,mcuPinPort_t::k_modePort_output };
     static constexpr gpio_config_struct_t ain       = {mcuPinPort_t::k_typePort_analog  ,mcuPinPort_t::k_modePort_input  };
@@ -87,7 +108,6 @@ public:
     static constexpr gpio_config_struct_t i2c_clck  = {mcuPinPort_t::k_typePort_i2c     ,mcuPinPort_t::k_modePort_clck };
 
     mcuPinPort_t(uint8_t p_mcuId,   uint8_t  p_port,      uint8_t p_pin, const gpio_config_struct_t& p_config);
-
     mcuPinPort_t(                   uint8_t* p_ptrPort,   uint8_t p_pin,                        const gpio_config_struct_t& p_config);
     mcuPinPort_t(uint8_t p_mcuId,   uint8_t* p_ptrPort,   uint8_t p_pin,                        const gpio_config_struct_t& p_config);
     mcuPinPort_t(                   uint8_t* p_ptrPort,   uint8_t p_pin, void (*p_func)(void),  const gpio_config_struct_t& p_config );

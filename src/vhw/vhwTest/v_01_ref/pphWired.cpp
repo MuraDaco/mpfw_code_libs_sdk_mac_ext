@@ -22,18 +22,43 @@
 //  *******************************************************************************
 
 /*
- * uyTypesDefs.h
+ * pphWired.cpp
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Jun, 27 2024
  *      Author: Marco Dau
  */
- 
-#ifndef UY_TYPES_DEFS_H
-#define UY_TYPES_DEFS_H
 
-typedef void (* func_t)     (void);
-typedef void (* funcCallback_t)     (void);
+#include <iostream>
 
-typedef void (* event_t)    (void);
 
-#endif 	// UY_TYPES_DEFS_H
+#include "mcuDeviceConfig.h"
+#include "pphWired.h"
+
+
+pphWired_t::pphWired_t(const char* p_strName, gpio_config3_struct_t p_ConfPinPortOut, gpio_config3_struct_t p_ConfPinPortIn)  :
+     mcuPinPort2_t  (
+                        {p_ConfPinPortOut.mcuId,    p_ConfPinPortOut.ptrPort, p_ConfPinPortOut.pin, mcuPinPort_t::dout},
+                        {p_ConfPinPortIn.mcuId,     p_ConfPinPortIn.ptrPort , p_ConfPinPortIn.pin , mcuPinPort_t::din}
+     )
+    ,g_strName          {p_strName    }
+{}
+
+
+void pphWired_t::vhwInit (void) {
+}
+
+
+void pphWired_t::vhwLoop () {
+}
+
+void pphWired_t::setHigh ([[maybe_unused]] uint8_t p_mcuId) {
+}
+
+void pphWired_t::setLow ([[maybe_unused]] uint8_t p_mcuId) {
+}
+
+bool pphWired_t::getStatus (void) {
+    return true;
+}
+
+

@@ -22,18 +22,26 @@
 //  *******************************************************************************
 
 /*
- * uyTypesDefs.h
+ * vhwPphTbl.cpp
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Jun, 27 2024
  *      Author: Marco Dau
+
+    see the mcuPinPort.h to know how to compose the PORT and PIN #define name
+    MCU_<port function name>_PORT
+    MCU_<port function name>_PIN
+
  */
- 
-#ifndef UY_TYPES_DEFS_H
-#define UY_TYPES_DEFS_H
 
-typedef void (* func_t)     (void);
-typedef void (* funcCallback_t)     (void);
 
-typedef void (* event_t)    (void);
+#include <iostream>
 
-#endif 	// UY_TYPES_DEFS_H
+//#include "vhwPphTbl.h"
+
+#include "mcuPinPortDefineConfig.h"
+#include "pphButton.h"
+
+////extern DEF_H___PPH_BUTTON   (BUTTON_DOWN)
+//extern DEF_H___PPH_BUTTON   (BUTTON_UP)
+//extern DEF_H___PPH_BUTTON   (BUTTON_TEST)
+//extern DEF_H___PPH_BUTTON   (BUTTON_XXX)

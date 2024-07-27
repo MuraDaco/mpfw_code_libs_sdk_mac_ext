@@ -22,68 +22,106 @@
 //  *******************************************************************************
 
 /*
- * tuiBaseUnit.cpp
+ * dtyBaseUnit.cpp
  *
  *  Created on: Jul, 16th 2024
  *      Author: Marco Dau
  */
  
+#include <cstdint>
 
-#include "tuiBaseUnit.h"
-
-event_t* tuiBaseUnit_t::g_eventArray = nullptr;
+#include "dtyUint8.h"
 
 
-tuiBaseUnit_t::tuiBaseUnit_t (zone_t* p_zoneList) :
-    g_zoneList      {p_zoneList}
+// ************************************************************ ATTRIBUTE
+// +++++++++++++++++++++ Class (Static) attribute
+const char*			dtyUint8_t::m_pStringValue				{m_StringValue};
+char				dtyUint8_t::m_StringValue[kDigitNum+1];
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ***************************************************************************** CONSTRUCTOR **************
+dtyUint8_t::dtyUint8_t(uint8_t* p_pValue) :
+         dtyBaseUnit_t   {}
+		,g_pValue        {p_pValue   }
 {}
-
-tuiBaseUnit_t::tuiBaseUnit_t (box_t* p_box, zone_t* p_zoneList) :
-     g_box              {p_box}
-    ,g_zoneList         {p_zoneList}
-{}
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ************* END CONSTRUCTOR **********************
 
 
-void tuiBaseUnit_t::SetEventArrayOfWindow   	(void)      {
-    g_pFather->SetEventArrayOfWindow();
+
+// ************************************************************** METHODS
+/*
+ * This function must be call only after calling
+ * vLoadDataStructure()
+ */
+void	dtyUint8_t::vUpdateInit	(void) {
+	*g_pValue = g_tmpValue;
 }
 
-bool tuiBaseUnit_t::bMouseClickInsideBounds (point_t p_mouseXY)      {
-    bool l_result = false;
-
-    if(
-        ((g_box->xStart <= p_mouseXY.x) && (p_mouseXY.x < (g_box->xStart+g_box->width ))) &&
-        ((g_box->yStart <= p_mouseXY.y) && (p_mouseXY.y < (g_box->yStart+g_box->height)))
-    ) {
-        l_result = true;
-        //select();
-        //if(!bCheckSensitiveZone(p_mouseXY))  {
-        //    //for_each(element of elementList)   {
-        //    //    if(elementList[element]->bMouseClickInsideBounds(p_mouseXY))    {
-        //    //        l_result = true;
-        //    //        break;
-        //    //    }
-        //    //}
-        //}
-    }
-    return l_result;
+/*
+ * This function makes parameter modification operative
+ */
+void	dtyUint8_t::vUpdate			(void) {
+	if(m_bTemporValueChanged) {
+		*g_pValue = g_tmpValue;
+	}
 }
 
-bool tuiBaseUnit_t::bCheckSensitiveZone (point_t p_mouseXY)      {
-    bool l_result = false;
-    zone_t* l_zoneList = g_zoneList;
-    while(l_zoneList->hndl)   {
-        if(
-            (l_zoneList->box.xStart <= p_mouseXY.x < (l_zoneList->box.xStart+l_zoneList->box.width)) &&
-            (l_zoneList->box.yStart <= p_mouseXY.y < (l_zoneList->box.yStart+l_zoneList->box.height))
-        ) {
-            l_result = true;
-            //l_zoneList->hndl();
-            //setEventWinTbl()
-            break;
-        }
-        l_zoneList++;
-    }
+// --------------------- Interfaces from uySettingsIfField
+void	dtyUint8_t::vInc				(void) {
+	(g_tmpValue)++;
+	vValueToString();
+}
 
-    return l_result;
+void	dtyUint8_t::vDec				(void) {
+	(g_tmpValue)--;
+	vValueToString();
+}
+
+void	dtyUint8_t::vSelected			(void) {
+	if(!m_bTemporValueChanged) {
+		g_tmpValue = *g_pValue;
+	}
+	vValueToString();
+}
+
+void	dtyUint8_t::vConfirm			(void) {
+	if(!m_bTemporValueChanged) {
+		m_bTemporValueChanged = true;
+
+		if(m_bApplyChangesImmediatly) {
+			vUpdate();
+		}
+
+	}
+}
+
+void	dtyUint8_t::vSet			(char* p_str)	{
+	p_str += 2;
+
+	if(bStringToValue(p_str)) {
+		vConfirm();
+	}
+}
+
+
+
+// --------------------- Subroutine
+bool	dtyUint8_t::bStringToValue	(__attribute__((unused)) char* p_str ) {
+	return false;
+}
+
+void	dtyUint8_t::vValueToString	(void) {
+	uint8_t l_value		{g_tmpValue};
+	char remandier;
+
+	m_pStringValue = m_StringValue;
+
+	// set null string terminator
+	m_StringValue[kDigitNum]	= 0;
+	for(uint8_t i=1; i<=kDigitNum; i++) {
+		remandier	= static_cast<char>(l_value % 10);
+		l_value		= l_value / 10;
+		m_StringValue[kDigitNum - i] = static_cast<char>('0' + remandier);
+	}
 }

@@ -73,4 +73,3 @@ tuiWin_t tuiAppMain_t::g_win ("Main Window", &g_box, g_zoneList, g_elementList);
 // -------- MAIN WINDOW define - end
 
 
-tuiWin_t* tuiManager_t::g_mainWin = &tuiAppMain_t::g_win;

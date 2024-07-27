@@ -32,7 +32,7 @@
 #define TUI_MANAGER_H
 
 #include <ncurses.h> // /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/ncurses.h -> curses.h
-#include "tuiWin.h"
+#include "tuiBaseUnit.h"
 
 
 class tuiManager_t    {
@@ -40,14 +40,10 @@ class tuiManager_t    {
 public:
     static void init   (void);
     static void loop   (void);
-    static void end   (void);
+    static void end    (void);
 
 private:
-    static int eventCode        (int p_ncursesEventCode);
-    static void test_1          (uint8_t p_mcuId);
-
-    static uint8_t g_mcuId;
-    static tuiWin_t* g_mainWin;
+    static tuiBaseUnit_t* g_mainWin;
 };
 
 

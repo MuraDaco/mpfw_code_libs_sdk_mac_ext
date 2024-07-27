@@ -84,22 +84,22 @@ void tuiWin_t::init       (void* p_poFather) 	{
     //      - only if the current window has a [father]
     //      - otherwise the current windows is the [main] and it is associated to [ncurses stdscr]
     if(p_poFather) {
-        g_ncursWin = newwin(g_box->height, g_box->width, g_box->yStart, g_box->xStart);
+        g_ncursWin = newwin(g_pBox->height, g_pBox->width, g_pBox->yStart, g_pBox->xStart);
         box(g_ncursWin, 0, 0);
     }
     else
     {   // the current instance is the main window, therefore ...
         // 2. set the pointer of ncurses window to main window [stdsrc]
         g_ncursWin = stdscr;
-
+        g_poSelected = this;
         // 4. complete ncurses initialization
         raw();                              /* Line buffering disabled        */
         nodelay(g_ncursWin, true);
         keypad(g_ncursWin, TRUE);           /* We get F1, F2 etc..            */
         noecho();                           /* Don't echo() while we do getch */
         mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
+        printf("\033[?1003h\n"); // Makes the terminal report mouse movement events                
     }
-    g_ncursTest = ACS_VLINE;
 
     //if(has_colors() == FALSE)
     //{       
@@ -132,7 +132,7 @@ void tuiWin_t::init       (void* p_poFather) 	{
 
 }
 
-bool tuiWin_t::eventManagement            (void)  {
+bool tuiWin_t::loop            (void)  {
     bool l_result = true;
     tuiEventCode_t l_eventCode = tuiEventCode_t::noEvent;
 
@@ -142,6 +142,7 @@ bool tuiWin_t::eventManagement            (void)  {
         if(ERR != l_ncursEventCode)   {
             if(('x' == l_ncursEventCode) || ('q' == l_ncursEventCode) ){
                 l_result = false;
+                printf("\033[?1003l\n"); // Disable mouse movement events, as l = low
                 mvwprintw(g_ncursWin, 9, 2, "Exiting ... \n");
             } else {
                 switch(l_ncursEventCode)    {
@@ -198,6 +199,7 @@ bool tuiWin_t::eventManagement            (void)  {
 void tuiWin_t::select     (void)    {
     start_color();                  /* Start color                  */
 
+    deSelectSelected         (this);
     wattron(g_ncursWin,COLOR_PAIR(2));
     // refresh current window and ...
     //mvwprintw(g_ncursWin, 0, 0, " 1st row - window name: %s \n", g_strName);
@@ -257,7 +259,7 @@ void tuiWin_t::vEventHndlKey_down	(void)  {
 void tuiWin_t::vEventHndlKey_up	(void)  {
     mvwprintw(g_po->g_ncursWin, 0, 30, "event hndl - key up");
     if(g_po->g_bElementList) {
-        g_po->g_pCurrentElement->element->deSelect();
+        //g_po->g_pCurrentElement->element->deSelect();
         g_po->g_pCurrentElement++;
         if(g_po->g_pLastElement == g_po->g_pCurrentElement)
             g_po->g_pCurrentElement = g_po->g_elementList;
@@ -289,6 +291,8 @@ void tuiWin_t::vEventHndlKey_home	(void)  {
     // //g_po->g_pCurrentElement->element->eventOn();
 }
 
+// it can be run only by [main_window] therefore ...
+// its elements are all & only windows
 void tuiWin_t::vEventHndlMouse	(void)  {
     MEVENT l_mouseEvent;
     int l_mouseEventStatus = getmouse(&l_mouseEvent);
@@ -304,15 +308,30 @@ void tuiWin_t::vEventHndlMouse	(void)  {
     } else mvwprintw(g_po->g_ncursWin, 8, 2, "getmouse() function failed! Its return value is different from \"OK\" - %08x", l_mouseEventStatus);
 
     element_t* l_element = g_po->g_elementList;
-    //uint8_t l_cnt = 3;
+    element_t* l_elementSelected = nullptr;
     while(l_element->element)    {
         if(l_element->element->bMouseClickInsideBounds({static_cast<uint8_t>(l_mouseEvent.x), static_cast<uint8_t>(l_mouseEvent.y)})) {
-            g_po->g_pCurrentElement->element->deSelect();
-            static_cast<tuiWin_t*>(l_element->element)->select();
-            g_po->g_pCurrentElement = l_element;
-            mvwprintw(g_po->g_ncursWin, 8, 2, "window \"%s\" selcted by mouse", static_cast<tuiWin_t*>(l_element->element)->g_strName);
+            //g_po->g_pCurrentElement->element->deSelect();
+
+            if(l_elementSelected) {
+                mvwprintw(g_po->g_ncursWin, 2, 1, "p_selCnt1: %02x - p_selCnt2: %02x", static_cast<tuiWin_t*>(l_elementSelected->element)->g_selCnt, static_cast<tuiWin_t*>(l_element->element)->g_selCnt);
+                if(bTstSelCnts(static_cast<tuiWin_t*>(l_elementSelected->element)->g_selCnt, static_cast<tuiWin_t*>(l_element->element)->g_selCnt)) {
+                    l_elementSelected = l_element;
+                }
+            } else {
+                l_elementSelected = l_element;
+            }
+            // static_cast<tuiWin_t*>(l_element->element)->select();
+            // g_po->g_pCurrentElement = l_element;
+            // mvwprintw(g_po->g_ncursWin, 8, 2, "window \"%s\" selcted by mouse", static_cast<tuiWin_t*>(l_element->element)->g_strName);
+            // break;
         }
         l_element++;
+    }
+    if(l_elementSelected) {
+        static_cast<tuiWin_t*>(l_elementSelected->element)->select();
+        g_po->g_pCurrentElement = l_elementSelected;
+        mvwprintw(g_po->g_ncursWin, 8, 2, "window \"%s\" selcted by mouse", static_cast<tuiWin_t*>(l_elementSelected->element)->g_strName);
     }
 
 }

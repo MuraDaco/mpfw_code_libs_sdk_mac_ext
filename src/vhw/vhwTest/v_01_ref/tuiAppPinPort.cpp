@@ -28,13 +28,21 @@
  *      Author: Marco Dau
  */
  
+//import vhwPphTbl;
 
 #include "tuiAppPinPort.h"
+#include "tuiDigitalInOut.h"
+
+//#include "vhwPphObjs.hpp"
+//#include "vhwPphTbl.h"
+#include "vhwPphTbl_Buttons.h"
+#include "vhwPphTbl_Mod1.h"
+
 
 // **********************************************************
 // -------- BOX define - start
 // ............................ H   W  Yo  Xo
-box_t tuiAppPinPort_t::g_box = {4, 45, 15, 20};
+box_t tuiAppPinPort_t::g_box = {10, 45, 15, 20};
 // -------- BOX define - end
 
 // **********************************************************
@@ -54,8 +62,19 @@ tuiBaseUnit_t::zone_t tuiAppPinPort_t::g_zoneList[] = {
 
 // **********************************************************
 // -------- ELEMENT LIST define - start
+//tuiDigitalInOut_t tuiButtonTest2 (&OBJ_PPH_BUTTON(vhwPphObjs_t,BUTTON_TEST).g_dtyUint8_mcuPort);
+//tuiDigitalInOut_t tuiButtonTest (&OBJ_PPH_BUTTON_STD(BUTTON_TEST).g_dtyUint8_mcuPort);
+
+//DEF_TUI_DIGITAL_IN_OUT_OBJ  (BUTTON_TEST)
+DEF_TUI_DIGITAL_IN_OUT_OBJ  (BUTTON_TEST, 0, 3)
+DEF_TUI_DIGITAL_IN_OUT_OBJ  (BUTTON_XXX, 0, 5)
+DEF_TUI_DIGITAL_IN_OUT_OBJ  (BUTTON_UP, 0, 7)
+//DEF_TUI_DIGITAL_IN_OUT_OBJ  (0, 1, BUTTON_TEST)
+
 tuiWin_t::element_t tuiAppPinPort_t::g_elementList[] = {
-     {nullptr, 1}
+     {&OBJ_TUI_DIGITAL_IN_OUT   (BUTTON_TEST), 1}
+    ,{&OBJ_TUI_DIGITAL_IN_OUT   (BUTTON_XXX), 0}
+    ,{&OBJ_TUI_DIGITAL_IN_OUT   (BUTTON_UP), 3}
     ,{nullptr, 1}
 };
 // -------- ELEMENT LIST define - end

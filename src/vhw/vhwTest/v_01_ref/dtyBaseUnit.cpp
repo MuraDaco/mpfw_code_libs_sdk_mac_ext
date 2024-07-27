@@ -22,18 +22,27 @@
 //  *******************************************************************************
 
 /*
- * uyTypesDefs.h
+ * dtyBaseUnit.cpp
  *
  *  Created on: Jul, 16th 2024
  *      Author: Marco Dau
  */
  
-#ifndef UY_TYPES_DEFS_H
-#define UY_TYPES_DEFS_H
 
-typedef void (* func_t)     (void);
-typedef void (* funcCallback_t)     (void);
+#include "dtyBaseUnit.h"
 
-typedef void (* event_t)    (void);
 
-#endif 	// UY_TYPES_DEFS_H
+dtyBaseUnit_t::dtyBaseUnit_t		(															)	:
+		m_bApplyChangesImmediatly	{true						},
+		m_bTemporValueChanged		{false						}
+{}
+
+dtyBaseUnit_t::dtyBaseUnit_t		(bool p_bApplyChangesImmediatly								)	:
+		m_bApplyChangesImmediatly	{p_bApplyChangesImmediatly	},
+		m_bTemporValueChanged		{false						}
+{}
+
+dtyBaseUnit_t::dtyBaseUnit_t		(bool p_bApplyChangesImmediatly	,bool p_bTemporValueChanged	)	:
+		m_bApplyChangesImmediatly	{p_bApplyChangesImmediatly	},
+		m_bTemporValueChanged		{p_bTemporValueChanged		}
+{}

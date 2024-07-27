@@ -60,6 +60,7 @@ message(STATUS "TOOLCHAIN - C++:                  ${CMAKE_CXX_COMPILER}")
 
 set(SOURCE_FILES_CPP
     mcuPinPort.cpp        
+    mcuPinPort2.cpp        
     mcuPortDef.cpp        
     mcuUSART.cpp          
     mcuUSARTTbl.cpp          
@@ -67,6 +68,7 @@ set(SOURCE_FILES_CPP
     pphLed.cpp            
     pphRely.cpp         
     pphSwitch.cpp         
+    pphWired.cpp         
     ###--- pphUSART.cpp          
     shmMcuPinPort.cpp     
     shmMcuUSART.cpp       
@@ -75,8 +77,15 @@ set(SOURCE_FILES_CPP
     pphManager.cpp        
     shmManager.cpp        
     # vhwPphMcuPinPortWiredTbl.cpp  
+    vhwPphTbl_Buttons.cpp
+    vhwPphTbl_Mod1.cpp
     vhwPphTbl.cpp
+
+    dtyBaseUnit.cpp
+    dtyUint8.cpp
+
     tuiBaseUnit.cpp
+    tuiDigitalInOut.cpp
     tuiWin.cpp
     # tuiObjs.cpp
     tuiAppUSART_1.cpp
@@ -84,6 +93,8 @@ set(SOURCE_FILES_CPP
     tuiAppBoard.cpp
     tuiAppMain.cpp
     tuiManager.cpp
+    tuiManagerApp.cpp
+
     vhwManager.cpp        
     #vhwTbl.cpp        
     vhwMain.cpp               

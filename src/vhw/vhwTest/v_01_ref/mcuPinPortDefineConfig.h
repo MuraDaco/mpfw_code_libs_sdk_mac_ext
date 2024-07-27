@@ -32,6 +32,7 @@
 #ifndef MCU_PIN_PORT_DEFINE_CONFIG_H
 #define MCU_PIN_PORT_DEFINE_CONFIG_H
 
+
 /*
     peripherals list
     - USART_RX
@@ -61,37 +62,54 @@
 #define MCU_USART_TX_PORT                   SDK_MCU_PORT_A
 #define MCU_USART_TX_PIN                    4
 
+#define MCU_LED_TEST
 #define MCU_LED_TEST_PORT_PTR               SDK_MCU_PORT_D_PTR
 #define MCU_LED_TEST_PORT                   SDK_MCU_PORT_D
 #define MCU_LED_TEST_PIN                    6
 
+#define MCU_LED_A
 #define MCU_LED_A_PORT_PTR                  SDK_MCU_PORT_E_PTR
 #define MCU_LED_A_PORT                      SDK_MCU_PORT_E
 #define MCU_LED_A_PIN                       7
 
-#define MCU_4_LED_B_dout_PORT_PTR                  SDK_MCU_PORT_F_PTR
-#define MCU_4_LED_B_dout_PORT                      SDK_MCU_PORT_F
-#define MCU_4_LED_B_dout_PIN                       2
+#define MCU_4_LED_B_dout_PORT_PTR           SDK_MCU_PORT_F_PTR
+#define MCU_4_LED_B_dout_PORT               SDK_MCU_PORT_F
+#define MCU_4_LED_B_dout_PIN                2
 
+#define MCU_LED_C
 #define MCU_LED_C_PORT_PTR                  SDK_MCU_PORT_D_PTR
 #define MCU_LED_C_PORT                      SDK_MCU_PORT_D
 #define MCU_LED_C_PIN                       3
 
+#define MCU_BUTTON_UP
 #define MCU_BUTTON_UP_PORT_PTR              SDK_MCU_PORT_B_PTR
 #define MCU_BUTTON_UP_PORT                  SDK_MCU_PORT_B
 #define MCU_BUTTON_UP_PIN                   0
 
+#define MCU_BUTTON_TEST
+#define MCU_BUTTON_TEST_PORT_PTR            SDK_MCU_PORT_D_PTR
+#define MCU_BUTTON_TEST_PORT                SDK_MCU_PORT_D
+#define MCU_BUTTON_TEST_PIN                 4
+
+#define MCU_BUTTON_XXX
+#define MCU_BUTTON_XXX_PORT_PTR             SDK_MCU_PORT_D_PTR
+#define MCU_BUTTON_XXX_PORT                 SDK_MCU_PORT_D
+#define MCU_BUTTON_XXX_PIN                  4
+
+#define MCU_SWITCH_TST1
 #define MCU_SWITCH_TST1_PORT_PTR            SDK_MCU_PORT_B_PTR
 #define MCU_SWITCH_TST1_PORT                SDK_MCU_PORT_B
 #define MCU_SWITCH_TST1_PIN                 1
 
 //      MCU_<pin function>_port
-#define MCU_2_ALARM_A_dout_PORT_PTR            SDK_MCU_PORT_C_PTR
-#define MCU_2_ALARM_A_dout_PORT                SDK_MCU_PORT_C
-#define MCU_2_ALARM_A_dout_PIN                 1
-#define MCU_5_ALARM_A_din_PORT_PTR             SDK_MCU_PORT_H_PTR
-#define MCU_5_ALARM_A_din_PORT                 SDK_MCU_PORT_H
-#define MCU_5_ALARM_A_din_PIN                  4
+#define MCU_ALARM_A_dout
+#define MCU_2_ALARM_A_dout_PORT_PTR         SDK_MCU_PORT_C_PTR
+#define MCU_2_ALARM_A_dout_PORT             SDK_MCU_PORT_C
+#define MCU_2_ALARM_A_dout_PIN              1
+#define MCU_ALARM_A_din
+#define MCU_5_ALARM_A_din_PORT_PTR          SDK_MCU_PORT_H_PTR
+#define MCU_5_ALARM_A_din_PORT              SDK_MCU_PORT_H
+#define MCU_5_ALARM_A_din_PIN               4
 
 // #define MCU_ALARM_A_PORT_PTR      SDK_MCU_PORT_C_PTR
 // #define MCU_ALARM_A_PORT          SDK_MCU_PORT_C

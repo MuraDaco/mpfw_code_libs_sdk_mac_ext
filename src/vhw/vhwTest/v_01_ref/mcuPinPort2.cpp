@@ -22,18 +22,41 @@
 //  *******************************************************************************
 
 /*
- * uyTypesDefs.h
+ * mcuPinPort2.cpp
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Jul, 26 2024
  *      Author: Marco Dau
  */
- 
-#ifndef UY_TYPES_DEFS_H
-#define UY_TYPES_DEFS_H
 
-typedef void (* func_t)     (void);
-typedef void (* funcCallback_t)     (void);
+#include <iostream>
 
-typedef void (* event_t)    (void);
 
-#endif 	// UY_TYPES_DEFS_H
+#include "mcuPinPort2.h"
+
+
+mcuPinPort2_t::mcuPinPort2_t    (gpio_base_struct_t p_confPort) :
+     mcuPinPort_t   (p_confPort.mcuId, p_confPort.ptrPort, p_confPort.pin,  p_confPort.config)
+    ,g_pinPort2     {p_confPort.mcuId, p_confPort.ptrPort, p_confPort.pin,  p_confPort.config}
+{}
+
+mcuPinPort2_t::mcuPinPort2_t    (gpio_base_struct_t p_confPort1, gpio_base_struct_t p_confPort2) :
+     mcuPinPort_t   (p_confPort1.mcuId, p_confPort1.ptrPort, p_confPort1.pin,  p_confPort1.config)
+    ,g_pinPort2     {p_confPort2.mcuId, p_confPort2.ptrPort, p_confPort2.pin,  p_confPort2.config}
+{}
+
+
+
+void mcuPinPort2_t::vhwInit (void) {
+
+    mcuPinPort_t::vhwInit();
+}
+
+void mcuPinPort2_t::vhwInit (uint8_t p_mcuId, uint8_t p_port,   uint8_t p_pin) {
+    mcuPinPort_t::vhwInit(p_mcuId, p_port, p_pin);
+}
+
+
+void mcuPinPort2_t::vhwLoop (void) {
+    mcuPinPort_t::vhwLoop();
+}
+

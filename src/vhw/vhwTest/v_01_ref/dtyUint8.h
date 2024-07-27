@@ -22,61 +22,68 @@
 //  *******************************************************************************
 
 /*
- * tuiBaseUnit.h
+ * dtyUint8.h
  *
  *  Created on: Jul, 16th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_BASE_UNIT_H
-#define TUI_BASE_UNIT_H
+#ifndef DTY_UINT8_H
+#define DTY_UINT8_H
 
-#include "tuiGraphicTypes.h"
-#include "uyTypesDefs.h"
+#include "dtyBaseUnit.h"
 
-class tuiBaseUnit_t  {
+class dtyUint8_t : public dtyBaseUnit_t  {
 
 public:
-    typedef struct __zone__ {
-        box_t box;
-        func_t hndl;
-    } zone_t;
+	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// ***************************************************************************** CONSTRUCTOR **************
+	dtyUint8_t(uint8_t* p_pValue);
+	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// ************* END CONSTRUCTOR **********************
 
-    tuiBaseUnit_t (zone_t* p_zoneList);
-    tuiBaseUnit_t (box_t* p_box, zone_t* p_zoneList);
-    virtual void init       	([[maybe_unused]] void* p_poFather)											{				};
-    // virtual void EventOn    	([[maybe_unused]] uiBase* p_pFather)            {				};
-    virtual void eventOn    	(void)                                  		{				};
-    virtual void select     	(void)											{				};
-    virtual void deSelect   	(void)											{				};
-    virtual void SetEventArrayOfWindow   	(void);
-    virtual bool bDisplayable	(void)											{return true;	};
+    // ************************************************************ CONSTANTS
+	enum kDigit {
+		kDigitNum = 3
+	};
 
-    bool bMouseClickInsideBounds    (point_t p_mouseXY);
-    bool bCheckSensitiveZone        (point_t p_mouseXY);
+    // ************************************************************ ATTRIBUTE
+	// +++++++++++++++++++++ Instance (non Static) attribute
+	uint8_t*    g_pValue					;
+	uint8_t	    g_tmpValue					;
 
+	// +++++++++++++++++++++ Class (Static) attribute
 
-    // // --------------------- Events handler section - START
-	// // ..................... Events handler: functions
-    // template <uint8_t keycode>
-    // static void vEventHndlKey	(void);
-	// ..................... Events handler: array
-    static event_t* g_eventArray;
-    // --------------------- Events handler section - END
-
-    // // --------------------- Pointers section - START
-    // // pointer to the list of uiBase objects belonging to one
-    // // or more objects of the current class
-    // static Element_t*	ro_uiBase;
-    // tuiBaseUnit_t*	ro_Father;
-    // // --------------------- Pointers section - END
-
+	static const char*		m_pStringValue;
 protected:
-    //static eventHndl_t eventArray[];
-    tuiBaseUnit_t* g_pFather;
-    box_t*  g_box;
-    zone_t* g_zoneList;
+	static char				m_StringValue[kDigitNum+1];
+
+    // ************************************************************** METHODS
+
+	// --------------------- Interfaces from uySettingsIfField
+public:
+	void	vUpdate				(void);
+
+	virtual void	vSet		                (char* p_str)	override;
+	//virtual void	vGet		                (void*)	{} // = 0;
+	//virtual void*	xGet		                (void)	{return nullptr;} // = 0;
+	virtual void	vInc		                (void)	        override;
+	virtual void	vDec		                (void)	        override;
+	virtual void	vConfirm	                (void)	        override;
+	virtual void	vSelected	                (void)	        override;
+	virtual void	vUpdateInit	                (void)	        override;
+	// virtual void	vSearchFirst                (void)	{} // = 0;
+	// virtual void	vSearchNext					(void)	{} // = 0;
+	// virtual void	vSearchPrev					(void)	{} // = 0;
+	// virtual bool	bSearchLast  				(void)	{return true;} // = 0;
+	// virtual bool	bDisplayable    			(void)	{return true;};
+
+	// --------------------- Subroutine
+	__attribute__((const)) bool	bStringToValue			(char* p_str );
+	void	vValueToString			(void);
+
+
 };
 
 
-#endif 	// TUI_BASE_UNIT_H
+#endif 	// DTY_UINT8_H

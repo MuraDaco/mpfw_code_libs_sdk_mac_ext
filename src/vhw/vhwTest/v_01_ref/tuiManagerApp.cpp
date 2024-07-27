@@ -22,18 +22,15 @@
 //  *******************************************************************************
 
 /*
- * uyTypesDefs.h
+ * tuiManager.cpp
  *
  *  Created on: Jul, 16th 2024
  *      Author: Marco Dau
  */
- 
-#ifndef UY_TYPES_DEFS_H
-#define UY_TYPES_DEFS_H
 
-typedef void (* func_t)     (void);
-typedef void (* funcCallback_t)     (void);
 
-typedef void (* event_t)    (void);
+#include "tuiManager.h"
 
-#endif 	// UY_TYPES_DEFS_H
+#include "tuiAppMain.h"
+
+tuiBaseUnit_t* tuiManager_t::g_mainWin = &tuiAppMain_t::g_win;

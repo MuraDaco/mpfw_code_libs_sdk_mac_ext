@@ -32,23 +32,30 @@
 #ifndef PPH_BUTTON_H
 #define PPH_BUTTON_H
 
-#include "vhwUnit.h"
+#include "mcuPinPort.h"
+#include "dtyUint8.h"
 
-#define DEF_PPH_BUTTON(name)            pphButton_t pph_##name;
-#define DEF_PPH_BUTTON_DEVICE(name, id) pphButton_t pph_##id##_##name(id);
 
-class pphButton_t : public vhwUnit_t {
+#define DEF_H___PPH_BUTTON(name)            MCU_##name  pphButton_t                 pph_##name;
+#define DEF_CPP_PPH_BUTTON(name)                                \
+            pphButton_t pph_##name  (                           \
+                {MCU_##name##_PORT_PTR, MCU_##name##_PIN }      \
+            );
+#define OBJ_PPH_BUTTON(name)                                                        pph_##name
+
+#define GET_DATA_TYPE_PTR(name) &pph_##name.g_dtyStatus
+
+class pphButton_t : public mcuPinPort_t {
 
 public:
+    pphButton_t(gpio_config2_struct_t p_ConfPinPort  );
+    pphButton_t(gpio_config3_struct_t p_ConfPinPort  );
     pphButton_t();
     pphButton_t(uint8_t p_mcuId);
-    void vhwInit (uint8_t p_mcuId, uint8_t* p_ptrPort,   uint8_t p_pin)    override;
+    void vhwInit (uint8_t p_mcuId, uint8_t p_port,   uint8_t p_pin)    override;
     void vhwLoop (void)        override;
 
-    uint8_t g_mcuId;
-    uint8_t g_pin;
-    uint8_t* g_ptrPort;
-  
+    dtyUint8_t g_dtyStatus;
 };
 
 
