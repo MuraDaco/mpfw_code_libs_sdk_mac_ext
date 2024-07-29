@@ -22,50 +22,16 @@
 //  *******************************************************************************
 
 /*
- * mcuPort.cpp
+ * tuiDigitalInOut.cpp
  *
- *  Created on: Jun, 27 2024
+ *  Created on: Jul, 28th 2024
  *      Author: Marco Dau
  */
+ 
 
-#include <iostream>
+#include "tuiDigitalInOut2.h"
 
-
-#include "mcuPort.h"
-
-
-mcuPort_t::mcuPort_t(uint8_t* p_ptrPort, uint8_t p_Pin) :
-     g_mcuId        {0xff}
-    ,g_ptrPort      {p_ptrPort}
-    ,g_Pin          {p_Pin}
+tuiDigitalInOut2_t::tuiDigitalInOut2_t      (const char* p_strName, point_t p_origin,  dtyUint8_t* p_pDtyStatus,    dtyUint8_t* p_pDtyStatus2    )  :
+     tuiDigitalInOut_t      (p_strName, p_origin, p_pDtyStatus  )
+    ,g_pDtyStatus2          {p_pDtyStatus2}
 {}
-
-
-mcuPort_t::mcuPort_t(uint8_t p_Port, uint8_t p_Pin) :
-     g_mcuId    {0xff}
-    ,g_Port     {p_Port}
-    ,g_Pin      {p_Pin}
-{}
-
-mcuPort_t::mcuPort_t(uint8_t p_mcuId, uint8_t p_Port, uint8_t p_Pin) :
-     g_mcuId    {p_mcuId}
-    ,g_Port     {p_Port}
-    ,g_Pin      {p_Pin}
-{}
-
-mcuPort_t::mcuPort_t(uint8_t p_mcuId, uint8_t p_Port, uint8_t p_Pin, void (*p_Func)(void) ) :
-     g_mcuId    {p_mcuId}
-    ,g_Port     {p_Port}
-    ,g_Pin      {p_Pin}
-    ,g_Func     {p_Func}
-{}
-
-
-void mcuPort_t::init (uint8_t* p_port) {
-    g_ptrPort = p_port;
-}
-
-
-void mcuPort_t::loop (void) {
-    std::cout << "vhwUnitTest1 - loop function\n";
-}

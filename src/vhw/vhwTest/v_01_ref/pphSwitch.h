@@ -32,22 +32,18 @@
 #ifndef PPH_SWITCH_H
 #define PPH_SWITCH_H
 
-#include "vhwUnit.h"
+#include "pphMacroDefine.h"
+#include "mcuPinPort.h"
 
-#define DEF_PPH_SWITCH(name)            pphSwitch_t pph_##name;
-#define DEF_PPH_SWITCH_DEVICE(name, id) pphSwitch_t pph_##id##_##name(id);
-
-class pphSwitch_t : public vhwUnit_t {
+class pphSwitch_t : public mcuPinPort_t {
 
 public:
     pphSwitch_t();
     pphSwitch_t(uint8_t p_mcuId);
-    void vhwInit     (uint8_t p_mcuId, uint8_t* p_ptrPort,   uint8_t p_pin)    override;
+    pphSwitch_t(gpio_config2_struct_t p_ConfPinPort  );
+    pphSwitch_t(gpio_config3_struct_t p_ConfPinPort  );
+    void vhwInit (uint8_t p_mcuId, uint8_t p_port,   uint8_t p_pin)    override;
     void vhwLoop (void)        override;
-
-    uint8_t  g_mcuId;
-    uint8_t  g_pin;
-    uint8_t* g_ptrPort;
   
 };
 

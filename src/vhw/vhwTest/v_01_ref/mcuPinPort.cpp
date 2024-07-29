@@ -40,6 +40,7 @@ mcuPinPort_t::mcuPinPort_t(uint8_t p_mcuId, uint8_t  p_port,      uint8_t p_pin,
      g_mcuId        {p_mcuId}
     ,g_port         {p_port}
     ,g_pin          {p_pin}
+    ,g_dtyStatus    {&g_status}
     ,g_config       {p_config}
     
 {}
@@ -48,6 +49,7 @@ mcuPinPort_t::mcuPinPort_t(                 uint8_t* p_ptrPort, uint8_t p_Pin,  
      g_mcuId        {MCU_DEVICE_DEFAULT}
     ,g_ptrPort      {p_ptrPort}
     ,g_pin          {p_Pin}
+    ,g_dtyStatus    {&g_status}
     ,g_config       {p_config}
 {}
 
@@ -55,6 +57,7 @@ mcuPinPort_t::mcuPinPort_t(uint8_t p_mcuId, uint8_t* p_ptrPort, uint8_t p_Pin,  
      g_mcuId        {p_mcuId}
     ,g_ptrPort      {p_ptrPort}
     ,g_pin          {p_Pin}
+    ,g_dtyStatus    {&g_status}
     ,g_config       {p_config}
 {}
 
@@ -62,6 +65,7 @@ mcuPinPort_t::mcuPinPort_t(                 uint8_t* p_ptrPort, uint8_t p_Pin, v
      g_mcuId        {MCU_DEVICE_DEFAULT}
     ,g_ptrPort      {p_ptrPort}
     ,g_pin          {p_Pin}
+    ,g_dtyStatus    {&g_status}
     ,g_Func         {p_Func}
     ,g_config       {p_config}
 {}
@@ -70,6 +74,7 @@ mcuPinPort_t::mcuPinPort_t(uint8_t p_mcuId, uint8_t* p_ptrPort, uint8_t p_Pin, v
      g_mcuId        {p_mcuId}
     ,g_ptrPort      {p_ptrPort}
     ,g_pin          {p_Pin}
+    ,g_dtyStatus    {&g_status}
     ,g_Func         {p_Func}
     ,g_config       {p_config}
 {}
@@ -128,11 +133,17 @@ void mcuPinPort_t::setLow         (uint8_t p_mcuId)    {
 }
 
 void mcuPinPort_t::vhwSetHigh        ([[maybe_unused]]uint8_t p_mcuId)    {
-    if(k_modePort_input == g_config.mode) pinSet;
+    if(k_modePort_input == g_config.mode) {
+        pinSet;
+        g_status = 1;
+    }
 }
 
 void mcuPinPort_t::vhwSetLow         ([[maybe_unused]]uint8_t p_mcuId)    {
-    if(k_modePort_input == g_config.mode) pinClr;
+    if(k_modePort_input == g_config.mode)   {
+        pinClr;
+        g_status = 0;
+    }
 }
 
 bool mcuPinPort_t::getStatus      (void)    {

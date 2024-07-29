@@ -49,10 +49,17 @@ mcuPinPort2_t::mcuPinPort2_t    (gpio_base_struct_t p_confPort1, gpio_base_struc
 void mcuPinPort2_t::vhwInit (void) {
 
     mcuPinPort_t::vhwInit();
+    g_pinPort2.vhwInit();
 }
 
 void mcuPinPort2_t::vhwInit (uint8_t p_mcuId, uint8_t p_port,   uint8_t p_pin) {
     mcuPinPort_t::vhwInit(p_mcuId, p_port, p_pin);
+    g_pinPort2.vhwInit(p_mcuId, p_port, p_pin);
+}
+
+void mcuPinPort2_t::vhwInit (uint8_t p_mcuId,     uint8_t  p_port,   uint8_t p_pin, uint8_t p_pin2)    {
+    mcuPinPort_t::vhwInit(p_mcuId, p_port, p_pin);
+    g_pinPort2.vhwInit(p_mcuId, p_port, p_pin2);
 }
 
 

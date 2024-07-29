@@ -34,35 +34,17 @@
 
 #include "mcuPinPort2.h"
 
-//pphWired_t pphWiredTest1 ( "Test1", {2, &g_test, 4}, {5, &g_test, 4} ) ;
-
-#define DEF_PPH_WIRED_NEW(name, id1, id2)           \
-            pphWired_t pph_wired_##name##_##id1##_##id2                            (   \
-                #name,  \
-                {id1, MCU_##id1##_##name##_dout_PORT_PTR, MCU_##id1##_##name##_dout_PIN },  \
-                {id2, MCU_##id2##_##name##_din_PORT_PTR,  MCU_##id2##_##name##_din_PIN  }   \
-            );
-
-#define DEF_PPH_WIRED(name)                                 pphWired_t pph_##name;
-#define DEF_PPH_WIRED_DEVICE(name, id)                      pphWired_t pph_##id##_##name (id);
-#define DEF_PPH_WIRED_IN(name)                              pphWired_t pph_##name        (&mcu_##name##_dout             ,nullptr);
-#define DEF_PPH_WIRED_DEVICE_IN(name, id)                   pphWired_t pph_##id##_##name (&mcu_##name##_dout             ,nullptr);
-#define DEF_PPH_WIRED_OUT(name)                             pphWired_t pph_##name        (nullpptr                       ,&mcu_##name##_din);
-#define DEF_PPH_WIRED_DEVICE_OUT(name, id)                  pphWired_t pph_##id##_##name (nullpptr                       ,&mcu_##name##_din);
-#define DEF_PPH_WIRED_IN_OUT(name, idout, idin)             pphWired_t pph_##name        (&mcu_##idout##_##name##_dout   ,&mcu_##idin##_##name##_din);
-#define DEF_PPH_WIRED_IN_OUT_NAME(name, idout, idin)        pphWired_t pph_##name        (#name, &mcu_##idout##_##name##_dout   ,&mcu_##idin##_##name##_din);
-
 class pphWired_t : public mcuPinPort2_t {
 
 public:
 
-    //static constexpr gpio_config_struct_t din       = {mcuPinPort_t::k_typePort_digital ,mcuPinPort_t::k_modePort_input  };
-
     pphWired_t(const char* p_strName, gpio_config3_struct_t p_ConfPinPortOut, gpio_config3_struct_t p_ConfPinPortIn);
     void vhwInit (void)    override;
+    void vhwInit    (uint8_t p_mcuId,     uint8_t  p_port,   uint8_t p_pin, uint8_t p_pin2) override;
     void vhwLoop (void)    override;
-    void setHigh        (uint8_t p_mcuId);
-    void setLow         (uint8_t p_mcuId);
+    void vhwLoop (uint8_t p_mcuId)    override;
+    void setHigh        (uint8_t p_mcuId) override;
+    void setLow         (uint8_t p_mcuId) override;
     bool getStatus      (void);
 
     const char* g_strName;

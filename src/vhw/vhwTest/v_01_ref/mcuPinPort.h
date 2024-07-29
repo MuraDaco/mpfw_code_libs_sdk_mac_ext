@@ -34,13 +34,17 @@
 
 #include "vhwUnit.h"
 #include "mcuPortDef.h"
+#include "dtyUint8.h"
 
-#define DEF_MCU_PIN_PORT_DEVICE_CONFIG(name, id, config)                mcuPinPort_t mcu_##id##_##name              (id, MCU_##name##_PORT,                         MCU_##name##_PIN,                           mcuPinPort_t::config);
-#define DEF_MCU_PIN_PORT_PTR(name, config)                              mcuPinPort_t mcu_##name                     (    MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                           mcuPinPort_t::config);
-#define DEF_MCU_PIN_PORT(name, config)                                  mcuPinPort_t mcu_##name                     (    MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                           mcuPinPort_t::config);
-#define DEF_MCU_PIN_PORT_INTERRUPT(name, hndl, config)                  mcuPinPort_t mcu_##name                     (    MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                   hndl,   mcuPinPort_t::config);
-#define DEF_MCU_PIN_PORT_DEVICE(name, id, config)                       mcuPinPort_t mcu_##id##_##name##_##config   (id, MCU_##id##_##name##_##config##_PORT_PTR,   MCU_##id##_##name##_##config##_PIN,         mcuPinPort_t::config);
-#define DEF_MCU_PIN_PORT_INTERRUPT_DEVICE(name, hndl, id, config)       mcuPinPort_t mcu_##id##_##name              (id, MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                   hndl,   mcuPinPort_t::config);
+//#define DEF_MCU_PIN_PORT_DEVICE_CONFIG(name, id, config)                mcuPinPort_t mcu_##id##_##name              (id, MCU_##name##_PORT,                         MCU_##name##_PIN,                           mcuPinPort_t::config);
+//#define DEF_MCU_PIN_PORT_PTR(name, config)                              mcuPinPort_t mcu_##name                     (    MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                           mcuPinPort_t::config);
+//#define DEF_MCU_PIN_PORT(name, config)                                  mcuPinPort_t mcu_##name                     (    MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                           mcuPinPort_t::config);
+//#define DEF_MCU_PIN_PORT_INTERRUPT(name, hndl, config)                  mcuPinPort_t mcu_##name                     (    MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                   hndl,   mcuPinPort_t::config);
+//#define DEF_MCU_PIN_PORT_DEVICE(name, id, config)                       mcuPinPort_t mcu_##id##_##name##_##config   (id, MCU_##id##_##name##_##config##_PORT_PTR,   MCU_##id##_##name##_##config##_PIN,         mcuPinPort_t::config);
+//#define DEF_MCU_PIN_PORT_INTERRUPT_DEVICE(name, hndl, id, config)       mcuPinPort_t mcu_##id##_##name              (id, MCU_##name##_PORT_PTR,                     MCU_##name##_PIN,                   hndl,   mcuPinPort_t::config);
+
+#define mcuPinPort_t_DATA_TYPE_PTRS(name)      &pph_##name.g_dtyStatus
+
 
 #define pinSet          *g_ptrPort = *g_ptrPort | (1 << g_pin)
 #define pinClr          *g_ptrPort = *g_ptrPort & ~(1 << g_pin)
@@ -121,16 +125,19 @@ public:
     uint8_t* g_ptrPort;
     uint8_t  g_port;
     uint8_t  g_pin;
+    uint8_t  g_status;
+    dtyUint8_t g_dtyStatus;
+
     void (*g_Func)(void);
     gpio_config_struct_t g_config;
 
     uint16_t pinRead    (uint8_t  p_port,      uint8_t p_pin);
     void pinWrite       (uint8_t  p_Port,      uint8_t p_pin, uint16_t p_status);
     void pinConfig      (uint8_t  p_Port,      uint8_t p_pin, gpio_config_struct_t& p_config);
-    void setHigh        (uint8_t p_mcuId);
-    void setLow         (uint8_t p_mcuId);
-    void vhwSetHigh     (uint8_t p_mcuId);
-    void vhwSetLow      (uint8_t p_mcuId);
+    virtual void setHigh        (uint8_t p_mcuId);
+    virtual void setLow         (uint8_t p_mcuId);
+    virtual void vhwSetHigh     (uint8_t p_mcuId);
+    virtual void vhwSetLow      (uint8_t p_mcuId);
     bool getStatus      (void);
 
 };

@@ -83,8 +83,8 @@ protected:
     static void deSelectSelected(tuiBaseUnit_t* p_pSelected);
     static bool bTstSelCnts(uint8_t p_selCnt1, uint8_t p_selCnt2);
     static tuiBaseUnit_t* g_poSelected;
-    static uint8_t g_currentSelCnt;
-    uint8_t     g_selCnt;
+    static uint32_t g_currentSelCnt;
+    uint32_t     g_selCnt;
     static tuiBaseUnit_t* g_pSelectedOld;
     static void setNcursWindow(WINDOW* p_ncursWinSelected);
     static WINDOW* g_ncursWinSelected;

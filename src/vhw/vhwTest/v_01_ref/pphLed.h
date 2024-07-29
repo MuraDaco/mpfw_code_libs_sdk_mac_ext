@@ -32,36 +32,20 @@
 #ifndef PPH_LED_H
 #define PPH_LED_H
 
-#include "vhwUnit.h"
+#include "pphMacroDefine.h"
 #include "mcuPinPort.h"
+#include "dtyUint8.h"
 
-#define DEF_PPH_LED(name)             pphLed_t pph_##name(&mcu_##name);
-#define DEF_PPH_LED_DEVICE(name, id)    pphLed_t pph_##id##_##name(id);
-
-#define DEF_PPH_LED_2(name)                pphLed_t pph_##name;
-//#define DEF_PPH_LED_DEVICE(name, id)     pphLed_t pph_##id##_##name(id);
-
-#define DEF_H___PPH_LED(name)           MCU_##name  pphLed_t                 pph_##name;
-#define DEF_CPP_PPH_LED(name)           MCU_##name  pphLed_t PPH_CLASS_DEF:: pph_##name;
-#define OBJ_PPH_LED(name)                                    PPH_CLASS_DEF:: pph_##name
-
-
-class pphLed_t : public vhwUnit_t {
+class pphLed_t : public mcuPinPort_t {
 
 public:
-    pphLed_t(void);
-    pphLed_t(                   mcuPinPort_t* p_pinPort);
+    pphLed_t(gpio_config2_struct_t p_ConfPinPort  );
+    pphLed_t(gpio_config3_struct_t p_ConfPinPort  );
+    pphLed_t();
     pphLed_t(uint8_t p_mcuId);
-    pphLed_t(uint8_t p_mcuId,   mcuPinPort_t* p_pinPort);
-    void vhwInit (uint8_t p_mcuId, uint8_t* p_ptrPort,   uint8_t p_pin)    override;
+    void vhwInit (uint8_t p_mcuId, uint8_t p_port,   uint8_t p_pin)    override;
     void vhwLoop (void)        override;
 
-    uint8_t g_mcuId;
-    uint8_t g_pin;
-    uint8_t* g_ptrPort;
-    mcuPinPort_t* g_pinPort;
-  
 };
-
 
 #endif 	// PPH_LED_H

@@ -102,14 +102,21 @@
 #define MCU_SWITCH_TST1_PIN                 1
 
 //      MCU_<pin function>_port
-#define MCU_ALARM_A_dout
+#define MCU_ALARM_A
 #define MCU_2_ALARM_A_dout_PORT_PTR         SDK_MCU_PORT_C_PTR
 #define MCU_2_ALARM_A_dout_PORT             SDK_MCU_PORT_C
 #define MCU_2_ALARM_A_dout_PIN              1
-#define MCU_ALARM_A_din
 #define MCU_5_ALARM_A_din_PORT_PTR          SDK_MCU_PORT_H_PTR
 #define MCU_5_ALARM_A_din_PORT              SDK_MCU_PORT_H
 #define MCU_5_ALARM_A_din_PIN               4
+
+#define MCU_LINK_A
+#define MCU_3_LINK_A_dout_PORT_PTR         SDK_MCU_PORT_B_PTR
+#define MCU_3_LINK_A_dout_PORT             SDK_MCU_PORT_B
+#define MCU_3_LINK_A_dout_PIN              2
+#define MCU_1_LINK_A_din_PORT_PTR          SDK_MCU_PORT_E_PTR
+#define MCU_1_LINK_A_din_PORT              SDK_MCU_PORT_E
+#define MCU_1_LINK_A_din_PIN               7
 
 // #define MCU_ALARM_A_PORT_PTR      SDK_MCU_PORT_C_PTR
 // #define MCU_ALARM_A_PORT          SDK_MCU_PORT_C

@@ -34,12 +34,13 @@
 
 #include "mcuPinPort.h"
 
-#define DEF_MCU_PIN_PORT2_DEVICE_CONFIG(name, id1, config1, id2, config2)           \
-            mcuPinPort2_t mcu_##id1##_##id2##_##name                            (   \
-                {id1, MCU_##id1##_##name##_##config1##_PORT_PTR, MCU_##id1##_##name##_##config1##_PIN, mcuPinPort_t::config1},  \
-                {id2, MCU_##id2##_##name##_##config2##_PORT_PTR, MCU_##id2##_##name##_##config2##_PIN, mcuPinPort_t::config2}   \
-            );
+//#define DEF_MCU_PIN_PORT2_DEVICE_CONFIG(name, id1, config1, id2, config2)           \
+//            mcuPinPort2_t mcu_##id1##_##id2##_##name                            (   \
+//                {id1, MCU_##id1##_##name##_##config1##_PORT_PTR, MCU_##id1##_##name##_##config1##_PIN, mcuPinPort_t::config1},  \
+//                {id2, MCU_##id2##_##name##_##config2##_PORT_PTR, MCU_##id2##_##name##_##config2##_PIN, mcuPinPort_t::config2}   \
+//            );
                 
+#define mcuPinPort2_t_DATA_TYPE_PTRS(name)      &pph_##name.g_dtyStatus, &pph_##name.g_pinPort2.g_dtyStatus
 
 
 class mcuPinPort2_t : public mcuPinPort_t {
@@ -55,8 +56,8 @@ public:
     //mcuPinPort2_t(                   uint8_t* p_ptrPort,   uint8_t p_pin, void (*p_func)(void),  const gpio_config_struct_t& p_config );
     //mcuPinPort2_t(uint8_t p_mcuId,   uint8_t* p_ptrPort,   uint8_t p_pin, void (*p_func)(void),  const gpio_config_struct_t& p_config );
 
-    void vhwInit (uint8_t p_mcuId,     uint8_t  p_port,   uint8_t p_pin)    override;
-    void vhwInit (uint8_t p_mcuId,     uint8_t  p_port,   uint8_t p_pin, uint8_t p_pin2);
+    void vhwInit            (uint8_t p_mcuId,     uint8_t  p_port,   uint8_t p_pin)    override;
+    virtual void vhwInit    (uint8_t p_mcuId,     uint8_t  p_port,   uint8_t p_pin, uint8_t p_pin2);
     void vhwInit (void)    override;
     void vhwLoop (void)        override;
 

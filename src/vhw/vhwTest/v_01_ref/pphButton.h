@@ -32,18 +32,8 @@
 #ifndef PPH_BUTTON_H
 #define PPH_BUTTON_H
 
+#include "pphMacroDefine.h"
 #include "mcuPinPort.h"
-#include "dtyUint8.h"
-
-
-#define DEF_H___PPH_BUTTON(name)            MCU_##name  pphButton_t                 pph_##name;
-#define DEF_CPP_PPH_BUTTON(name)                                \
-            pphButton_t pph_##name  (                           \
-                {MCU_##name##_PORT_PTR, MCU_##name##_PIN }      \
-            );
-#define OBJ_PPH_BUTTON(name)                                                        pph_##name
-
-#define GET_DATA_TYPE_PTR(name) &pph_##name.g_dtyStatus
 
 class pphButton_t : public mcuPinPort_t {
 
@@ -55,7 +45,6 @@ public:
     void vhwInit (uint8_t p_mcuId, uint8_t p_port,   uint8_t p_pin)    override;
     void vhwLoop (void)        override;
 
-    dtyUint8_t g_dtyStatus;
 };
 
 

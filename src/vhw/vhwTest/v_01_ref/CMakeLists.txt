@@ -76,7 +76,8 @@ set(SOURCE_FILES_CPP
     mcuUSARTManager.cpp          
     pphManager.cpp        
     shmManager.cpp        
-    # vhwPphMcuPinPortWiredTbl.cpp  
+
+    vhwPphTbl_Leds.cpp
     vhwPphTbl_Buttons.cpp
     vhwPphTbl_Mod1.cpp
     vhwPphTbl.cpp
@@ -86,8 +87,9 @@ set(SOURCE_FILES_CPP
 
     tuiBaseUnit.cpp
     tuiDigitalInOut.cpp
+    tuiDigitalInOut2.cpp
     tuiWin.cpp
-    # tuiObjs.cpp
+
     tuiAppUSART_1.cpp
     tuiAppPinPort.cpp
     tuiAppBoard.cpp
@@ -96,7 +98,6 @@ set(SOURCE_FILES_CPP
     tuiManagerApp.cpp
 
     vhwManager.cpp        
-    #vhwTbl.cpp        
     vhwMain.cpp               
 )
 

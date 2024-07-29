@@ -67,6 +67,8 @@ tuiDigitalInOut_t::tuiDigitalInOut_t      (const char* p_strName, point_t p_orig
 
 void tuiDigitalInOut_t::init       (void* p_poFather) 	{
     g_poFather = static_cast<tuiBaseUnit_t*>(p_poFather);
+    mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "digital in out name: %s \n", g_strName);
+    wrefresh(g_ncursWinSelected);
 }
 
 bool tuiDigitalInOut_t::loop            (void)  {
@@ -77,7 +79,8 @@ bool tuiDigitalInOut_t::loop            (void)  {
 
 
 void tuiDigitalInOut_t::select          (void)    {
-    mvwprintw(stdscr, 2, 2, "window name: %s \n", g_strName);
+    //mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "digital in out name: %s \n", g_strName);
+    //wrefresh(g_ncursWinSelected);
 }
 
 void tuiDigitalInOut_t::deSelect        (void)    {

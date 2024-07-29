@@ -22,30 +22,20 @@
 //  *******************************************************************************
 
 /*
- * vhwUnitTest1.cpp
+ * tuiMacroDefine.h
  *
- *  Created on: Jun, 27 2024
+ *  Created on: Jul, 28th 2024
  *      Author: Marco Dau
  */
-
-#include <iostream>
-
-
-#include "vhwUnitTest1.h"
+ 
 
 
-vhwUnitTest1::vhwUnitTest1(uint8_t p_mcuId, uint8_t p_Port, uint8_t p_Pin) :
-     g_mcuId    {p_mcuId}
-    ,g_Port     {p_Port}
-    ,g_Pin      {p_Pin}
-{}
+#ifndef TUI_MACRO_DEFINE_H
+#define TUI_MACRO_DEFINE_H
 
+#include "pphMacroDefine.h"
 
-void vhwUnitTest1::init (uint8_t* p_port) {
-    g_port = p_port;
-}
+#define TUI_DEF_CPP(tui_t, pph_t, name, x, y)          MCU_##name tui_t  tui_##name (#name, {x, y}, pph_t##_DATA_TYPE_PTRS(name));
+#define TUI_OBJ(name)                       tui_##name
 
-
-void vhwUnitTest1::loop (void) {
-    std::cout << "vhwUnitTest1 - loop function\n";
-}
+#endif 	// TUI_MACRO_DEFINE_H

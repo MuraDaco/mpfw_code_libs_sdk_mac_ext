@@ -22,30 +22,17 @@
 //  *******************************************************************************
 
 /*
- * vhwUnitTest1.cpp
+ * vhwPphTbl_Leds.cpp
  *
  *  Created on: Jun, 27 2024
  *      Author: Marco Dau
  */
 
-#include <iostream>
 
+#include "mcuPinPortDefineConfig.h"
+#include "pphLed.h"
 
-#include "vhwUnitTest1.h"
+PPH_DEF_CPP                     (pphLed_t, LED_A)                 // pph_LED_A
+//DEF_CPP_PPH_LED_DEVICE              (LED_B,4)               // pph_4_LED_A
+PPH_DEF_CPP                     (pphLed_t, LED_C)                 // pph_LED_C
 
-
-vhwUnitTest1::vhwUnitTest1(uint8_t p_mcuId, uint8_t p_Port, uint8_t p_Pin) :
-     g_mcuId    {p_mcuId}
-    ,g_Port     {p_Port}
-    ,g_Pin      {p_Pin}
-{}
-
-
-void vhwUnitTest1::init (uint8_t* p_port) {
-    g_port = p_port;
-}
-
-
-void vhwUnitTest1::loop (void) {
-    std::cout << "vhwUnitTest1 - loop function\n";
-}

@@ -22,17 +22,18 @@
 //  *******************************************************************************
 
 /*
- * vhwUnitManager.cpp
+ * vhwPphTbl_Leds.cpp
  *
  *  Created on: Jun, 27 2024
  *      Author: Marco Dau
  */
 
 
-#include "vhwUnitManager.h"
+#include <iostream>
 
-vhwUnitManager::vhwUnitManager(uint8_t p_shmPort, uint8_t p_shmPin, vhwUnit_t& p_ptrUnit) :
-     g_shmPort      {p_shmPort}
-    ,g_shmPin       {p_shmPin}
-    ,g_ptrUnit      {p_ptrUnit}
-{}
+#include "mcuPinPortDefineConfig.h"
+#include "pphLed.h"
+
+extern PPH_DEF_H__   (pphLed_t, LED_A)
+//extern DEF_H___PPH_LED   (LED_B)
+extern PPH_DEF_H__   (pphLed_t, LED_C)

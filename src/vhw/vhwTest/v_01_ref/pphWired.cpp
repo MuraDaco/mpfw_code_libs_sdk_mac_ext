@@ -43,22 +43,72 @@ pphWired_t::pphWired_t(const char* p_strName, gpio_config3_struct_t p_ConfPinPor
     ,g_strName          {p_strName    }
 {}
 
-
 void pphWired_t::vhwInit (void) {
+
+    // inizializzazione 
+    mcuPinPort2_t::vhwInit();
+
+    /*
+        inizializzazione della dashboard per la categoria degli oggetti pphRely
+    */
+
+}
+
+void pphWired_t::vhwInit    (uint8_t p_mcuId,     uint8_t  p_port,   uint8_t p_pin, uint8_t p_pin2)     {
+
+    // inizializzazione 
+    mcuPinPort2_t::vhwInit(p_mcuId, p_port, p_pin, p_pin2);
+
 }
 
 
-void pphWired_t::vhwLoop () {
+void pphWired_t::vhwLoop (void) {
+    mcuPinPort2_t::vhwLoop();
 }
 
-void pphWired_t::setHigh ([[maybe_unused]] uint8_t p_mcuId) {
+void pphWired_t::vhwLoop (uint8_t p_mcuId) {
+
+//    // 1. processo che analizza l'ingresso della dashboard per sapere se deve cambiare lo stato del oggetto
+//    // start dashboard read
+//        // ... after reading,
+//        // 1.1. set pinPort input to high
+//        if((nullptr == g_pinPortOut) && (g_pinPortIn)) g_pinPortIn->vhwSetHigh(p_mcuId);
+//
+//        // ... after reading,
+//        // 1.1. set pinPort input to low
+//        if((nullptr == g_pinPortOut) && (g_pinPortIn)) g_pinPortIn->vhwSetLow(p_mcuId);
+
+    // 2. processo che analizza l'input del relay per sapere se aggiornare l' stato di output del rely
+    //    questo controllo deve essere eseguito solo se entrambe i puntatori non sono nulli
+//    if((g_pinPortOut) && (g_pinPortIn)) 
+    {
+    // check config
+            // rely is configured as NORMAL CLOSE
+            if(g_pinPort2.getStatus())   {
+                // mcuPinPort out (that is rely input) is high, therefore
+                // set rely out (that is mcuPinPort in) open
+                g_pinPort2.vhwSetHigh(p_mcuId);
+            } else {
+                // mcuPinPort out (that is rely input) is low, therefore
+                // set rely out (that is mcuPinPort in) close
+                g_pinPort2.vhwSetLow(p_mcuId);
+            }
+    }
+
+    // 3. processo che analizza lo stato del oggetto per poi aggiornarlo sulla dashboard
+
 }
 
-void pphWired_t::setLow ([[maybe_unused]] uint8_t p_mcuId) {
+
+void pphWired_t::setHigh (uint8_t p_mcuId) {
+    mcuPinPort_t::setHigh(p_mcuId);
+}
+
+void pphWired_t::setLow (uint8_t p_mcuId) {
+    mcuPinPort_t::setLow(p_mcuId);
 }
 
 bool pphWired_t::getStatus (void) {
-    return true;
+    return g_pinPort2.getStatus();
 }
-
 

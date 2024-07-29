@@ -22,27 +22,28 @@
 //  *******************************************************************************
 
 /*
- * vhwPphTbl.cpp
+ * tuiDigitalInOut2.h
  *
- *  Created on: Jun, 27 2024
+ *  Created on: Jul, 28th 2024
  *      Author: Marco Dau
-
-    see the mcuPinPort.h to know how to compose the PORT and PIN #define name
-    MCU_<port function name>_PORT
-    MCU_<port function name>_PIN
-
  */
+ 
+#ifndef TUI_DIGITAL_IN_OUT_2_H
+#define TUI_DIGITAL_IN_OUT_2_H
+
+#include "tuiDigitalInOut.h"
 
 
-#include "mcuPinPortDefineConfig.h"
-#include "pphLed.h"
+class tuiDigitalInOut2_t : public tuiDigitalInOut_t  {
 
-DEF_MCU_PIN_PORT                (LED_A, dout)           // mcu_LED_A
-DEF_PPH_LED_2                   (LED_A)                 // pph_LED_A
+public:
+    tuiDigitalInOut2_t       (const char* p_strName, point_t p_Origin,  dtyUint8_t* p_pDtyStatus,    dtyUint8_t* p_pDtyStatus2    );
 
-DEF_MCU_PIN_PORT_DEVICE         (LED_B,4, dout)         // mcu_4_LED_A
-DEF_PPH_LED_DEVICE              (LED_B,4)               // pph_4_LED_A
+    dtyUint8_t* g_pDtyStatus2;
 
-DEF_MCU_PIN_PORT_PTR            (LED_C, dout)           // mcu_LED_C
-DEF_PPH_LED                     (LED_C)                 // pph_LED_C
+private:
 
+};
+
+
+#endif 	// TUI_DIGITAL_IN_OUT_2_H

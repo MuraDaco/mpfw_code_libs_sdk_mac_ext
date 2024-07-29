@@ -37,22 +37,22 @@
 
 pphButton_t::pphButton_t(void) :
      mcuPinPort_t  ({0,    nullptr, 0, mcuPinPort_t::din})
-    ,g_dtyStatus     {nullptr}
+    //,g_dtyStatus     {nullptr}
 {}
 
 pphButton_t::pphButton_t(uint8_t p_mcuId) :
      mcuPinPort_t  ({p_mcuId,    nullptr, 0, mcuPinPort_t::din})
-    ,g_dtyStatus     {nullptr}
+    //,g_dtyStatus     {nullptr}
 {}
 
 pphButton_t::pphButton_t(gpio_config2_struct_t p_ConfPinPort   )  :
      mcuPinPort_t  ({                        p_ConfPinPort.ptrPort, p_ConfPinPort.pin, mcuPinPort_t::din})
-    ,g_dtyStatus     {nullptr}
+    //,g_dtyStatus     {nullptr}
 {}
 
 pphButton_t::pphButton_t(gpio_config3_struct_t p_ConfPinPort   )  :
      mcuPinPort_t  ({p_ConfPinPort.mcuId,    p_ConfPinPort.ptrPort, p_ConfPinPort.pin, mcuPinPort_t::din})
-    ,g_dtyStatus     {nullptr}
+    //,g_dtyStatus     {nullptr}
 {}
 
 

@@ -32,19 +32,11 @@
 #ifndef PPH_RELY_H
 #define PPH_RELY_H
 
-#include "vhwUnit.h"
-#include "mcuPinPort.h"
+#include "mcuPinPort2.h"
+#include "pphMacroDefine.h"
 
-#define DEF_PPH_RELY(name)                          pphRely_t pph_##name;
-#define DEF_PPH_RELY_DEVICE(name, id)               pphRely_t pph_##id##_##name (id);
-#define DEF_PPH_RELY_IN(name)                       pphRely_t pph_##name        (&mcu_##name##_dout             ,nullptr);
-#define DEF_PPH_RELY_DEVICE_IN(name, id)            pphRely_t pph_##id##_##name (&mcu_##name##_dout             ,nullptr);
-#define DEF_PPH_RELY_OUT(name)                      pphRely_t pph_##name        (nullpptr                       ,&mcu_##name##_din);
-#define DEF_PPH_RELY_DEVICE_OUT(name, id)           pphRely_t pph_##id##_##name (nullpptr                       ,&mcu_##name##_din);
-#define DEF_PPH_RELY_IN_OUT(name, idout, idin)      pphRely_t pph_##name        (&mcu_##idout##_##name##_dout   ,&mcu_##idin##_##name##_din);
-#define DEF_PPH_RELY_IN_OUT_NAME(name, idout, idin)      pphRely_t pph_##name        (#name, &mcu_##idout##_##name##_dout   ,&mcu_##idin##_##name##_din);
 
-class pphRely_t : public vhwUnit_t {
+class pphRely_t : public mcuPinPort2_t {
 
 public:
 
@@ -53,22 +45,16 @@ public:
         ,k_config_NormalClose   // rely input is low => rely output is low/close
     };
 
-    //static constexpr gpio_config_struct_t din       = {mcuPinPort_t::k_typePort_digital ,mcuPinPort_t::k_modePort_input  };
-
-    pphRely_t();
-    pphRely_t(uint8_t p_mcuId);
-    pphRely_t(mcuPinPort_t* p_pinPortOut, mcuPinPort_t* p_pinPortIn);
-    pphRely_t(const char* p_strName, mcuPinPort_t* p_pinPortOut, mcuPinPort_t* p_pinPortIn);
+    pphRely_t(const char* p_strName, gpio_config3_struct_t p_ConfPinPortOut, gpio_config3_struct_t p_ConfPinPortIn);
     void vhwInit (void)    override;
+    void vhwInit    (uint8_t p_mcuId,     uint8_t  p_port,   uint8_t p_pin, uint8_t p_pin2) override;
+    void vhwLoop (void)    override;
     void vhwLoop (uint8_t p_mcuId)    override;
-    void setHigh        (uint8_t p_mcuId);
-    void setLow         (uint8_t p_mcuId);
+    void setHigh        (uint8_t p_mcuId) override;
+    void setLow         (uint8_t p_mcuId) override;
     bool getStatus      (void);
 
-    uint8_t  g_mcuId;
     const char* g_strName;
-    mcuPinPort_t* g_pinPortOut;
-    mcuPinPort_t* g_pinPortIn;
     k_config_t  g_config;
   
 };

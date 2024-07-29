@@ -35,10 +35,6 @@
 #include "uyTypesDefs.h"
 #include "tuiWin.h"
 
-#define DEF_TUI_DIGITAL_IN_OUT_OBJ(name, x, y)      MCU_##name tuiDigitalInOut_t tui_##name (#name, {x, y}, GET_DATA_TYPE_PTR(name));
-#define OBJ_TUI_DIGITAL_IN_OUT(name)                tui_##name
-
-
 class tuiAppPinPort_t {
 
 public:

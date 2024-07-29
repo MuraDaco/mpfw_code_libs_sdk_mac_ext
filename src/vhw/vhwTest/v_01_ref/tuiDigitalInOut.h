@@ -31,6 +31,7 @@
 #ifndef TUI_DIGITAL_IN_OUT_H
 #define TUI_DIGITAL_IN_OUT_H
 
+#include "tuiMacroDefine.h"
 #include "tuiBaseUnit.h"
 #include "dtyUint8.h"
 

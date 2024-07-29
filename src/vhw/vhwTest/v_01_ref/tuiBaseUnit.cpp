@@ -33,7 +33,7 @@
 
 event_t* tuiBaseUnit_t::g_eventArray = nullptr;
 
-uint8_t tuiBaseUnit_t::g_currentSelCnt = 0;
+uint32_t tuiBaseUnit_t::g_currentSelCnt = 0;
 
 tuiBaseUnit_t*  tuiBaseUnit_t::g_poSelected;
 tuiBaseUnit_t*  tuiBaseUnit_t::g_pSelectedOld;

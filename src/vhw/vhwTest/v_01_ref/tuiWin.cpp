@@ -32,7 +32,9 @@
 #include "tuiWin.h"
 
 #define KEY_RETURN  0x0A
-
+#define NCURS_MOUSE_TRACKING_ENABLE    printf("\033[?1003h\n");            // Makes the terminal report mouse movement events           
+#define NCURS_MOUSE_TRACKING_DISABLE   printf("\033[?1003l\n");            // Makes the terminal report mouse movement events           
+                                    // printf("\033[?1003l\n"); // Disable mouse movement events, as l = low
 
 tuiWin_t*	tuiWin_t::g_po = nullptr;
 
@@ -83,44 +85,55 @@ void tuiWin_t::init       (void* p_poFather) 	{
     // 4. instantiate a new window
     //      - only if the current window has a [father]
     //      - otherwise the current windows is the [main] and it is associated to [ncurses stdscr]
-    if(p_poFather) {
+    if(p_poFather)
+    {   // the current instance is NOT the main window, therefore ...
+
+        // crete new ncurses window
         g_ncursWin = newwin(g_pBox->height, g_pBox->width, g_pBox->yStart, g_pBox->xStart);
-        box(g_ncursWin, 0, 0);
     }
     else
     {   // the current instance is the main window, therefore ...
+        // 1. initialize the g_poSelected (the pointer of the instance that is currently selected)
+        g_poSelected = this;
         // 2. set the pointer of ncurses window to main window [stdsrc]
         g_ncursWin = stdscr;
-        g_poSelected = this;
-        // 4. complete ncurses initialization
+        // 3. complete ncurses initialization
         raw();                              /* Line buffering disabled        */
         nodelay(g_ncursWin, true);
         keypad(g_ncursWin, TRUE);           /* We get F1, F2 etc..            */
         noecho();                           /* Don't echo() while we do getch */
-        mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
-        printf("\033[?1003h\n"); // Makes the terminal report mouse movement events                
+        mousemask(  ALL_MOUSE_EVENTS |      \
+                    REPORT_MOUSE_POSITION,  \
+                    NULL);
+        // 3.1. enable the continuously monitoring of mouse movement
+        NCURS_MOUSE_TRACKING_ENABLE
     }
 
-    //if(has_colors() == FALSE)
-    //{       
-    //    printf("Your terminal does not support color\n");
-    //}
+    setNcursWindow(g_ncursWin);
+
+    // a) enable color windows management
     start_color();                  /* Start color                  */
     init_pair(1, COLOR_YELLOW,  COLOR_BLACK);
     init_pair(2, COLOR_RED,     COLOR_BLUE);
 
+    // b) enable color windows management
     wattron(g_ncursWin, COLOR_PAIR(2));
     mvwprintw(g_ncursWin, 2, 2, "window name: %s \n", g_strName);
+
+    box(g_ncursWin, 0, 0);
     wrefresh(g_ncursWin);
     wattroff(g_ncursWin, COLOR_PAIR(2));
 
-    // // 3. run [init] function for each my [child] elements
+    // c) initialize all elements of the its own element list that is
     element_t* l_element = g_elementList;
-    //uint8_t l_cnt = 3;
+
+    // c.1) run [init] function for each [child] element
     while(l_element->element)    {
         l_element->element->init(this);
         l_element++;
     }
+
+    // c.2) determine the existence of an element list
     if(l_element == g_elementList) {
         g_bElementList = false;
     } else {
@@ -142,7 +155,7 @@ bool tuiWin_t::loop            (void)  {
         if(ERR != l_ncursEventCode)   {
             if(('x' == l_ncursEventCode) || ('q' == l_ncursEventCode) ){
                 l_result = false;
-                printf("\033[?1003l\n"); // Disable mouse movement events, as l = low
+                NCURS_MOUSE_TRACKING_DISABLE
                 mvwprintw(g_ncursWin, 9, 2, "Exiting ... \n");
             } else {
                 switch(l_ncursEventCode)    {
@@ -197,7 +210,7 @@ bool tuiWin_t::loop            (void)  {
 //void EventOn    (uiBase* p_pFather) override;
 
 void tuiWin_t::select     (void)    {
-    start_color();                  /* Start color                  */
+    //start_color();                  /* Start color                  */
 
     deSelectSelected         (this);
     wattron(g_ncursWin,COLOR_PAIR(2));
@@ -209,14 +222,22 @@ void tuiWin_t::select     (void)    {
     box(g_ncursWin, 0, 0);
     wrefresh(g_ncursWin);
     wattroff(g_ncursWin,COLOR_PAIR(2));
+    setNcursWindow(g_ncursWin);
 
     //mvwprintw(g_ncursWin, 3, 0, " 4th row - window name: %s \n", g_strName);
     // ... its elements
+    element_t* l_element = g_elementList;
+
+    // c.1) run [init] function for each [child] element
+    while(l_element->element)    {
+        l_element->element->select();
+        l_element++;
+    }
 
 }
 
 void tuiWin_t::deSelect     (void)    {
-    start_color();                  /* Start color                  */
+    //start_color();                  /* Start color                  */
 
     // refresh current window and ...
     wclear(g_ncursWin);
@@ -247,7 +268,6 @@ tuiBaseUnit_t::zone_t tuiWin_t::g_zoneList[] = {
     ,{{1, 2, 3, 4}, zone_hndl_2}
     ,{{1, 4, 3, 4}, zone_hndl_2}
     ,{{1, 2, 3, 4}, nullptr}
-    //,nullptr
 };
 
 
@@ -333,6 +353,8 @@ void tuiWin_t::vEventHndlMouse	(void)  {
         g_po->g_pCurrentElement = l_elementSelected;
         mvwprintw(g_po->g_ncursWin, 8, 2, "window \"%s\" selcted by mouse", static_cast<tuiWin_t*>(l_elementSelected->element)->g_strName);
     }
+
+    wrefresh(g_po->g_ncursWin);
 
 }
 

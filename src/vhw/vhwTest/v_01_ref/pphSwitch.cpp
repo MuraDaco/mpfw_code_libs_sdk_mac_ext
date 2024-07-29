@@ -36,21 +36,29 @@
 
 
 pphSwitch_t::pphSwitch_t(void) :
-     g_mcuId    {MCU_DEVICE_DEFAULT}
+     mcuPinPort_t  ({0,    nullptr, 0, mcuPinPort_t::din})
 {}
 
 pphSwitch_t::pphSwitch_t(uint8_t p_mcuId) :
-     g_mcuId    {p_mcuId}
+     mcuPinPort_t  ({p_mcuId,    nullptr, 0, mcuPinPort_t::din})
+{}
+
+pphSwitch_t::pphSwitch_t(gpio_config2_struct_t p_ConfPinPort   )  :
+     mcuPinPort_t  ({                        p_ConfPinPort.ptrPort, p_ConfPinPort.pin, mcuPinPort_t::din})
+{}
+
+pphSwitch_t::pphSwitch_t(gpio_config3_struct_t p_ConfPinPort   )  :
+     mcuPinPort_t  ({p_ConfPinPort.mcuId,    p_ConfPinPort.ptrPort, p_ConfPinPort.pin, mcuPinPort_t::din})
 {}
 
 
-void pphSwitch_t::vhwInit (uint8_t p_mcuId, uint8_t* p_ptrPort,   uint8_t p_pin) {
+void pphSwitch_t::vhwInit (uint8_t p_mcuId, uint8_t p_port,   uint8_t p_pin) {
     if(MCU_DEVICE_DEFAULT == g_mcuId) g_mcuId     = p_mcuId;
-    g_ptrPort   = p_ptrPort;
+    g_port   = p_port;
     g_pin       = p_pin;
 }
 
 
 void pphSwitch_t::vhwLoop (void) {
-    std::cout << "pphButton_t - loop function\n";
+    std::cout << "pphSwitch_t - loop function\n";
 }

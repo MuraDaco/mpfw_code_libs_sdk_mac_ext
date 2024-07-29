@@ -29,38 +29,38 @@
  */
 
 #include <iostream>
-
-
 #include "mcuDeviceConfig.h"
 #include "pphLed.h"
 
 
 pphLed_t::pphLed_t(void) :
-     g_mcuId    {MCU_DEVICE_DEFAULT}
-{}
-
-pphLed_t::pphLed_t(                  mcuPinPort_t* p_pinPort ) :
-     g_mcuId    {MCU_DEVICE_DEFAULT}
-    ,g_pinPort  {p_pinPort}
+     mcuPinPort_t  ({0,    nullptr, 0, mcuPinPort_t::din})
+    //,g_dtyStatus     {nullptr}
 {}
 
 pphLed_t::pphLed_t(uint8_t p_mcuId) :
-     g_mcuId    {p_mcuId}
+     mcuPinPort_t  ({p_mcuId,    nullptr, 0, mcuPinPort_t::din})
+    //,g_dtyStatus     {nullptr}
 {}
 
-pphLed_t::pphLed_t(uint8_t p_mcuId  ,mcuPinPort_t* p_pinPort ) :
-     g_mcuId    {p_mcuId}
-    ,g_pinPort  {p_pinPort}
+pphLed_t::pphLed_t(gpio_config2_struct_t p_ConfPinPort   )  :
+     mcuPinPort_t  ({                        p_ConfPinPort.ptrPort, p_ConfPinPort.pin, mcuPinPort_t::din})
+    //,g_dtyStatus     {nullptr}
+{}
+
+pphLed_t::pphLed_t(gpio_config3_struct_t p_ConfPinPort   )  :
+     mcuPinPort_t  ({p_ConfPinPort.mcuId,    p_ConfPinPort.ptrPort, p_ConfPinPort.pin, mcuPinPort_t::din})
+    //,g_dtyStatus     {nullptr}
 {}
 
 
-void pphLed_t::vhwInit (uint8_t p_mcuId, uint8_t* p_ptrPort,   uint8_t p_pin) {
+void pphLed_t::vhwInit (uint8_t p_mcuId, uint8_t p_port,   uint8_t p_pin) {
     if(MCU_DEVICE_DEFAULT == g_mcuId) g_mcuId     = p_mcuId;
-    g_ptrPort   = p_ptrPort;
+    g_port   = p_port;
     g_pin       = p_pin;
 }
 
 
 void pphLed_t::vhwLoop (void) {
-    std::cout << "pphLed - loop function\n";
+    std::cout << "pphLed_t - loop function\n";
 }

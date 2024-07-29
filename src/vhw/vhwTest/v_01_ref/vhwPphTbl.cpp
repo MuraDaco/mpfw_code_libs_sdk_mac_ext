@@ -38,17 +38,17 @@
 #include "vhwPphTbl.h"
 
 #include "vhwPphTbl_Buttons.h"
+#include "vhwPphTbl_Leds.h"
 #include "vhwPphTbl_Mod1.h"
 
 vhwUnit_t*  vhwPphTbl_t::UnitPtrArray[]   = {
-//     nullptr
-     &OBJ_PPH_BUTTON    (BUTTON_UP)
-    ,&OBJ_PPH_BUTTON    (BUTTON_TEST)
-    // ,&pph_LED_A
+     &PPH_OBJ   (BUTTON_UP)
+    ,&PPH_OBJ   (BUTTON_TEST)
+    ,&PPH_OBJ   (BUTTON_XXX)
+    ,&PPH_OBJ   (LED_A)
     // ,&pph_4_LED_B
-    // ,&pph_LED_C
-    // ,&pph_SWITCH_TST1
-    // ,&pph_ALARM_A
-    ,&OBJ_PPH_BUTTON    (BUTTON_XXX)
+    ,&PPH_OBJ   (LED_C)
+    ,&PPH_OBJ   (SWITCH_TST1)
+    ,&PPH_OBJ   (ALARM_A)
     ,nullptr
 };

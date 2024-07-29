@@ -22,24 +22,17 @@
 //  *******************************************************************************
 
 /*
- * vhwPphTbl.cpp
+ * vhwPphTbl_Buttons.cpp
  *
  *  Created on: Jun, 27 2024
  *      Author: Marco Dau
-
-    see the mcuPinPort.h to know how to compose the PORT and PIN #define name
-    MCU_<port function name>_PORT
-    MCU_<port function name>_PIN
-
  */
 
-
-#include "vhwPphTbl.h"
 
 #include "mcuPinPortDefineConfig.h"
 #include "pphButton.h"
 
-DEF_CPP_PPH_BUTTON              (BUTTON_UP)                 // pph_BUTTON_UP
-DEF_CPP_PPH_BUTTON              (BUTTON_TEST)     // pph_BUTTON_UP
-DEF_CPP_PPH_BUTTON              (BUTTON_XXX)
+PPH_DEF_CPP     (pphButton_t, BUTTON_UP)
+PPH_DEF_CPP     (pphButton_t, BUTTON_TEST)
+PPH_DEF_CPP     (pphButton_t, BUTTON_XXX)
 
