@@ -35,5 +35,7 @@
 #include "pphLed.h"
 
 extern PPH_DEF_H__   (pphLed_t, LED_A)
-//extern DEF_H___PPH_LED   (LED_B)
 extern PPH_DEF_H__   (pphLed_t, LED_C)
+
+extern PPH_DEF_H__   (pphLed_t, LED_XXX)
+extern PPH_DEF_H__   (pphLed_t, LED_YYY)

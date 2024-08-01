@@ -33,9 +33,10 @@
 
 event_t* tuiBaseUnit_t::g_eventArray = nullptr;
 
+point_t tuiBaseUnit_t::g_mouseXY = {0, 0};
 uint32_t tuiBaseUnit_t::g_currentSelCnt = 0;
 
-tuiBaseUnit_t*  tuiBaseUnit_t::g_poSelected;
+tuiBaseUnit_t*  tuiBaseUnit_t::g_poSelected = nullptr;
 tuiBaseUnit_t*  tuiBaseUnit_t::g_pSelectedOld;
 WINDOW*         tuiBaseUnit_t::g_ncursWinSelected;
 WINDOW*         tuiBaseUnit_t::g_ncursWinSelectedOld;
@@ -66,10 +67,14 @@ bool tuiBaseUnit_t::loop       	(void)  {
     return true;	
 }
 
-void tuiBaseUnit_t::deSelectSelected         (tuiBaseUnit_t* p_pSelected)    {
+void tuiBaseUnit_t::setMouseXY(point_t p_mouseXY)   {
+    g_mouseXY = p_mouseXY;
+}
+
+void tuiBaseUnit_t::deSelectSelected         ([[maybe_unused]] tuiBaseUnit_t* p_pSelected)    {
     // de-select the previous element
-    g_poSelected->deSelect();
-    g_poSelected = p_pSelected;
+    //g_poSelected->deSelect();
+    //g_poSelected = p_pSelected;
     g_currentSelCnt++;
     p_pSelected->g_selCnt = g_currentSelCnt;
 }
@@ -117,17 +122,25 @@ bool tuiBaseUnit_t::bMouseClickInsideBounds (point_t p_mouseXY)      {
         ((g_pBox->yStart <= p_mouseXY.y) && (p_mouseXY.y < (g_pBox->yStart+g_pBox->height)))
     ) {
         l_result = true;
-        //select();
-        //if(!bCheckSensitiveZone(p_mouseXY))  {
-        //    //for_each(element of elementList)   {
-        //    //    if(elementList[element]->bMouseClickInsideBounds(p_mouseXY))    {
-        //    //        l_result = true;
-        //    //        break;
-        //    //    }
-        //    //}
-        //}
+
     }
     return l_result;
+}
+
+bool tuiBaseUnit_t::bMouseClickInsideBounds (void)      {
+    bool l_result = false;
+
+    if(
+        ((g_pBox->xStart <= g_mouseXY.x) && (g_mouseXY.x < (g_pBox->xStart+g_pBox->width ))) &&
+        ((g_pBox->yStart <= g_mouseXY.y) && (g_mouseXY.y < (g_pBox->yStart+g_pBox->height)))
+    ) {
+        l_result = true;
+
+    }
+    return l_result;
+
+//    return  ((g_pBox->xStart <= g_mouseXY.x) && (g_mouseXY.x < (g_pBox->xStart+g_pBox->width ))) &&
+//            ((g_pBox->yStart <= g_mouseXY.y) && (g_mouseXY.y < (g_pBox->yStart+g_pBox->height)));
 }
 
 bool tuiBaseUnit_t::bCheckSensitiveZone (point_t p_mouseXY)      {

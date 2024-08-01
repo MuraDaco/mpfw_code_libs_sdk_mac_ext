@@ -46,7 +46,9 @@ public:
 
     void init               (void* p_poFather) 				override;
     bool loop       	    (void)							override;
-    void select             (void) override;
+    void display            (void) override;
+    void selectByKey        (void) override;
+    void selectByMouse      (void) override;
     void deSelect           (void) override;
     void eventOn            (void) override;
 

@@ -51,7 +51,10 @@
 
 
 
-PPH_DEF_CPP_LINK    (pphWired_t  ,LINK_A      ,3 ,1    )
-PPH_DEF_CPP         (pphSwitch_t ,SWITCH_TST1          )
-PPH_DEF_CPP_LINK    (pphRely_t   ,ALARM_A     ,2 ,5    )
+PPH_DEF_CPP_LINK    (pphRely_t   ,ALARM_A     ,2 ,5     )
+PPH_DEF_CPP         (pphSwitch_t ,SWITCH_TST1           )
+PPH_DEF_CPP_LINK    (pphWired_t  ,LINK_A      ,3 ,1     )
 
+PPH_DEF_CPP_LINK    (pphRely_t   ,ALARM_NNN   ,2 ,5     )
+PPH_DEF_CPP         (pphSwitch_t ,SWITCH_GGG            )
+PPH_DEF_CPP_LINK    (pphWired_t  ,LINK_TTT    ,3 ,1     )

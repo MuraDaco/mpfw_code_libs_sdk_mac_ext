@@ -28,14 +28,10 @@
  *      Author: Marco Dau
  */
  
-//import vhwPphTbl;
-
 #include "tuiAppPinPort.h"
 #include "tuiDigitalInOut.h"
 #include "tuiDigitalInOut2.h"
 
-//#include "vhwPphObjs.hpp"
-//#include "vhwPphTbl.h"
 #include "vhwPphTbl_Buttons.h"
 #include "vhwPphTbl_Leds.h"
 #include "vhwPphTbl_Mod1.h"
@@ -44,7 +40,7 @@
 // **********************************************************
 // -------- BOX define - start
 // ............................ H   W  Yo  Xo
-box_t tuiAppPinPort_t::g_box = {12, 45, 15, 20};
+box_t tuiAppPinPort_t::g_box = {25,  75,  5, 80};
 // -------- BOX define - end
 
 // **********************************************************
@@ -64,14 +60,14 @@ tuiBaseUnit_t::zone_t tuiAppPinPort_t::g_zoneList[] = {
 
 // **********************************************************
 // -------- ELEMENT LIST define - start
-TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_TEST    ,0  , 3 )
-TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_XXX     ,0  , 4 )
-TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_UP      ,0  , 5 )
-TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,LED_A          ,0  , 6 )
-TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,LED_C          ,0  , 7 )
-TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,SWITCH_TST1    ,0  , 8 )
-TUI_DEF_CPP  (tuiDigitalInOut2_t    ,mcuPinPort2_t  ,ALARM_A        ,0  , 9 )
-TUI_DEF_CPP  (tuiDigitalInOut2_t    ,mcuPinPort2_t  ,LINK_A         ,0  ,10 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_TEST    ,1  , 3 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_XXX     ,1  , 4 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_UP      ,1  , 5 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,LED_A          ,1  , 6 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,LED_C          ,1  , 7 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,SWITCH_TST1    ,1  , 8 )
+TUI_DEF_CPP  (tuiDigitalInOut2_t    ,mcuPinPort2_t  ,ALARM_A        ,1  , 9 )
+TUI_DEF_CPP  (tuiDigitalInOut2_t    ,mcuPinPort2_t  ,LINK_A         ,1  ,10 )
 
 tuiWin_t::element_t tuiAppPinPort_t::g_elementList[] = {
      {&TUI_OBJ   (BUTTON_TEST)  , 1 }

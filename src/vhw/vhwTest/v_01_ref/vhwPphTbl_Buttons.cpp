@@ -36,3 +36,7 @@ PPH_DEF_CPP     (pphButton_t, BUTTON_UP)
 PPH_DEF_CPP     (pphButton_t, BUTTON_TEST)
 PPH_DEF_CPP     (pphButton_t, BUTTON_XXX)
 
+PPH_DEF_CPP     (pphButton_t, BUTTON_AAA)
+PPH_DEF_CPP     (pphButton_t, BUTTON_BBB)
+PPH_DEF_CPP     (pphButton_t, BUTTON_CCC)
+

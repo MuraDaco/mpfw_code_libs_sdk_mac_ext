@@ -31,10 +31,18 @@
 
 #include "tuiAppBoard.h"
 
+#include "tuiAppPinPort.h"
+#include "tuiDigitalInOut.h"
+#include "tuiDigitalInOut2.h"
+
+#include "vhwPphTbl_Buttons.h"
+#include "vhwPphTbl_Leds.h"
+#include "vhwPphTbl_Mod1.h"
+
 // **********************************************************
 // -------- BOX define - start
 // .......................... H   W  Yo  Xo
-box_t tuiAppBoard_t::g_box = {4, 45, 10, 10 };
+box_t tuiAppBoard_t::g_box = {25,  75,  5,  5};
 // -------- BOX define - end
 
 // **********************************************************
@@ -54,9 +62,25 @@ tuiBaseUnit_t::zone_t tuiAppBoard_t::g_zoneList[] = {
 
 // **********************************************************
 // -------- ELEMENT LIST define - start
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_AAA     ,1  ,  3 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_BBB     ,1  ,  4 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_CCC     ,1  ,  5 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,LED_XXX        ,1  ,  6 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,LED_YYY        ,1  ,  7 )
+TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,SWITCH_GGG     ,1  ,  8 )
+TUI_DEF_CPP  (tuiDigitalInOut2_t    ,mcuPinPort2_t  ,ALARM_NNN      ,1  ,  9 )
+TUI_DEF_CPP  (tuiDigitalInOut2_t    ,mcuPinPort2_t  ,LINK_TTT       ,1  , 10 )
+
 tuiWin_t::element_t tuiAppBoard_t::g_elementList[] = {
-     {nullptr, 1}
-    ,{nullptr, 1}
+     {&TUI_OBJ   (BUTTON_AAA)   ,  1 }
+    ,{&TUI_OBJ   (BUTTON_BBB)   ,  0 }
+    ,{&TUI_OBJ   (BUTTON_CCC)   ,  3 }
+    ,{&TUI_OBJ   (LED_XXX)      ,  3 }
+    ,{&TUI_OBJ   (LED_YYY)      ,  3 }
+    ,{&TUI_OBJ   (SWITCH_GGG)   ,  6 }
+    ,{&TUI_OBJ   (ALARM_NNN)    ,  3 }
+    ,{&TUI_OBJ   (LINK_TTT)     , 19 }
+    ,{nullptr                   ,  1 }
 };
 // -------- ELEMENT LIST define - end
 

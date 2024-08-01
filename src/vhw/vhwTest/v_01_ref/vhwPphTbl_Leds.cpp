@@ -33,6 +33,8 @@
 #include "pphLed.h"
 
 PPH_DEF_CPP                     (pphLed_t, LED_A)                 // pph_LED_A
-//DEF_CPP_PPH_LED_DEVICE              (LED_B,4)               // pph_4_LED_A
 PPH_DEF_CPP                     (pphLed_t, LED_C)                 // pph_LED_C
+
+PPH_DEF_CPP                     (pphLed_t, LED_XXX)                 // pph_LED_A
+PPH_DEF_CPP                     (pphLed_t, LED_YYY)                 // pph_LED_C
 

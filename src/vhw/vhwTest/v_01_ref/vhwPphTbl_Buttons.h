@@ -35,3 +35,7 @@
 extern PPH_DEF_H__   (pphButton_t, BUTTON_UP)
 extern PPH_DEF_H__   (pphButton_t, BUTTON_TEST)
 extern PPH_DEF_H__   (pphButton_t, BUTTON_XXX)
+
+extern PPH_DEF_H__   (pphButton_t, BUTTON_AAA)
+extern PPH_DEF_H__   (pphButton_t, BUTTON_BBB)
+extern PPH_DEF_H__   (pphButton_t, BUTTON_CCC)

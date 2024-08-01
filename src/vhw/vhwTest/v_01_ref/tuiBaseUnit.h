@@ -49,9 +49,12 @@ public:
     virtual bool loop       	(void)											;
     // virtual void EventOn    	([[maybe_unused]] uiBase* p_pFather)            {				};
     virtual void eventOn    	(void)                                  		{				};
-    virtual void select     	(void)											{				};
+    virtual void display   	    (void)											{				};
+    virtual void selectByKey  	(void)											{				};
+    virtual void selectByMouse 	(void)											{				};
     virtual void deSelect   	(void)											{				};
     bool bMouseClickInsideBounds    (point_t p_mouseXY);
+    bool bMouseClickInsideBounds    (void);
 
     virtual void SetEventArrayOfWindow   	(void);
     virtual bool bDisplayable	(void)											{return true;	};
@@ -80,6 +83,9 @@ protected:
     box_t*  g_pBox;
     zone_t* g_zoneList;
 
+    static point_t g_mouseXY;
+    static void setMouseXY(point_t p_mouseXY);
+    static void resetMouseXY(void);
     static void deSelectSelected(tuiBaseUnit_t* p_pSelected);
     static bool bTstSelCnts(uint8_t p_selCnt1, uint8_t p_selCnt2);
     static tuiBaseUnit_t* g_poSelected;

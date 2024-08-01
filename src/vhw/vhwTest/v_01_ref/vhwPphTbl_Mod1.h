@@ -38,3 +38,7 @@
 extern PPH_DEF_H__(pphRely_t,   ALARM_A     )
 extern PPH_DEF_H__(pphSwitch_t, SWITCH_TST1 )
 extern PPH_DEF_H__(pphWired_t,  LINK_A      )
+
+extern PPH_DEF_H__(pphRely_t,   ALARM_NNN   )
+extern PPH_DEF_H__(pphSwitch_t, SWITCH_GGG  )
+extern PPH_DEF_H__(pphWired_t,  LINK_TTT    )

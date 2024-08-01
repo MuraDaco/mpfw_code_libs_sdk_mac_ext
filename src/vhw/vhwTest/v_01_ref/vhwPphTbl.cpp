@@ -46,9 +46,26 @@ vhwUnit_t*  vhwPphTbl_t::UnitPtrArray[]   = {
     ,&PPH_OBJ   (BUTTON_TEST)
     ,&PPH_OBJ   (BUTTON_XXX)
     ,&PPH_OBJ   (LED_A)
-    // ,&pph_4_LED_B
     ,&PPH_OBJ   (LED_C)
     ,&PPH_OBJ   (SWITCH_TST1)
     ,&PPH_OBJ   (ALARM_A)
+
+    ,&PPH_OBJ   (BUTTON_AAA)
+    ,&PPH_OBJ   (BUTTON_BBB)
+    ,&PPH_OBJ   (BUTTON_CCC)
+    ,&PPH_OBJ   (LED_XXX)
+    ,&PPH_OBJ   (LED_YYY)
+    ,&PPH_OBJ   (ALARM_NNN)
+    ,&PPH_OBJ   (SWITCH_GGG)
+    ,&PPH_OBJ   (LINK_TTT)
     ,nullptr
 };
+
+// (BUTTON_AAA)
+// (BUTTON_BBB)
+// (BUTTON_CCC)
+// (LED_XXX)
+// (LED_YYY)
+// (SWITCH_GGG)
+// (ALARM_NNN)
+// (LINK_TTT)
