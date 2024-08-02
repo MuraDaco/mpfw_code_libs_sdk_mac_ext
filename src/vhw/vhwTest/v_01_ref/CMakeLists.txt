@@ -89,6 +89,7 @@ set(SOURCE_FILES_CPP
     tuiDigitalInOut.cpp
     tuiDigitalInOut2.cpp
     tuiWin.cpp
+    tuiWinRoot.cpp
 
     tuiAppUSART_1.cpp
     tuiAppPinPort.cpp

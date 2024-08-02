@@ -69,6 +69,9 @@ public:
     // tuiBaseUnit_t*	ro_Father;
     // // --------------------- Pointers section - END
 
+    uint32_t     g_selCnt;
+    box_t*  g_pBox;
+
 protected:
 
     // // --------------------- Events handler section - START
@@ -80,7 +83,7 @@ protected:
     // --------------------- Events handler section - END
 
     tuiBaseUnit_t* g_pFather;
-    box_t*  g_pBox;
+//    box_t*  g_pBox;
     zone_t* g_zoneList;
 
     static point_t g_mouseXY;
@@ -90,11 +93,13 @@ protected:
     static bool bTstSelCnts(uint8_t p_selCnt1, uint8_t p_selCnt2);
     static tuiBaseUnit_t* g_poSelected;
     static uint32_t g_currentSelCnt;
-    uint32_t     g_selCnt;
+//    uint32_t     g_selCnt;
     static tuiBaseUnit_t* g_pSelectedOld;
     static void setNcursWindow(WINDOW* p_ncursWinSelected);
     static WINDOW* g_ncursWinSelected;
     static WINDOW* g_ncursWinSelectedOld;
+
+    static void vEventHndlKey_moveForward    (void);
 
 };
 

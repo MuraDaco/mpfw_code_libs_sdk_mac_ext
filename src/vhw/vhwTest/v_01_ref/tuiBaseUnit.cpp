@@ -53,16 +53,6 @@ tuiBaseUnit_t::tuiBaseUnit_t (box_t* p_pBox, zone_t* p_zoneList) :
 {}
 
 bool tuiBaseUnit_t::loop       	(void)  {
-    //if(g_pSelectedOld != g_poSelected)   {
-    //    g_pSelectedOld->deSelect();
-    //    if(g_ncursWinSelectedOld != g_ncursWinSelected) {
-    //        wrefresh(g_ncursWinSelectedOld);
-    //        g_ncursWinSelectedOld = g_ncursWinSelected;
-    //    } else {
-    //        wrefresh(g_ncursWinSelected);
-    //    }
-    //    g_pSelectedOld = g_poSelected;
-    //}
 
     return true;	
 }
@@ -92,16 +82,6 @@ bool tuiBaseUnit_t::bTstSelCnts    (uint8_t p_selCnt1, uint8_t p_selCnt2)  {
     return l_result;
 }
 
-//void tuiBaseUnit_t::setSelected         (WINDOW* p_ncursWinSelected, tuiBaseUnit_t* p_pSelected)    {
-//    g_poSelected->deSelect();
-//    if(g_ncursWinSelectedOld != g_ncursWinSelected) {
-//        wrefresh(g_ncursWinSelected);
-//        g_ncursWinSelectedOld = g_ncursWinSelected;
-//    } else {
-//        wrefresh(g_ncursWinSelected);
-//    }
-//    g_poSelected = p_pSelected;
-//}
 
 void tuiBaseUnit_t::setNcursWindow      (WINDOW* p_ncursWinSelected)    {
     g_ncursWinSelectedOld = g_ncursWinSelected;
@@ -160,4 +140,9 @@ bool tuiBaseUnit_t::bCheckSensitiveZone (point_t p_mouseXY)      {
     }
 
     return l_result;
+}
+
+
+void tuiBaseUnit_t::vEventHndlKey_moveForward   (void)  {
+
 }

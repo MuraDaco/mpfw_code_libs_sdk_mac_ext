@@ -69,7 +69,7 @@ tuiWin_t::element_t tuiAppMain_t::g_elementList[] = {
 
 // **********************************************************
 // -------- MAIN WINDOW define - start
-tuiWin_t tuiAppMain_t::g_win ("Main Window", &g_box, g_zoneList, g_elementList);
+tuiWinRoot_t tuiAppMain_t::g_win ("Main Window", &g_box, g_zoneList, g_elementList);
 // -------- MAIN WINDOW define - end
 
 

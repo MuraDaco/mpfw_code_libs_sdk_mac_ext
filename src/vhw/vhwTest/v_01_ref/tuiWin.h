@@ -33,6 +33,22 @@
 
 #include "tuiBaseUnit.h"
 
+
+#define TUI_KEY_TAB             0x0009
+#define TUI_KEY_SHIFT_TAB       0x0161
+#define TUI_KEY_RETURN          0x000A
+#define TUI_KEY_ESC             0x001b
+
+#define NCURS_MOUSE_TRACKING_ENABLE     // printf("\033[?1003h");            // Makes the terminal report mouse movement events           
+#define NCURS_MOUSE_TRACKING_DISABLE    // printf("\033[?1003l");            // Disable mouse movement events, as l = low
+
+#define NCURS_COLOR_PAIR_WINDOW_SELECT              COLOR_PAIR  (1)
+#define NCURS_COLOR_PAIR_INIT_WINDOW_SELECT         init_pair   (1, COLOR_YELLOW,  COLOR_BLUE)
+
+#define NCURS_COLOR_PAIR_WINDOW_DESELECT            COLOR_PAIR  (2)
+#define NCURS_COLOR_PAIR_INIT_WINDOW_DESELECT       init_pair   (2, COLOR_RED,     COLOR_BLACK)
+
+
 class tuiWin_t : public tuiBaseUnit_t  {
 
 public:
@@ -49,17 +65,47 @@ public:
     tuiWin_t        (const char* p_strName, box_t* p_box, zone_t*    p_zoneList, element_t* p_elementList);
 
     void init               (void* p_poFather) 				override;
-    bool loop       	    (void)							override;
+    void initTuiNcursesBox      (void);
+    void initElementsList       (void);
+//    bool loop       	    (void)							override;
     void display            (void) override;
     void eventOn            (void) override;
     void selectByKey        (void) override;
     void selectByMouse      (void) override;
     void deSelect           (void) override;
-    void eventHndlMouse     (void);
+//    void eventHndlMouse     (void);
+
+    // --------------------- ncurses section - START
+    WINDOW* g_ncursWin;
+    // --------------------- ncurses section - END
+
+    const char* g_strName;
+
+    // --------------------- Element pointers section - START
+    // pointer to the list of uiBase objects belonging to one
+    // or more objects of the current class
+    element_t*	g_elementList;
+    element_t*  g_pLastElement;
+    element_t*  g_pCurrentElement;
+    bool g_bElementList;
+    //[[maybe_unused]] tuiBaseUnit_t*	g_ptrFather;
+    // --------------------- Element pointers section - END
+
+protected:
+
+    // --------------------- Object pointers section - START
+    // pointer to the list of uiBase objects belonging to one
+    // or more objects of the current class
+    static tuiWin_t*	g_po;
+    tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
+    // --------------------- Object pointers section - END
+
+//    // --------------------- ncurses section - START
+//    WINDOW* g_ncursWin;
+//    // --------------------- ncurses section - END
 
 
 private:
-    const char* g_strName;
     
     // // --------------------- Events handler section - START
 	// // ..................... Events handler: functions
@@ -77,22 +123,6 @@ private:
     static event_t g_eventArray[];
     // --------------------- Events handler section - END
 
-    // --------------------- Element pointers section - START
-    // pointer to the list of uiBase objects belonging to one
-    // or more objects of the current class
-    element_t*	g_elementList;
-    element_t*  g_pLastElement;
-    element_t*  g_pCurrentElement;
-    bool g_bElementList;
-    //[[maybe_unused]] tuiBaseUnit_t*	g_ptrFather;
-    // --------------------- Element pointers section - END
-
-    // --------------------- Object pointers section - START
-    // pointer to the list of uiBase objects belonging to one
-    // or more objects of the current class
-    static tuiWin_t*	g_po;
-    tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
-    // --------------------- Object pointers section - END
 
 
     // --------------------- Sensitive zone section - START
@@ -107,9 +137,6 @@ private:
     // --------------------- Sensitive zone section - END
 
 
-    // --------------------- ncurses section - START
-    WINDOW* g_ncursWin;
-    // --------------------- ncurses section - END
 
 };
 

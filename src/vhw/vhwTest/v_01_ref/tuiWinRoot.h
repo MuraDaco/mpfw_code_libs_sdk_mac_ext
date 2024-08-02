@@ -22,36 +22,29 @@
 //  *******************************************************************************
 
 /*
- * tuiWin.h
+ * tuiWinRoot.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Aug, 1st 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_WIN_H
-#define TUI_WIN_H
+#ifndef TUI_WIN_ROOT_H
+#define TUI_WIN_ROOT_H
 
-#include "tuiBaseUnit.h"
+#include "tuiWin.h"
 
-class tuiWin_t : public tuiBaseUnit_t  {
+class tuiWinRoot_t : public tuiWin_t  {
 
 public:
 
-    typedef struct __element__	{
-    	tuiBaseUnit_t*	element;
-    	uint8_t	        flag;
-    } element_t;
-
-    tuiWin_t        (box_t* p_box);
-    tuiWin_t        (box_t* p_box, element_t* p_elementList);
-    tuiWin_t        (box_t* p_box, zone_t*    p_zoneList);
-    tuiWin_t        (box_t* p_box, zone_t*    p_zoneList, element_t* p_elementList);
-    tuiWin_t        (const char* p_strName, box_t* p_box, zone_t*    p_zoneList, element_t* p_elementList);
+    tuiWinRoot_t        (const char* p_strName, box_t* p_box, zone_t*    p_zoneList, element_t* p_elementList);
 
     void init               (void* p_poFather) 				override;
+    void initTuiNcursesEnv      (void);
+    void initTuiNcursesColoPair (void);
     bool loop       	    (void)							override;
-    void display            (void) override;
-    void eventOn            (void) override;
+//    void display            (void) override;
+//    void eventOn            (void) override;
     void selectByKey        (void) override;
     void selectByMouse      (void) override;
     void deSelect           (void) override;
@@ -59,59 +52,59 @@ public:
 
 
 private:
-    const char* g_strName;
-    
-    // // --------------------- Events handler section - START
-	// // ..................... Events handler: functions
-    // the "event" & the "event array" is equal for all the instanticies of the current class therefore ...
-    // the event handler function & the event array must to be defined as static
-    // template <uint8_t keycode>
-    // static void vEventHndlKey	(void);
+//    const char* g_strName;
+//    
+//    // // --------------------- Events handler section - START
+//	// // ..................... Events handler: functions
+//    // the "event" & the "event array" is equal for all the instanticies of the current class therefore ...
+//    // the event handler function & the event array must to be defined as static
+//    // template <uint8_t keycode>
+//    // static void vEventHndlKey	(void);
     static void vEventHndlKey_down	(void);
     static void vEventHndlKey_up	(void);
-    static void vEventHndlKey_left	(void);
-    static void vEventHndlKey_right	(void);
-    static void vEventHndlKey_enter	(void);
-    static void vEventHndlKey_home	(void);
-	// ..................... Events handler: array
-    static event_t g_eventArray[];
-    // --------------------- Events handler section - END
-
-    // --------------------- Element pointers section - START
-    // pointer to the list of uiBase objects belonging to one
-    // or more objects of the current class
-    element_t*	g_elementList;
-    element_t*  g_pLastElement;
-    element_t*  g_pCurrentElement;
-    bool g_bElementList;
-    //[[maybe_unused]] tuiBaseUnit_t*	g_ptrFather;
-    // --------------------- Element pointers section - END
-
-    // --------------------- Object pointers section - START
-    // pointer to the list of uiBase objects belonging to one
-    // or more objects of the current class
-    static tuiWin_t*	g_po;
-    tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
-    // --------------------- Object pointers section - END
-
-
-    // --------------------- Sensitive zone section - START
-    static void zone_hndl_1  (void);
-    static void zone_hndl_2  (void);
-
-    // the "zone list" is equal for all instanticies of the current class therefore ...
-    // - define zone list pointer in tuiBaseUnit class is not good to memory optimization
-    //      - the best is to define it here as static
-    static zone_t g_zoneList[]; 
-    // - but it is good for code optimization because it simplifies the code
-    // --------------------- Sensitive zone section - END
-
-
-    // --------------------- ncurses section - START
-    WINDOW* g_ncursWin;
-    // --------------------- ncurses section - END
+//    static void vEventHndlKey_left	(void);
+//    static void vEventHndlKey_right	(void);
+//    static void vEventHndlKey_enter	(void);
+//    static void vEventHndlKey_home	(void);
+//	// ..................... Events handler: array
+//    static event_t g_eventArray[];
+//    // --------------------- Events handler section - END
+//
+//    // --------------------- Element pointers section - START
+//    // pointer to the list of uiBase objects belonging to one
+//    // or more objects of the current class
+//    element_t*	g_elementList;
+//    element_t*  g_pLastElement;
+//    element_t*  g_pCurrentElement;
+//    bool g_bElementList;
+//    //[[maybe_unused]] tuiBaseUnit_t*	g_ptrFather;
+//    // --------------------- Element pointers section - END
+//
+//    // --------------------- Object pointers section - START
+//    // pointer to the list of uiBase objects belonging to one
+//    // or more objects of the current class
+//    static tuiWin_t*	g_po;
+//    tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
+//    // --------------------- Object pointers section - END
+//
+//
+//    // --------------------- Sensitive zone section - START
+//    static void zone_hndl_1  (void);
+//    static void zone_hndl_2  (void);
+//
+//    // the "zone list" is equal for all instanticies of the current class therefore ...
+//    // - define zone list pointer in tuiBaseUnit class is not good to memory optimization
+//    //      - the best is to define it here as static
+//    static zone_t g_zoneList[]; 
+//    // - but it is good for code optimization because it simplifies the code
+//    // --------------------- Sensitive zone section - END
+//
+//
+//    // --------------------- ncurses section - START
+//    WINDOW* g_ncursWin;
+//    // --------------------- ncurses section - END
 
 };
 
 
-#endif 	// TUI_WIN_H
+#endif 	// TUI_WIN_ROOT_H

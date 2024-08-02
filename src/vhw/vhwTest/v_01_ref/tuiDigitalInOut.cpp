@@ -87,11 +87,12 @@ void tuiDigitalInOut_t::selectByKey         (void)    {
 }
 
 void tuiDigitalInOut_t::selectByMouse       (void)    {
-    wattron(g_ncursWinSelected, A_UNDERLINE);
-    mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-    wattroff(g_ncursWinSelected, A_UNDERLINE);
-    //box(g_ncursWinSelected, 0, 0);
-    wrefresh(g_ncursWinSelected);
+    selectByKey();
+    // wattron(g_ncursWinSelected, A_UNDERLINE);
+    // mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    // wattroff(g_ncursWinSelected, A_UNDERLINE);
+    // //box(g_ncursWinSelected, 0, 0);
+    // wrefresh(g_ncursWinSelected);
 }
 
 void tuiDigitalInOut_t::display          (void)    {

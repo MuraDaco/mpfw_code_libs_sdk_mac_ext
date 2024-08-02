@@ -33,12 +33,12 @@
 
 #include "tuiGraphicTypes.h"
 #include "uyTypesDefs.h"
-#include "tuiWin.h"
+#include "tuiWinRoot.h"
 
 class tuiAppMain_t {
 
 public:
-    static tuiWin_t                 g_win;
+    static tuiWinRoot_t                 g_win;
 
 private:
     static void zone_1_hndl    (void);
