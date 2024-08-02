@@ -50,6 +50,7 @@ public:
     // virtual void EventOn    	([[maybe_unused]] uiBase* p_pFather)            {				};
     virtual void eventOn    	(void)                                  		{				};
     virtual void display   	    (void)											{				};
+    virtual void select     	(void)											{				};
     virtual void selectByKey  	(void)											{				};
     virtual void selectByMouse 	(void)											{				};
     virtual void deSelect   	(void)											{				};
@@ -60,7 +61,9 @@ public:
     virtual bool bDisplayable	(void)											{return true;	};
     bool bCheckSensitiveZone        (point_t p_mouseXY);
 
-
+    void deSelectX(tuiBaseUnit_t* p_poDeselectEnd);
+    void selectX(void);
+    void selectX(tuiBaseUnit_t* p_poFather);
 
     // // --------------------- Pointers section - START
     // // pointer to the list of uiBase objects belonging to one

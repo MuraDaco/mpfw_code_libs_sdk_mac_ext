@@ -78,16 +78,19 @@ bool tuiDigitalInOut_t::loop            (void)  {
 }
 
 
-void tuiDigitalInOut_t::selectByKey         (void)    {
+void tuiDigitalInOut_t::select         (void)    {
     wattron(g_ncursWinSelected, A_UNDERLINE);
     mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
     wattroff(g_ncursWinSelected, A_UNDERLINE);
-    //box(g_ncursWinSelected, 0, 0);
     wrefresh(g_ncursWinSelected);
 }
 
+void tuiDigitalInOut_t::selectByKey         (void)    {
+    select();
+}
+
 void tuiDigitalInOut_t::selectByMouse       (void)    {
-    selectByKey();
+    select();
     // wattron(g_ncursWinSelected, A_UNDERLINE);
     // mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
     // wattroff(g_ncursWinSelected, A_UNDERLINE);

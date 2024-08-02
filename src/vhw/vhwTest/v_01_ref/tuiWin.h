@@ -70,6 +70,8 @@ public:
 //    bool loop       	    (void)							override;
     void display            (void) override;
     void eventOn            (void) override;
+    void select             (void) override;
+    void selectElements     (void);
     void selectByKey        (void) override;
     void selectByMouse      (void) override;
     void deSelect           (void) override;

@@ -142,7 +142,35 @@ bool tuiBaseUnit_t::bCheckSensitiveZone (point_t p_mouseXY)      {
     return l_result;
 }
 
+void tuiBaseUnit_t::deSelectX(tuiBaseUnit_t* p_poDeselectEnd) {
+    if(this != p_poDeselectEnd)   {
+        deSelect();
+        if(g_pFather) {
+            g_pFather->deSelectX(p_poDeselectEnd);
+        } else {
+            // the current function belong to rootWindow, therefore ...
+            // no other deSelect functions have to be called
+        }
 
+    } else {
+        // the elemet that is going to be selected is the element that the current function belong to, therefore ...
+        // do nothing ...
+        // 
+    }
+}
+
+// the selectX has to be called to select the element 
+// the selectByMouse has to be called to select an inside element
+void  tuiBaseUnit_t::selectX() {
+    g_poSelected->deSelectX(this);
+    g_poSelected = this;
+    select();
+}
+
+void  tuiBaseUnit_t::selectX(tuiBaseUnit_t* p_pFather) {
+    g_poSelected->deSelectX(p_pFather);
+    g_poSelected = this;
+}
 void tuiBaseUnit_t::vEventHndlKey_moveForward   (void)  {
 
 }

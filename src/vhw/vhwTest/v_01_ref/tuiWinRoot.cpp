@@ -174,28 +174,14 @@ void tuiWinRoot_t::eventHndlMouse	(void)  {
                 static_cast<tuiWin_t*>(l_elementSelected->element)->selectByMouse();
                 static_cast<tuiWin_t*>(l_elementSelected->element)->eventOn();
             } else {
-                //deSelectSelected         (this);
                 g_poSelected = this;
+
+                select();
+
+                // ... its elements
+                refreshElements();
+
                 eventOn();
-                setNcursWindow(g_ncursWin);
-                wattron(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-                box(g_ncursWin, 0, 0);
-                mvwprintw(g_ncursWin, 0, 10, " *** window name: %s *** ", g_strName);
-                wattroff(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-                wrefresh(g_ncursWin);
-
-                // c) initialize all elements of the its own element list that is
-                element_t* l_element = g_elementList;
-
-                // c.1) run [init] function for each [child] element
-                while(l_element->element)    {
-                    l_element->element->deSelect();
-                    l_element++;
-                }
-
-                //mvwchgat(g_ncursWin, 2, 0, 3, A_NORMAL, 2, NULL);
-                wrefresh(g_ncursWin);
-
             }
             g_pCurrentElement = l_elementSelected;
         }
@@ -209,6 +195,11 @@ void tuiWinRoot_t::deSelect     (void)    {
     tuiWin_t::deSelect();
 
     // ... its elements
+    refreshElements();
+
+}
+
+void tuiWinRoot_t::refreshElements     (void)    {
     element_t* l_element = g_elementList;
 
     // c.1) run [init] function for each [child] element
@@ -216,63 +207,6 @@ void tuiWinRoot_t::deSelect     (void)    {
         l_element->element->deSelect();
         l_element++;
     }
-
-    //mvwchgat(g_ncursWin, 2, 0, 3, A_NORMAL, 2, NULL);
-    wrefresh(g_ncursWin);
-
-
-}
-
-
-void tuiWinRoot_t::selectByMouse     (void)    {
-
-//    if(g_poSelected) g_poSelected->deSelect();
-//    g_poSelected = this;
-//
-//    setNcursWindow(g_ncursWin);
-//
-//    element_t* l_element = g_elementList;
-//    while(l_element->element)    {
-//        if(l_element->element->bMouseClickInsideBounds()) {
-//            if(g_pCurrentElement) g_pCurrentElement->element->deSelect();   // because of mouse event management
-//            g_pCurrentElement = l_element;
-//            l_element->element->selectByMouse();
-//        } else {
-//            l_element->element->display();
-//        }
-//        l_element++;
-//    }
-//
-//    wattron(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-//    // refresh current window and ...
-//    mvwprintw(g_ncursWin, 1, 1, " 2nd row - window name: %s ", g_strName);
-//    mvwprintw(g_ncursWin, 2, 1, " 3rd row - window name: %s ", g_strName);
-//
-//    box(g_ncursWin, 0, 0);
-//    wattroff(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-//    wrefresh(g_ncursWin);
-//
-
-}
-
-void tuiWinRoot_t::selectByKey     (void)    {
-
-//    if(g_poSelected) g_poSelected->deSelect();
-//    g_poSelected = this;
-//
-//    setNcursWindow(g_ncursWin);
-//
-//    wattron(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-//    // refresh current window and ...
-//    //mvwprintw(g_ncursWin, 0, 0, " 1st row - window name: %s ", g_strName);
-//    mvwprintw(g_ncursWin, 1, 1, " 2nd row - window name: %s ", g_strName);
-//    mvwprintw(g_ncursWin, 2, 1, " 3rd row - window name: %s ", g_strName);
-//
-//    box(g_ncursWin, 0, 0);
-//    wattroff(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-//    wrefresh(g_ncursWin);
-
-
 }
 
 void tuiWinRoot_t::vEventHndlKey_up	(void)  {

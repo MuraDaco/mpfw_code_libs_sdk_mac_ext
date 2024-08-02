@@ -45,8 +45,10 @@ public:
     bool loop       	    (void)							override;
 //    void display            (void) override;
 //    void eventOn            (void) override;
-    void selectByKey        (void) override;
-    void selectByMouse      (void) override;
+//    void selectByKey        (void) override;
+//    void selectByMouse      (void) override;
+    void refreshElements     (void);
+
     void deSelect           (void) override;
     void eventHndlMouse     (void);
 
