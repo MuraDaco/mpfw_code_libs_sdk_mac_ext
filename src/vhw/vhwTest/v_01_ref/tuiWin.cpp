@@ -91,8 +91,6 @@ void tuiWin_t::initElementsList       (void) 	{
     // c) initialize all elements of the its own element list that is
     element_t* l_element = g_elementList;
 
-    setNcursWindow(g_ncursWin);
-
     // c.1) run [init] function for each [child] element
     while(l_element->element)    {
         //g_pLastElement = l_element;
@@ -120,7 +118,6 @@ void tuiWin_t::init       (void* p_poFather) 	{
     // crete new ncurses window
     g_ncursWin = newwin(g_pBox->height, g_pBox->width, g_pBox->yStart, g_pBox->xStart);
 
-    //initTuiNcursesColoPair();
     initTuiNcursesBox();
 
     initElementsList();
@@ -137,29 +134,31 @@ void tuiWin_t::display     (void)    {
 
 void tuiWin_t::selectByMouse     (void)    {
 
-    if(g_poSelected) g_poSelected->deSelect();
-    g_poSelected = this;
-
-    selectElements();
-    select();
+    if(selectElements()) {
+        select();
+    } else {
+        selectX();
+    }
 
 }
 
-void tuiWin_t::selectElements     (void)    {
+bool tuiWin_t::selectElements     (void)    {
+    bool l_result = false;
 
-    setNcursWindow(g_ncursWin);
     element_t* l_element = g_elementList;
     while(l_element->element)    {
         if(l_element->element->bMouseClickInsideBounds()) {
             if(g_pCurrentElement) g_pCurrentElement->element->deSelect();   // because of mouse event management
             g_pCurrentElement = l_element;
             l_element->element->selectByMouse();
+            l_result = true;
         } else {
             l_element->element->display();
         }
         l_element++;
     }
 
+    return l_result;
 }
 
 void tuiWin_t::selectByKey     (void)    {
@@ -177,8 +176,7 @@ void tuiWin_t::select     (void)    {
     mvwprintw(g_ncursWin, 0, 10, " *** window name: %s *** ", g_strName);
     wattroff(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
     wrefresh(g_ncursWin);
-    
-    setNcursWindow(g_ncursWin);
+
 }
 
 void tuiWin_t::deSelect     (void)    {
@@ -213,14 +211,13 @@ tuiBaseUnit_t::zone_t tuiWin_t::g_zoneList[] = {
 void tuiWin_t::vEventHndlKey_up	(void)  {
     if(g_po->g_bElementList) {
         if(g_po->g_pCurrentElement) {
-            g_po->g_pCurrentElement->element->deSelect();
             if(g_po->g_elementList == g_po->g_pCurrentElement)
                 g_po->g_pCurrentElement = g_po->g_pLastElement;
             g_po->g_pCurrentElement--;
         } else {
             g_po->g_pCurrentElement = g_po->g_elementList;
         }
-        g_po->g_pCurrentElement->element->selectByKey();
+        g_po->g_pCurrentElement->element->selectX(g_po);
     } else
         mvwprintw(g_po->g_ncursWin, 4, 5, "NO ELEMENTS");
 }
@@ -228,14 +225,13 @@ void tuiWin_t::vEventHndlKey_up	(void)  {
 void tuiWin_t::vEventHndlKey_down	(void)  {
     if(g_po->g_bElementList) {
         if(g_po->g_pCurrentElement) {
-            g_po->g_pCurrentElement->element->deSelect();
             g_po->g_pCurrentElement++;
             if(g_po->g_pLastElement == g_po->g_pCurrentElement)
                 g_po->g_pCurrentElement = g_po->g_elementList;
         } else {
             g_po->g_pCurrentElement = g_po->g_elementList;
         }
-        g_po->g_pCurrentElement->element->selectByKey();
+        g_po->g_pCurrentElement->element->selectX(g_po);
     }
 }
 
@@ -254,8 +250,7 @@ void tuiWin_t::vEventHndlKey_enter	(void)  {
 }
 
 void tuiWin_t::vEventHndlKey_home	(void)  {
-    // mvwprintw(g_po->g_ncursWin, 0, 30, "event hndl - key home");
-    // go back to parent window
+    g_po->selectX();
     if(g_po->g_poFather) g_po->g_poFather->eventOn();
 
 }

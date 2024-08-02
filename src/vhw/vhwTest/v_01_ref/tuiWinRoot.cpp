@@ -174,9 +174,7 @@ void tuiWinRoot_t::eventHndlMouse	(void)  {
                 static_cast<tuiWin_t*>(l_elementSelected->element)->selectByMouse();
                 static_cast<tuiWin_t*>(l_elementSelected->element)->eventOn();
             } else {
-                g_poSelected = this;
-
-                select();
+                selectX();
 
                 // ... its elements
                 refreshElements();
@@ -206,34 +204,5 @@ void tuiWinRoot_t::refreshElements     (void)    {
     while(l_element->element)    {
         l_element->element->deSelect();
         l_element++;
-    }
-}
-
-void tuiWinRoot_t::vEventHndlKey_up	(void)  {
-    if(g_po->g_bElementList) {
-        if(g_po->g_pCurrentElement) {
-//            g_po->g_pCurrentElement->element->deSelect();
-            if(g_po->g_elementList == g_po->g_pCurrentElement)
-                g_po->g_pCurrentElement = g_po->g_pLastElement;
-            g_po->g_pCurrentElement--;
-        } else {
-            g_po->g_pCurrentElement = g_po->g_elementList;
-        }
-        g_po->g_pCurrentElement->element->selectByKey();
-    } else
-        mvwprintw(g_po->g_ncursWin, 4, 5, "NO ELEMENTS");
-}
-
-void tuiWinRoot_t::vEventHndlKey_down	(void)  {
-    if(g_po->g_bElementList) {
-        if(g_po->g_pCurrentElement) {
-//            g_po->g_pCurrentElement->element->deSelect();
-            g_po->g_pCurrentElement++;
-            if(g_po->g_pLastElement == g_po->g_pCurrentElement)
-                g_po->g_pCurrentElement = g_po->g_elementList;
-        } else {
-            g_po->g_pCurrentElement = g_po->g_elementList;
-        }
-        g_po->g_pCurrentElement->element->selectByKey();
     }
 }

@@ -67,8 +67,9 @@ tuiDigitalInOut_t::tuiDigitalInOut_t      (const char* p_strName, point_t p_orig
 
 void tuiDigitalInOut_t::init       (void* p_poFather) 	{
     g_poFather = static_cast<tuiBaseUnit_t*>(p_poFather);
-    mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-    wrefresh(g_ncursWinSelected);
+    g_ncursWin = g_poFather->g_ncursWin;
+    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    wrefresh(g_ncursWin);
 }
 
 bool tuiDigitalInOut_t::loop            (void)  {
@@ -79,10 +80,10 @@ bool tuiDigitalInOut_t::loop            (void)  {
 
 
 void tuiDigitalInOut_t::select         (void)    {
-    wattron(g_ncursWinSelected, A_UNDERLINE);
-    mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-    wattroff(g_ncursWinSelected, A_UNDERLINE);
-    wrefresh(g_ncursWinSelected);
+    wattron(g_ncursWin, A_UNDERLINE);
+    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    wattroff(g_ncursWin, A_UNDERLINE);
+    wrefresh(g_ncursWin);
 }
 
 void tuiDigitalInOut_t::selectByKey         (void)    {
@@ -90,29 +91,29 @@ void tuiDigitalInOut_t::selectByKey         (void)    {
 }
 
 void tuiDigitalInOut_t::selectByMouse       (void)    {
-    select();
-    // wattron(g_ncursWinSelected, A_UNDERLINE);
-    // mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-    // wattroff(g_ncursWinSelected, A_UNDERLINE);
-    // //box(g_ncursWinSelected, 0, 0);
-    // wrefresh(g_ncursWinSelected);
+    selectX(g_poFather);
+    // wattron(g_ncursWin, A_UNDERLINE);
+    // mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    // wattroff(g_ncursWin, A_UNDERLINE);
+    // //box(g_ncursWin, 0, 0);
+    // wrefresh(g_ncursWin);
 }
 
 void tuiDigitalInOut_t::display          (void)    {
-//    mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "name: %s - %02x - x: %02d - y: %02d - mx: %2d - my: %02d", g_strName, *g_pDtyStatus->g_pValue, 
-//    mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "name: %s - x: %02d - y: %02d - mx: %2d - my: %02d", g_strName, 
+//    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "name: %s - %02x - x: %02d - y: %02d - mx: %2d - my: %02d", g_strName, *g_pDtyStatus->g_pValue, 
+//    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "name: %s - x: %02d - y: %02d - mx: %2d - my: %02d", g_strName, 
 //                                                                                    g_pBox->xStart,
 //                                                                                    g_pBox->yStart,
 //                                                                                    g_mouseXY.x,
 //                                                                                    g_mouseXY.y);
-    //box(g_ncursWinSelected, 0, 0);
-    mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-    wrefresh(g_ncursWinSelected);
+    //box(g_ncursWin, 0, 0);
+    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    wrefresh(g_ncursWin);
 }
 
 void tuiDigitalInOut_t::deSelect        (void)    {
-    mvwprintw(g_ncursWinSelected, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-    wrefresh(g_ncursWinSelected);
+    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    wrefresh(g_ncursWin);
 }
 
 void tuiDigitalInOut_t::eventOn         (void)    {

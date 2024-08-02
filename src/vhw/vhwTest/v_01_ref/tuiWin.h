@@ -71,15 +71,12 @@ public:
     void display            (void) override;
     void eventOn            (void) override;
     void select             (void) override;
-    void selectElements     (void);
+    bool selectElements     (void);
     void selectByKey        (void) override;
     void selectByMouse      (void) override;
     void deSelect           (void) override;
 //    void eventHndlMouse     (void);
 
-    // --------------------- ncurses section - START
-    WINDOW* g_ncursWin;
-    // --------------------- ncurses section - END
 
     const char* g_strName;
 
@@ -99,7 +96,7 @@ protected:
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
     static tuiWin_t*	g_po;
-    tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
+    //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
     // --------------------- Object pointers section - END
 
 //    // --------------------- ncurses section - START

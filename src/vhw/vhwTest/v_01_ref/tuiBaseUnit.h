@@ -65,6 +65,10 @@ public:
     void selectX(void);
     void selectX(tuiBaseUnit_t* p_poFather);
 
+    // --------------------- ncurses section - START
+    WINDOW* g_ncursWin;
+    // --------------------- ncurses section - END
+
     // // --------------------- Pointers section - START
     // // pointer to the list of uiBase objects belonging to one
     // // or more objects of the current class
@@ -85,7 +89,7 @@ protected:
     static event_t* g_eventArray;
     // --------------------- Events handler section - END
 
-    tuiBaseUnit_t* g_pFather;
+    tuiBaseUnit_t* g_poFather;
 //    box_t*  g_pBox;
     zone_t* g_zoneList;
 
@@ -98,9 +102,6 @@ protected:
     static uint32_t g_currentSelCnt;
 //    uint32_t     g_selCnt;
     static tuiBaseUnit_t* g_pSelectedOld;
-    static void setNcursWindow(WINDOW* p_ncursWinSelected);
-    static WINDOW* g_ncursWinSelected;
-    static WINDOW* g_ncursWinSelectedOld;
 
     static void vEventHndlKey_moveForward    (void);
 

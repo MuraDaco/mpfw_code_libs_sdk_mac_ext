@@ -38,8 +38,6 @@ uint32_t tuiBaseUnit_t::g_currentSelCnt = 0;
 
 tuiBaseUnit_t*  tuiBaseUnit_t::g_poSelected = nullptr;
 tuiBaseUnit_t*  tuiBaseUnit_t::g_pSelectedOld;
-WINDOW*         tuiBaseUnit_t::g_ncursWinSelected;
-WINDOW*         tuiBaseUnit_t::g_ncursWinSelectedOld;
 
 
 tuiBaseUnit_t::tuiBaseUnit_t (zone_t* p_zoneList) :
@@ -83,15 +81,9 @@ bool tuiBaseUnit_t::bTstSelCnts    (uint8_t p_selCnt1, uint8_t p_selCnt2)  {
 }
 
 
-void tuiBaseUnit_t::setNcursWindow      (WINDOW* p_ncursWinSelected)    {
-    g_ncursWinSelectedOld = g_ncursWinSelected;
-    g_ncursWinSelected    = p_ncursWinSelected;
-}
-
-
 
 void tuiBaseUnit_t::SetEventArrayOfWindow   	(void)      {
-    g_pFather->SetEventArrayOfWindow();
+    g_poFather->SetEventArrayOfWindow();
 }
 
 bool tuiBaseUnit_t::bMouseClickInsideBounds (point_t p_mouseXY)      {
@@ -145,8 +137,8 @@ bool tuiBaseUnit_t::bCheckSensitiveZone (point_t p_mouseXY)      {
 void tuiBaseUnit_t::deSelectX(tuiBaseUnit_t* p_poDeselectEnd) {
     if(this != p_poDeselectEnd)   {
         deSelect();
-        if(g_pFather) {
-            g_pFather->deSelectX(p_poDeselectEnd);
+        if(g_poFather) {
+            g_poFather->deSelectX(p_poDeselectEnd);
         } else {
             // the current function belong to rootWindow, therefore ...
             // no other deSelect functions have to be called
@@ -170,6 +162,7 @@ void  tuiBaseUnit_t::selectX() {
 void  tuiBaseUnit_t::selectX(tuiBaseUnit_t* p_pFather) {
     g_poSelected->deSelectX(p_pFather);
     g_poSelected = this;
+    select();
 }
 void tuiBaseUnit_t::vEventHndlKey_moveForward   (void)  {
 

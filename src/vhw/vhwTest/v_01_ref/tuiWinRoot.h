@@ -62,8 +62,8 @@ private:
 //    // the event handler function & the event array must to be defined as static
 //    // template <uint8_t keycode>
 //    // static void vEventHndlKey	(void);
-    static void vEventHndlKey_down	(void);
-    static void vEventHndlKey_up	(void);
+//    static void vEventHndlKey_down	(void);
+//    static void vEventHndlKey_up	(void);
 //    static void vEventHndlKey_left	(void);
 //    static void vEventHndlKey_right	(void);
 //    static void vEventHndlKey_enter	(void);

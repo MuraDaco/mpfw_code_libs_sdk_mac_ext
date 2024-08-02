@@ -78,7 +78,7 @@ private:
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
     static tuiDigitalInOut_t*	g_po;
-    tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
+    //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
     // --------------------- Object pointers section - END
 
 
