@@ -34,6 +34,14 @@
 #include "mcuPinPortDefineConfig.h"
 #include "pphLed.h"
 
+extern PPH_DEF_H__   (pphLed_t, LED_RAI)
+extern PPH_DEF_H__   (pphLed_t, LED_REO)
+extern PPH_DEF_H__   (pphLed_t, LED_REI)
+
+extern PPH_DEF_H__   (pphLed_t, LED_PER)
+extern PPH_DEF_H__   (pphLed_t, LED_PUR)
+extern PPH_DEF_H__   (pphLed_t, LED_MAI)
+
 extern PPH_DEF_H__   (pphLed_t, LED_A)
 extern PPH_DEF_H__   (pphLed_t, LED_C)
 

@@ -32,6 +32,7 @@
 #include "tuiAppBoard.h"
 
 #include "tuiAppPinPort.h"
+#include "tuiBaseDgtInOut.h"
 #include "tuiDigitalInOut.h"
 #include "tuiDigitalInOut2.h"
 
@@ -62,6 +63,15 @@ tuiBaseUnit_t::zone_t tuiAppBoard_t::g_zoneList[] = {
 
 // **********************************************************
 // -------- ELEMENT LIST define - start
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_VIA    ,1 ,40 , 3 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_BIO    ,1 ,40 , 4 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_VAI    ,1 ,40 , 5 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_PER       ,1 ,40 , 6 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_PUR       ,1 ,40 , 7 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_MAI       ,1 ,40 , 8 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_AND    ,1 ,40 , 9 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOT    ,1 ,40 ,10 ,1  )
+
 TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_AAA     ,1  ,  3 )
 TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_BBB     ,1  ,  4 )
 TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_CCC     ,1  ,  5 )
@@ -82,9 +92,25 @@ tuiWin_t::element_t tuiAppBoard_t::g_elementList[] = {
     ,{&TUI_OBJ   (LINK_TTT)     , 19 }
     ,{nullptr                   ,  1 }
 };
+
+tuiBaseListUnit_t::element_t tuiAppBoard_t::g_baseElementList[] = {
+    //{nullptr                   , 1 }
+     {&TUI_OBJ   (BUTTON_VIA)   , 1 }
+    ,{&TUI_OBJ   (BUTTON_BIO)   , 0 }
+    ,{&TUI_OBJ   (BUTTON_VAI)   , 3 }
+    ,{&TUI_OBJ   (LED_PER)      , 3 }
+    ,{&TUI_OBJ   (LED_PUR)      , 3 }
+    ,{&TUI_OBJ   (LED_MAI)      , 3 }
+    ,{&TUI_OBJ   (SWITCH_AND)   , 6 }
+    ,{&TUI_OBJ   (SWITCH_NOT)   , 6 }
+    ,{nullptr                   , 1 }
+};
+
+
 // -------- ELEMENT LIST define - end
 
 // **********************************************************
 // -------- MAIN WINDOW define - start
-tuiWin_t tuiAppBoard_t::g_win ("Board Window", &g_box, g_zoneList, g_elementList);
+tuiWin_t        tuiAppBoard_t::g_win       ("Board Window", &g_box, g_zoneList, g_elementList      );
+tuiBaseWin_t    tuiAppBoard_t::g_baseWin   ("Board Window", &g_box,             g_baseElementList   );
 // -------- MAIN WINDOW define - end

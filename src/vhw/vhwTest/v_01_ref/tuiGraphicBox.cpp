@@ -22,31 +22,37 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.h
+ * tuiGraphicBox.cpp
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Aug, 3rd 2024
  *      Author: Marco Dau
  */
- 
-#ifndef TUI_MANAGER_H
-#define TUI_MANAGER_H
 
-#include <ncurses.h> // /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/ncurses.h -> curses.h
-#include "tuiBaseUnit.h"
-#include "tuiBaseWinRoot.h"
+#include "tuiGraphicBox.h"
 
 
-class tuiManager_t    {
+tuiGraphicBox_t::tuiGraphicBox_t (box_t* p_pBox) :
+     g_h        {p_pBox->height}
+    ,g_w        {p_pBox->width}
+    ,g_y0       {p_pBox->yStart}
+    ,g_x0       {p_pBox->xStart}
+{}
 
-public:
-    static void init   (void);
-    static void loop   (void);
-    static void end    (void);
-
-private:
-    static tuiBaseUnit_t* g_mainWin;
-    static tuiBaseWinRoot_t* g_baseMainWin;
-};
+tuiGraphicBox_t::tuiGraphicBox_t (uint8_t p_h, uint8_t p_w, uint8_t p_y0, uint8_t p_x0)     :
+     g_h        {p_h}
+    ,g_w        {p_w}
+    ,g_y0       {p_y0}
+    ,g_x0       {p_x0}
+{}
 
 
-#endif 	// TUI_MANAGER_H
+void tuiGraphicBox_t::draw (WINDOW* p_pNcursWin)   {
+	mvwaddch(p_pNcursWin, g_y0        ,g_x0       ,ACS_ULCORNER                   );
+	mvwaddch(p_pNcursWin, g_y0        ,g_x0 + g_w ,ACS_URCORNER               );
+	mvwaddch(p_pNcursWin, g_y0 + g_h  ,g_x0       ,ACS_LLCORNER               );
+	mvwaddch(p_pNcursWin, g_y0 + g_h  ,g_x0 + g_w ,ACS_LRCORNER               );
+	mvwhline(p_pNcursWin, g_y0        ,g_x0 + 1   ,0   ,g_w - 1    );
+	mvwhline(p_pNcursWin, g_y0 + g_h  ,g_x0 + 1   ,0   ,g_w - 1    );
+	mvwvline(p_pNcursWin, g_y0 + 1    ,g_x0       ,0   ,g_h - 1    );
+	mvwvline(p_pNcursWin, g_y0 + 1    ,g_x0 + g_w ,0   ,g_h - 1    );
+}

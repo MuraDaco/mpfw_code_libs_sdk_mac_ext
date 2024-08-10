@@ -33,4 +33,5 @@
 
 #include "tuiAppMain.h"
 
-tuiBaseUnit_t* tuiManager_t::g_mainWin = &tuiAppMain_t::g_win;
+tuiBaseUnit_t*      tuiManager_t::g_mainWin     = &tuiAppMain_t::g_win;
+tuiBaseWinRoot_t*   tuiManager_t::g_baseMainWin = &tuiAppMain_t::g_baseWin;

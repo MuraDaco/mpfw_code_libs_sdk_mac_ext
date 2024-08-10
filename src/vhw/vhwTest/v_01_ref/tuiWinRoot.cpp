@@ -60,6 +60,7 @@ void tuiWinRoot_t::initTuiNcursesEnv        (void)    {
     nodelay(g_ncursWin, true);
     keypad(g_ncursWin, TRUE);           /* We get F1, F2 etc..            */
     noecho();                           /* Don't echo() while we do getch */
+    curs_set(0);                        /* make cursor invisible */
     mousemask(  ALL_MOUSE_EVENTS |      \
                 REPORT_MOUSE_POSITION,  \
                 NULL);
@@ -172,7 +173,7 @@ void tuiWinRoot_t::eventHndlMouse	(void)  {
                 tuiWin_t* l_winSelected = static_cast<tuiWin_t*> (l_elementSelected->element);
                 setMouseXY({static_cast<uint8_t>(l_mouseEvent.x - l_winSelected->g_pBox->xStart), static_cast<uint8_t>(l_mouseEvent.y - l_winSelected->g_pBox->yStart)});
                 static_cast<tuiWin_t*>(l_elementSelected->element)->selectByMouse();
-                static_cast<tuiWin_t*>(l_elementSelected->element)->eventOn();
+                //static_cast<tuiWin_t*>(l_elementSelected->element)->eventOn();
             } else {
                 selectX();
 

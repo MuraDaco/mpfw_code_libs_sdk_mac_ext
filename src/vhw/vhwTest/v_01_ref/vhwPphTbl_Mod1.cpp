@@ -49,6 +49,11 @@
 // }
 
 
+PPH_DEF_CPP         (pphSwitch_t ,SWITCH_XOR           )
+PPH_DEF_CPP         (pphSwitch_t ,SWITCH_NOR           )
+
+PPH_DEF_CPP         (pphSwitch_t ,SWITCH_AND           )
+PPH_DEF_CPP         (pphSwitch_t ,SWITCH_NOT           )
 
 
 PPH_DEF_CPP_LINK    (pphRely_t   ,ALARM_A     ,2 ,5     )

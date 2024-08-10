@@ -41,12 +41,20 @@ tuiBaseUnit_t*  tuiBaseUnit_t::g_pSelectedOld;
 
 
 tuiBaseUnit_t::tuiBaseUnit_t (zone_t* p_zoneList) :
-     g_pBox           {nullptr}
-    ,g_zoneList      {p_zoneList}
+     g_strName          {nullptr}
+    ,g_pBox             {nullptr}
+    ,g_zoneList         {p_zoneList}
 {}
 
 tuiBaseUnit_t::tuiBaseUnit_t (box_t* p_pBox, zone_t* p_zoneList) :
-     g_pBox             {p_pBox}
+     g_strName          {nullptr}
+    ,g_pBox             {p_pBox}
+    ,g_zoneList         {p_zoneList}
+{}
+
+tuiBaseUnit_t::tuiBaseUnit_t (const char* p_strName, box_t* p_pBox, zone_t* p_zoneList) :
+     g_strName          {p_strName}
+    ,g_pBox             {p_pBox}
     ,g_zoneList         {p_zoneList}
 {}
 

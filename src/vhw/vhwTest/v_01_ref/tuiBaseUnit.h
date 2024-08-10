@@ -45,7 +45,9 @@ public:
 
     tuiBaseUnit_t (zone_t* p_zoneList);
     tuiBaseUnit_t (box_t* p_pBox, zone_t* p_zoneList);
+    tuiBaseUnit_t (const char* p_strName, box_t* p_pBox, zone_t* p_zoneList);
     virtual void init       	([[maybe_unused]] void* p_poFather)				{				};
+    virtual void init       	([[maybe_unused]] void* p_poFather, [[maybe_unused]] point_t p_point0)				{				};
     virtual bool loop       	(void)											;
     // virtual void EventOn    	([[maybe_unused]] uiBase* p_pFather)            {				};
     virtual void eventOn    	(void)                                  		{				};
@@ -64,6 +66,9 @@ public:
     void deSelectX(tuiBaseUnit_t* p_poDeselectEnd);
     void selectX(void);
     void selectX(tuiBaseUnit_t* p_poFather);
+
+
+    const char* g_strName;
 
     // --------------------- ncurses section - START
     WINDOW* g_ncursWin;

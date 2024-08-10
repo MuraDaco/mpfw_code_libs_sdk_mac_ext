@@ -38,13 +38,13 @@ tuiDigitalInOut_t*	tuiDigitalInOut_t::g_po = nullptr;
 
 tuiDigitalInOut_t::tuiDigitalInOut_t      (point_t p_origin                               )     :
      tuiBaseUnit_t          (&g_box, g_zoneList)
-    ,g_strName              {nullptr}
+    ,tuiDrawerBase_t        (&g_box)
     ,g_box                  {g_boxDim.height, g_boxDim.width, p_origin.y, p_origin.x}
 {}
 
 tuiDigitalInOut_t::tuiDigitalInOut_t      (                   dtyUint8_t* p_pDtyStatus    )     :
      tuiBaseUnit_t          (&g_box, g_zoneList)
-    ,g_strName              {nullptr}
+    ,tuiDrawerBase_t        (&g_box)
     ,g_pDtyStatus           {p_pDtyStatus}
     ,g_boxOrigin            {0, 0}
     ,g_box                  {g_boxDim.height, g_boxDim.width, g_boxOrigin.y, g_boxOrigin.x}
@@ -52,14 +52,14 @@ tuiDigitalInOut_t::tuiDigitalInOut_t      (                   dtyUint8_t* p_pDty
 
 tuiDigitalInOut_t::tuiDigitalInOut_t      (point_t p_origin, dtyUint8_t* p_pDtyStatus     )     :
      tuiBaseUnit_t          (&g_box, g_zoneList)
-    ,g_strName              {nullptr}
+    ,tuiDrawerBase_t        (&g_box)
     ,g_pDtyStatus           {p_pDtyStatus}
     ,g_box                  {g_boxDim.height, g_boxDim.width, p_origin.y, p_origin.x}
 {}
 
 tuiDigitalInOut_t::tuiDigitalInOut_t      (const char* p_strName, point_t p_origin, dtyUint8_t* p_pDtyStatus     )     :
-     tuiBaseUnit_t          (&g_box, g_zoneList)
-    ,g_strName              {p_strName}
+     tuiBaseUnit_t          (p_strName, &g_box, g_zoneList)
+    ,tuiDrawerBase_t        (p_strName, &g_box)
     ,g_pDtyStatus           {p_pDtyStatus}
     ,g_box                  {g_boxDim.height, g_boxDim.width, p_origin.y, p_origin.x}
 {}
@@ -68,7 +68,7 @@ tuiDigitalInOut_t::tuiDigitalInOut_t      (const char* p_strName, point_t p_orig
 void tuiDigitalInOut_t::init       (void* p_poFather) 	{
     g_poFather = static_cast<tuiBaseUnit_t*>(p_poFather);
     g_ncursWin = g_poFather->g_ncursWin;
-    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", tuiBaseUnit_t::g_strName, *g_pDtyStatus->g_pValue);
     wrefresh(g_ncursWin);
 }
 
@@ -81,7 +81,7 @@ bool tuiDigitalInOut_t::loop            (void)  {
 
 void tuiDigitalInOut_t::select         (void)    {
     wattron(g_ncursWin, A_UNDERLINE);
-    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", tuiBaseUnit_t::g_strName, *g_pDtyStatus->g_pValue);
     wattroff(g_ncursWin, A_UNDERLINE);
     wrefresh(g_ncursWin);
 }
@@ -92,27 +92,16 @@ void tuiDigitalInOut_t::selectByKey         (void)    {
 
 void tuiDigitalInOut_t::selectByMouse       (void)    {
     selectX(g_poFather);
-    // wattron(g_ncursWin, A_UNDERLINE);
-    // mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-    // wattroff(g_ncursWin, A_UNDERLINE);
-    // //box(g_ncursWin, 0, 0);
-    // wrefresh(g_ncursWin);
+    eventOn();
 }
 
 void tuiDigitalInOut_t::display          (void)    {
-//    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "name: %s - %02x - x: %02d - y: %02d - mx: %2d - my: %02d", g_strName, *g_pDtyStatus->g_pValue, 
-//    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "name: %s - x: %02d - y: %02d - mx: %2d - my: %02d", g_strName, 
-//                                                                                    g_pBox->xStart,
-//                                                                                    g_pBox->yStart,
-//                                                                                    g_mouseXY.x,
-//                                                                                    g_mouseXY.y);
-    //box(g_ncursWin, 0, 0);
-    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", tuiBaseUnit_t::g_strName, *g_pDtyStatus->g_pValue);
     wrefresh(g_ncursWin);
 }
 
 void tuiDigitalInOut_t::deSelect        (void)    {
-    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", tuiBaseUnit_t::g_strName, *g_pDtyStatus->g_pValue);
     wrefresh(g_ncursWin);
 }
 
@@ -142,7 +131,7 @@ void tuiDigitalInOut_t::vEventHndlKey_down	(void)  {
 }
 
 void tuiDigitalInOut_t::vEventHndlKey_up	(void)  {
-    g_po->g_pDtyStatus->vInc();
+    //g_po->g_pDtyStatus->vInc();
 }
 
 void tuiDigitalInOut_t::vEventHndlKey_left	(void)  {
@@ -152,13 +141,14 @@ void tuiDigitalInOut_t::vEventHndlKey_right	(void)  {
 }
 
 void tuiDigitalInOut_t::vEventHndlKey_enter	(void)  {
+    //eventOn();
 }
 
 void tuiDigitalInOut_t::vEventHndlKey_home	(void)  {
+    g_po->selectX();
+    if(g_po->g_poFather) g_po->g_poFather->eventOn();
 }
 
-void tuiDigitalInOut_t::vEventHndlMouse	(void)  {
-}
 
 event_t tuiDigitalInOut_t::g_eventArray[]  = {
      vEventHndlKey_down
@@ -167,7 +157,6 @@ event_t tuiDigitalInOut_t::g_eventArray[]  = {
     ,vEventHndlKey_right
     ,vEventHndlKey_enter
     ,vEventHndlKey_home
-    ,vEventHndlMouse
 };
 
 

@@ -22,31 +22,10 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.h
+ * tuiBaseEventHandler.cpp
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Aug, 7th 2024
  *      Author: Marco Dau
  */
- 
-#ifndef TUI_MANAGER_H
-#define TUI_MANAGER_H
 
-#include <ncurses.h> // /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/ncurses.h -> curses.h
-#include "tuiBaseUnit.h"
-#include "tuiBaseWinRoot.h"
-
-
-class tuiManager_t    {
-
-public:
-    static void init   (void);
-    static void loop   (void);
-    static void end    (void);
-
-private:
-    static tuiBaseUnit_t* g_mainWin;
-    static tuiBaseWinRoot_t* g_baseMainWin;
-};
-
-
-#endif 	// TUI_MANAGER_H
+#include "tuiBaseEventHandler.h"

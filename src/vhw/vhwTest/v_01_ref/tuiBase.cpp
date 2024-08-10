@@ -22,31 +22,20 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.h
+ * tuiBase.cpp
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Aug, 7th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_MANAGER_H
-#define TUI_MANAGER_H
 
-#include <ncurses.h> // /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/ncurses.h -> curses.h
-#include "tuiBaseUnit.h"
-#include "tuiBaseWinRoot.h"
+#include "tuiBase.h"
 
+tuiBase_t::tuiBase_t (const char* p_strName, box_t *p_pBox) :
+    tuiBaseDrawer_t(p_strName, p_pBox)
+{}
 
-class tuiManager_t    {
+tuiBase_t::tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus) :
+    tuiBaseDrawer_t(p_strName, p_box, p_pDtyStatus)
+{}
 
-public:
-    static void init   (void);
-    static void loop   (void);
-    static void end    (void);
-
-private:
-    static tuiBaseUnit_t* g_mainWin;
-    static tuiBaseWinRoot_t* g_baseMainWin;
-};
-
-
-#endif 	// TUI_MANAGER_H

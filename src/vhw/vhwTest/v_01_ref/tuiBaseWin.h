@@ -22,45 +22,58 @@
 //  *******************************************************************************
 
 /*
- * tuiLbox.h
+ * tuiBaseWin.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Aug, 7th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_LBOX_H
-#define TUI_LBOX_H
+#ifndef TUI_BASE_WIN_H
+#define TUI_BASE_WIN_H
 
-#include "tuiBaseWlistUnit.h"
-#include "tuiDrawerBase.h"
+#include "tuiBaseListUnit.h"
 
-class tuiLbox_t : public tuiBaseWlistUnit_t, private tuiDrawerBase_t    {
+class tuiBaseWin_t : public tuiBaseListUnit_t  {
 
 public:
 
-    tuiLbox_t (const char* p_strName, box_t* p_pBox, zone_t*    p_zoneList, element_t* p_elementList);
+    tuiBaseWin_t        (const char* p_strName, box_t* p_box, element_t* p_elementList);
 
     void init               (void* p_poFather) 				override;
-
-
-    void select             (void) override;
-    void selectByMouse      (void) override;
     void display            (void) override;
+    void eventOn            (void) override;
+    void select             (void) override;
     void deSelect           (void) override;
 
-    void eventOn            (void) override;
+
+//    const char* g_strName;
+
+//    // --------------------- Element pointers section - START
+//    // pointer to the list of uiBase objects belonging to one
+//    // or more objects of the current class
+//    element_t*	g_elementList;
+//    element_t*  g_pLastElement;
+//    element_t*  g_pCurrentElement;
+//    bool g_bElementList;
+//    //[[maybe_unused]] tuiBase_t*	g_ptrFather;
+//    // --------------------- Element pointers section - END
 
 protected:
 
     // --------------------- Object pointers section - START
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
-    static tuiLbox_t*	g_po;
-    //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
+    static tuiBaseWin_t*	g_po;
+    //tuiBase_t*	    g_poFather; // to initialize in the init function
     // --------------------- Object pointers section - END
 
-private:
+//    // --------------------- ncurses section - START
+//    WINDOW* g_ncursWin;
+//    // --------------------- ncurses section - END
 
+
+protected:
+    
     // // --------------------- Events handler section - START
 	// // ..................... Events handler: functions
     // the "event" & the "event array" is equal for all the instanticies of the current class therefore ...
@@ -78,7 +91,11 @@ private:
     // --------------------- Events handler section - END
 
 
+
+
+
+
 };
 
 
-#endif 	// TUI_LBOX_H
+#endif 	// TUI_BASE_WIN_H

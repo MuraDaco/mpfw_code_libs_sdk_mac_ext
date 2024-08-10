@@ -22,45 +22,43 @@
 //  *******************************************************************************
 
 /*
- * tuiLbox.h
+ * tuiDgtInOut.h
  *
  *  Created on: Jul, 16th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_LBOX_H
-#define TUI_LBOX_H
+#ifndef TUI_DGT_IN_OUT_H
+#define TUI_DGT_IN_OUT_H
 
-#include "tuiBaseWlistUnit.h"
+#include "tuiMacroDefine.h"
+#include "tuiBaseUnit.h"
 #include "tuiDrawerBase.h"
+#include "dtyUint8.h"
 
-class tuiLbox_t : public tuiBaseWlistUnit_t, private tuiDrawerBase_t    {
+
+class tuiDgtInOut_t : public tuiBaseUnit_t, public tuiDrawerBase_t  {
 
 public:
-
-    tuiLbox_t (const char* p_strName, box_t* p_pBox, zone_t*    p_zoneList, element_t* p_elementList);
+    tuiDgtInOut_t       (point_t p_Origin                               );
+    tuiDgtInOut_t       (                   dtyUint8_t* p_pDtyStatus    );
+    tuiDgtInOut_t       (point_t p_Origin,  dtyUint8_t* p_pDtyStatus    );
+    tuiDgtInOut_t       (const char* p_strName  ,point_t p_origin   ,dtyUint8_t* p_pDtyStatus   );
+    tuiDgtInOut_t       (const char* p_strName  ,box_t p_box        ,dtyUint8_t* p_pDtyStatus   );
 
     void init               (void* p_poFather) 				override;
-
-
+    void init       	    (void* p_poFather, point_t p_point0)    override;
+    bool loop       	    (void)							override;
+    void display            (void) override;
     void select             (void) override;
     void selectByMouse      (void) override;
-    void display            (void) override;
     void deSelect           (void) override;
-
     void eventOn            (void) override;
 
-protected:
-
-    // --------------------- Object pointers section - START
-    // pointer to the list of uiBase objects belonging to one
-    // or more objects of the current class
-    static tuiLbox_t*	g_po;
-    //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
-    // --------------------- Object pointers section - END
 
 private:
-
+//    const char* g_strName;
+    
     // // --------------------- Events handler section - START
 	// // ..................... Events handler: functions
     // the "event" & the "event array" is equal for all the instanticies of the current class therefore ...
@@ -77,8 +75,34 @@ private:
     static event_t g_eventArray[];
     // --------------------- Events handler section - END
 
+    // --------------------- Object pointers section - START
+    // pointer to the list of uiBase objects belonging to one
+    // or more objects of the current class
+    static tuiDgtInOut_t*	g_po;
+    //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
+    // --------------------- Object pointers section - END
+
+
+    // --------------------- Data section - START
+    dtyUint8_t* g_pDtyStatus;
+    // --------------------- Data section - END
+    
+    // --------------------- Sensitive zone section - START
+    static void zone_hndl_1  (void);
+    static void zone_hndl_2  (void);
+
+    // the "zone list" is equal for all instanticies of the current class therefore ...
+    // - define zone list pointer in tuiBaseUnit class is not good to memory optimization
+    //      - the best is to define it here as static
+    static zone_t g_zoneList[]; 
+    // - but it is good for code optimization because it simplifies the code
+    // --------------------- Sensitive zone section - END
+
+    point_t g_boxOrigin;
+    static dimension_t g_boxDim;
+    box_t g_box;
 
 };
 
 
-#endif 	// TUI_LBOX_H
+#endif 	// TUI_DGT_IN_OUT_H

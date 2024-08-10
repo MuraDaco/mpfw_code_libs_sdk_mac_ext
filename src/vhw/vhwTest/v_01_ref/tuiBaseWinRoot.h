@@ -22,31 +22,35 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.h
+ * tuiBaseWinRoot.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Aug, 7th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_MANAGER_H
-#define TUI_MANAGER_H
+#ifndef TUI_BASE_WIN_ROOT_H
+#define TUI_BASE_WIN_ROOT_H
 
-#include <ncurses.h> // /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/ncurses.h -> curses.h
-#include "tuiBaseUnit.h"
-#include "tuiBaseWinRoot.h"
+#include "tuiBaseWin.h"
 
-
-class tuiManager_t    {
+class tuiBaseWinRoot_t : public tuiBaseWin_t  {
 
 public:
-    static void init   (void);
-    static void loop   (void);
-    static void end    (void);
 
-private:
-    static tuiBaseUnit_t* g_mainWin;
-    static tuiBaseWinRoot_t* g_baseMainWin;
+    tuiBaseWinRoot_t        (const char* p_strName, box_t* p_box, element_t* p_elementList);
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+    void init                   (void)      override;
+#pragma clang diagnostic pop
+
+    bool loop       	        (void)      override;
+    void end          	        (void)      override;
+    void deSelect               (void)      override;
+
+
+
 };
 
 
-#endif 	// TUI_MANAGER_H
+#endif 	// TUI_BASE_WIN_ROOT_H

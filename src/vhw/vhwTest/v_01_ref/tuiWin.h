@@ -32,21 +32,8 @@
 #define TUI_WIN_H
 
 #include "tuiBaseUnit.h"
+#include "tuiDrawerBase.h"
 
-
-#define TUI_KEY_TAB             0x0009
-#define TUI_KEY_SHIFT_TAB       0x0161
-#define TUI_KEY_RETURN          0x000A
-#define TUI_KEY_ESC             0x001b
-
-#define NCURS_MOUSE_TRACKING_ENABLE     // printf("\033[?1003h");            // Makes the terminal report mouse movement events           
-#define NCURS_MOUSE_TRACKING_DISABLE    // printf("\033[?1003l");            // Disable mouse movement events, as l = low
-
-#define NCURS_COLOR_PAIR_WINDOW_SELECT              COLOR_PAIR  (1)
-#define NCURS_COLOR_PAIR_INIT_WINDOW_SELECT         init_pair   (1, COLOR_YELLOW,  COLOR_BLUE)
-
-#define NCURS_COLOR_PAIR_WINDOW_DESELECT            COLOR_PAIR  (2)
-#define NCURS_COLOR_PAIR_INIT_WINDOW_DESELECT       init_pair   (2, COLOR_RED,     COLOR_BLACK)
 
 
 class tuiWin_t : public tuiBaseUnit_t  {
@@ -72,13 +59,11 @@ public:
     void eventOn            (void) override;
     void select             (void) override;
     bool selectElements     (void);
-    void selectByKey        (void) override;
     void selectByMouse      (void) override;
     void deSelect           (void) override;
-//    void eventHndlMouse     (void);
 
 
-    const char* g_strName;
+//    const char* g_strName;
 
     // --------------------- Element pointers section - START
     // pointer to the list of uiBase objects belonging to one

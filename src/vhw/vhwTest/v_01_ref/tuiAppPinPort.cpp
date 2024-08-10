@@ -29,6 +29,7 @@
  */
  
 #include "tuiAppPinPort.h"
+#include "tuiBaseDgtInOut.h"
 #include "tuiDigitalInOut.h"
 #include "tuiDigitalInOut2.h"
 
@@ -60,6 +61,15 @@ tuiBaseUnit_t::zone_t tuiAppPinPort_t::g_zoneList[] = {
 
 // **********************************************************
 // -------- ELEMENT LIST define - start
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_NEO    ,1 ,40 , 3 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_MAO    ,1 ,40 , 4 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_LEO    ,1 ,40 , 5 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_RAI       ,1 ,40 , 6 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REO       ,1 ,40 , 7 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REI       ,1 ,40 , 8 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_XOR    ,1 ,40 , 9 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOR    ,1 ,40 ,10 ,1  )
+
 TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_TEST    ,1  , 3 )
 TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_XXX     ,1  , 4 )
 TUI_DEF_CPP  (tuiDigitalInOut_t     ,mcuPinPort_t   ,BUTTON_UP      ,1  , 5 )
@@ -80,9 +90,24 @@ tuiWin_t::element_t tuiAppPinPort_t::g_elementList[] = {
     ,{&TUI_OBJ   (LINK_A)       ,19 }
     ,{nullptr                   , 1 }
 };
+
+tuiBaseListUnit_t::element_t tuiAppPinPort_t::g_baseElementList[] = {
+    //{nullptr                   , 1 }
+     {&TUI_OBJ   (BUTTON_NEO)   , 1 }
+    ,{&TUI_OBJ   (BUTTON_MAO)   , 0 }
+    ,{&TUI_OBJ   (BUTTON_LEO)   , 3 }
+    ,{&TUI_OBJ   (LED_RAI)      , 3 }
+    ,{&TUI_OBJ   (LED_REO)      , 3 }
+    ,{&TUI_OBJ   (LED_REI)      , 3 }
+    ,{&TUI_OBJ   (SWITCH_XOR)   , 6 }
+    ,{&TUI_OBJ   (SWITCH_NOR)   , 6 }
+    ,{nullptr                   , 1 }
+};
+
 // -------- ELEMENT LIST define - end
 
 // **********************************************************
 // -------- MAIN WINDOW define - start
-tuiWin_t tuiAppPinPort_t::g_win ("PinPort Window", &g_box, g_zoneList, g_elementList);
+tuiWin_t        tuiAppPinPort_t::g_win      ("PinPort Window", &g_box, g_zoneList,  g_elementList       );
+tuiBaseWin_t    tuiAppPinPort_t::g_baseWin  ("PinPort Window", &g_box,              g_baseElementList   );
 // -------- MAIN WINDOW define - end

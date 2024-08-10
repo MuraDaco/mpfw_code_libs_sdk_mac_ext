@@ -39,7 +39,7 @@
 
 // **********************************************************
 // -------- BOX define - start
-box_t tuiAppMain_t::g_box = {1, 2, 3, 4};
+box_t tuiAppMain_t::g_box = {20, 80, 5, 5};
 // -------- BOX define - end
 
 // **********************************************************
@@ -65,11 +65,20 @@ tuiWin_t::element_t tuiAppMain_t::g_elementList[] = {
     ,{&tuiAppUSART_1_t::    g_win, 5}
     ,{nullptr, 1}
 };
+
+tuiBaseListUnit_t::element_t tuiAppMain_t::g_baseElementList[] = {
+    //{nullptr, 1}
+     {&tuiAppBoard_t::      g_baseWin, 2}
+    ,{&tuiAppPinPort_t::    g_baseWin, 7}
+    ,{&tuiAppUSART_1_t::    g_baseWin, 5}
+    ,{nullptr, 1}
+};
 // -------- ELEMENT LIST define - end
 
 // **********************************************************
 // -------- MAIN WINDOW define - start
-tuiWinRoot_t tuiAppMain_t::g_win ("Main Window", &g_box, g_zoneList, g_elementList);
+tuiWinRoot_t        tuiAppMain_t::g_win     ("Main Window"      ,&g_box ,g_zoneList ,g_elementList);
+tuiBaseWinRoot_t    tuiAppMain_t::g_baseWin ("Base Main Window" ,&g_box             ,g_baseElementList);
 // -------- MAIN WINDOW define - end
 
 

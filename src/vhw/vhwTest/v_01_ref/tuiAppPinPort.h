@@ -34,11 +34,15 @@
 #include "tuiGraphicTypes.h"
 #include "uyTypesDefs.h"
 #include "tuiWin.h"
+#include "tuiBaseWin.h"
 
 class tuiAppPinPort_t {
 
 public:
-    static tuiWin_t                 g_win;
+    static tuiWin_t                         g_win;
+    static tuiBaseWin_t                     g_baseWin;
+    static tuiWin_t::element_t              g_elementList[];
+    static tuiBaseListUnit_t::element_t     g_baseElementList[];
 
 private:
     static void zone_1_hndl    (void);
@@ -46,7 +50,6 @@ private:
 
     static box_t                    g_box;
     static tuiBaseUnit_t::zone_t    g_zoneList[];
-    static tuiWin_t::element_t      g_elementList[];
 
 };
 

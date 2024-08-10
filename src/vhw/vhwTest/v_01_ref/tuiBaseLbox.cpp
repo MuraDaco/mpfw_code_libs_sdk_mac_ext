@@ -22,113 +22,116 @@
 //  *******************************************************************************
 
 /*
- * tuiLbox.cpp
+ * tuiBaseLbox.cpp
  *
  *  Created on: Jul, 16th 2024
  *      Author: Marco Dau
  */
  
 
-#include "tuiLbox.h"
+#include "tuiBaseLbox.h"
 
 
-tuiLbox_t*	tuiLbox_t::g_po = nullptr;
+tuiBaseLbox_t*	tuiBaseLbox_t::g_po = nullptr;
 
 
-tuiLbox_t::tuiLbox_t      (const char* p_strName, box_t* p_pBox, zone_t*    p_zoneList, element_t* p_elementList) :
-     tuiBaseWlistUnit_t         (p_strName, p_pBox, p_zoneList, p_elementList)
-    ,tuiDrawerBase_t            (p_strName, p_pBox)
+tuiBaseLbox_t::tuiBaseLbox_t      (const char* p_strName, box_t* p_pBox, element_t* p_elementList) :
+     tuiBaseListUnit_t         (p_strName, p_pBox, p_elementList)
 {}
 
-void tuiLbox_t::init       (void* p_poFather) 	{
+void tuiBaseLbox_t::init       (void* p_poFather) 	{
     // 1. backup pointer to my own [father]
     //      - it will be usefull for move between tui elements
-    g_poFather = static_cast<tuiBaseUnit_t*>(p_poFather);
+    g_poFather = static_cast<tuiBase_t*>(p_poFather);
+    g_pNcursWin = static_cast<tuiBase_t*>(p_poFather)->g_pNcursWin;
+    g_x0Win     = static_cast<tuiBase_t*>(p_poFather)->g_x0Win  + g_x0r;
+    g_y0Win     = static_cast<tuiBase_t*>(p_poFather)->g_y0Win  + g_y0r;
+    g_x0a       = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
+    g_y0a       = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
 
-    g_ncursWin = g_poFather->g_ncursWin;
-    g_pNcursWin = g_poFather->g_ncursWin;
 
     //g_box.draw(g_ncursWin);    
     frame(tuiMode_t::deselect);
-    tuiDrawer__mvprintw(0, 5, " *~ %s ~* ", tuiDrawerBase_t::g_strName);
+    tuiBaseDrawer__mvprintw(0, 5, " *~ %s ~* ", g_strName);
 
-    //tuiDrawer__name(0, 85);
+    //tuiBaseDrawer__name(0, 85);
 
     //g_box.drawFrame(g_ncursWin, SELECT/DESELECT);    
     //g_box.drawName(g_ncursWin, SELECT/DESELECT);    
     //g_box.drawStatus(g_ncursWin, SELECT/DESELECT);    
-    //g_box.draw(g_ncursWin, g_box.g_y0, g_box.g_x0 + 5, " *~ %s ~* ", g_strName);
+    //g_box.draw(g_ncursWin, g_box.g_y0r, g_box.g_x0r + 5, " *~ %s ~* ", g_strName);
 
     //g_box.draw_name(g_ncursWin);    
     //g_box.draw_value(g_ncursWin, SELECT/DESELECT);    
     //g_box.draw_element(g_ncursWin, DESELECT/SELECT, );    // the element has the coords where draw the name and the value
     //g_box.draw_elements(g_ncursWin);
-    //tuiGraphicBox__draw(g_ncursWin, g_box.g_y0, g_box.g_x0 + 5, " *~ %s ~* ", tuiDrawerBase_t::g_strName);
-    point_t l_point0 = {g_x0, g_y0};
-    initElementsList(l_point0);
-    //initElementsList();
+    //tuiGraphicBox__draw(g_ncursWin, g_box.g_y0r, g_box.g_x0r + 5, " *~ %s ~* ", tuiDrawerBase_t::g_strName);
+    // point_t l_point0 = {g_x0r, g_y0r};
+    // initElementsList(l_point0);
+    initElementsList();
 
 }
 
 
-void tuiLbox_t::select         (void)    {
+void tuiBaseLbox_t::select         (void)    {
     frame(tuiMode_t::select);
 }
 
-void tuiLbox_t::selectByMouse         (void)    {
+void tuiBaseLbox_t::selectByMouse         (void)    {
     if(selectElements()) {
         select();
     } else {
-        selectX();
+        deselectBackNselect();
+        g_po = this;
         eventOn();
     }
     
 }
 
-void tuiLbox_t::display               (void)    {
+void tuiBaseLbox_t::display               (void)    {
     frame(tuiMode_t::deselect);
 }
 
-void tuiLbox_t::deSelect        (void)    {
+void tuiBaseLbox_t::deSelect        (void)    {
     frame(tuiMode_t::deselect);
 }
 
 
-void tuiLbox_t::eventOn     (void)    {
+void tuiBaseLbox_t::eventOn     (void)    {
     g_po = this;
-    tuiBaseUnit_t::g_eventArray  = g_eventArray;
+    tuiBaseAction_t::g_eventArray  = g_eventArray;
 }
 
-void tuiLbox_t::vEventHndlKey_up	(void)  {
+void tuiBaseLbox_t::vEventHndlKey_up	(void)  {
     prevElement(g_po);
 }
 
-void tuiLbox_t::vEventHndlKey_down	(void)  {
+void tuiBaseLbox_t::vEventHndlKey_down	(void)  {
     nextElement(g_po);
 }
 
-void tuiLbox_t::vEventHndlKey_left	(void)  {
+void tuiBaseLbox_t::vEventHndlKey_left	(void)  {
     //mvwprintw(g_po->g_ncursWin, 0, 30, "event hndl - key left");
     //g_po->g_pCurrentElement = g_po->g_elementList;
 }
 
-void tuiLbox_t::vEventHndlKey_right	(void)  {
+void tuiBaseLbox_t::vEventHndlKey_right	(void)  {
     //mvwprintw(g_po->g_ncursWin, 0, 30, "event hndl - key right");
     //g_po->g_pCurrentElement = g_po->g_elementList;
 }
 
-void tuiLbox_t::vEventHndlKey_enter	(void)  {
+void tuiBaseLbox_t::vEventHndlKey_enter	(void)  {
     g_po->g_pCurrentElement->element->eventOn();
 }
 
-void tuiLbox_t::vEventHndlKey_home	(void)  {
-    g_po->selectX();
+void tuiBaseLbox_t::vEventHndlKey_home	(void)  {
+    g_po->deselectBackNselect();
     if(g_po->g_poFather) g_po->g_poFather->eventOn();
 
 }
 
 
-event_t tuiLbox_t::g_eventArray[]  = {
+event_t tuiBaseLbox_t::g_eventArray[]  = {
      vEventHndlKey_down
     ,vEventHndlKey_up
     ,vEventHndlKey_left

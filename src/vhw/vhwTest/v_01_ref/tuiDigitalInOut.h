@@ -33,10 +33,11 @@
 
 #include "tuiMacroDefine.h"
 #include "tuiBaseUnit.h"
+#include "tuiDrawerBase.h"
 #include "dtyUint8.h"
 
 
-class tuiDigitalInOut_t : public tuiBaseUnit_t  {
+class tuiDigitalInOut_t : public tuiBaseUnit_t, public tuiDrawerBase_t  {
 
 public:
     tuiDigitalInOut_t       (point_t p_Origin                               );
@@ -55,7 +56,7 @@ public:
 
 
 private:
-    const char* g_strName;
+//    const char* g_strName;
     
     // // --------------------- Events handler section - START
 	// // ..................... Events handler: functions
@@ -69,7 +70,6 @@ private:
     static void vEventHndlKey_right	(void);
     static void vEventHndlKey_enter	(void);
     static void vEventHndlKey_home	(void);
-    static void vEventHndlMouse     (void);
 	// ..................... Events handler: array
     static event_t g_eventArray[];
     // --------------------- Events handler section - END

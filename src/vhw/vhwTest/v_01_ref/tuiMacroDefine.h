@@ -35,7 +35,8 @@
 
 #include "pphMacroDefine.h"
 
-#define TUI_DEF_CPP(tui_t, pph_t, name, x, y)          MCU_##name tui_t  tui_##name (#name, {x, y}, pph_t##_DATA_TYPE_PTRS(name));
+#define TUI_DEF_CPP(tui_t, pph_t, name, x, y)                   MCU_##name tui_t  tui_##name (#name, {x, y},        pph_t##_DATA_TYPE_PTRS(name));
+#define TUI_DEF_CPP_BOX(tui_t, pph_t, name, h, w, y, x)         MCU_##name tui_t  tui_##name (#name, {h, w, y, x},  pph_t##_DATA_TYPE_PTRS(name));
 #define TUI_OBJ(name)                       tui_##name
 
 #endif 	// TUI_MACRO_DEFINE_H

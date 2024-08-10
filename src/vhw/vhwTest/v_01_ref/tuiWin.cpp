@@ -64,8 +64,7 @@ tuiWin_t::tuiWin_t      (box_t* p_box, zone_t*    p_zoneList, element_t* p_eleme
 {}
 
 tuiWin_t::tuiWin_t      (const char* p_strName, box_t* p_box, zone_t*    p_zoneList, element_t* p_elementList) :
-     tuiBaseUnit_t          (p_box, p_zoneList)
-    ,g_strName              {p_strName}
+     tuiBaseUnit_t          (p_strName, p_box, p_zoneList)
     ,g_elementList          {p_elementList}
     ,g_pCurrentElement      {nullptr}
 {}
@@ -138,6 +137,7 @@ void tuiWin_t::selectByMouse     (void)    {
         select();
     } else {
         selectX();
+        eventOn();
     }
 
 }
@@ -159,15 +159,6 @@ bool tuiWin_t::selectElements     (void)    {
     }
 
     return l_result;
-}
-
-void tuiWin_t::selectByKey     (void)    {
-
-    if(g_poSelected) g_poSelected->deSelect();
-    g_poSelected = this;
-
-    select();
-
 }
 
 void tuiWin_t::select     (void)    {

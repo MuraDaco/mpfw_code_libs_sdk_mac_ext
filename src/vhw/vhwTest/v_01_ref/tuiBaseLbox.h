@@ -22,23 +22,22 @@
 //  *******************************************************************************
 
 /*
- * tuiLbox.h
+ * tuiBaseLbox.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Aug, 7th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_LBOX_H
-#define TUI_LBOX_H
+#ifndef TUI_BASE_LBOX_H
+#define TUI_BASE_LBOX_H
 
-#include "tuiBaseWlistUnit.h"
-#include "tuiDrawerBase.h"
+#include "tuiBaseListUnit.h"
 
-class tuiLbox_t : public tuiBaseWlistUnit_t, private tuiDrawerBase_t    {
+class tuiBaseLbox_t : public tuiBaseListUnit_t    {
 
 public:
 
-    tuiLbox_t (const char* p_strName, box_t* p_pBox, zone_t*    p_zoneList, element_t* p_elementList);
+    tuiBaseLbox_t (const char* p_strName, box_t* p_pBox, element_t* p_elementList);
 
     void init               (void* p_poFather) 				override;
 
@@ -55,7 +54,7 @@ protected:
     // --------------------- Object pointers section - START
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
-    static tuiLbox_t*	g_po;
+    static tuiBaseLbox_t*	g_po;
     //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
     // --------------------- Object pointers section - END
 
@@ -81,4 +80,4 @@ private:
 };
 
 
-#endif 	// TUI_LBOX_H
+#endif 	// TUI_BASE_LBOX_H

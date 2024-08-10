@@ -22,31 +22,41 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.h
+ * tuiGraphicBox.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Aug, 3rd 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_MANAGER_H
-#define TUI_MANAGER_H
+#ifndef TUI_GRAPHIC_BOX_H
+#define TUI_GRAPHIC_BOX_H
 
-#include <ncurses.h> // /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/ncurses.h -> curses.h
-#include "tuiBaseUnit.h"
-#include "tuiBaseWinRoot.h"
+#include <cstdint>
+#include "tuiGraphicTypes.h"
+#include <ncurses.h>
 
 
-class tuiManager_t    {
+#define tuiGraphicBox__draw(ncursWin, y0, x0, strFrmt, strName)       \
+        mvwprintw(ncursWin, y0, x0, strFrmt, strName)
+
+class tuiGraphicBox_t   {
 
 public:
-    static void init   (void);
-    static void loop   (void);
-    static void end    (void);
+    tuiGraphicBox_t (box_t *p_pBox);
+    tuiGraphicBox_t (uint8_t p_h, uint8_t p_w, uint8_t p_y0, uint8_t p_x0);
+
+    // void plotBox     (void);
+    // void frame       (void);
+    void draw        (WINDOW* p_pNcursWin);
+
+    uint8_t g_h;
+    uint8_t g_w;
+    uint8_t g_y0;
+    uint8_t g_x0;
 
 private:
-    static tuiBaseUnit_t* g_mainWin;
-    static tuiBaseWinRoot_t* g_baseMainWin;
+
+
 };
 
-
-#endif 	// TUI_MANAGER_H
+#endif 	// TUI_GRAPHIC_TYPES_H

@@ -44,6 +44,11 @@ enum class tuiEventCode_t: uint8_t {
     ,noEvent = 0xff
 };
 
+enum class tuiMode_t: uint8_t {
+     deselect
+    ,select
+};
+
 #define tuiEventCodeNum(a) static_cast<uint8_t>(a)
 
 typedef struct __point__ {

@@ -32,6 +32,14 @@
 #include "mcuPinPortDefineConfig.h"
 #include "pphButton.h"
 
+extern PPH_DEF_H__   (pphButton_t, BUTTON_NEO)
+extern PPH_DEF_H__   (pphButton_t, BUTTON_MAO)
+extern PPH_DEF_H__   (pphButton_t, BUTTON_LEO)
+
+extern PPH_DEF_H__   (pphButton_t, BUTTON_VIA)
+extern PPH_DEF_H__   (pphButton_t, BUTTON_BIO)
+extern PPH_DEF_H__   (pphButton_t, BUTTON_VAI)
+
 extern PPH_DEF_H__   (pphButton_t, BUTTON_UP)
 extern PPH_DEF_H__   (pphButton_t, BUTTON_TEST)
 extern PPH_DEF_H__   (pphButton_t, BUTTON_XXX)
