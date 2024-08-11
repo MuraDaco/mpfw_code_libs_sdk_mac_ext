@@ -46,12 +46,14 @@ void tuiBaseWinRoot_t::init       (void) 	{
 
     // 2. draw window frame
     frameBox(tuiMode_t::select);
-    
+
     // 3. init elements and its sub-elements
     initElementsList();
     
     // 4. activate the ehandler event array of the current root window
     eventOn();
+    refreshElements();
+
 
 }
 
@@ -75,13 +77,13 @@ bool tuiBaseWinRoot_t::loop            (void)  {
 
             if(uiMouseEventCode_ButtonPressed())
             {
-                //selectByMouse();
-                //refreshElements();
 
                 if(!selectElements()) {
                     deselectBackNselect();
-                    refreshElements();
                     eventOn();
+                } else {
+                    frameBox(tuiMode_t::select);
+                    refreshElements();
                 }
             }
         }

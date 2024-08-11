@@ -47,6 +47,8 @@ enum class tuiEventCode_t: uint8_t {
 enum class tuiMode_t: uint8_t {
      deselect
     ,select
+    ,eventOn
+    ,num
 };
 
 #define tuiEventCodeNum(a) static_cast<uint8_t>(a)

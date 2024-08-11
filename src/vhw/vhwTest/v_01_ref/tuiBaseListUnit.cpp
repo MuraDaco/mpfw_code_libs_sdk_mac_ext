@@ -149,7 +149,7 @@ void tuiBaseListUnit_t::refreshElements     (void)    {
 
     // c.1) run [init] function for each [child] element
     while(l_element->element)    {
-        l_element->element->deSelect();
+        l_element->element->display();
         l_element++;
     }
 }

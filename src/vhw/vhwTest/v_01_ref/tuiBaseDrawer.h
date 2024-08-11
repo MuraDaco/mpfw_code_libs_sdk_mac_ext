@@ -31,10 +31,12 @@
 #ifndef TUI_BASE_DRAWER_H
 #define TUI_BASE_DRAWER_H
 
+#include <functional>
 #include <cstdint>
 #include "tuiGraphicTypes.h"
 #include <ncurses.h>
 #include "dtyUint8.h"
+#include "uyTypesDefs.h"
 
 
 #define TUI_KEY_TAB             0x0009
@@ -50,6 +52,9 @@
 
 #define NCURS_COLOR_PAIR_WINDOW_DESELECT            COLOR_PAIR  (2)
 #define NCURS_COLOR_PAIR_INIT_WINDOW_DESELECT       init_pair   (2, COLOR_RED,     COLOR_BLACK)
+
+#define NCURS_COLOR_PAIR_WINDOW_EVENT_ON            COLOR_PAIR  (3)
+#define NCURS_COLOR_PAIR_INIT_WINDOW_EVENT_ON       init_pair   (3, COLOR_RED,   COLOR_YELLOW)
 
 #define tuiBaseDrawer__mvprintw(y, x, strFrmt, strName)       \
         mvwprintw(g_pNcursWin, g_y0r + y, g_x0r + x, strFrmt, strName);     wrefresh(g_pNcursWin)
@@ -75,21 +80,18 @@ public:
     tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox);
     tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
 
-    //void init           (WINDOW* p_pNcursWin, point_t );
     void initWin                (void);
     void initGraphEnv           (void);
     void initGraphEnvColor      (void);
     void deinitGraphEnv         (void);
     void endGraphEnv            (void);
-    void frame          (WINDOW* p_pNcursWin);
-    void frame          (void);
     void frame          (tuiMode_t p_mode);
+    void frameNname     (tuiMode_t p_mode);    
     void frameBox       (tuiMode_t p_mode);
     void frameBox       ();
     void name           (tuiMode_t p_mode);
     void nameNstatus    (void);
     void nameNstatus    (tuiMode_t p_mode);
-    void nameNstatus    (tuiMode_t p_mode, point_t p_point0);
     bool bMouseClickInsideBounds            (void);
 
     bool uiEventStatus                      (void);
@@ -107,6 +109,7 @@ public:
     uint8_t g_x0a;
     uint8_t g_y0Win;
     uint8_t g_x0Win;
+    tuiMode_t g_status;
 
     const char* g_strName;
     // --------------------- Data section - START
@@ -115,12 +118,23 @@ public:
 
 private:
 
+    typedef void (* attributeFunc_t)    (tuiBaseDrawer_t*, uint8_t);
+
     static uint8_t g_xMouse;
     static uint8_t g_yMouse;
 
     static int g_ncursEventCode;
     static MEVENT g_mouseEvent;
 
+    std::function<void(int)>  g_attributeModeX[2];
+    static attributeFunc_t  g_attributeMode_Frame[static_cast<uint8_t>(tuiMode_t::num)];
+    static void attributeMode_frameDeselect     (tuiBaseDrawer_t* p_this, uint8_t p_status);
+    static void attributeMode_frameSelect       (tuiBaseDrawer_t* p_this, uint8_t p_status);
+    static void attributeMode_frameEventOn      (tuiBaseDrawer_t* p_this, uint8_t p_status);
+    static attributeFunc_t  g_attributeMode_Line[static_cast<uint8_t>(tuiMode_t::num)];
+    static void attributeMode_lineDeselect      (tuiBaseDrawer_t* p_this, uint8_t p_status);
+    static void attributeMode_lineSelect        (tuiBaseDrawer_t* p_this, uint8_t p_status);
+    static void attributeMode_lineEventOn       (tuiBaseDrawer_t* p_this, uint8_t p_status);
 };
 
 #endif 	// TUI_DRAWER_BASE_H

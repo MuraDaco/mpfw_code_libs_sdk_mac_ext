@@ -32,7 +32,6 @@
 #define TUI_BASE_H
 
 
-//#include "tuiGraphicTypes.h"
 #include "tuiBaseAction.h"
 #include "tuiBaseDrawer.h"
 

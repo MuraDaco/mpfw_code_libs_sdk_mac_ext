@@ -35,6 +35,9 @@ uint8_t tuiBaseDrawer_t::g_yMouse;
 int      tuiBaseDrawer_t::g_ncursEventCode;
 MEVENT   tuiBaseDrawer_t::g_mouseEvent;
 
+#define OFF     0
+#define ON      1
+
 
 tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox) :
      g_pNcursWin    {nullptr}
@@ -46,6 +49,7 @@ tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox) :
     ,g_x0a          {0}
     ,g_y0Win        {0}
     ,g_x0Win        {0}
+    ,g_status       {tuiMode_t::deselect}
     ,g_strName      {p_strName}
     ,g_pDtyStatus   {nullptr}
 {}
@@ -60,11 +64,13 @@ tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t
     ,g_x0a          {0}
     ,g_y0Win        {0}
     ,g_x0Win        {0}
+    ,g_status       {tuiMode_t::deselect}
     ,g_strName      {p_strName      }
     ,g_pDtyStatus   {p_pDtyStatus   }
 {}
 
 void tuiBaseDrawer_t::initGraphEnv        (void)     {
+
     // the current instance is the main window, therefore ...
 
     // 2. set the pointer of ncurses window to main window [stdsrc]
@@ -89,6 +95,7 @@ void tuiBaseDrawer_t::initGraphEnvColor (void)    {
     // a) init color windows management
     NCURS_COLOR_PAIR_INIT_WINDOW_DESELECT;
     NCURS_COLOR_PAIR_INIT_WINDOW_SELECT;
+    NCURS_COLOR_PAIR_INIT_WINDOW_EVENT_ON;
 
 }
 void tuiBaseDrawer_t::deinitGraphEnv    (void)    {
@@ -108,34 +115,9 @@ void tuiBaseDrawer_t::endGraphEnv       (void)  {
     endwin();                           /* Wait for user input */
 }
 
-void tuiBaseDrawer_t::frame (WINDOW* p_pNcursWin)   {
-	mvwaddch(p_pNcursWin, g_y0r        ,g_x0r       ,ACS_ULCORNER                   );
-	mvwaddch(p_pNcursWin, g_y0r        ,g_x0r + g_w ,ACS_URCORNER               );
-	mvwaddch(p_pNcursWin, g_y0r + g_h  ,g_x0r       ,ACS_LLCORNER               );
-	mvwaddch(p_pNcursWin, g_y0r + g_h  ,g_x0r + g_w ,ACS_LRCORNER               );
-	mvwhline(p_pNcursWin, g_y0r        ,g_x0r + 1   ,0   ,g_w - 1    );
-	mvwhline(p_pNcursWin, g_y0r + g_h  ,g_x0r + 1   ,0   ,g_w - 1    );
-	mvwvline(p_pNcursWin, g_y0r + 1    ,g_x0r       ,0   ,g_h - 1    );
-	mvwvline(p_pNcursWin, g_y0r + 1    ,g_x0r + g_w ,0   ,g_h - 1    );
-}
-
-void tuiBaseDrawer_t::frame (void)   {
-	mvwaddch(g_pNcursWin, g_y0r        ,g_x0r       ,ACS_ULCORNER                   );
-	mvwaddch(g_pNcursWin, g_y0r        ,g_x0r + g_w ,ACS_URCORNER               );
-	mvwaddch(g_pNcursWin, g_y0r + g_h  ,g_x0r       ,ACS_LLCORNER               );
-	mvwaddch(g_pNcursWin, g_y0r + g_h  ,g_x0r + g_w ,ACS_LRCORNER               );
-	mvwhline(g_pNcursWin, g_y0r        ,g_x0r + 1   ,0   ,g_w - 1    );
-	mvwhline(g_pNcursWin, g_y0r + g_h  ,g_x0r + 1   ,0   ,g_w - 1    );
-	mvwvline(g_pNcursWin, g_y0r + 1    ,g_x0r       ,0   ,g_h - 1    );
-	mvwvline(g_pNcursWin, g_y0r + 1    ,g_x0r + g_w ,0   ,g_h - 1    );
-}
-
 void tuiBaseDrawer_t::frame (tuiMode_t p_mode)   {
-    if(tuiMode_t::deselect == p_mode) {
-        wattron(g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
-    } else {
-        wattron(g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-    }
+    g_status = p_mode;
+    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
 
 	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r               ,ACS_ULCORNER       );
 	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r + g_w - 1     ,ACS_URCORNER       );
@@ -146,43 +128,53 @@ void tuiBaseDrawer_t::frame (tuiMode_t p_mode)   {
 	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r               ,0    ,g_h - 2      );
 	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r + g_w - 1     ,0    ,g_h - 2      );
 
-    if(tuiMode_t::deselect == p_mode) {
-        wattroff(g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
-    } else {
-        wattroff(g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-    }
+    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
+
+    wrefresh(g_pNcursWin);
+
+}
+
+void tuiBaseDrawer_t::frameNname (tuiMode_t p_mode)   {
+    g_status = p_mode;
+    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
+
+	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r               ,ACS_ULCORNER       );
+	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r + g_w - 1     ,ACS_URCORNER       );
+	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r               ,ACS_LLCORNER       );
+	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + g_w - 1     ,ACS_LRCORNER       );
+	mvwhline(g_pNcursWin, g_y0r              ,g_x0r + 1           ,0    ,g_w - 2      );
+	mvwhline(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + 1           ,0    ,g_w - 2      );
+	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r               ,0    ,g_h - 2      );
+	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r + g_w - 1     ,0    ,g_h - 2      );
+
+    mvwprintw(g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
+
+    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
 
     wrefresh(g_pNcursWin);
 
 }
 
 void tuiBaseDrawer_t::frameBox (void)   {
-    wattron     (g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
+    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
 
     box         (g_pNcursWin, 0, 0);                  // BE CAREFUL !! - if (g_ncursWin==stdscr) this instructions clear all sub-windows and you have to repaint the box and refresh subwindow
-
     mvwprintw   (g_pNcursWin, 0, 10, " *** window name: %s *** ", g_strName);
-    wattroff    (g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
+
+    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
 
     wrefresh    (g_pNcursWin);
 
 }
 
 void tuiBaseDrawer_t::frameBox (tuiMode_t p_mode)   {
-    if(tuiMode_t::deselect == p_mode) {
-        wattron(g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
-    } else {
-        wattron(g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-    }
+    g_status = p_mode;
+    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
 
     box(g_pNcursWin, 0, 0);                  // BE CAREFUL !! - if (g_ncursWin==stdscr) this instructions clear all sub-windows and you have to repaint the box and refresh subwindow
     mvwprintw   (g_pNcursWin, 0, 10, " *** window name: %s *** ", g_strName);
 
-    if(tuiMode_t::deselect == p_mode) {
-        wattroff(g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
-    } else {
-        wattroff(g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-    }
+    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
 
     wrefresh(g_pNcursWin);
 
@@ -190,44 +182,33 @@ void tuiBaseDrawer_t::frameBox (tuiMode_t p_mode)   {
 
 
 void tuiBaseDrawer_t::name (tuiMode_t p_mode)   {
-    if(tuiMode_t::deselect == p_mode) {
-        wattron(g_pNcursWin,A_UNDERLINE);
-    }
+    g_status = p_mode;
+    g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, ON);
 
     mvwprintw(g_pNcursWin, g_y0Win + g_y0r, g_x0Win + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
 
-    if(tuiMode_t::deselect == p_mode) {
-        wattroff(g_pNcursWin,A_UNDERLINE);
-    }
+    g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, OFF);
+
 
     wrefresh(g_pNcursWin);
 }
 
 void tuiBaseDrawer_t::nameNstatus (tuiMode_t p_mode)   {
-    if(tuiMode_t::select == p_mode) wattron(g_pNcursWin,A_UNDERLINE);
+    g_status = p_mode;
+    g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, ON);
+
     mvwprintw(g_pNcursWin, g_y0Win + g_y0r, g_x0Win + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-    if(tuiMode_t::select == p_mode) wattroff(g_pNcursWin,A_UNDERLINE);
+
+    g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, OFF);
 
     wrefresh(g_pNcursWin);
 }
 
 void tuiBaseDrawer_t::nameNstatus (void)   {
 
+    g_attributeMode_Line[static_cast<uint8_t>(g_status)](this, ON);
     mvwprintw(g_pNcursWin, g_y0Win + g_y0r, g_x0Win + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-
-    wrefresh(g_pNcursWin);
-}
-
-void tuiBaseDrawer_t::nameNstatus (tuiMode_t p_mode, point_t p_point0)   {
-    if(tuiMode_t::select == p_mode) {
-        wattron(g_pNcursWin,A_UNDERLINE);
-    }
-
-    mvwprintw(g_pNcursWin, p_point0.y + g_y0r, p_point0.x + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-
-    if(tuiMode_t::select == p_mode) {
-        wattroff(g_pNcursWin,A_UNDERLINE);
-    }
+    g_attributeMode_Line[static_cast<uint8_t>(g_status)](this, OFF);
 
     wrefresh(g_pNcursWin);
 }
@@ -315,4 +296,48 @@ bool tuiBaseDrawer_t::uiMouseEventCode_ButtonPressed             (void)  {
                 (g_mouseEvent.bstate & BUTTON1_CLICKED)     );
     return l_result;
 }
+
+void tuiBaseDrawer_t::attributeMode_frameDeselect (tuiBaseDrawer_t* p_this, uint8_t p_status)   {
+    if(OFF == p_status) wattroff(p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
+    if(ON  == p_status) wattron (p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
+}
+
+void tuiBaseDrawer_t::attributeMode_frameSelect (tuiBaseDrawer_t* p_this, uint8_t p_status)     {
+    if(OFF == p_status) wattroff(p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
+    if(ON  == p_status) wattron (p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
+}
+
+void tuiBaseDrawer_t::attributeMode_frameEventOn (tuiBaseDrawer_t* p_this, uint8_t p_status)    {
+    if(OFF == p_status) wattroff(p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_EVENT_ON);
+    if(ON  == p_status) wattron (p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_EVENT_ON);
+}
+
+void tuiBaseDrawer_t::attributeMode_lineDeselect ([[maybe_unused]]tuiBaseDrawer_t* p_this, [[maybe_unused]] uint8_t p_status)    {
+    //if(OFF == p_status) wattroff(p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
+    //if(ON  == p_status) wattron (p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
+}
+
+void tuiBaseDrawer_t::attributeMode_lineSelect (tuiBaseDrawer_t* p_this, uint8_t p_status)      {
+    if(OFF == p_status) wattroff(p_this->g_pNcursWin,A_UNDERLINE);
+    if(ON  == p_status) wattron (p_this->g_pNcursWin,A_UNDERLINE);
+}
+
+void tuiBaseDrawer_t::attributeMode_lineEventOn (tuiBaseDrawer_t* p_this, uint8_t p_status)     {
+    if(OFF == p_status) wattroff(p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_EVENT_ON);
+    if(ON  == p_status) wattron (p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_EVENT_ON);
+//    if(OFF == p_status) wattroff(p_this->g_pNcursWin,A_REVERSE);
+//    if(ON  == p_status) wattron (p_this->g_pNcursWin,A_REVERSE);
+}
+
+tuiBaseDrawer_t::attributeFunc_t  tuiBaseDrawer_t::g_attributeMode_Frame[] = {
+     attributeMode_frameDeselect
+    ,attributeMode_frameSelect
+    ,attributeMode_frameEventOn
+};
+
+tuiBaseDrawer_t::attributeFunc_t  tuiBaseDrawer_t::g_attributeMode_Line[] = {
+     attributeMode_lineDeselect
+    ,attributeMode_lineSelect
+    ,attributeMode_lineEventOn
+};
 

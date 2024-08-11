@@ -57,11 +57,8 @@ void tuiBaseWin_t::init       (void* p_poFather) 	{
 
 }
 
-
-
-//void EventOn    (uiBase* p_pFather) override;
-
 void tuiBaseWin_t::display     (void)    {
+    frameBox();
 }
 
 void tuiBaseWin_t::select     (void)    {
@@ -86,6 +83,8 @@ void tuiBaseWin_t::deSelect     (void)    {
 void tuiBaseWin_t::eventOn     (void)    {
     g_po = this;
     tuiBaseAction_t::g_eventArray  = g_eventArray;
+    frameBox(tuiMode_t::eventOn);
+    if(!g_poFather) refreshElements();
 }
 
 
@@ -110,12 +109,16 @@ void tuiBaseWin_t::vEventHndlKey_right	(void)  {
 }
 
 void tuiBaseWin_t::vEventHndlKey_enter	(void)  {
+    g_po->frameBox(tuiMode_t::select);
+    if(!g_po->g_poFather) g_po->refreshElements();
     g_po->g_pCurrentElement->element->eventOn();
 }
 
 void tuiBaseWin_t::vEventHndlKey_home	(void)  {
-    g_po->deselectBackNselect();
-    if(g_po->g_poFather) g_po->g_poFather->eventOn();
+    if(g_po->g_poFather) {
+        g_po->deselectBackNselect();
+        g_po->g_poFather->eventOn();
+    }
 
 }
 

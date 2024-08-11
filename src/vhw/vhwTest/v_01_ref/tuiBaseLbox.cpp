@@ -51,8 +51,7 @@ void tuiBaseLbox_t::init       (void* p_poFather) 	{
 
 
     //g_box.draw(g_ncursWin);    
-    frame(tuiMode_t::deselect);
-    tuiBaseDrawer__mvprintw(0, 5, " *~ %s ~* ", g_strName);
+    frameNname(tuiMode_t::deselect);
 
     //tuiBaseDrawer__name(0, 85);
 
@@ -74,7 +73,7 @@ void tuiBaseLbox_t::init       (void* p_poFather) 	{
 
 
 void tuiBaseLbox_t::select         (void)    {
-    frame(tuiMode_t::select);
+    frameNname(tuiMode_t::select);
 }
 
 void tuiBaseLbox_t::selectByMouse         (void)    {
@@ -89,17 +88,18 @@ void tuiBaseLbox_t::selectByMouse         (void)    {
 }
 
 void tuiBaseLbox_t::display               (void)    {
-    frame(tuiMode_t::deselect);
+    frameNname(tuiMode_t::deselect);
 }
 
 void tuiBaseLbox_t::deSelect        (void)    {
-    frame(tuiMode_t::deselect);
+    frameNname(tuiMode_t::deselect);
 }
 
 
 void tuiBaseLbox_t::eventOn     (void)    {
     g_po = this;
     tuiBaseAction_t::g_eventArray  = g_eventArray;
+    frameNname(tuiMode_t::eventOn);
 }
 
 void tuiBaseLbox_t::vEventHndlKey_up	(void)  {
@@ -121,6 +121,7 @@ void tuiBaseLbox_t::vEventHndlKey_right	(void)  {
 }
 
 void tuiBaseLbox_t::vEventHndlKey_enter	(void)  {
+    g_po->frameNname(tuiMode_t::select);
     g_po->g_pCurrentElement->element->eventOn();
 }
 

@@ -51,14 +51,6 @@ void tuiBaseDgtInOut_t::init       (void* p_poFather) 	{
     nameNstatus();
 }
 
-//void tuiBaseDgtInOut_t::init       (void* p_poFather, point_t p_point0) 	{
-//    g_poFather = static_cast<tuiBase_t*>(p_poFather);
-//    g_pNcursWin = static_cast<tuiBaseDrawer_t*>(p_poFather)->g_pNcursWin;
-//    g_x0Win = p_point0.x;
-//    g_y0Win = p_point0.y;
-//    nameNstatus(tuiMode_t::deselect);
-//}
-
 bool tuiBaseDgtInOut_t::loop            (void)  {
     bool l_result = false;
 
@@ -104,6 +96,7 @@ void tuiBaseDgtInOut_t::deSelect        (void)    {
 void tuiBaseDgtInOut_t::eventOn         (void)    {
     g_po = this;
     tuiBaseAction_t::g_eventArray  = g_eventArray;
+    nameNstatus(tuiMode_t::eventOn);
 }
 
 void tuiBaseDgtInOut_t::vEventHndlKey_down	(void)  {
@@ -125,6 +118,7 @@ void tuiBaseDgtInOut_t::vEventHndlKey_enter	(void)  {
 void tuiBaseDgtInOut_t::vEventHndlKey_home	(void)  {
     g_po->deselectBackNselect();
     g_po->g_poFather->eventOn();
+
 }
 
 

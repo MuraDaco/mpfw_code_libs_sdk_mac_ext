@@ -31,7 +31,6 @@
 #ifndef TUI_BASE_ACTION_H
 #define TUI_BASE_ACTION_H
 
-//#include "tuiGraphicTypes.h"
 #include "uyTypesDefs.h"
 #include <ncurses.h>
 
