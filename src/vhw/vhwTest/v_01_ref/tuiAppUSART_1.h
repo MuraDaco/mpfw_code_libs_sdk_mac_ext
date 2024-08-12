@@ -31,24 +31,17 @@
 #ifndef TUI_APP_USART_1_H
 #define TUI_APP_USART_1_H
 
-#include "tuiGraphicTypes.h"
 #include "uyTypesDefs.h"
-#include "tuiWin.h"
 #include "tuiBaseWin.h"
 
 class tuiAppUSART_1_t {
 
 public:
-    static tuiWin_t                 g_win;
     static tuiBaseWin_t             g_baseWin;
 
 private:
-    static void zone_1_hndl    (void);
-    static void zone_2_hndl    (void);
 
     static box_t                            g_box;
-    static tuiBaseUnit_t::zone_t            g_zoneList[];
-    static tuiWin_t::element_t              g_elementList[];
     static tuiBaseListUnit_t::element_t     g_elementBaseList[];
 
 };

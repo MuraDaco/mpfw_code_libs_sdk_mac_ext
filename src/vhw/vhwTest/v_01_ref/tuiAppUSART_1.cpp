@@ -31,10 +31,7 @@
 
 #include "tuiAppUSART_1.h"
 #include "tuiAppPinPort.h"
-#include "tuiDgtInOut.h"
 #include "tuiBaseDgtInOut.h"
-
-#include "tuiLbox.h"
 #include "tuiBaseLbox.h"
 
 // **********************************************************
@@ -42,21 +39,6 @@
 // ............................ H   W  Yo  Xo
 box_t tuiAppUSART_1_t::g_box = {25, 150, 33,  5};
 // -------- BOX define - end
-
-// **********************************************************
-// -------- ZONE LIST define - start
-void tuiAppUSART_1_t::zone_1_hndl    (void)  {
-}
-
-void tuiAppUSART_1_t::zone_2_hndl    (void)  {
-}
-
-tuiBaseUnit_t::zone_t tuiAppUSART_1_t::g_zoneList[] = {
-     {{1, 2, 3, 4}, zone_1_hndl}
-    ,{{1, 2, 3, 4}, zone_2_hndl}
-    ,{{1, 2, 3, 4}, nullptr}
-};
-// -------- ZONE LIST define - end
 
 // **********************************************************
 // -------- ELEMENT LIST define - start
@@ -101,27 +83,6 @@ tuiBaseListUnit_t::element_t g_elementBaseListLbox0[] = {
     ,{nullptr                   , 1 }
 };
 
-tuiDgtInOut_t testDgtInOut0A("DgtInOut 0A", {0 ,0 ,1 ,1}, &testPar0A);
-tuiDgtInOut_t testDgtInOut0B("DgtInOut 0B", {0 ,0 ,2 ,1}, &testPar0B);
-tuiDgtInOut_t testDgtInOut0C("DgtInOut 0C", {0 ,0 ,3 ,1}, &testPar0C);
-tuiDgtInOut_t testDgtInOut0D("DgtInOut 0D", {0 ,0 ,4 ,1}, &testPar0D);
-tuiDgtInOut_t testDgtInOut0E("DgtInOut 0E", {0 ,0 ,5 ,1}, &testPar0E);
-tuiDgtInOut_t testDgtInOut0F("DgtInOut 0F", {0 ,0 ,6 ,1}, &testPar0F);
-tuiDgtInOut_t testDgtInOut0G("DgtInOut 0G", {0 ,0 ,7 ,1}, &testPar0G);
-tuiDgtInOut_t testDgtInOut0H("DgtInOut 0H", {0 ,0 ,8 ,1}, &testPar0H);
-
-
-tuiBaseWlistUnit_t::element_t g_elementListLbox0[] = {
-     {&testDgtInOut0A , 1 }
-    ,{&testDgtInOut0B , 0 }
-    ,{&testDgtInOut0C , 3 }
-    ,{&testDgtInOut0D , 3 }
-    ,{&testDgtInOut0E , 3 }
-    ,{&testDgtInOut0F , 6 }
-    ,{&testDgtInOut0G , 3 }
-    ,{&testDgtInOut0H ,19 }
-    ,{nullptr                   , 1 }
-};
 
 // ***** list 0 - end
 // ******************
@@ -147,29 +108,6 @@ tuiBaseListUnit_t::element_t g_elementBaseListLbox1[] = {
     ,{&testBaseDgtInOut1F , 6 }
     ,{&testBaseDgtInOut1G , 3 }
     ,{&testBaseDgtInOut1H ,19 }
-    ,{nullptr                   , 1 }
-};
-
-
-tuiDgtInOut_t testDgtInOut1A("DgtInOut 1A", {0 ,0 ,1 ,1}, &testPar0A);
-tuiDgtInOut_t testDgtInOut1B("DgtInOut 1B", {0 ,0 ,2 ,1}, &testPar0B);
-tuiDgtInOut_t testDgtInOut1C("DgtInOut 1C", {0 ,0 ,3 ,1}, &testPar0C);
-tuiDgtInOut_t testDgtInOut1D("DgtInOut 1D", {0 ,0 ,4 ,1}, &testPar0D);
-tuiDgtInOut_t testDgtInOut1E("DgtInOut 1E", {0 ,0 ,5 ,1}, &testPar0E);
-tuiDgtInOut_t testDgtInOut1F("DgtInOut 1F", {0 ,0 ,6 ,1}, &testPar0F);
-tuiDgtInOut_t testDgtInOut1G("DgtInOut 1G", {0 ,0 ,7 ,1}, &testPar0G);
-tuiDgtInOut_t testDgtInOut1H("DgtInOut 1H", {0 ,0 ,8 ,1}, &testPar0H);
-
-
-tuiBaseWlistUnit_t::element_t g_elementListLbox1[] = {
-     {&testDgtInOut1A , 1 }
-    ,{&testDgtInOut1B , 0 }
-    ,{&testDgtInOut1C , 3 }
-    ,{&testDgtInOut1D , 3 }
-    ,{&testDgtInOut1E , 3 }
-    ,{&testDgtInOut1F , 6 }
-    ,{&testDgtInOut1G , 3 }
-    ,{&testDgtInOut1H ,19 }
     ,{nullptr                   , 1 }
 };
 
@@ -201,50 +139,18 @@ tuiBaseListUnit_t::element_t g_elementBaseListLbox2[] = {
 };
 
 
-tuiDgtInOut_t testDgtInOut2A("DgtInOut 2A", {0 ,0 ,1 ,1}, &testPar0A);
-tuiDgtInOut_t testDgtInOut2B("DgtInOut 2B", {0 ,0 ,2 ,1}, &testPar0B);
-tuiDgtInOut_t testDgtInOut2C("DgtInOut 2C", {0 ,0 ,3 ,1}, &testPar0C);
-tuiDgtInOut_t testDgtInOut2D("DgtInOut 2D", {0 ,0 ,4 ,1}, &testPar0D);
-tuiDgtInOut_t testDgtInOut2E("DgtInOut 2E", {0 ,0 ,5 ,1}, &testPar0E);
-tuiDgtInOut_t testDgtInOut2F("DgtInOut 2F", {0 ,0 ,6 ,1}, &testPar0F);
-tuiDgtInOut_t testDgtInOut2G("DgtInOut 2G", {0 ,0 ,7 ,1}, &testPar0G);
-tuiDgtInOut_t testDgtInOut2H("DgtInOut 2H", {0 ,0 ,8 ,1}, &testPar0H);
-
-
-tuiBaseWlistUnit_t::element_t g_elementListLbox2[] = {
-     {&testDgtInOut2A , 1 }
-    ,{&testDgtInOut2B , 0 }
-    ,{&testDgtInOut2C , 3 }
-    ,{&testDgtInOut2D , 3 }
-    ,{&testDgtInOut2E , 3 }
-    ,{&testDgtInOut2F , 6 }
-    ,{&testDgtInOut2G , 3 }
-    ,{&testDgtInOut2H ,19 }
-    ,{nullptr                   , 1 }
-};
-
 // ***** list 2 - end
 // ******************
 
 
 box_t testLboxBox0 = {14,30,2,5};
-tuiLbox_t testLbox0("testLbox 0", &testLboxBox0, nullptr, g_elementListLbox0);
 tuiBaseLbox_t testBaseLbox0("testBaseLbox 0", &testLboxBox0, g_elementBaseListLbox0);
 
 box_t testLboxBox1 = {14,30,2,45};
-tuiLbox_t testLbox1("testLbox 1", &testLboxBox1, nullptr, g_elementListLbox1);
 tuiBaseLbox_t testBaseLbox1("testBaseLbox 1", &testLboxBox1, g_elementBaseListLbox1);
 
 box_t testLboxBox2 = {14,30,2,85};
-tuiLbox_t testLbox2("testLbox 2", &testLboxBox2, nullptr, g_elementListLbox2);
 tuiBaseLbox_t testBaseLbox2("testBaseLbox 2", &testLboxBox2, g_elementBaseListLbox2);
-
-tuiWin_t::element_t tuiAppUSART_1_t::g_elementList[] = {
-     {&testLbox0, 1}
-    ,{&testLbox1, 1}
-    ,{&testLbox2, 1}
-    ,{nullptr, 1}
-};
 
 tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
      {&testBaseLbox0, 1}
@@ -258,6 +164,5 @@ tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
 
 // **********************************************************
 // -------- MAIN WINDOW define - start
-tuiWin_t        tuiAppUSART_1_t::g_win      ("USART_1 window"        ,&g_box ,g_zoneList     ,g_elementList);
 tuiBaseWin_t    tuiAppUSART_1_t::g_baseWin  ("USART_1 base window"   ,&g_box                 ,g_elementBaseList);
 // -------- MAIN WINDOW define - end

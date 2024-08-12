@@ -85,9 +85,8 @@ set(SOURCE_FILES_CPP
     dtyBaseUnit.cpp
     dtyUint8.cpp
 
-    tuiGraphicBox.cpp
+    ##-- tuiGraphicBox.cpp
     
-    tuiDrawerBase.cpp
 
     tuiBaseAction.cpp
     tuiBaseDrawer.cpp
@@ -98,19 +97,21 @@ set(SOURCE_FILES_CPP
     tuiBaseWin.cpp
     tuiBaseWinRoot.cpp
     
+    tuiDrawerBase.cpp
     tuiBaseUnit.cpp
-    tuiBaseWlistUnit.cpp
-    tuiDgtInOut.cpp
+    ##-- tuiBaseWlistUnit.cpp
+    ##-- tuiDgtInOut.cpp
     tuiDigitalInOut.cpp
     tuiDigitalInOut2.cpp
-    tuiLbox.cpp
-    tuiWin.cpp
-    tuiWinRoot.cpp
+    ##-- tuiLbox.cpp
+    ##-- tuiWin.cpp
+    ##-- tuiWinRoot.cpp
 
     tuiAppUSART_1.cpp
     tuiAppPinPort.cpp
     tuiAppBoard.cpp
     tuiAppMain.cpp
+
     tuiManager.cpp
     tuiManagerApp.cpp
 

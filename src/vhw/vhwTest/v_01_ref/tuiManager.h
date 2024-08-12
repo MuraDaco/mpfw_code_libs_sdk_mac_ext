@@ -32,7 +32,6 @@
 #define TUI_MANAGER_H
 
 #include <ncurses.h> // /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/ncurses.h -> curses.h
-#include "tuiBaseUnit.h"
 #include "tuiBaseWinRoot.h"
 
 
@@ -44,7 +43,6 @@ public:
     static void end    (void);
 
 private:
-    static tuiBaseUnit_t* g_mainWin;
     static tuiBaseWinRoot_t* g_baseMainWin;
 };
 
