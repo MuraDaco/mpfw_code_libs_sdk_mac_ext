@@ -54,6 +54,21 @@ tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox) :
     ,g_pDtyStatus   {nullptr}
 {}
 
+tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box) :
+     g_pNcursWin    {nullptr}
+    ,g_h            {p_box.height}
+    ,g_w            {p_box.width}
+    ,g_y0r          {p_box.yStart}
+    ,g_x0r          {p_box.xStart}
+    ,g_y0a          {0}
+    ,g_x0a          {0}
+    ,g_y0Win        {0}
+    ,g_x0Win        {0}
+    ,g_status       {tuiMode_t::deselect}
+    ,g_strName      {p_strName}
+    ,g_pDtyStatus   {nullptr}
+{}
+
 tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus) :
      g_pNcursWin    {nullptr}
     ,g_h            {p_box.height   }

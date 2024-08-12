@@ -33,6 +33,7 @@
 #include "tuiAppPinPort.h"
 #include "tuiBaseDgtInOut.h"
 #include "tuiBaseLbox.h"
+#include "tuiBaseLboxY.h"
 
 // **********************************************************
 // -------- BOX define - start
@@ -126,7 +127,7 @@ tuiBaseDgtInOut_t testBaseDgtInOut2F("BaseDgtInOut 2F", {1 ,40 ,6 ,1}, &testPar0
 tuiBaseDgtInOut_t testBaseDgtInOut2G("BaseDgtInOut 2G", {1 ,40 ,7 ,1}, &testPar0G);
 tuiBaseDgtInOut_t testBaseDgtInOut2H("BaseDgtInOut 2H", {1 ,40 ,8 ,1}, &testPar0H);
 
-tuiBaseListUnit_t::element_t g_elementBaseListLbox2[] = {
+tuiBaseListUnitY_t::element_t g_elementBaseListLboxY2[] = {
      {&testBaseDgtInOut2A , 1 }
     ,{&testBaseDgtInOut2B , 0 }
     ,{&testBaseDgtInOut2C , 3 }
@@ -149,13 +150,13 @@ tuiBaseLbox_t testBaseLbox0("testBaseLbox 0", &testLboxBox0, g_elementBaseListLb
 box_t testLboxBox1 = {14,30,2,45};
 tuiBaseLbox_t testBaseLbox1("testBaseLbox 1", &testLboxBox1, g_elementBaseListLbox1);
 
-box_t testLboxBox2 = {14,30,2,85};
-tuiBaseLbox_t testBaseLbox2("testBaseLbox 2", &testLboxBox2, g_elementBaseListLbox2);
+box_t testLboxBoxY2 = {14,30,2,85};
+tuiBaseLboxY_t testBaseLboxY2("testBaseLbox 2", &testLboxBoxY2, g_elementBaseListLboxY2);
 
 tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
      {&testBaseLbox0, 1}
     ,{&testBaseLbox1, 1}
-    ,{&testBaseLbox2, 1}
+    ,{&testBaseLboxY2, 1}
     ,{nullptr, 1}
 };
 

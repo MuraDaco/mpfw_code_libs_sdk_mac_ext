@@ -78,6 +78,7 @@ public:
     } zone_t;
 
     tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox);
+    tuiBaseDrawer_t (const char* p_strName, box_t p_box);
     tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
 
     void initWin                (void);

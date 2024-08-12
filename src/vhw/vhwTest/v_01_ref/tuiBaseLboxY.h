@@ -22,39 +22,45 @@
 //  *******************************************************************************
 
 /*
- * tuiBaseDgtInOut.h
+ * tuiBaseLboxY.h
  *
- *  Created on: Aug, 7th 2024
+ *  Created on: Aug, 12th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_BASE_DGT_IN_OUT_H
-#define TUI_BASE_DGT_IN_OUT_H
+#ifndef TUI_BASE_LBOX_Y_H
+#define TUI_BASE_LBOX_Y_H
 
-#include "tuiMacroDefine.h"
-#include "tuiBase.h"
-#include "dtyUint8.h"
+#include "tuiBaseListUnitY.h"
 
-
-class tuiBaseDgtInOut_t : public tuiBase_t  {
+class tuiBaseLboxY_t : public tuiBaseListUnitY_t    {
 
 public:
-    tuiBaseDgtInOut_t       (const char* p_strName  ,uint8_t p_height   ,dtyUint8_t* p_pDtyStatus   );
-    tuiBaseDgtInOut_t       (const char* p_strName  ,box_t p_box        ,dtyUint8_t* p_pDtyStatus   );
+
+    tuiBaseLboxY_t (const char* p_strName, uint8_t p_height ,element_t* p_elementList);
+    tuiBaseLboxY_t (const char* p_strName, box_t* p_pBox    ,element_t* p_elementList);
 
     void init               (void* p_poFather) 				override;
-    //void init       	    (void* p_poFather, point_t p_point0)    override;
-    bool loop       	    (void)							override;
-    void display            (void) override;
+
+
     void select             (void) override;
     void selectByMouse      (void) override;
+    void display            (void) override;
     void deSelect           (void) override;
+
     void eventOn            (void) override;
 
+protected:
+
+    // --------------------- Object pointers section - START
+    // pointer to the list of uiBase objects belonging to one
+    // or more objects of the current class
+    static tuiBaseLboxY_t*	g_po;
+    //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
+    // --------------------- Object pointers section - END
 
 private:
-//    const char* g_strName;
-    
+
     // // --------------------- Events handler section - START
 	// // ..................... Events handler: functions
     // the "event" & the "event array" is equal for all the instanticies of the current class therefore ...
@@ -71,19 +77,8 @@ private:
     static event_t g_eventArray[];
     // --------------------- Events handler section - END
 
-    // --------------------- Object pointers section - START
-    // pointer to the list of uiBase objects belonging to one
-    // or more objects of the current class
-    static tuiBaseDgtInOut_t*	g_po;
-    //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
-    // --------------------- Object pointers section - END
-
-
-    // --------------------- Data section - START
-    dtyUint8_t* g_pDtyStatus;
-    // --------------------- Data section - END
 
 };
 
 
-#endif 	// TUI_BASE_DGT_IN_OUT_H
+#endif 	// TUI_BASE_LBOX_Y_H

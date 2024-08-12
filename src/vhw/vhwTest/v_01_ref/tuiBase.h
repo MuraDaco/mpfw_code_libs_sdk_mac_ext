@@ -40,6 +40,7 @@ class tuiBase_t : public tuiBaseAction_t, public tuiBaseDrawer_t {
 public:
 
     tuiBase_t (const char* p_strName, box_t *p_pBox);
+    tuiBase_t (const char* p_strName, box_t p_box);
     tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
 
 

@@ -35,6 +35,10 @@ tuiBase_t::tuiBase_t (const char* p_strName, box_t *p_pBox) :
     tuiBaseDrawer_t(p_strName, p_pBox)
 {}
 
+tuiBase_t::tuiBase_t (const char* p_strName, box_t p_box) :
+    tuiBaseDrawer_t(p_strName, p_box)
+{}
+
 tuiBase_t::tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus) :
     tuiBaseDrawer_t(p_strName, p_box, p_pDtyStatus)
 {}
