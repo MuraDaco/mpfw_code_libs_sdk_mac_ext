@@ -99,6 +99,7 @@ public:
     tuiEventCode_t  uiHandlerEventCode      (void);
     bool uiMouseEventStatus                 (void);
     bool uiMouseEventCode_ButtonPressed     (void);
+    bool isSelected                         (void);
 
     WINDOW* g_pNcursWin;
     uint8_t g_h;

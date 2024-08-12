@@ -121,8 +121,10 @@ void tuiBaseLbox_t::vEventHndlKey_right	(void)  {
 }
 
 void tuiBaseLbox_t::vEventHndlKey_enter	(void)  {
-    g_po->frameNname(tuiMode_t::select);
-    g_po->g_pCurrentElement->element->eventOn();
+    if(g_po->g_pCurrentElement->element->isSelected())  {
+        g_po->frameNname(tuiMode_t::select);
+        g_po->g_pCurrentElement->element->eventOn();
+    }
 }
 
 void tuiBaseLbox_t::vEventHndlKey_home	(void)  {

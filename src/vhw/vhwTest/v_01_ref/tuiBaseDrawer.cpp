@@ -297,6 +297,10 @@ bool tuiBaseDrawer_t::uiMouseEventCode_ButtonPressed             (void)  {
     return l_result;
 }
 
+bool tuiBaseDrawer_t::isSelected             (void)  {
+    return (tuiMode_t::select == g_status);
+}
+
 void tuiBaseDrawer_t::attributeMode_frameDeselect (tuiBaseDrawer_t* p_this, uint8_t p_status)   {
     if(OFF == p_status) wattroff(p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
     if(ON  == p_status) wattron (p_this->g_pNcursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
