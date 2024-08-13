@@ -51,7 +51,7 @@ void tuiBaseLbox_t::init       (void* p_poFather) 	{
 
 
     //g_box.draw(g_ncursWin);    
-    frameNname(tuiMode_t::deselect);
+    frameNname();
 
     //tuiBaseDrawer__name(0, 85);
 
@@ -88,8 +88,14 @@ void tuiBaseLbox_t::selectByMouse         (void)    {
 }
 
 void tuiBaseLbox_t::display               (void)    {
-    frameNname(tuiMode_t::deselect);
+    frameNname();
 }
+
+void tuiBaseLbox_t::display               (bool p_recursively)    {
+    display();
+    if(p_recursively) displayElements(p_recursively);
+}
+
 
 void tuiBaseLbox_t::deSelect        (void)    {
     frameNname(tuiMode_t::deselect);

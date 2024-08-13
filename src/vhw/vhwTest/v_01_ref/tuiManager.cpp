@@ -40,32 +40,16 @@ using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 
 void tuiManager_t::init(void)   {
-    initscr();                          /* Start curses mode            */
-    //--- g_mainWin->init(nullptr);
     g_baseMainWin->init();
-    
 }
 
 void tuiManager_t::loop(void)   {
-
-    //--- while(g_mainWin->loop()) {
-    //--- 	sleep_for(2*1ms);
-    //--- }
-
     while(g_baseMainWin->loop()) {
     	sleep_for(2*1ms);
     }
-
 }
 
 void tuiManager_t::end(void)   {
-    //--- nodelay(stdscr, false);
-    //--- getch();                            /* Print it on to the real screen */
-    //--- clrtoeol();
-	//--- refresh();
-    //--- endwin();                           /* Wait for user input */
-
     g_baseMainWin->end();
-
 }
 

@@ -87,9 +87,10 @@ public:
     void deinitGraphEnv         (void);
     void endGraphEnv            (void);
     void frame          (tuiMode_t p_mode);
+    void frameNname     (void);    
     void frameNname     (tuiMode_t p_mode);    
     void frameBox       (tuiMode_t p_mode);
-    void frameBox       ();
+    void frameBox       (void);
     void name           (tuiMode_t p_mode);
     void nameNstatus    (void);
     void nameNstatus    (tuiMode_t p_mode);
@@ -120,14 +121,15 @@ public:
 
 private:
 
-    typedef void (* attributeFunc_t)    (tuiBaseDrawer_t*, uint8_t);
 
+    //bool g_visible;
     static uint8_t g_xMouse;
     static uint8_t g_yMouse;
 
     static int g_ncursEventCode;
     static MEVENT g_mouseEvent;
 
+    typedef void (* attributeFunc_t)    (tuiBaseDrawer_t*, uint8_t);
     std::function<void(int)>  g_attributeModeX[2];
     static attributeFunc_t  g_attributeMode_Frame[static_cast<uint8_t>(tuiMode_t::num)];
     static void attributeMode_frameDeselect     (tuiBaseDrawer_t* p_this, uint8_t p_status);

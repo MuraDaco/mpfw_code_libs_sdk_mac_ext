@@ -38,21 +38,16 @@ tuiBaseWinRoot_t::tuiBaseWinRoot_t      (const char* p_strName, box_t* p_box, el
 {}
 
 void tuiBaseWinRoot_t::init       (void) 	{
-    //g_poFather = nullptr;
-
     // 1. init TUI environment
     initGraphEnv();
     initGraphEnvColor();
-
-    // 2. draw window frame
-    frameBox(tuiMode_t::select);
 
     // 3. init elements and its sub-elements
     initElementsList();
     
     // 4. activate the ehandler event array of the current root window
     eventOn();
-    refreshElements();
+    displayElements(true); // "true" means that the elements are displayed recursively
 
 
 }

@@ -50,7 +50,7 @@ void tuiBaseWin_t::init       (void* p_poFather) 	{
     initWin();
 
     //initTuiNcursesBox();
-    frameBox();
+    //frameBox();
 
     initElementsList();
     
@@ -60,6 +60,12 @@ void tuiBaseWin_t::init       (void* p_poFather) 	{
 void tuiBaseWin_t::display     (void)    {
     frameBox();
 }
+
+void tuiBaseWin_t::display               (bool p_recursively)    {
+    display();
+    if(p_recursively) displayElements(p_recursively);
+}
+
 
 void tuiBaseWin_t::select     (void)    {
     frameBox(tuiMode_t::select);
@@ -81,12 +87,10 @@ void tuiBaseWin_t::deSelect     (void)    {
 }
 
 void tuiBaseWin_t::eventOn     (void)    {
-    // if(tuiMode_t::select == g_status) {
-        g_po = this;
-        tuiBaseAction_t::g_eventArray  = g_eventArray;
-        frameBox(tuiMode_t::eventOn);
-        if(!g_poFather) refreshElements();
-    // }
+    g_po = this;
+    tuiBaseAction_t::g_eventArray  = g_eventArray;
+    frameBox(tuiMode_t::eventOn);
+    if(!g_poFather) refreshElements();
 }
 
 

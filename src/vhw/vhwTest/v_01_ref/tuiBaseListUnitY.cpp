@@ -38,6 +38,7 @@ tuiBaseListUnitY_t::tuiBaseListUnitY_t      (const char* p_strName, box_t p_box,
     ,g_pCurrentElement      {p_elementList}
     ,g_pLastElement         {p_elementList}
     ,g_bElementList         {false}
+    ,g_originWin            {0}
 {}
 
 tuiBaseListUnitY_t::tuiBaseListUnitY_t      (const char* p_strName, box_t* p_pBox, element_t* p_elementList) :
@@ -46,6 +47,7 @@ tuiBaseListUnitY_t::tuiBaseListUnitY_t      (const char* p_strName, box_t* p_pBo
     ,g_pCurrentElement      {p_elementList}
     ,g_pLastElement         {p_elementList}
     ,g_bElementList         {false}
+    ,g_originWin            {0}
 {}
 
 void tuiBaseListUnitY_t::initElementsList       (void) 	{
@@ -71,29 +73,6 @@ void tuiBaseListUnitY_t::initElementsList       (void) 	{
     }
 
 }
-
-//void tuiBaseListUnitY_t::initElementsList       (point_t p_point0) 	{
-//    if(!g_elementList)   return;
-//    // c) initialize all elements of the its own element list that is
-//    element_t* l_element = g_elementList;
-//
-//    // c.1) run [init] function for each [child] element
-//    while(l_element->element)    {
-//        //g_pLastElement = l_element;
-//        l_element->element->init(this, p_point0);
-//        l_element++;
-//    }
-//
-//    // c.2) determine the existence of an elements list
-//    if(l_element == g_elementList) {
-//        g_bElementList = false;
-//    } else {
-//        g_bElementList = true;
-//        // initialize last Element of the list
-//        g_pLastElement = l_element;
-//    }
-//
-//}
 
 void tuiBaseListUnitY_t::selectByMouse     (void)    {
 
@@ -129,10 +108,14 @@ bool tuiBaseListUnitY_t::selectElements     (void)    {
 void tuiBaseListUnitY_t::prevElement     (tuiBaseListUnitY_t* p_po)    {
     if(p_po->g_bElementList) {
         if(p_po->g_pCurrentElement) {
-            if(p_po->g_elementList == p_po->g_pCurrentElement)
+            if(p_po->g_elementList == p_po->g_pCurrentElement) {
                 p_po->g_pCurrentElement = p_po->g_pLastElement;
-            p_po->g_pCurrentElement--;
+            } else {
+                // 
+                p_po->g_pCurrentElement--;
+            }
         } else {
+            // list is not initialized, therefore ..
             p_po->g_pCurrentElement = p_po->g_elementList;
         }
         p_po->g_pCurrentElement->element->deselectBackNselect(p_po);
@@ -161,3 +144,15 @@ void tuiBaseListUnitY_t::refreshElements     (void)    {
         l_element++;
     }
 }
+
+void tuiBaseListUnitY_t::displayElements     (bool p_recursively)    {
+    element_t* l_element = g_elementList;
+
+    // c.1) run [init] function for each [child] element
+    while(l_element->element)    {
+        l_element->element->display(p_recursively);
+        l_element++;
+    }
+}
+
+

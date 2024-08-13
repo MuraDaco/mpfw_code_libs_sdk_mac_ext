@@ -153,3 +153,15 @@ void tuiBaseListUnit_t::refreshElements     (void)    {
         l_element++;
     }
 }
+
+void tuiBaseListUnit_t::displayElements     (bool p_recursively)    {
+    element_t* l_element = g_elementList;
+
+    // c.1) run [init] function for each [child] element
+    while(l_element->element)    {
+        l_element->element->display(p_recursively);
+        l_element++;
+    }
+}
+
+

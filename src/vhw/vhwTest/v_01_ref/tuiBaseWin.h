@@ -39,11 +39,12 @@ public:
 
     tuiBaseWin_t        (const char* p_strName, box_t* p_box, element_t* p_elementList);
 
-    void init               (void* p_poFather) 				override;
-    void display            (void) override;
-    void eventOn            (void) override;
-    void select             (void) override;
-    void deSelect           (void) override;
+    void init               (void* p_poFather)      override;
+    void display            (void)                  override;
+    void display            (bool p_recursively)    override;
+    void eventOn            (void)                  override;
+    void select             (void)                  override;
+    void deSelect           (void)                  override;
 
 
 //    const char* g_strName;

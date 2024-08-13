@@ -52,8 +52,6 @@ void tuiBaseDgtInOut_t::init       (void* p_poFather) 	{
     g_y0Win     = static_cast<tuiBase_t*>(p_poFather)->g_y0Win  ; // + g_y0r;
     g_x0a       = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
     g_y0a       = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
-
-    nameNstatus();
 }
 
 bool tuiBaseDgtInOut_t::loop            (void)  {
@@ -64,15 +62,7 @@ bool tuiBaseDgtInOut_t::loop            (void)  {
 
 
 void tuiBaseDgtInOut_t::select         (void)    {
-    //wattron(g_ncursWin, A_UNDERLINE);
-    //mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", tuiBase_t::g_strName, *g_pDtyStatus->g_pValue);
-    //wattroff(g_ncursWin, A_UNDERLINE);
-    //wrefresh(g_ncursWin);
-    //-- point_t l_point0 = { reinterpret_cast<tuiBaseDrawer_t*>(g_poFather)->g_x0r,  reinterpret_cast<tuiBaseDrawer_t*>(g_poFather)->g_y0r};
-    //-- nameNstatus(tuiMode_t::select, l_point0);
-
     nameNstatus(tuiMode_t::select);
-
 }
 
 void tuiBaseDgtInOut_t::selectByMouse       (void)    {
@@ -81,21 +71,15 @@ void tuiBaseDgtInOut_t::selectByMouse       (void)    {
 }
 
 void tuiBaseDgtInOut_t::display          (void)    {
-    //nameNstatus(tuiMode_t::deselect);
-    //point_t l_point0 = { g_poFather->g_pBox->xStart,  g_poFather->g_pBox->yStart};
-    //-- nameNstatus(tuiMode_t::deselect, { reinterpret_cast<tuiBaseDrawer_t*>(g_poFather)->g_x0r,  reinterpret_cast<tuiBaseDrawer_t*>(g_poFather)->g_y0r});
-    nameNstatus(tuiMode_t::deselect);
-
-    // mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", tuiBase_t::g_strName, *g_pDtyStatus->g_pValue);
-    // wrefresh(g_ncursWin);
+    nameNstatus();
 }
 
+void tuiBaseDgtInOut_t::display         ([[maybe_unused]] bool p_recursively)  {
+    display();
+}  
+
 void tuiBaseDgtInOut_t::deSelect        (void)    {
-    //point_t l_point0 = { g_poFather->g_pBox->xStart,  g_poFather->g_pBox->yStart};
-    //nameNstatus(tuiMode_t::deselect, { reinterpret_cast<tuiBaseDrawer_t*>(g_poFather)->g_x0r,  reinterpret_cast<tuiBaseDrawer_t*>(g_poFather)->g_y0r});
     nameNstatus(tuiMode_t::deselect);
-    // mvwprintw(g_ncursWin, g_box.yStart, g_box.xStart, "-- %s -- %02d", tuiBase_t::g_strName, *g_pDtyStatus->g_pValue);
-    // wrefresh(g_ncursWin);
 }
 
 void tuiBaseDgtInOut_t::eventOn         (void)    {

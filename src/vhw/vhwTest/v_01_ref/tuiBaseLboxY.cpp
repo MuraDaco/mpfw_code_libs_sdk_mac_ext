@@ -52,7 +52,7 @@ void tuiBaseLboxY_t::init       (void* p_poFather) 	{
     g_x0a       = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
     g_y0a       = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
 
-    frameNname(tuiMode_t::deselect);
+    frameNname();
 
     initElementsList();
 
@@ -75,7 +75,12 @@ void tuiBaseLboxY_t::selectByMouse         (void)    {
 }
 
 void tuiBaseLboxY_t::display               (void)    {
-    frameNname(tuiMode_t::deselect);
+    frameNname();
+}
+
+void tuiBaseLboxY_t::display               (bool p_recursively)    {
+    display();
+    if(p_recursively) displayElements(p_recursively);
 }
 
 void tuiBaseLboxY_t::deSelect        (void)    {

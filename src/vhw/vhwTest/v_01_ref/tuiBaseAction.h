@@ -47,6 +47,7 @@ public:
     virtual void end       	    (void)  {};
     virtual void eventOn    	(void)  {};
     virtual void display   	    (void)  {};
+    virtual void display   	    ([[maybe_unused]] bool p_recursively)  {};
     virtual void select     	(void)  {};
     virtual void deSelect   	(void)  {};
     virtual void selectByMouse 	(void)  {};

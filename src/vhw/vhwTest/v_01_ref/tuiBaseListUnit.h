@@ -46,13 +46,13 @@ public:
 
     void selectByMouse 	(void) override;
 
-    void initElementsList       (void); // initElementsList
+    void initElementsList           (void); // initElementsList
     //void initElementsList       (point_t p_point0);
-    bool selectElements     (void);
-    static void nextElement        (tuiBaseListUnit_t* p_po);  // it is a static function because it will be called by a static function
-    static void prevElement        (tuiBaseListUnit_t* p_po);  // it is a static function because it will be called by a static function
+    bool selectElements             (void);
+    static void nextElement         (tuiBaseListUnit_t* p_po);  // it is a static function because it will be called by a static function
+    static void prevElement         (tuiBaseListUnit_t* p_po);  // it is a static function because it will be called by a static function
     void refreshElements            (void);
-
+    void displayElements            (bool p_recursively);
     // --------------------- Element pointers section - START
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
