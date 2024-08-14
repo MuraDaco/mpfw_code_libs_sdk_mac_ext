@@ -92,6 +92,7 @@ set(SOURCE_FILES_CPP
     tuiBaseDrawer.cpp
     tuiBase.cpp
     tuiBaseListUnit.cpp
+    tuiBaseListElem.cpp
     tuiBaseListUnitY.cpp
     tuiBaseDgtInOut.cpp
     tuiBaseLbox.cpp

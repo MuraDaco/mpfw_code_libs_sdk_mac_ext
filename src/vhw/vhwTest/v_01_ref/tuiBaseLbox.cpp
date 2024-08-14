@@ -51,7 +51,7 @@ void tuiBaseLbox_t::init       (void* p_poFather) 	{
 
 
     //g_box.draw(g_ncursWin);    
-    frameNname();
+    //frameNname();
 
     //tuiBaseDrawer__name(0, 85);
 

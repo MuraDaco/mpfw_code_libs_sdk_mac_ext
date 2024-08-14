@@ -123,6 +123,19 @@ void tuiBaseDrawer_t::initWin           (void) {
     g_pNcursWin = newwin(g_h, g_w, g_y0r, g_x0r);
 }
 
+
+void tuiBaseDrawer_t::updateRelativeX   (uint8_t p_x0r) {
+
+    g_x0a = (g_x0a - g_x0r) + p_x0r; // N.B.: (g_x0a - g_x0r) = p_poFather)->g_x0a
+    g_x0r = p_x0r;
+}
+
+void tuiBaseDrawer_t::updateRelativeY   (uint8_t p_y0r) {
+
+    g_y0a = (g_y0a - g_y0r) + p_y0r + 1; // N.B.: (g_x0a - g_x0r) = p_poFather)->g_x0a
+    g_y0r = p_y0r + 1;
+}
+
 void tuiBaseDrawer_t::endGraphEnv       (void)  {
     nodelay(stdscr, false);
     getch();                            /* Print it on to the real screen */

@@ -32,18 +32,14 @@
 #define TUI_BASE_LIST_UNIT_Y_H
 
 #include "tuiBase.h"
+#include "tuiBaseListElem.h"
 
 class tuiBaseListUnitY_t : public tuiBase_t {
 
 public:
 
-    typedef struct __element__	{
-    	tuiBase_t*	element;
-    	uint8_t	    flag;
-    } element_t;
-
-    tuiBaseListUnitY_t      (const char* p_strName, box_t  p_box,   element_t* p_elementList);
-    tuiBaseListUnitY_t      (const char* p_strName, box_t* p_pBox,  element_t* p_elementList);
+    tuiBaseListUnitY_t      (const char* p_strName, box_t  p_box,   tuiBaseListElem_t* p_elementList);
+    tuiBaseListUnitY_t      (const char* p_strName, box_t* p_pBox,  tuiBaseListElem_t* p_elementList);
 
     void selectByMouse 	(void) override;
 
@@ -52,19 +48,19 @@ public:
     static void nextElement             (tuiBaseListUnitY_t* p_po);  // it is a static function because it will be called by a static function
     static void prevElement             (tuiBaseListUnitY_t* p_po);  // it is a static function because it will be called by a static function
     void refreshElements                (void);
-    void displayElements            (bool p_recursively);
+    void displayElements                (bool p_recursively);
     // --------------------- Element pointers section - START
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
-    element_t*	g_elementList;
-    element_t*  g_pCurrentElement;
-    element_t*  g_pLastElement;
+    tuiBaseListElem_t*	g_elementList;
+    tuiBaseListElem_t*  g_pCurrentElement;
+    tuiBaseListElem_t*  g_pLastElement;
     bool g_bElementList;
     // --------------------- Element pointers section - END
 
 
 protected:
-    uint32_t    g_originWin;
+    int16_t    g_originWin;
 
 
 

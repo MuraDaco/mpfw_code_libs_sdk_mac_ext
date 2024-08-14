@@ -32,7 +32,7 @@
 #include "tuiBaseListUnitY.h"
 
 
-tuiBaseListUnitY_t::tuiBaseListUnitY_t      (const char* p_strName, box_t p_box, element_t* p_elementList) :
+tuiBaseListUnitY_t::tuiBaseListUnitY_t      (const char* p_strName, box_t p_box, tuiBaseListElem_t* p_elementList) :
      tuiBase_t              (p_strName, p_box)
     ,g_elementList          {p_elementList}
     ,g_pCurrentElement      {p_elementList}
@@ -41,7 +41,7 @@ tuiBaseListUnitY_t::tuiBaseListUnitY_t      (const char* p_strName, box_t p_box,
     ,g_originWin            {0}
 {}
 
-tuiBaseListUnitY_t::tuiBaseListUnitY_t      (const char* p_strName, box_t* p_pBox, element_t* p_elementList) :
+tuiBaseListUnitY_t::tuiBaseListUnitY_t      (const char* p_strName, box_t* p_pBox, tuiBaseListElem_t* p_elementList) :
      tuiBase_t              (p_strName, p_pBox)
     ,g_elementList          {p_elementList}
     ,g_pCurrentElement      {p_elementList}
@@ -53,14 +53,19 @@ tuiBaseListUnitY_t::tuiBaseListUnitY_t      (const char* p_strName, box_t* p_pBo
 void tuiBaseListUnitY_t::initElementsList       (void) 	{
     if(!g_elementList)   return;
     // c) initialize all elements of the its own element list that is
-    element_t* l_element = g_elementList;
+    tuiBaseListElem_t* l_element = g_elementList;
 
     // c.1) run [init] function for each [child] element
-    while(l_element->element)    {
+    uint16_t l_id = 0;
+    while(l_element->g_pUnit)    {
+        l_element->g_id = l_id;
         //g_pLastElement = l_element;
-        if(this->g_pNcursWin) 
-            l_element->element->init(this);
+        if(g_pNcursWin)   {
+            l_element->g_pUnit->init(this);
+            l_element->g_pUnit->updateRelativeY(l_id);
+        }
         l_element++;
+        l_id++;
     }
 
     // c.2) determine the existence of an elements list
@@ -88,16 +93,16 @@ void tuiBaseListUnitY_t::selectByMouse     (void)    {
 bool tuiBaseListUnitY_t::selectElements     (void)    {
     bool l_result = false;
 
-    element_t* l_element = g_elementList;
-    while(l_element->element)    {
-        if(l_element->element->bMouseClickInsideBounds()) {
-            //if(g_pCurrentElement) g_pCurrentElement->element->deSelect();   // because of mouse event management
+    tuiBaseListElem_t* l_element = g_elementList;
+    while(l_element->g_pUnit)    {
+        if(l_element->g_pUnit->bMouseClickInsideBounds()) {
+            
             g_pCurrentElement = l_element;
-            l_element->element->selectByMouse();
+            l_element->g_pUnit->selectByMouse();
             l_result = true;
             break;
         } else {
-            l_element->element->display();
+            l_element->g_pUnit->display();
         }
         l_element++;
     }
@@ -107,18 +112,37 @@ bool tuiBaseListUnitY_t::selectElements     (void)    {
 
 void tuiBaseListUnitY_t::prevElement     (tuiBaseListUnitY_t* p_po)    {
     if(p_po->g_bElementList) {
-        if(p_po->g_pCurrentElement) {
-            if(p_po->g_elementList == p_po->g_pCurrentElement) {
-                p_po->g_pCurrentElement = p_po->g_pLastElement;
-            } else {
-                // 
-                p_po->g_pCurrentElement--;
-            }
+        if(p_po->g_elementList == p_po->g_pCurrentElement) {
+            // the current element is already the first element, therefore ...
+            // do nothing
         } else {
-            // list is not initialized, therefore ..
-            p_po->g_pCurrentElement = p_po->g_elementList;
+            // 
+            p_po->g_pCurrentElement--;
+            // get element-id
+            //if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id) >= p_po->g_originWin)   {
+            if(p_po->g_pCurrentElement->g_id >= p_po->g_originWin)   {
+                // repaint is NOT necessary
+                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(p_po);
+            } else {
+                // re-paint is necessary
+
+                // update relative coordinates
+                p_po->g_pCurrentElement->g_pUnit->updateRelativeY(1);
+
+                g_poSelected = p_po->g_pCurrentElement->g_pUnit;
+                p_po->g_pCurrentElement->g_pUnit->select();
+                // update origin
+                p_po->g_originWin--;
+
+                tuiBaseListElem_t* l_element = p_po->g_pCurrentElement + 1;
+                for(uint8_t l_id = 2; l_id < (p_po->g_h-1); l_id++) {
+                    if(l_element->g_pUnit) {
+                        l_element->g_pUnit->updateRelativeY(l_id);
+                        l_element->g_pUnit->deSelect();
+                    } else break;
+                }
+            }
         }
-        p_po->g_pCurrentElement->element->deselectBackNselect(p_po);
     }
 }
 
@@ -128,29 +152,32 @@ void tuiBaseListUnitY_t::nextElement	(tuiBaseListUnitY_t* p_po)  {
             p_po->g_pCurrentElement++;
             if(p_po->g_pLastElement == p_po->g_pCurrentElement)
                 p_po->g_pCurrentElement = p_po->g_elementList;
-        } else {
-            p_po->g_pCurrentElement = p_po->g_elementList;
         }
-        p_po->g_pCurrentElement->element->deselectBackNselect(p_po);
+        p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(p_po);
     }
 }
 
 void tuiBaseListUnitY_t::refreshElements     (void)    {
-    element_t* l_element = g_elementList;
+    tuiBaseListElem_t* l_element = g_elementList + g_originWin;
 
     // c.1) run [init] function for each [child] element
-    while(l_element->element)    {
-        l_element->element->display();
+    while(l_element->g_pUnit)    {
+        if(l_element->g_id < (g_originWin + g_h))    {
+            l_element->g_pUnit->display();
+        } else break;
         l_element++;
     }
+
 }
 
 void tuiBaseListUnitY_t::displayElements     (bool p_recursively)    {
-    element_t* l_element = g_elementList;
+    tuiBaseListElem_t* l_element = g_elementList + g_originWin;
 
     // c.1) run [init] function for each [child] element
-    while(l_element->element)    {
-        l_element->element->display(p_recursively);
+    while(l_element->g_pUnit)    {
+        if(l_element->g_id < (g_originWin + g_h))    {
+            l_element->g_pUnit->display(p_recursively);
+        } else break;
         l_element++;
     }
 }

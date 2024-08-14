@@ -37,8 +37,8 @@ class tuiBaseLboxY_t : public tuiBaseListUnitY_t    {
 
 public:
 
-    tuiBaseLboxY_t (const char* p_strName, uint8_t p_height ,element_t* p_elementList);
-    tuiBaseLboxY_t (const char* p_strName, box_t* p_pBox    ,element_t* p_elementList);
+    tuiBaseLboxY_t (const char* p_strName, uint8_t p_height ,tuiBaseListElem_t* p_elementList);
+    tuiBaseLboxY_t (const char* p_strName, box_t* p_pBox    ,tuiBaseListElem_t* p_elementList);
 
     void init               (void* p_poFather) 		override;
     void select             (void)                  override;

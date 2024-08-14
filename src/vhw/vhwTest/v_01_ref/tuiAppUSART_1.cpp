@@ -118,16 +118,16 @@ tuiBaseListUnit_t::element_t g_elementBaseListLbox1[] = {
 // ******************
 // ***** list 2 *****
 
-tuiBaseDgtInOut_t testBaseDgtInOut2A("BaseDgtInOut 2A", {1 ,40 ,1 ,1}, &testPar0A);
-tuiBaseDgtInOut_t testBaseDgtInOut2B("BaseDgtInOut 2B", {1 ,40 ,2 ,1}, &testPar0B);
-tuiBaseDgtInOut_t testBaseDgtInOut2C("BaseDgtInOut 2C", {1 ,40 ,3 ,1}, &testPar0C);
-tuiBaseDgtInOut_t testBaseDgtInOut2D("BaseDgtInOut 2D", {1 ,40 ,4 ,1}, &testPar0D);
-tuiBaseDgtInOut_t testBaseDgtInOut2E("BaseDgtInOut 2E", {1 ,40 ,5 ,1}, &testPar0E);
-tuiBaseDgtInOut_t testBaseDgtInOut2F("BaseDgtInOut 2F", {1 ,40 ,6 ,1}, &testPar0F);
-tuiBaseDgtInOut_t testBaseDgtInOut2G("BaseDgtInOut 2G", {1 ,40 ,7 ,1}, &testPar0G);
-tuiBaseDgtInOut_t testBaseDgtInOut2H("BaseDgtInOut 2H", {1 ,40 ,8 ,1}, &testPar0H);
+tuiBaseDgtInOut_t testBaseDgtInOut2A("BaseDgtInOut 2A", 1, &testPar0A);
+tuiBaseDgtInOut_t testBaseDgtInOut2B("BaseDgtInOut 2B", 1, &testPar0B);
+tuiBaseDgtInOut_t testBaseDgtInOut2C("BaseDgtInOut 2C", 1, &testPar0C);
+tuiBaseDgtInOut_t testBaseDgtInOut2D("BaseDgtInOut 2D", 1, &testPar0D);
+tuiBaseDgtInOut_t testBaseDgtInOut2E("BaseDgtInOut 2E", 1, &testPar0E);
+tuiBaseDgtInOut_t testBaseDgtInOut2F("BaseDgtInOut 2F", 1, &testPar0F);
+tuiBaseDgtInOut_t testBaseDgtInOut2G("BaseDgtInOut 2G", 1, &testPar0G);
+tuiBaseDgtInOut_t testBaseDgtInOut2H("BaseDgtInOut 2H", 1, &testPar0H);
 
-tuiBaseListUnitY_t::element_t g_elementBaseListLboxY2[] = {
+tuiBaseListElem_t   g_elementBaseListLboxY2[] = {
      {&testBaseDgtInOut2A , 1 }
     ,{&testBaseDgtInOut2B , 0 }
     ,{&testBaseDgtInOut2C , 3 }

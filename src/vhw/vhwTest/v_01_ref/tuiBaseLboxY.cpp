@@ -35,10 +35,10 @@
 tuiBaseLboxY_t*	tuiBaseLboxY_t::g_po = nullptr;
 
 
-tuiBaseLboxY_t::tuiBaseLboxY_t      (const char* p_strName, uint8_t p_height    ,element_t* p_elementList) :
+tuiBaseLboxY_t::tuiBaseLboxY_t      (const char* p_strName, uint8_t p_height    ,tuiBaseListElem_t* p_elementList) :
      tuiBaseListUnitY_t         (p_strName, {p_height, 0, 0, 0}, p_elementList)
 {}
-tuiBaseLboxY_t::tuiBaseLboxY_t      (const char* p_strName, box_t* p_pBox       ,element_t* p_elementList) :
+tuiBaseLboxY_t::tuiBaseLboxY_t      (const char* p_strName, box_t* p_pBox       ,tuiBaseListElem_t* p_elementList) :
      tuiBaseListUnitY_t         (p_strName, p_pBox, p_elementList)
 {}
 
@@ -52,7 +52,7 @@ void tuiBaseLboxY_t::init       (void* p_poFather) 	{
     g_x0a       = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
     g_y0a       = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
 
-    frameNname();
+    //frameNname();
 
     initElementsList();
 
@@ -113,9 +113,9 @@ void tuiBaseLboxY_t::vEventHndlKey_right	(void)  {
 }
 
 void tuiBaseLboxY_t::vEventHndlKey_enter	(void)  {
-    if(g_po->g_pCurrentElement->element->isSelected())  {
+    if(g_po->g_pCurrentElement->g_pUnit->isSelected())  {
         g_po->frameNname(tuiMode_t::select);
-        g_po->g_pCurrentElement->element->eventOn();
+        g_po->g_pCurrentElement->g_pUnit->eventOn();
     }
 }
 

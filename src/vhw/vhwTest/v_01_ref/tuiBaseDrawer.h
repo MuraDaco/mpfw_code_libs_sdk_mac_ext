@@ -119,6 +119,9 @@ public:
     dtyUint8_t* g_pDtyStatus;
     // --------------------- Data section - END
 
+    void updateRelativeX    (uint8_t p_x0r);
+    void updateRelativeY    (uint8_t p_y0r);
+
 private:
 
 

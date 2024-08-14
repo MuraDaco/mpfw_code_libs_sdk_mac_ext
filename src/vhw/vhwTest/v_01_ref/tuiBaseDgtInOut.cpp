@@ -35,7 +35,7 @@
 tuiBaseDgtInOut_t*	tuiBaseDgtInOut_t::g_po = nullptr;
 
 tuiBaseDgtInOut_t::tuiBaseDgtInOut_t      (const char* p_strName    ,uint8_t p_height   ,dtyUint8_t* p_pDtyStatus   )   :
-     tuiBase_t          (p_strName, {p_height, 0, 0, 0}, p_pDtyStatus)
+     tuiBase_t          (p_strName, {p_height, 0, 0, 1}, p_pDtyStatus)
     ,g_pDtyStatus           {p_pDtyStatus}
 {}
 
@@ -52,6 +52,7 @@ void tuiBaseDgtInOut_t::init       (void* p_poFather) 	{
     g_y0Win     = static_cast<tuiBase_t*>(p_poFather)->g_y0Win  ; // + g_y0r;
     g_x0a       = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
     g_y0a       = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
+    if(!g_w) g_w = static_cast<tuiBase_t*>(p_poFather)->g_w - 2;
 }
 
 bool tuiBaseDgtInOut_t::loop            (void)  {
