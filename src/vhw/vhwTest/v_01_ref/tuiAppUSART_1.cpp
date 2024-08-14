@@ -109,7 +109,7 @@ tuiBaseListUnit_t::element_t g_elementBaseListLbox1[] = {
     ,{&testBaseDgtInOut1F , 6 }
     ,{&testBaseDgtInOut1G , 3 }
     ,{&testBaseDgtInOut1H ,19 }
-    ,{nullptr                   , 1 }
+    ,{nullptr, 1 }
 };
 
 // ***** list 1 - end
@@ -150,7 +150,7 @@ tuiBaseLbox_t testBaseLbox0("testBaseLbox 0", &testLboxBox0, g_elementBaseListLb
 box_t testLboxBox1 = {14,30,2,45};
 tuiBaseLbox_t testBaseLbox1("testBaseLbox 1", &testLboxBox1, g_elementBaseListLbox1);
 
-box_t testLboxBoxY2 = {14,30,2,85};
+box_t testLboxBoxY2 = {9,30,2,85};
 tuiBaseLboxY_t testBaseLboxY2("testBaseLbox 2", &testLboxBoxY2, g_elementBaseListLboxY2);
 
 tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
