@@ -58,6 +58,7 @@ protected:
     // --------------------- Object pointers section - END
 
 private:
+    void getStrStatus               (char* p_str);
 
     // // --------------------- Events handler section - START
 	// // ..................... Events handler: functions

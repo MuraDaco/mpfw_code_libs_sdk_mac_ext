@@ -68,6 +68,8 @@ void tuiBaseListUnitY_t::initElementsList       (void) 	{
         l_id++;
     }
 
+    g_elementNum = l_id;
+
     // c.2) determine the existence of an elements list
     if(l_element == g_elementList) {
         g_bElementList = false;
@@ -143,6 +145,7 @@ void tuiBaseListUnitY_t::prevElement     (tuiBaseListUnitY_t* p_po)    {
                     l_element++;
                 }
             }
+            p_po->display();
         }
     }
 }
@@ -183,8 +186,9 @@ void tuiBaseListUnitY_t::nextElement	(tuiBaseListUnitY_t* p_po)  {
                     l_element--;
                 }
             }
+            p_po->display();
         }
-        p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(p_po);
+        //p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(p_po);
     }
 }
 

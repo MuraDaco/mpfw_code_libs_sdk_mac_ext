@@ -61,6 +61,7 @@ public:
 
 protected:
     int16_t    g_originWin;
+    uint16_t   g_elementNum;
 
 
 

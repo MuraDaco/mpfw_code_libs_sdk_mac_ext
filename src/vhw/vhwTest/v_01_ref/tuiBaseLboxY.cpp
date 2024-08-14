@@ -28,9 +28,9 @@
  *      Author: Marco Dau
  */
  
+#include <stdio.h>  // sprintf
 
 #include "tuiBaseLboxY.h"
-
 
 tuiBaseLboxY_t*	tuiBaseLboxY_t::g_po = nullptr;
 
@@ -59,23 +59,18 @@ void tuiBaseLboxY_t::init       (void* p_poFather) 	{
 }
 
 
-void tuiBaseLboxY_t::select         (void)    {
-    frameNname(tuiMode_t::select);
-}
-
 void tuiBaseLboxY_t::selectByMouse         (void)    {
     if(selectElements()) {
+        // a sub-element has been selected
         select();
     } else {
+        // none sub-element has been selected
         deselectBackNselect();
         g_po = this;
         eventOn();
     }
+    display();
     
-}
-
-void tuiBaseLboxY_t::display               (void)    {
-    frameNname();
 }
 
 void tuiBaseLboxY_t::display               (bool p_recursively)    {
@@ -83,15 +78,42 @@ void tuiBaseLboxY_t::display               (bool p_recursively)    {
     if(p_recursively) displayElements(p_recursively);
 }
 
+#define SIZE_OF_STATUS_STR  10
+void tuiBaseLboxY_t::getStrStatus               (char* p_str)    {
+    uint8_t l_idSelected = 0;
+    // check status mode of current element: is it selected or not?
+    if(g_pCurrentElement->g_pUnit->isSelectedOrEventOn()) {
+        l_idSelected = g_pCurrentElement->g_id;
+    }
+    snprintf(p_str, SIZE_OF_STATUS_STR,"%03d / %03d", l_idSelected+1, g_elementNum);
+}
+
+void tuiBaseLboxY_t::display               (void)    {
+    char l_str[SIZE_OF_STATUS_STR];
+    getStrStatus(l_str);
+    frameNameNstatus(l_str);
+}
+
+void tuiBaseLboxY_t::select         (void)    {
+    char l_str[SIZE_OF_STATUS_STR];
+    getStrStatus(l_str);
+    frameNameNstatus(tuiMode_t::select, l_str);
+}
+
+
 void tuiBaseLboxY_t::deSelect        (void)    {
-    frameNname(tuiMode_t::deselect);
+    char l_str[SIZE_OF_STATUS_STR];
+    getStrStatus(l_str);
+    frameNameNstatus(tuiMode_t::deselect, l_str);
 }
 
 
 void tuiBaseLboxY_t::eventOn     (void)    {
+    char l_str[SIZE_OF_STATUS_STR];
     g_po = this;
     tuiBaseAction_t::g_eventArray  = g_eventArray;
-    frameNname(tuiMode_t::eventOn);
+    getStrStatus(l_str);
+    frameNameNstatus(tuiMode_t::eventOn, l_str);
 }
 
 void tuiBaseLboxY_t::vEventHndlKey_up	(void)  {

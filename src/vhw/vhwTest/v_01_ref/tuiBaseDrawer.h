@@ -86,9 +86,11 @@ public:
     void initGraphEnvColor      (void);
     void deinitGraphEnv         (void);
     void endGraphEnv            (void);
-    void frame          (tuiMode_t p_mode);
-    void frameNname     (void);    
-    void frameNname     (tuiMode_t p_mode);    
+    void frame              (tuiMode_t p_mode);
+    void frameNname         (void);
+    void frameNameNstatus   (char* p_str);
+    void frameNname         (tuiMode_t p_mode);
+    void frameNameNstatus   (tuiMode_t p_mode, char* p_str);
     void frameBox       (tuiMode_t p_mode);
     void frameBox       (void);
     void name           (tuiMode_t p_mode);
@@ -102,6 +104,7 @@ public:
     bool uiMouseEventStatus                 (void);
     bool uiMouseEventCode_ButtonPressed     (void);
     bool isSelected                         (void);
+    bool isSelectedOrEventOn                (void);
 
     WINDOW* g_pNcursWin;
     uint8_t g_h;
