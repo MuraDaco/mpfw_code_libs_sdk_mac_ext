@@ -96,8 +96,9 @@ void tuiBaseListUnitY_t::selectByMouse     (void)    {
 bool tuiBaseListUnitY_t::selectElements     (void)    {
     bool l_result = false;
 
-    tuiBaseListElem_t* l_element = g_elementList;
-    while(l_element->g_pUnit)    {
+    tuiBaseListElem_t* l_element = g_elementList + g_originWin;
+    uint16_t l_id = 0;
+    while((l_element->g_pUnit) && (l_id < (g_h-2)))  {
         if(l_element->g_pUnit->bMouseClickInsideBounds()) {
             
             g_pCurrentElement = l_element;
@@ -108,6 +109,7 @@ bool tuiBaseListUnitY_t::selectElements     (void)    {
             l_element->g_pUnit->display();
         }
         l_element++;
+        l_id++;
     }
 
     return l_result;
@@ -121,7 +123,6 @@ void tuiBaseListUnitY_t::prevElement     (tuiBaseListUnitY_t* p_po)    {
         } else {
             // 
             p_po->g_pCurrentElement--;
-            // get element-id
             //if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id) >= p_po->g_originWin)   {
             if(p_po->g_pCurrentElement->g_id >= p_po->g_originWin)   {
                 // repaint is NOT necessary
@@ -163,7 +164,6 @@ void tuiBaseListUnitY_t::nextElement	(tuiBaseListUnitY_t* p_po)  {
             // do not other things
         } else {
             if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id - (p_po->g_h - 2)) < p_po->g_originWin)   {
-            //if(p_po->g_pCurrentElement->g_id >= p_po->g_originWin)   {
                 // repaint is NOT necessary
                 p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(p_po);
             } else {
@@ -173,7 +173,6 @@ void tuiBaseListUnitY_t::nextElement	(tuiBaseListUnitY_t* p_po)  {
                 p_po->g_originWin++;
                 // update relative coordinates
                 p_po->g_pCurrentElement->g_pUnit->updateRelativeY(p_po->g_h-3);
-                //p_po->g_pCurrentElement->g_id = p_po->g_h-3;
                 g_poSelected = p_po->g_pCurrentElement->g_pUnit;
                 p_po->g_pCurrentElement->g_pUnit->select();
 
@@ -188,7 +187,6 @@ void tuiBaseListUnitY_t::nextElement	(tuiBaseListUnitY_t* p_po)  {
             }
             p_po->display();
         }
-        //p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(p_po);
     }
 }
 

@@ -83,9 +83,9 @@ void tuiBaseLboxY_t::getStrStatus               (char* p_str)    {
     uint8_t l_idSelected = 0;
     // check status mode of current element: is it selected or not?
     if(g_pCurrentElement->g_pUnit->isSelectedOrEventOn()) {
-        l_idSelected = g_pCurrentElement->g_id;
+        l_idSelected = g_pCurrentElement->g_id + 1;
     }
-    snprintf(p_str, SIZE_OF_STATUS_STR,"%03d / %03d", l_idSelected+1, g_elementNum);
+    snprintf(p_str, SIZE_OF_STATUS_STR,"%03d / %03d", l_idSelected, g_elementNum);
 }
 
 void tuiBaseLboxY_t::display               (void)    {
