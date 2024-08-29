@@ -22,49 +22,51 @@
 //  *******************************************************************************
 
 /*
- * tuiBaseWlistUnit.h
+ * tuiBaseCntnr.h
  *
- *  Created on: Aug, 3rd 2024
+ *  Created on: Aug, 12th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_BASE_WLIST_UNIT_H
-#define TUI_BASE_WLIST_UNIT_H
+#ifndef TUI_BASE_CNTNR_H
+#define TUI_BASE_CNTNR_H
 
-#include "tuiBaseUnit.h"
+#include "tuiBase.h"
+#include "dtyBaseCntnrUnit.h"
 
-class tuiBaseWlistUnit_t : public tuiBaseUnit_t {
+class tuiBaseCntnr_t : public tuiBase_t {
 
 public:
 
-    typedef struct __element__	{
-    	tuiBaseUnit_t*	element;
-    	uint8_t	        flag;
-    } element_t;
+    tuiBaseCntnr_t      (const char* p_strName, box_t  p_box,   dtyBaseCntnrUnit_t* p_pCntr);
 
-    tuiBaseWlistUnit_t      (const char* p_strName, box_t* p_box, zone_t*    p_zoneList, element_t* p_elementList);
-    void initElementsList       (void);
-    void initElementsList       (point_t p_point0);
-    bool selectElements     (void);
-    static void nextElement        (tuiBaseWlistUnit_t* p_po);  // it is a static function because it will be called by a static function
-    static void prevElement        (tuiBaseWlistUnit_t* p_po);  // it is a static function because it will be called by a static function
-    void refreshElements            (void);
+
+    void initElementsList               (void); // initElementsList
+    void displayElements                (bool p_recursively);
+    void selectByMouse 	                (void) override;
+    bool selectElements                 (void);
+    static void nextElement             (tuiBaseCntnr_t* p_po);  // it is a static function because it will be called by a static function
+    static void prevElement             (tuiBaseCntnr_t* p_po);  // it is a static function because it will be called by a static function
+    void refreshElements                (void);
+
 
     // --------------------- Element pointers section - START
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
-    element_t*	g_elementList;
-    element_t*  g_pCurrentElement;
-    element_t*  g_pLastElement;
-    bool g_bElementList;
-    //[[maybe_unused]] tuiBaseUnit_t*	g_ptrFather;
+    dtyBaseCntnrUnit_t* g_pCntnr;
     // --------------------- Element pointers section - END
 
 
 protected:
 
+    uint8_t markerToColor     (dtyBaseCntnrUnit_t::kMarker_t p_marker);
+
+    int16_t    g_originWin;
+    uint16_t   g_elementNum;
+
+
 
 };
 
 
-#endif 	// TUI_BASE_WLIST_UNIT_H
+#endif 	// TUI_BASE_CNTNR_H

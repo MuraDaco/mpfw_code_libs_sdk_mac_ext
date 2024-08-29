@@ -38,11 +38,13 @@ project(${MAIN_NAME} VERSION 1.0)
 
 set(EXECUTABLE ${PROJECT_NAME}.out )
 
-
-
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
+
+
+
+
 
 #enable_language(C ASM)
 #set(CMAKE_C_STANDARD 11)
@@ -82,11 +84,18 @@ set(SOURCE_FILES_CPP
     vhwPphTbl_Mod1.cpp
     vhwPphTbl.cpp
 
+    ##-- utyFrmtUsart.cpp
+
     dtyBaseUnit.cpp
     dtyUint8.cpp
+    dtyBaseCntnrUnit.cpp
+    dtyStuf.cpp
+    ##-- dtyStringList.cpp
 
     ##-- tuiGraphicBox.cpp
     
+    tuiBaseCntnr.cpp
+    tuiTextUsart.cpp
 
     tuiBaseAction.cpp
     tuiBaseDrawer.cpp

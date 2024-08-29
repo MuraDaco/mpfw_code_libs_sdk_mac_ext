@@ -37,6 +37,7 @@
 #include <ncurses.h>
 #include "dtyUint8.h"
 #include "uyTypesDefs.h"
+#include "tuiBaseDrawerColor.h"
 
 
 #define TUI_KEY_TAB             0x0009
@@ -47,14 +48,14 @@
 #define NCURS_MOUSE_TRACKING_ENABLE     // printf("\033[?1003h");            // Makes the terminal report mouse movement events           
 #define NCURS_MOUSE_TRACKING_DISABLE    // printf("\033[?1003l");            // Disable mouse movement events, as l = low
 
-#define NCURS_COLOR_PAIR_WINDOW_SELECT              COLOR_PAIR  (1)
-#define NCURS_COLOR_PAIR_INIT_WINDOW_SELECT         init_pair   (1, COLOR_YELLOW,  COLOR_BLUE)
-
-#define NCURS_COLOR_PAIR_WINDOW_DESELECT            COLOR_PAIR  (2)
-#define NCURS_COLOR_PAIR_INIT_WINDOW_DESELECT       init_pair   (2, COLOR_RED,     COLOR_BLACK)
-
-#define NCURS_COLOR_PAIR_WINDOW_EVENT_ON            COLOR_PAIR  (3)
-#define NCURS_COLOR_PAIR_INIT_WINDOW_EVENT_ON       init_pair   (3, COLOR_RED,   COLOR_YELLOW)
+// #define NCURS_COLOR_PAIR_WINDOW_SELECT              COLOR_PAIR  (1)
+// #define NCURS_COLOR_PAIR_INIT_WINDOW_SELECT         init_pair   (1, COLOR_YELLOW,  COLOR_BLUE)
+// 
+// #define NCURS_COLOR_PAIR_WINDOW_DESELECT            COLOR_PAIR  (2)
+// #define NCURS_COLOR_PAIR_INIT_WINDOW_DESELECT       init_pair   (2, COLOR_RED,     COLOR_BLACK)
+// 
+// #define NCURS_COLOR_PAIR_WINDOW_EVENT_ON            COLOR_PAIR  (3)
+// #define NCURS_COLOR_PAIR_INIT_WINDOW_EVENT_ON       init_pair   (3, COLOR_RED,   COLOR_YELLOW)
 
 #define tuiBaseDrawer__mvprintw(y, x, strFrmt, strName)       \
         mvwprintw(g_pNcursWin, g_y0r + y, g_x0r + x, strFrmt, strName);     wrefresh(g_pNcursWin)
@@ -86,9 +87,14 @@ public:
     void initGraphEnvColor      (void);
     void deinitGraphEnv         (void);
     void endGraphEnv            (void);
+
+    void rowPrint(uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength);
+
     void frame              (tuiMode_t p_mode);
     void frameNname         (void);
     void frameNameNstatus   (char* p_str);
+    void frameDebug         (char* p_str);
+    void frameDebug         (uint8_t p_row, char* p_str);
     void frameNname         (tuiMode_t p_mode);
     void frameNameNstatus   (tuiMode_t p_mode, char* p_str);
     void frameBox       (tuiMode_t p_mode);

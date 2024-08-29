@@ -112,6 +112,10 @@ void tuiBaseDrawer_t::initGraphEnvColor (void)    {
     NCURS_COLOR_PAIR_INIT_WINDOW_DESELECT;
     NCURS_COLOR_PAIR_INIT_WINDOW_SELECT;
     NCURS_COLOR_PAIR_INIT_WINDOW_EVENT_ON;
+    NCURS_COLOR_PAIR_INIT_WINDOW_YELLOW;
+    NCURS_COLOR_PAIR_INIT_WINDOW_MAGENTA;
+    NCURS_COLOR_PAIR_INIT_WINDOW_CYAN;
+    NCURS_COLOR_PAIR_INIT_WINDOW_WHITE;
 
 }
 void tuiBaseDrawer_t::deinitGraphEnv    (void)    {
@@ -196,7 +200,44 @@ void tuiBaseDrawer_t::frameNameNstatus (char* p_str)   {
 	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r + g_w - 1     ,0    ,g_h - 2      );
 
     mvwprintw(g_pNcursWin, g_y0Win + 0          ,g_x0Win + 4        ," *~ %s ~* ", g_strName);
-    mvwprintw(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 21 ," >> %s << ", p_str);
+    mvwprintw(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1        ,"~ %s ~", p_str);
+
+    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
+
+    wrefresh(g_pNcursWin);
+
+}
+
+//void tuiBaseDrawer_t::rowPrint  ([[maybe_unused]] uint8_t b_row, [[maybe_unused]] bool p_bRowBegin, [[maybe_unused]] uint8_t p_rowMarker, [[maybe_unused]] uint8_t* p_pRowStr, [[maybe_unused]] uint8_t p_rowLength)     {
+void tuiBaseDrawer_t::rowPrint  (uint8_t p_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength)     {
+    wattron (g_pNcursWin,COLOR_PAIR(p_rowMarker));
+
+    //mvwaddchnstr(g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win + 1        ,p_pRowStr  ,p_rowLength);
+    if(p_bRowBegin) mvwaddnstr(g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win        ,"1"  ,1);
+    if(*p_pRowStr)
+        mvwaddnstr(g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win + 1        ,p_pRowStr  ,p_rowLength);
+    else
+        mvwaddnstr(g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win + 1        ,"0123456789"  ,10);
+
+    wattroff(g_pNcursWin,COLOR_PAIR(p_rowMarker));
+    wrefresh(g_pNcursWin);
+}
+
+void tuiBaseDrawer_t::frameDebug (char* p_str)   {
+    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
+
+    mvwprintw(g_pNcursWin, g_y0Win + 2          ,g_x0Win + 4        ,"~ %s ~", p_str);
+
+    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
+
+    wrefresh(g_pNcursWin);
+
+}
+
+void tuiBaseDrawer_t::frameDebug (uint8_t p_row, char* p_str)   {
+    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
+
+    mvwprintw(g_pNcursWin, g_y0Win + p_row          ,g_x0Win + 4        ,"~ %s ~", p_str);
 
     g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
 

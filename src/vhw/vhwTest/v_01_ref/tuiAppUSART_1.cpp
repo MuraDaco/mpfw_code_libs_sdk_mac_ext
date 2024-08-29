@@ -35,6 +35,8 @@
 #include "tuiBaseLbox.h"
 #include "tuiBaseLboxY.h"
 
+#include "tuiTextUsart.h"
+
 // **********************************************************
 // -------- BOX define - start
 // ............................ H   W  Yo  Xo
@@ -153,10 +155,26 @@ tuiBaseLbox_t testBaseLbox1("testBaseLbox 1", &testLboxBox1, g_elementBaseListLb
 box_t testLboxBoxY2 = {5,30,2,85};
 tuiBaseLboxY_t testBaseLboxY2("testBaseLbox 2", &testLboxBoxY2, g_elementBaseListLboxY2);
 
+uint8_t appBufferLog[1000000];
+uint8_t appBufferIn[] = {
+//  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
+};
+
+dtyStuf_t       testBuffer1(appBufferLog, sizeof(appBufferLog), appBufferIn, sizeof(appBufferIn));
+dtyStuf_t       testBuffer2(appBufferLog, sizeof(appBufferLog), appBufferIn, sizeof(appBufferIn));
+tuiTextUsart_t  testTextUsart1("testTextUsart1", {5, 60, 2,85}, &testBuffer1);
+tuiTextUsart_t  testTextUsart2("testTextUsart2", {7,140,16, 5}, &testBuffer2);
+
+
 tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
      {&testBaseLbox0, 1}
     ,{&testBaseLbox1, 1}
-    ,{&testBaseLboxY2, 1}
+    //,{&testBaseLboxY2, 1}
+    ,{&testTextUsart1, 1}
+    ,{&testTextUsart2, 1}
     ,{nullptr, 1}
 };
 

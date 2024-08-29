@@ -1,5 +1,5 @@
 // main.cpp
-import helloworld; // import declaration
+import tstModule_A; // import declaration
  
 int main()
 {

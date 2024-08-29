@@ -1,5 +1,5 @@
-// helloworld.cpp
-export module helloworld; // module declaration
+// tstModule_A.cpp
+export module tstModule_A; // module declaration
  
 #include <iostream>        // import declaration
  
