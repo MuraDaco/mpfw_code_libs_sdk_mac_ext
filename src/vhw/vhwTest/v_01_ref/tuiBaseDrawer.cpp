@@ -190,14 +190,14 @@ void tuiBaseDrawer_t::frameNname (void)   {
 void tuiBaseDrawer_t::frameNameNstatus (char* p_str)   {
     g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
 
-	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r               ,ACS_ULCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r + g_w - 1     ,ACS_URCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r               ,ACS_LLCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + g_w - 1     ,ACS_LRCORNER       );
-	mvwhline(g_pNcursWin, g_y0r              ,g_x0r + 1           ,0    ,g_w - 2      );
-	mvwhline(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + 1           ,0    ,g_w - 2      );
-	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r               ,0    ,g_h - 2      );
-	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r + g_w - 1     ,0    ,g_h - 2      );
+	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win               ,ACS_ULCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win               ,ACS_LLCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
+	mvwhline(g_pNcursWin, g_y0Win              ,g_x0Win + 1           ,0    ,g_w - 2      );
+	mvwhline(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1           ,0    ,g_w - 2      );
+	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win               ,0    ,g_h - 2      );
+	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win + g_w - 1     ,0    ,g_h - 2      );
 
     mvwprintw(g_pNcursWin, g_y0Win + 0          ,g_x0Win + 4        ," *~ %s ~* ", g_strName);
     mvwprintw(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1        ,"~ %s ~", p_str);
@@ -213,10 +213,18 @@ void tuiBaseDrawer_t::rowPrint  (uint8_t p_row, bool p_bRowBegin, uint8_t p_rowM
     wattron (g_pNcursWin,COLOR_PAIR(p_rowMarker));
 
     //mvwaddchnstr(g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win + 1        ,p_pRowStr  ,p_rowLength);
-    if(p_bRowBegin) mvwaddnstr(g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win        ,"1"  ,1);
-    if(*p_pRowStr)
-        mvwaddnstr(g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win + 1        ,p_pRowStr  ,p_rowLength);
+    if(p_bRowBegin) 
+        //mvwaddnstr(g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win        ,"1"  ,1);
+        mvwaddch(g_pNcursWin,   g_y0Win + 1 + p_row          ,g_x0Win    ,'1'       );
     else
+        //mvwaddnstr(g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win        ," "  ,1);
+        mvwaddch(g_pNcursWin,   g_y0Win + 1 + p_row          ,g_x0Win    ,' '       );
+
+    if(*p_pRowStr)  {
+        mvwaddnstr  (g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win + 1        ,p_pRowStr  ,p_rowLength);
+        if(p_rowLength < g_w-2)
+    	    mvwhline    (g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win + 1 + p_rowLength           ,' '    ,g_w - p_rowLength - 2      );
+    } else
         mvwaddnstr(g_pNcursWin, g_y0Win + 1 + p_row          ,g_x0Win + 1        ,"0123456789"  ,10);
 
     wattroff(g_pNcursWin,COLOR_PAIR(p_rowMarker));

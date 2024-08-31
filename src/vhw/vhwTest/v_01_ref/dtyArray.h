@@ -22,48 +22,34 @@
 //  *******************************************************************************
 
 /*
- * dtyStuf.h
+ * dtyArray.h
  *
- *  Created on: Aug, 20th 2024
+ *  Created on: Aug, 29th 2024
  *      Author: Marco Dau
  *
 
-    Format description:
-    
-    01234567890 ....
-    mmlliiddd....................dddllnn
-          |__lenght of data block__|
+    Use Case
+        - 
 
-    m = begin marker
-    l = length of data block
-    d = data (hex-ascii coded)
-    i = info data block (i.e. text data block / binary data block )
-    n = end marker
-    m + n = 0
-  
-    LF = 0x0a
-    CR = 0x0d
-    '0'...'9''A'...'F'
-    x30...x39x41...x46
+
 
  */
  
-#ifndef UTY_STUF_H
-#define UTY_STUF_H
+#ifndef UTY_ARRAY_H
+#define UTY_ARRAY_H
 
 #include <cstdint>
 #include "dtyBaseCntnrUnit.h"
 
-class dtyStuf_t : public dtyBaseCntnrUnit_t  {
+class dtyArray_t : public dtyBaseCntnrUnit_t  {
 
 public:
     // ****************************************************
     // section start **** GENERAL *****
 
-    dtyStuf_t   (uint8_t* p_pBuf, uint32_t p_bufSize);
-    dtyStuf_t   (uint8_t* p_pBuf, uint32_t p_bufSize, uint8_t* p_pBufIn, uint16_t p_bufInSize);
-    dtyStuf_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize);
-    dtyStuf_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBaseCntnrUnit_t* p_cntnr);
+    dtyArray_t   (uint8_t* p_pBuf, uint32_t p_bufSize);
+    dtyArray_t   (uint8_t* p_pBuf, uint32_t p_bufSize, uint8_t* p_pBufIn, uint16_t p_bufInSize);
+    dtyArray_t   (dtyBuffer_t* p_cntnrIn, uint32_t p_sizeCntnrIn);
 
     // section end   **** GENERAL ***** 
     // ****************************************************
@@ -78,9 +64,6 @@ public:
     // --------------------------
     // ****************************************************
     // section start **** DISPLAY *****
-
-    //void        initDisplayBox          (uint8_t p_boxH, uint8_t p_boxW)  override; 
-    //bool        setDisplayBoxNextRow    (void)  override;                                       
 
     // section end   **** DISPLAY ***** 
     // ****************************************************
@@ -97,15 +80,9 @@ protected:
     // ****************************************************
     // section start **** GENERAL *****
 
-    kMarker_t   getBlockDataMarker      (uint32_t p_idHeader) override;                  
-    uint32_t    getBlockDataRowBegin    (uint32_t p_idHeader) override;                  
-    uint16_t    getBlockDataSize        (uint32_t p_idHeader) override;                  
-
-    bool        bBlockDataHeaderBegin   (uint32_t p_idHeader) override;
-    bool        bBlockDataHeaderEnd     (uint32_t p_idHeader) override;
-
-    uint32_t    getBoxPrevHeader     (uint32_t p_pIdHeader) override;            
-    uint32_t    getBoxNextHeader     (uint32_t p_pIdHeader) override;            
+    kMarker_t   getBlockDataMarker     (uint32_t p_idHeader) override;                  
+    uint32_t    getBlockDataRowBegin   (uint32_t p_idHeader) override;                  
+    uint16_t    getBlockDataSize       (uint32_t p_idHeader) override;                  
 
     // section end   **** DISPLAY ***** 
     // ****************************************************
@@ -123,24 +100,14 @@ protected:
     // ****************************************************
     // section start **** DISPLAY *****
 
+    uint32_t    getBoxPrevHeader     (uint32_t p_pIdHeader) override;            
+    uint32_t    getBoxNextHeader     (uint32_t p_pIdHeader) override;            
 
     // section end   **** DISPLAY ***** 
     // ****************************************************
     // --------------------------
     // ****************************************************
     // section start **** SELECT *****
-
-	// void	    format          (kMarker_t p_marker ,uint8_t*   p_pBuffIn   ,uint8_t* p_pBuffOut);
-	// void	    formatStart     (kMarker_t p_marker ,uint8_t    p_data      ,uint8_t* p_buffOut);
-	// kMarker_t	getMarker       (uint8_t* p_buffOut);
-	// uint8_t*	getData         (uint8_t* p_buffOut);
-	// uint8_t	    getDataLength   (uint8_t* p_buffOut);
-    // void        search          (uint32_t p_pDataStart, uint16_t p_rowSize);
-    // void        next            (void);
-    // void        prev            (void);
-    // kMarker_t   getRowMarker    (void);
-    // uint8_t*    getRowData      (void);
-    // uint16_t    getRowInfo      (void);
 
     // section end   **** SELECT ***** 
     // ****************************************************
@@ -150,4 +117,4 @@ private:
 };
 
 
-#endif 	// DTY_STUF_H
+#endif 	// UTY_ARRAY_H

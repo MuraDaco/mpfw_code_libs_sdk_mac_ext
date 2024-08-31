@@ -115,12 +115,12 @@ public:
     WINDOW* g_pNcursWin;
     uint8_t g_h;
     uint8_t g_w;
-    uint8_t g_y0r;
-    uint8_t g_x0r;
-    uint8_t g_y0a;
-    uint8_t g_x0a;
-    uint8_t g_y0Win;
-    uint8_t g_x0Win;
+    uint8_t g_y0r;      // it is used to determine the "g_y0Win" & "g_y0a" coordinates and it is defined because it is easier to manage by the programmer user
+    uint8_t g_x0r;      // it is used to determine the "g_x0Win" & "g_x0a" coordinates and it is defined because it is easier to manage by the programmer user
+    uint8_t g_y0a;      // the origin/referiment is the ncurses "main" window, that is "stdscr"; it is used in mouse management
+    uint8_t g_x0a;      // the origin/referiment is the ncurses "main" window, that is "stdscr"; it is used in mouse management
+    uint8_t g_y0Win;    // the origin/referiment is the ncurses "secondary" windows, the windows that are created by "newwin" function; it is used in "print" functions
+    uint8_t g_x0Win;    // the origin/referiment is the ncurses "secondary" windows, the windows that are created by "newwin" function; it is used in "print" functions
     tuiMode_t g_status;
 
     const char* g_strName;

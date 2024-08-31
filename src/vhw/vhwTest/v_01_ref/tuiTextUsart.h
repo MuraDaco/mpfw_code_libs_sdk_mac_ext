@@ -59,6 +59,7 @@ protected:
     // --------------------- Object pointers section - END
 
 private:
+    uint8_t minOf               (uint8_t p_num1, uint8_t p_num2);
     void getStrStatus               (char* p_str);
     void getStrStatus               (uint8_t p_row, char* p_str);
 

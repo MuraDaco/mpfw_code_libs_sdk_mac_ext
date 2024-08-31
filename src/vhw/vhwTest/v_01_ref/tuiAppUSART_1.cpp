@@ -37,6 +37,8 @@
 
 #include "tuiTextUsart.h"
 
+#include "dtyArray.h"
+
 // **********************************************************
 // -------- BOX define - start
 // ............................ H   W  Yo  Xo
@@ -156,17 +158,56 @@ box_t testLboxBoxY2 = {5,30,2,85};
 tuiBaseLboxY_t testBaseLboxY2("testBaseLbox 2", &testLboxBoxY2, g_elementBaseListLboxY2);
 
 uint8_t appBufferLog[1000000];
-uint8_t appBufferIn[] = {
+uint8_t appBufferIn1[] = {
+//  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
+    '1', '1', '1', '1', '1', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x11,0x11,0x11,0x11
+};
+
+uint8_t appBufferIn2[] = {
+//  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
+    '2', '2', '2', '2', '2', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x22,0x22,0x22,0x22
+};
+
+uint8_t appBufferIn3[] = {
+//  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
+    '3', '3', '3', '3', '3', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x33,0x33,0x33,0x33
+};
+
+uint8_t appBufferInnn[] = {
 //  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5',
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
+    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x00,0x00,0x00,0x00
 };
 
-dtyStuf_t       testBuffer1(appBufferLog, sizeof(appBufferLog), appBufferIn, sizeof(appBufferIn));
-dtyStuf_t       testBuffer2(appBufferLog, sizeof(appBufferLog), appBufferIn, sizeof(appBufferIn));
-tuiTextUsart_t  testTextUsart1("testTextUsart1", {5, 60, 2,85}, &testBuffer1);
-tuiTextUsart_t  testTextUsart2("testTextUsart2", {7,140,16, 5}, &testBuffer2);
+
+dtyBuffer_t appArrayCntnr[] = {
+     {appBufferIn1, sizeof(appBufferIn1)}
+    ,{appBufferIn2, sizeof(appBufferIn2)}
+    ,{appBufferIn3, sizeof(appBufferIn3)}
+};
+//dtyArray_t      testArrayBufferIn(appArrayCntnr,sizeof(appArrayCntnr));
+//dtyStuf_t       testBuffer0(appBufferLog, sizeof(appBufferLog), testArrayBufferIn);
+uint8_t appBufferLog1[1000000]; dtyStuf_t       testBuffer1(appBufferLog1, sizeof(appBufferLog1), appArrayCntnr, sizeof(appArrayCntnr));
+uint8_t appBufferLog2[1000000]; dtyStuf_t       testBuffer2(appBufferLog2, sizeof(appBufferLog2), appArrayCntnr, sizeof(appArrayCntnr));
+dtyStuf_t       testBuffer3(appBufferLog, sizeof(appBufferLog), appBufferInnn, sizeof(appBufferInnn));
+uint8_t appBufferLog4[1000000]; dtyStuf_t       testBuffer4(appBufferLog4, sizeof(appBufferLog4), appArrayCntnr, sizeof(appArrayCntnr));
+
+//dtyStuf_t       testBuffer1(appBufferLog, sizeof(appBufferLog), appBufferIn, sizeof(appBufferIn));
+//dtyStuf_t       testBuffer2(appBufferLog, sizeof(appBufferLog), appBufferInnn, sizeof(appBufferInnn));
+//dtyStuf_t       testBuffer3(appBufferLog, sizeof(appBufferLog), appBufferInnn, sizeof(appBufferInnn));
+//dtyStuf_t       testBuffer4(appBufferLog, sizeof(appBufferLog), appBufferIn, sizeof(appBufferIn));
+
+tuiTextUsart_t  testTextUsart1("testTextUsart1", {5,  60,  2,  85}, &testBuffer1);
+tuiTextUsart_t  testTextUsart2("testTextUsart2", {9,  35,  7,  75}, &testBuffer2);
+tuiTextUsart_t  testTextUsart3("testTextUsart3", {5,  35,  7, 110}, &testBuffer3);
+tuiTextUsart_t  testTextUsart4("testTextUsart4", {7, 140, 16,   5}, &testBuffer4);
 
 
 tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
@@ -175,6 +216,8 @@ tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
     //,{&testBaseLboxY2, 1}
     ,{&testTextUsart1, 1}
     ,{&testTextUsart2, 1}
+    ,{&testTextUsart3, 1}
+    ,{&testTextUsart4, 1}
     ,{nullptr, 1}
 };
 

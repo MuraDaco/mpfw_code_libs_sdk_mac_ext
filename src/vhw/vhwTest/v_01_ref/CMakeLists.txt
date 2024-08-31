@@ -86,6 +86,7 @@ set(SOURCE_FILES_CPP
 
     ##-- utyFrmtUsart.cpp
 
+    dtyArray.cpp
     dtyBaseUnit.cpp
     dtyUint8.cpp
     dtyBaseCntnrUnit.cpp

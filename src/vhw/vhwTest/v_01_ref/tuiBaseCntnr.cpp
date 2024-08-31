@@ -84,12 +84,12 @@ void tuiBaseCntnr_t::displayElements     ([[maybe_unused]] bool p_recursively)  
 
 void tuiBaseCntnr_t::selectByMouse     (void)    {
 
-    if(selectElements()) {
-        select();
-    } else {
+//    if(selectElements()) {
+//        select();
+//    } else {
         deselectBackNselect();
         eventOn();
-    }
+//    }
 
 }
 
@@ -98,117 +98,16 @@ bool tuiBaseCntnr_t::selectElements     (void)    {
     return true;
 }
 
-void tuiBaseCntnr_t::prevElement     ([[maybe_unused]]  tuiBaseCntnr_t* p_po)    {
-
-//    if(!p_po->g_pCntnr->bEmpty())  {
-//        if(p_po->g_pCntnr->bFirstElement())    { // element selected
-//            // do nothing
-//        } else {
-//            if(p_po->g_pCntnr->bPrev())    {
-//                // the mobile-windows is moved up
-//                // it is necessary re-paint the mobile-window
-//                displayElements();
-//            } else {
-//                // update selected/deselected 
-//                //tuiDrawer_chgatt(p_po->g_rowSelected, DESELECT);
-//                p_po->g_rowSelected--;
-//                //tuiDrawer_chgatt(p_po->g_rowSelected, SELECT);
-//            }
-//        }
-//    }
-//
-//    if(p_po->g_bElementList) {
-//        if(p_po->g_elementList == p_po->g_pCurrentElement) {
-//            // the current element is already the first element, therefore ...
-//            // do nothing
-//        } else {
-//            // 
-//            p_po->g_pCurrentElement--;
-//            //if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id) >= p_po->g_originWin)   {
-//            if(p_po->g_pCurrentElement->g_id >= p_po->g_originWin)   {
-//                // repaint is NOT necessary
-//                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(p_po);
-//            } else {
-//                // re-paint is necessary
-//
-//                // update origin
-//                p_po->g_originWin--;
-//                // update relative coordinates
-//                p_po->g_pCurrentElement->g_pUnit->updateRelativeY(0);
-//                g_poSelected = p_po->g_pCurrentElement->g_pUnit;
-//                p_po->g_pCurrentElement->g_pUnit->select();
-//
-//                tuiBaseListElem_t* l_element = p_po->g_pCurrentElement + 1;
-//                for(uint8_t l_id = 1; l_id < (p_po->g_h-2); l_id++) {
-//                    if(l_element->g_pUnit) {
-//                        l_element->g_pUnit->updateRelativeY(l_id);
-//                        l_element->g_pUnit->deSelect();
-//                    } else break;
-//                    l_element++;
-//                }
-//            }
-//            p_po->display();
-//        }
-//    }
-
+void tuiBaseCntnr_t::prevElement     (tuiBaseCntnr_t* p_po)    {
+    p_po->g_pCntnr->getDisplayBoxMoveUp();
+    p_po->displayElements(false);
 
 }
 
 void tuiBaseCntnr_t::nextElement	([[maybe_unused]] tuiBaseCntnr_t* p_po)  {
+    p_po->g_pCntnr->getDisplayBoxMoveDown();
+    p_po->displayElements(false);
 
-//    if(!p_po->g_pCntnr->bEmpty())  {
-//        if(vg_pCntnr->bLastElement())    { // element selected
-//            // do nothing
-//        } else {
-//            if(p_po->g_pCntnr->bNext())    {
-//                // the mobile-windows is moved down
-//                // it is necessary re-paint the mobile-window
-//                displayElements();
-//            } else {
-//                // update selected/deselected 
-//                //tuiDrawer_chgatt(p_po->g_rowSelected, DESELECT);
-//                p_po->g_rowSelected++;
-//                //tuiDrawer_chgatt(p_po->g_rowSelected, SELECT);
-//            }
-//        }
-//    }
-//
-//    if(p_po->g_bElementList) {
-//        p_po->g_pCurrentElement++;
-//        if(p_po->g_pLastElement == p_po->g_pCurrentElement) {
-//            // the bottom of the list has been reached, therefore ...
-//
-//            // go back with the (current element)
-//            // N.B.: the last element of the list is the element that has the [tuiBase] element pointer (g_pUnit) = nullptr
-//            p_po->g_pCurrentElement--;
-//
-//            // do not other things
-//        } else {
-//            if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id - (p_po->g_h - 2)) < p_po->g_originWin)   {
-//                // repaint is NOT necessary
-//                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(p_po);
-//            } else {
-//                // re-paint is necessary
-//
-//                // update origin
-//                p_po->g_originWin++;
-//                // update relative coordinates
-//                p_po->g_pCurrentElement->g_pUnit->updateRelativeY(p_po->g_h-3);
-//                g_poSelected = p_po->g_pCurrentElement->g_pUnit;
-//                p_po->g_pCurrentElement->g_pUnit->select();
-//
-//                tuiBaseListElem_t* l_element = p_po->g_pCurrentElement - 1;
-//                for(int8_t l_id = (p_po->g_h-4); l_id >= 0; l_id--) {
-//                    if(l_element->g_pUnit) {
-//                        l_element->g_pUnit->updateRelativeY(l_id);
-//                        l_element->g_pUnit->deSelect();
-//                    } else break;
-//                    l_element--;
-//                }
-//            }
-//            p_po->display();
-//        }
-//    }
 
 }
 

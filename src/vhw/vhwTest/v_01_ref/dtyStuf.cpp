@@ -57,6 +57,28 @@ dtyStuf_t::dtyStuf_t   (uint8_t* p_pBuf, uint32_t p_bufSize, uint8_t* p_pBufIn, 
     add(p_pBufIn, p_bufInSize);
 }
 
+dtyStuf_t::dtyStuf_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize) :
+    dtyBaseCntnrUnit_t  (p_pBuf, p_bufSize)
+{
+    uint8_t l_max = p_arrayBufInSize / sizeof(dtyBuffer_t);
+    kMarker_t l_marker = kMarker_t::defaultX;
+    for(uint8_t l_id=0; l_id < l_max; l_id++)   {
+        switch (l_id)   {
+            case 0:
+                l_marker = kMarker_t::defaultX;
+                break;
+            case 1:
+                l_marker = kMarker_t::deviceRx;
+                break;
+            case 2:
+                l_marker = kMarker_t::deviceTx;
+                break;
+        };
+        add(p_pArrayBufIn[l_id].pBuf, p_pArrayBufIn[l_id].size, l_marker, kDataType_t::binary);
+    }
+}
+
+
 
 dtyStuf_t::kMarker_t dtyStuf_t::getBlockDataMarker  (uint32_t p_idHeader) {                 
     uint16_t l_byteH = (g_pBuf[p_idHeader+HEADER_MARKER_POS  ] <<  8) & 0xFF00;
@@ -76,6 +98,23 @@ uint16_t dtyStuf_t::getBlockDataSize   (uint32_t p_idHeader) {
     uint16_t l_byteH = (g_pBuf[p_idHeader+HEADER_DATA_LENGTH_POS  ] <<  8) & 0xFF00;
     uint16_t l_byteL = (g_pBuf[p_idHeader+HEADER_DATA_LENGTH_POS+1]      ) & 0x00FF;
     return (l_byteH + l_byteL);
+}
+
+
+bool     dtyStuf_t::bBlockDataHeaderBegin   (uint32_t p_idHeader)   {
+    return (p_idHeader == 0);
+}
+
+bool     dtyStuf_t::bBlockDataHeaderEnd   (uint32_t p_idHeader)   {
+    return (p_idHeader + HEADER_SIZE == g_idWriteHeaderCurrent);
+}
+
+uint32_t dtyStuf_t::getBoxPrevHeader    (uint32_t p_pIdHeader)  {                            
+    return (p_pIdHeader >= HEADER_SIZE) ? (p_pIdHeader - HEADER_SIZE) : 0;
+}
+
+uint32_t dtyStuf_t::getBoxNextHeader    (uint32_t p_pIdHeader)  {                            
+    return p_pIdHeader + HEADER_SIZE;
 }
 
 
@@ -144,7 +183,7 @@ void dtyStuf_t::add         (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t 
     uint8_t* l_pBufInfo = &l_pBuf[DATA_BLOCK_INFO_POS+1];
 
     // update header block id/pointer
-    g_idWriteHeaderCurrent = getDisplayBoxNextHeader(g_idWriteHeaderCurrent);
+    g_idWriteHeaderCurrent = getBoxNextHeader(g_idWriteHeaderCurrent);
 
     // data block
 
@@ -182,73 +221,65 @@ void dtyStuf_t::add         (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t 
 // ****************************************************
 // section start **** DISPLAY *****
 
-uint32_t dtyStuf_t::getDisplayBoxPrevHeader    (uint32_t p_pIdHeader)  {                            
-    return (p_pIdHeader >= HEADER_SIZE) ? (p_pIdHeader - HEADER_SIZE) : 0;
-}
-
-uint32_t dtyStuf_t::getDisplayBoxNextHeader    (uint32_t p_pIdHeader)  {                            
-    return p_pIdHeader + HEADER_SIZE;
-}
-
-void dtyStuf_t::initDisplayBox        (uint8_t p_boxH, uint8_t p_boxW)      {              
-
-    // init display box parametrs
-    g_displayBoxH = p_boxH;
-    g_displayBoxW = p_boxW;
-
-    // determine the data block that contains the data to display begin
-    g_idDisplayHeaderBegin = getDisplayBoxPrevHeader(g_idWriteHeaderCurrent);
-    g_idDisplayHeaderEnd   = g_idDisplayHeaderBegin;
-    g_debugBlockDataSize = getBlockDataSize(g_idDisplayHeaderBegin);
-    uint8_t l_displayRow = 0;
-    do {
-        l_displayRow +=  getBlockDataSize(g_idDisplayHeaderBegin)/p_boxW;
-        l_displayRow += (getBlockDataSize(g_idDisplayHeaderBegin)%p_boxW) ? 1 : 0;
-        g_idDisplayHeaderBegin = getDisplayBoxPrevHeader(g_idDisplayHeaderBegin);     // g_idDisplayHeaderBegin -= HEADER_SIZE;  // setDisplayPrevHeader
-    } while(g_idDisplayHeaderBegin && (l_displayRow < p_boxH));
-    // all situations must be analyzed
-    // 1) g_idDisplayHeaderBegin = 0 && (l_displayRow < p_boxH)
-    //      -> it means that box contains all data blocks and has some rows free yet, therefore ...
-    //          -> g_idDisplayDataBegin = l_idBlockDataBegin
-    // 2) g_idDisplayHeaderBegin = 0 && (l_displayRow = p_boxH)
-    //      -> it means that the data to display perfectly matches the data the box can contain
-    //          -> g_idDisplayDataBegin = l_idBlockDataBegin
-    // 3) g_idDisplayHeaderBegin = 0 && (l_displayRow > p_boxH)
-    //      -> it means that the data to display are more than how much the box can contain
-    //          -> g_idDisplayDataBegin = l_idBlockDataBegin - (l_displayRow-p_boxH)*p_boxW
-    
-    // now the data block headers pointers/ids (begin:g_idDisplayHeaderBegin & end:g_idDisplayHeaderEnd) is determined 
-    // but it misses to determine the data block pointers/ids (begin:g_idDisplayDataBegin & end:g_idDisplayDataEnd), therefore ...
-    g_idDisplayDataBegin = getBlockDataRowBegin(g_idDisplayHeaderBegin);
-    g_idDisplayDataEnd   = getBlockDataRowEnd(g_idDisplayHeaderEnd); 
-    if(l_displayRow >= p_boxH)  {
-        g_idDisplayDataBegin  = getBlockDataRowBegin(g_idDisplayHeaderBegin) + (l_displayRow-p_boxH)*p_boxW;
-    }
-    g_debugDisplayRow = l_displayRow;
-
-}
+// void dtyStuf_t::initDisplayBox        (uint8_t p_boxH, uint8_t p_boxW)      {              
+// 
+//     // init display box parametrs
+//     g_displayBoxH = p_boxH;
+//     g_displayBoxW = p_boxW;
+// 
+//     // determine the data block that contains the data to display begin
+//     g_idDisplayHeaderBegin = getDisplayBoxPrevHeader(g_idWriteHeaderCurrent);
+//     g_idDisplayHeaderEnd   = g_idDisplayHeaderBegin;
+//     g_debugBlockDataSize = getBlockDataSize(g_idDisplayHeaderBegin);
+//     uint8_t l_displayRow = 0;
+//     do {
+//         l_displayRow +=  getBlockDataSize(g_idDisplayHeaderBegin)/p_boxW;
+//         l_displayRow += (getBlockDataSize(g_idDisplayHeaderBegin)%p_boxW) ? 1 : 0;
+//         g_idDisplayHeaderBegin = getDisplayBoxPrevHeader(g_idDisplayHeaderBegin);     // g_idDisplayHeaderBegin -= HEADER_SIZE;  // setDisplayPrevHeader
+//     } while(g_idDisplayHeaderBegin && (l_displayRow < p_boxH));
+//     // all situations must be analyzed
+//     // 1) g_idDisplayHeaderBegin = 0 && (l_displayRow < p_boxH)
+//     //      -> it means that box contains all data blocks and has some rows free yet, therefore ...
+//     //          -> g_idDisplayDataBegin = l_idBlockDataBegin
+//     // 2) g_idDisplayHeaderBegin = 0 && (l_displayRow = p_boxH)
+//     //      -> it means that the data to display perfectly matches the data the box can contain
+//     //          -> g_idDisplayDataBegin = l_idBlockDataBegin
+//     // 3) g_idDisplayHeaderBegin = 0 && (l_displayRow > p_boxH)
+//     //      -> it means that the data to display are more than how much the box can contain
+//     //          -> g_idDisplayDataBegin = l_idBlockDataBegin - (l_displayRow-p_boxH)*p_boxW
+//     
+//     // now the data block headers pointers/ids (begin:g_idDisplayHeaderBegin & end:g_idDisplayHeaderEnd) is determined 
+//     // but it misses to determine the data block pointers/ids (begin:g_idDisplayDataBegin & end:g_idDisplayDataEnd), therefore ...
+//     g_idDisplayDataBegin = getBlockDataRowBegin(g_idDisplayHeaderBegin);
+//     g_idDisplayDataEnd   = getBlockDataRowEnd(g_idDisplayHeaderEnd); 
+//     if(l_displayRow >= p_boxH)  {
+//         g_idDisplayDataBegin  = getBlockDataRowBegin(g_idDisplayHeaderBegin) + (l_displayRow-p_boxH)*p_boxW;
+//     }
+//     g_debugDisplayRow = l_displayRow;
+// 
+// }
 
 
-bool dtyStuf_t::setDisplayBoxNextRow          (void)      {                                         
-    bool l_result = false;
-    // check the box end
-    if(!bDisplayBoxRowEnd())    {
-        l_result = true;
-        // check the current data block end
-        if(bDisplayBlockDataRowEnd())    {
-            // the current pointer/id seeks the last data row of the data block, therefore ...
-
-            // the current header/block data must be updated/incremented before to determine the next data block pointer/id
-            g_idDisplayHeaderCurrent    = getDisplayBoxNextHeader(g_idDisplayHeaderCurrent);     // g_idDisplayHeaderCurrent    += HEADER_SIZE;
-            g_idDisplayDataCurrent      = getBlockDataRowBegin(g_idDisplayHeaderCurrent);
-        } else {
-            // stay on the current header/block data
-            // update only current data pointer/id
-            g_idDisplayDataCurrent += g_displayBoxW;
-        }
-    }
-    return l_result;
-}
+// bool dtyStuf_t::setDisplayBoxNextRow          (void)      {                                         
+//     bool l_result = false;
+//     // check the box end
+//     if(!bDisplayBoxRowEnd())    {
+//         l_result = true;
+//         // check the current data block end
+//         if(bDisplayBlockDataRowEnd())    {
+//             // the current pointer/id seeks the last data row of the data block, therefore ...
+// 
+//             // the current header/block data must be updated/incremented before to determine the next data block pointer/id
+//             g_idDisplayHeaderCurrent    = getDisplayBoxNextHeader(g_idDisplayHeaderCurrent);     // g_idDisplayHeaderCurrent    += HEADER_SIZE;
+//             g_idDisplayDataCurrent      = getBlockDataRowBegin(g_idDisplayHeaderCurrent);
+//         } else {
+//             // stay on the current header/block data
+//             // update only current data pointer/id
+//             g_idDisplayDataCurrent += g_displayBoxW;
+//         }
+//     }
+//     return l_result;
+// }
 
 // section end   **** DISPLAY ***** 
 // ****************************************************

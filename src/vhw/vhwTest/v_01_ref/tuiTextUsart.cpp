@@ -82,19 +82,20 @@ void tuiTextUsart_t::select         (void)    {
 }
 
 void tuiTextUsart_t::selectByMouse         (void)    {
-    if(selectElements()) {
-        select();
-    } else {
-        deselectBackNselect();
-        g_po = this;
-        eventOn();
-    }
+    deselectBackNselect();
+    g_po = this;
+    eventOn();
     
 }
 
-#define SIZE_OF_STATUS_STR  51
+#define SIZE_OF_STATUS_STR  200
+
+uint8_t tuiTextUsart_t::minOf               (uint8_t p_num1, uint8_t p_num2)    {
+    return (p_num1 < p_num2) ? p_num1 : p_num2;
+}
+
 void tuiTextUsart_t::getStrStatus               (char* p_str)    {
-    snprintf(p_str, SIZE_OF_STATUS_STR,"> %02x : %02x : %02x : %02x : %02x : %02x : %02x : %02x : %02x : %02x <", 
+    snprintf(p_str, minOf(SIZE_OF_STATUS_STR, g_w-5),"> %02x : %02x : %02x : %02x : %02x : %02x : %02x : %02x : %02x : %02x <", 
                 g_pCntnr->g_pBuf[0], g_pCntnr->g_pBuf[1],
                 g_pCntnr->g_pBuf[2], g_pCntnr->g_pBuf[3],
                 g_pCntnr->g_pBuf[4], g_pCntnr->g_pBuf[5],
@@ -106,19 +107,19 @@ void tuiTextUsart_t::getStrStatus               (char* p_str)    {
 void tuiTextUsart_t::getStrStatus                (uint8_t p_row, char* p_str)    {
     switch (p_row)  {
         case 1:
-            snprintf(p_str, SIZE_OF_STATUS_STR,"> %02x : %02x : %06x : %06x : %06x <", 
+            snprintf(p_str, minOf(SIZE_OF_STATUS_STR, g_w-5),"> %02x : %02x : %06x : %06x : %06x <", 
                         g_pCntnr->g_displayBoxH,            g_pCntnr->g_displayBoxW,
                         g_pCntnr->g_idDisplayDataBegin,     g_pCntnr->g_idDisplayDataEnd,   g_pCntnr->g_idDisplayDataCurrent
             );
             break;
         case 2:
-            snprintf(p_str, SIZE_OF_STATUS_STR,"> %02x : %06x : %06x : %06x <", 
+            snprintf(p_str, minOf(SIZE_OF_STATUS_STR, g_w-5),"> %02x : %06x : %06x : %06x <", 
                         g_pCntnr->g_debugDisplayRow,        
                         g_pCntnr->g_idDisplayHeaderBegin,     g_pCntnr->g_idDisplayHeaderEnd,   g_pCntnr->g_idDisplayHeaderCurrent
             );
             break;
         case 3:
-            snprintf(p_str, SIZE_OF_STATUS_STR,"> %04x : %06x : %06x <",
+            snprintf(p_str, minOf(SIZE_OF_STATUS_STR, g_w-5),"> %04x : %06x : %06x <",
                         g_pCntnr->g_debugBlockDataSize,
                         g_pCntnr->g_idWriteHeaderCurrent,        g_pCntnr->g_idWriteDataCurrent
             );
@@ -185,9 +186,9 @@ void tuiTextUsart_t::vEventHndlKey_enter	(void)  {
 }
 
 void tuiTextUsart_t::vEventHndlKey_home	(void)  {
-//    g_po->deselectBackNselect();
-//    if(g_po->g_poFather) g_po->g_poFather->eventOn();
-//
+    g_po->deselectBackNselect();
+    if(g_po->g_poFather) g_po->g_poFather->eventOn();
+
 }
 
 

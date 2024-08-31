@@ -32,6 +32,7 @@
 #define DTY_BASE_CNTR_UNIT_H
 
 #include "uyTypesDefs.h"
+#include "dtyTypesDefs.h"
 
 
 class dtyBaseCntnrUnit_t   {
@@ -45,18 +46,25 @@ public:
         ,testTx   = 0x15      // end marker = 0xeb
     };
 
-    virtual void        initDisplayBox          (uint8_t p_boxH, uint8_t p_boxW)  = 0;      
-    void        resetDisplayBox                (void);                                      
-    bool        bDisplayBoxRowEnd              (void);                                      
-    virtual bool        setDisplayBoxNextRow    (void)  = 0;                                       
+    bool        bEmpty       (void);
 
-    kMarker_t   getDisplayBlockDataRowMarker    (void);                                     
-    uint8_t*    getDisplayBlockDataRow          (void);                                     
-    uint8_t     getDisplayBlockDataRowLength    (void);                                     
-    bool        bDisplayBlockDataRowBegin       (void);                                     
-    bool        bDisplayBlockDataRowEnd         (void);                                     
+    void        initDisplayBox          (uint8_t p_boxH, uint8_t p_boxW);
+    void        resetDisplayBox         (void);
+    bool        setDisplayBoxNextRow    (void);
+
+    void        getDisplayBoxMoveUp     (void);
+    void        getDisplayBoxMoveDown   (void);
+
+    bool        bDisplayBoxRowEnd       (void);
+
+    kMarker_t   getDisplayBlockDataRowMarker    (void);
+    uint8_t*    getDisplayBlockDataRow          (void);
+    uint8_t     getDisplayBlockDataRowLength    (void);
+    bool        bDisplayBlockDataRowBegin       (void);
+    bool        bDisplayBlockDataRowEnd         (void);
 
     uint8_t* g_pBuf;
+    dtyBuffer_t* g_pAry;
 
     uint32_t g_idWriteHeaderCurrent;
     uint32_t g_idWriteDataCurrent;
@@ -85,89 +93,30 @@ protected:
 
 
     dtyBaseCntnrUnit_t  (uint8_t* p_pBuf, uint32_t p_bufSize);
+    dtyBaseCntnrUnit_t  (dtyBuffer_t* p_pAry, uint32_t p_arySize);
 
     virtual kMarker_t   getBlockDataMarker      (uint32_t p_idHeader)   = 0;                
     virtual uint32_t    getBlockDataRowBegin    (uint32_t p_idHeader)   = 0;                
             uint32_t    getBlockDataRowEnd      (uint32_t p_idHeader);                      
     virtual uint16_t    getBlockDataSize        (uint32_t p_idHeader)   = 0;                
 
-    //uint8_t* g_pBuf;
+    virtual bool        bBlockDataHeaderBegin   (uint32_t p_idHeader)  = 0;
+    virtual bool        bBlockDataHeaderEnd     (uint32_t p_idHeader)  = 0;
+    virtual uint32_t    getBoxPrevHeader        (uint32_t p_pIdHeader) = 0;                 
+    virtual uint32_t    getBoxNextHeader        (uint32_t p_pIdHeader) = 0;                 
+
     uint32_t g_bufSize;
 
     // section **** WRITE ****
     virtual void      add             (uint8_t* p_pBufIn, uint16_t p_bufInSize)                                             = 0;
     virtual void      add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker)                         = 0;
     virtual void      add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType) = 0;
-    //uint32_t g_idWriteHeaderCurrent;
-    //uint32_t g_idWriteDataCurrent;
 
     // section **** DISPLAY *****
-    virtual uint32_t    getDisplayBoxPrevHeader (uint32_t p_pIdHeader) = 0;                 
-    virtual uint32_t    getDisplayBoxNextHeader (uint32_t p_pIdHeader) = 0;                 
-
-
-
-
-//    uint8_t  g_displayBoxH;
-//    uint8_t  g_displayBoxW;
-//    uint32_t g_idDisplayHeaderCurrent;
-//    uint32_t g_idDisplayHeaderBegin;
-//    uint32_t g_idDisplayHeaderEnd;
-//    uint32_t g_idDisplayDataCurrent;
-//    uint32_t g_idDisplayDataBegin;
-//    uint32_t g_idDisplayDataEnd;
-
-    //virtual uint8_t*    getDisplayStrBuf        (void)  = 0;
-    //virtual bool        bDisplayStrBufBegin     (void)  = 0;
-    //virtual bool        bDisplaySelected        (void)  = 0;
-    //virtual void        setDisplayNext          (void)  = 0;
-    //virtual void        setDisplayNextHeader    (void)  = 0;
-    //virtual void        setDisplayPrev          (void)  = 0;
-
-
-
 
     // section **** SELECT ****
     uint32_t g_selectBlockCurrent;
     uint32_t g_selectDataCurrent;
-
-
-    // old 
-
-//	virtual void	  vDel		                (char*)	{}
-//	virtual void	  vUp                       (void)	{}
-//	virtual void	  vDown		                (void)	{}
-//	virtual void	  vRight		            (void)	{}
-//	virtual void	  vLeft		                (void)	{}
-//	virtual void	  vConfirm	                (void)	{}
-//	virtual void	  vSelected	                (void)	{}
-//	virtual void	  vUpdateInit	            (void)	{}
-//	virtual void	  vSearchFirst              (void)	{}
-//	virtual void	  vSearchNext		        (void)	{}
-//	virtual void	  vSearchPrev		        (void)	{}
-//	virtual bool	  bSearchLast  		        (void)	{return true;}
-//	virtual bool	  bDisplayable    	        (void)	{return true;}
-//
-//    uint32_t g_idDisplayHeaderCurr;   // absolute id buffer element currently displyed  -- g_pDisplayOrigin <= g_pDisplayCurr <= (g_pDisplayOrigin + g_inBoxSizeInRow*g_inBoxRowSize)
-//    uint32_t g_idDisplayCurr;         // absolute id buffer element currently displyed  -- g_pDisplayOrigin <= g_pDisplayCurr <= (g_pDisplayOrigin + g_inBoxSizeInRow*g_inBoxRowSize)
-//    uint32_t g_idDisplayOrigin;       // absolute id buffer element at the begin of box 
-//    uint8_t  g_inBoxSizeByRow;      // (rows number)
-//    uint8_t  g_inBoxRowSize;        // (row size)
-//    uint8_t  g_idRowSelected;  
-//
-//    uint32_t g_idDisplayBlockBeginCurr;
-//    uint32_t g_idDisplayBlockSizeCurr;
-//    uint32_t g_idDisplayHeaderBlockCurr;
-//    uint8_t  g_headerSize;
-//
-//    uint8_t* g_pBufCur;
-//
-//    uint8_t* g_pBufOrigin;
-//    uint8_t* g_pBufHeaderCur;
-//    uint8_t* g_pBufBlockDataCur;
-//    uint8_t* g_pBufSearch;
-//    uint8_t g_rowSize;
-
 
 };
 
