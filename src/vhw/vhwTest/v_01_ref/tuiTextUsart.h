@@ -47,6 +47,8 @@ public:
     void display            (void)                  override;
     void display            (bool p_recursively)    override;
     void deSelect           (void)                  override;
+
+    void setThis            (void)                  override;
     void eventOn            (void)                  override;
 
 protected:

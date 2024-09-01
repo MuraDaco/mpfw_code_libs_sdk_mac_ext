@@ -101,6 +101,9 @@ void tuiBaseLbox_t::deSelect        (void)    {
     frameNname(tuiMode_t::deselect);
 }
 
+void tuiBaseLbox_t::setThis            (void)  {
+    g_po = this;
+}
 
 void tuiBaseLbox_t::eventOn     (void)    {
     g_po = this;

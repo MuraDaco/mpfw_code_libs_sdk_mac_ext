@@ -49,6 +49,7 @@ public:
     void select             (void)                  override;
     void selectByMouse      (void)                  override;
     void deSelect           (void)                  override;
+    void setThis            (void)                  override;
     void eventOn            (void)                  override;
 
 

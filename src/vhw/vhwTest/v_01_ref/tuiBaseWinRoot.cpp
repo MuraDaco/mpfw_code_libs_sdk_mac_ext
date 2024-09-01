@@ -68,7 +68,7 @@ bool tuiBaseWinRoot_t::loop            (void)  {
 
     if(tuiEventCode_t::mouse == l_handlerEventCode) {
         if(uiMouseEventStatus())
-        { /* When the user clicks left mouse button */
+        {
 
             if(uiMouseEventCode_ButtonPressed())
             {
@@ -81,6 +81,7 @@ bool tuiBaseWinRoot_t::loop            (void)  {
                     refreshElements();
                 }
             }
+
         }
     } else {
         if(tuiEventCode_t::noEvent != l_handlerEventCode) tuiBaseAction_t::g_eventArray[tuiEventCodeNum(l_handlerEventCode)]();

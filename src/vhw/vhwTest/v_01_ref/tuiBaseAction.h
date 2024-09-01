@@ -50,7 +50,8 @@ public:
     virtual void display   	    ([[maybe_unused]] bool p_recursively)  {};
     virtual void select     	(void)  {};
     virtual void deSelect   	(void)  {};
-    virtual void selectByMouse 	(void)  {};
+    virtual void setThis        (void) = 0;
+    virtual void selectByMouse 	(void) = 0;
     virtual bool bDisplayable	(void)  {return true;};
 
     // common functions

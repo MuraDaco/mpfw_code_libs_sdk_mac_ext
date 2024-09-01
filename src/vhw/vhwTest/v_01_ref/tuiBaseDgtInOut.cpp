@@ -83,6 +83,10 @@ void tuiBaseDgtInOut_t::deSelect        (void)    {
     nameNstatus(tuiMode_t::deselect);
 }
 
+void tuiBaseDgtInOut_t::setThis            (void)  {
+    g_po = this;
+}
+
 void tuiBaseDgtInOut_t::eventOn         (void)    {
     g_po = this;
     tuiBaseAction_t::g_eventArray  = g_eventArray;

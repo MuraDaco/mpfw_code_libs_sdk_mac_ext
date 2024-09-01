@@ -86,6 +86,11 @@ void tuiBaseWin_t::deSelect     (void)    {
     // wrefresh(g_ncursWin);
 }
 
+void tuiBaseWin_t::setThis            (void)  {
+    g_po = this;
+}
+
+
 void tuiBaseWin_t::eventOn     (void)    {
     g_po = this;
     tuiBaseAction_t::g_eventArray  = g_eventArray;

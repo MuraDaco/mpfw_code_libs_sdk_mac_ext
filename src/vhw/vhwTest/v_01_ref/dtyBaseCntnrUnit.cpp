@@ -37,7 +37,6 @@
 
 dtyBaseCntnrUnit_t::dtyBaseCntnrUnit_t		(uint8_t* p_pBuf, uint32_t p_bufSize)	:
      g_pBuf                         {p_pBuf         }
-    ,g_bufSize                      {p_bufSize      }
     ,g_idWriteHeaderCurrent         {0              }
     ,g_idWriteDataCurrent           {p_bufSize      }
     ,g_idDisplayHeaderCurrent       {0              }
@@ -46,6 +45,7 @@ dtyBaseCntnrUnit_t::dtyBaseCntnrUnit_t		(uint8_t* p_pBuf, uint32_t p_bufSize)	:
     ,g_idDisplayDataCurrent         {p_bufSize      }
     ,g_idDisplayDataBegin           {p_bufSize      }
     ,g_idDisplayDataEnd             {p_bufSize      }
+    ,g_bufSize                      {p_bufSize      }
 {}
 
 dtyBaseCntnrUnit_t::dtyBaseCntnrUnit_t		(dtyBuffer_t* p_pAry, uint32_t p_arySize)	:

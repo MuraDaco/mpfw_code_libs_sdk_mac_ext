@@ -42,9 +42,13 @@ public:
     void init               (void* p_poFather)      override;
     void display            (void)                  override;
     void display            (bool p_recursively)    override;
+
+    void setThis            (void)                  override;
+
     void eventOn            (void)                  override;
     void select             (void)                  override;
     void deSelect           (void)                  override;
+
 
 
 //    const char* g_strName;

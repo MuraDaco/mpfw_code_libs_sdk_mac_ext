@@ -58,20 +58,22 @@ void tuiBaseLboxY_t::init       (void* p_poFather) 	{
 
 }
 
-
-void tuiBaseLboxY_t::selectByMouse         (void)    {
-    if(selectElements()) {
-        // a sub-element has been selected
-        select();
-    } else {
-        // none sub-element has been selected
-        deselectBackNselect();
-        g_po = this;
-        eventOn();
-    }
-    display();
-    
+void tuiBaseLboxY_t::setThis            (void)  {
+    g_po = this;
 }
+
+//void tuiBaseLboxY_t::selectByMouse         (void)    {
+//    if(selectElements()) {
+//        // a sub-element has been selected
+//        select();
+//    } else {
+//        // none sub-element has been selected
+//        deselectBackNselect();
+//        eventOn();
+//    }
+//    display();
+//    
+//}
 
 void tuiBaseLboxY_t::display               (bool p_recursively)    {
     display();

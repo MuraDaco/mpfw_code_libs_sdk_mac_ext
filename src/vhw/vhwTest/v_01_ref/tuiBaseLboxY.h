@@ -42,7 +42,8 @@ public:
 
     void init               (void* p_poFather) 		override;
     void select             (void)                  override;
-    void selectByMouse      (void)                  override;
+    void setThis            (void)                  override;
+    //void selectByMouse      (void)                  override;
     void display            (void)                  override;
     void display            (bool p_recursively)    override;
     void deSelect           (void)                  override;

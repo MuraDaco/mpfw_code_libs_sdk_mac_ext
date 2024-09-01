@@ -153,6 +153,10 @@ void tuiTextUsart_t::deSelect        (void)    {
     frameNname(tuiMode_t::deselect);
 }
 
+void tuiTextUsart_t::setThis            (void)  {
+    g_po = this;
+}
+
 
 void tuiTextUsart_t::eventOn     (void)    {
     g_po = this;

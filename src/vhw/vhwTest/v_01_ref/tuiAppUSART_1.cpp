@@ -104,7 +104,7 @@ tuiBaseDgtInOut_t testBaseDgtInOut1F("BaseDgtInOut 1F", {1 ,40 ,6 ,1}, &testPar0
 tuiBaseDgtInOut_t testBaseDgtInOut1G("BaseDgtInOut 1G", {1 ,40 ,7 ,1}, &testPar0G);
 tuiBaseDgtInOut_t testBaseDgtInOut1H("BaseDgtInOut 1H", {1 ,40 ,8 ,1}, &testPar0H);
 
-tuiBaseListUnit_t::element_t g_elementBaseListLbox1[] = {
+tuiBaseListElem_t g_elementBaseListLboxY1[] = {
      {&testBaseDgtInOut1A , 1 }
     ,{&testBaseDgtInOut1B , 0 }
     ,{&testBaseDgtInOut1C , 3 }
@@ -151,11 +151,11 @@ tuiBaseListElem_t   g_elementBaseListLboxY2[] = {
 box_t testLboxBox0 = {14,30,2,5};
 tuiBaseLbox_t testBaseLbox0("testBaseLbox 0", &testLboxBox0, g_elementBaseListLbox0);
 
-box_t testLboxBox1 = {14,30,2,45};
-tuiBaseLbox_t testBaseLbox1("testBaseLbox 1", &testLboxBox1, g_elementBaseListLbox1);
+box_t testLboxBoxY1 = {5,30,2,45};
+tuiBaseLboxY_t testBaseLboxY1("testBaseLboxY 1", &testLboxBoxY1, g_elementBaseListLboxY1);
 
-box_t testLboxBoxY2 = {5,30,2,85};
-tuiBaseLboxY_t testBaseLboxY2("testBaseLbox 2", &testLboxBoxY2, g_elementBaseListLboxY2);
+box_t testLboxBoxY2 = {5,30,7,45};
+tuiBaseLboxY_t testBaseLboxY2("testBaseLboxY 2", &testLboxBoxY2, g_elementBaseListLboxY2);
 
 uint8_t appBufferLog[1000000];
 uint8_t appBufferIn1[] = {
@@ -212,8 +212,8 @@ tuiTextUsart_t  testTextUsart4("testTextUsart4", {7, 140, 16,   5}, &testBuffer4
 
 tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
      {&testBaseLbox0, 1}
-    ,{&testBaseLbox1, 1}
-    //,{&testBaseLboxY2, 1}
+    ,{&testBaseLboxY1, 1}
+    ,{&testBaseLboxY2, 1}
     ,{&testTextUsart1, 1}
     ,{&testTextUsart2, 1}
     ,{&testTextUsart3, 1}

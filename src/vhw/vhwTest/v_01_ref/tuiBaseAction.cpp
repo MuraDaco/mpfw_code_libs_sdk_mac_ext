@@ -38,6 +38,22 @@ tuiBaseAction_t::tuiBaseAction_t    (void)  :
     g_poFather  {nullptr}
 {}
 
+
+//void tuiBaseAction_t::selectByMouse         (void)    {
+//    if(selectElements()) {
+//        // a sub-element has been selected
+//        select();
+//    } else {
+//        // none sub-element has been selected
+//        deselectBackNselect();
+//        //g_po = this;
+//        setThis();
+//        eventOn();
+//    }
+//    display();
+//    
+//}
+
 void tuiBaseAction_t::deselectBack(tuiBaseAction_t* p_poDeselectEnd) {
     if(this != p_poDeselectEnd)   {
         deSelect();

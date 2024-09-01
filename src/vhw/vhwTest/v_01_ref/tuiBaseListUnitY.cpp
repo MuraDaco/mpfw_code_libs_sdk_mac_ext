@@ -82,15 +82,30 @@ void tuiBaseListUnitY_t::initElementsList       (void) 	{
 
 }
 
-void tuiBaseListUnitY_t::selectByMouse     (void)    {
+//void tuiBaseListUnitY_t::selectByMouse     (void)    {
+//
+//    if(selectElements()) {
+//        select();
+//    } else {
+//        deselectBackNselect();
+//        eventOn();
+//    }
+//
+//}
 
+void tuiBaseListUnitY_t::selectByMouse         (void)    {
     if(selectElements()) {
+        // a sub-element has been selected
         select();
     } else {
+        // none sub-element has been selected
         deselectBackNselect();
+        //g_po = this;
+        //setThis();
         eventOn();
     }
-
+    display();
+    
 }
 
 bool tuiBaseListUnitY_t::selectElements     (void)    {
