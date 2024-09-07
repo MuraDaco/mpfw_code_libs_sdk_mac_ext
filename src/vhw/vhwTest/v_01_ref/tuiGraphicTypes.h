@@ -40,6 +40,9 @@ enum class tuiEventCode_t: uint8_t {
     ,keyRight
     ,keyEnter
     ,keyHome
+    ,keyDel
+    ,keyBackspace
+    ,keyTypeChar
     ,mouse
     ,noEvent = 0xff
 };

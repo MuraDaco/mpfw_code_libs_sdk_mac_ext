@@ -51,6 +51,7 @@ public:
     void deSelect           (void)                  override;
     void setThis            (void)                  override;
     void eventOn            (void)                  override;
+    event_t* pEventArrayGet	(void)                  override;
 
 
 private:

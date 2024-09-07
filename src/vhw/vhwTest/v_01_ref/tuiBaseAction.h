@@ -37,6 +37,8 @@
 class tuiBaseAction_t  {
 
 public:
+    static constexpr uint8_t constEventArraySize       = 6;
+
     tuiBaseAction_t (void);
     
     // virtual functions
@@ -45,7 +47,10 @@ public:
 
     virtual bool loop       	(void)  {return true;};
     virtual void end       	    (void)  {};
-    virtual void eventOn    	(void)  {};
+    virtual void eventOn    	(void);
+    virtual event_t* pEventArrayGet	(void) = 0;
+    virtual uint8_t eventArraySizeGet   (void);
+
     virtual void display   	    (void)  {};
     virtual void display   	    ([[maybe_unused]] bool p_recursively)  {};
     virtual void select     	(void)  {};
@@ -92,6 +97,7 @@ protected:
     //static point_t g_mouseXY;
     //static void setMouseXY(point_t p_mouseXY);
     static tuiBaseAction_t* g_poSelected;
+    static tuiBaseAction_t* g_poEventOn;
 
 
 };

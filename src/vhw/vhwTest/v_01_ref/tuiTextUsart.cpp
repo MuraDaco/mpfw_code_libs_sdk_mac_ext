@@ -160,8 +160,14 @@ void tuiTextUsart_t::setThis            (void)  {
 
 void tuiTextUsart_t::eventOn     (void)    {
     g_po = this;
-    tuiBaseAction_t::g_eventArray  = g_eventArray;
+    //tuiBaseAction_t::g_eventArray  = g_eventArray;
+    tuiBaseAction_t::eventOn();
+    
     frameNname(tuiMode_t::eventOn);
+}
+
+event_t* tuiTextUsart_t::pEventArrayGet	(void)      {
+    return g_eventArray;
 }
 
 void tuiTextUsart_t::vEventHndlKey_up	(void)  {

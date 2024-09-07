@@ -89,8 +89,13 @@ void tuiBaseDgtInOut_t::setThis            (void)  {
 
 void tuiBaseDgtInOut_t::eventOn         (void)    {
     g_po = this;
-    tuiBaseAction_t::g_eventArray  = g_eventArray;
+    //tuiBaseAction_t::g_eventArray  = g_eventArray;
+    tuiBaseAction_t::eventOn();
     nameNstatus(tuiMode_t::eventOn);
+}
+
+event_t* tuiBaseDgtInOut_t::pEventArrayGet	(void)      {
+    return g_eventArray;
 }
 
 void tuiBaseDgtInOut_t::vEventHndlKey_down	(void)  {

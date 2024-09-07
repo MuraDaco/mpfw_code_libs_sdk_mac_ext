@@ -38,6 +38,7 @@
 #include "tuiTextUsart.h"
 
 #include "dtyArray.h"
+#include "tuiBaseEbox.h"
 
 // **********************************************************
 // -------- BOX define - start
@@ -149,13 +150,13 @@ tuiBaseListElem_t   g_elementBaseListLboxY2[] = {
 
 
 box_t testLboxBox0 = {14,30,2,5};
-tuiBaseLbox_t testBaseLbox0("testBaseLbox 0", &testLboxBox0, g_elementBaseListLbox0);
+tuiBaseLbox_t   testBaseLbox0("testBaseLbox 0", &testLboxBox0, g_elementBaseListLbox0);
 
 box_t testLboxBoxY1 = {5,30,2,45};
-tuiBaseLboxY_t testBaseLboxY1("testBaseLboxY 1", &testLboxBoxY1, g_elementBaseListLboxY1);
+tuiBaseLboxY_t  testBaseLboxY1("testBaseLboxY 1", &testLboxBoxY1, g_elementBaseListLboxY1);
 
 box_t testLboxBoxY2 = {5,30,7,45};
-tuiBaseLboxY_t testBaseLboxY2("testBaseLboxY 2", &testLboxBoxY2, g_elementBaseListLboxY2);
+tuiBaseLboxY_t  testBaseLboxY2("testBaseLboxY 2", &testLboxBoxY2, g_elementBaseListLboxY2);
 
 uint8_t appBufferLog[1000000];
 uint8_t appBufferIn1[] = {
@@ -209,14 +210,26 @@ tuiTextUsart_t  testTextUsart2("testTextUsart2", {9,  35,  7,  75}, &testBuffer2
 tuiTextUsart_t  testTextUsart3("testTextUsart3", {5,  35,  7, 110}, &testBuffer3);
 tuiTextUsart_t  testTextUsart4("testTextUsart4", {7, 140, 16,   5}, &testBuffer4);
 
+// edit box test section
+
+//box_t testLboxBoxY2 = {3,40,12,35};
+char testStr[1000] = "Pippo Lippo Crisippo";
+dtyBaseArray_t testString(testStr, sizeof(testStr));
+tuiBaseEbox_t   testEbox1("testEbox1", {3,40,12,35}, &testString);
+
+char testStr2[1000] = "Gennaro Pasquale Natale Nando Nunzio Nicandro";
+dtyBaseArray_t testString2(testStr2, sizeof(testStr2));
+tuiBaseEbox_t   testEbox2("testEbox2", {3,  35, 12, 110}, &testString2);
 
 tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
      {&testBaseLbox0, 1}
     ,{&testBaseLboxY1, 1}
     ,{&testBaseLboxY2, 1}
+    ,{&testEbox1, 1}
     ,{&testTextUsart1, 1}
     ,{&testTextUsart2, 1}
     ,{&testTextUsart3, 1}
+    ,{&testEbox2, 2}
     ,{&testTextUsart4, 1}
     ,{nullptr, 1}
 };

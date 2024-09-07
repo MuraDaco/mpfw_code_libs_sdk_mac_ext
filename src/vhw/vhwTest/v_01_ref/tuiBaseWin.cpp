@@ -93,11 +93,16 @@ void tuiBaseWin_t::setThis            (void)  {
 
 void tuiBaseWin_t::eventOn     (void)    {
     g_po = this;
-    tuiBaseAction_t::g_eventArray  = g_eventArray;
+    //tuiBaseAction_t::g_eventArray  = g_eventArray;
+    tuiBaseAction_t::eventOn();
+
     frameBox(tuiMode_t::eventOn);
     if(!g_poFather) refreshElements();
 }
 
+event_t* tuiBaseWin_t::pEventArrayGet	(void)      {
+    return g_eventArray;
+}
 
 void tuiBaseWin_t::vEventHndlKey_up	(void)  {
     if(g_po)

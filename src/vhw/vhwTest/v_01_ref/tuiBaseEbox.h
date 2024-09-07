@@ -22,68 +22,76 @@
 //  *******************************************************************************
 
 /*
- * tuiTextUsart.h
+ * tuiBaseEbox.h
  *
- *  Created on: Aug, 26th 2024
+ *  Created on: Sep, 2nd 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_TEXT_USART_H
-#define TUI_TEXT_USART_H
+#ifndef TUI_BASE_EBOX_H
+#define TUI_BASE_EBOX_H
 
-#include "tuiBaseCntnr.h"
-#include "dtyStuf.h"
+#include "tuiBase.h"
+#include "dtyBaseArray.h"
 
-class tuiTextUsart_t : public tuiBaseCntnr_t    {
+
+class tuiBaseEbox_t : public tuiBase_t  {
 
 public:
-
-    tuiTextUsart_t (const char* p_strName, box_t  p_box, dtyStuf_t* p_pCntnr);
-    //tuiTextUsart_t (const char* p_strName, box_t* p_pBox, dtyStuf_t* p_pCntnr);
+    static constexpr uint8_t constEventArraySize       = 9;
+    tuiBaseEbox_t       (const char* p_strName  ,uint8_t p_height   ,dtyBaseArray_t* p_pDtyStr   );
+    tuiBaseEbox_t       (const char* p_strName  ,box_t p_box        ,dtyBaseArray_t* p_pDtyStr   );
 
     void init               (void* p_poFather) 		override;
-    void select             (void)                  override;
-    void selectByMouse      (void)                  override;
+    bool loop       	    (void)					override;
     void display            (void)                  override;
     void display            (bool p_recursively)    override;
+    void select             (void)                  override;
+    void selectByMouse      (void)                  override;
     void deSelect           (void)                  override;
-
     void setThis            (void)                  override;
     void eventOn            (void)                  override;
     event_t* pEventArrayGet	(void)                  override;
+    uint8_t eventArraySizeGet   (void)              override;
 
-protected:
+    uint8_t vEventHndlKeyArraySize	(void);
 
-    // --------------------- Object pointers section - START
-    // pointer to the list of uiBase objects belonging to one
-    // or more objects of the current class
-    static tuiTextUsart_t*	g_po;
-    //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
-    // --------------------- Object pointers section - END
 
 private:
-    uint8_t minOf               (uint8_t p_num1, uint8_t p_num2);
-    void getStrStatus               (char* p_str);
-    void getStrStatus               (uint8_t p_row, char* p_str);
-
+//    const char* g_strName;
+    
     // // --------------------- Events handler section - START
 	// // ..................... Events handler: functions
     // the "event" & the "event array" is equal for all the instanticies of the current class therefore ...
     // the event handler function & the event array must to be defined as static
     // template <uint8_t keycode>
     // static void vEventHndlKey	(void);
-    static void vEventHndlKey_down	(void);
-    static void vEventHndlKey_up	(void);
-    static void vEventHndlKey_left	(void);
-    static void vEventHndlKey_right	(void);
-    static void vEventHndlKey_enter	(void);
-    static void vEventHndlKey_home	(void);
+    static void vEventHndlKey_up	        (void);
+    static void vEventHndlKey_down	        (void);
+    static void vEventHndlKey_left	        (void);
+    static void vEventHndlKey_right	        (void);
+    static void vEventHndlKey_enter	        (void);
+    static void vEventHndlKey_home	        (void);
+    static void vEventHndlKey_del	        (void);
+    static void vEventHndlKey_backSpace	    (void);
+    static void vEventHndlKey_typeChar	    (void);
 	// ..................... Events handler: array
-    static event_t g_eventArray[];
+    static event_t g_eventArray[constEventArraySize];
     // --------------------- Events handler section - END
 
+    // --------------------- Object pointers section - START
+    // pointer to the list of uiBase objects belonging to one
+    // or more objects of the current class
+    static tuiBaseEbox_t*	g_po;
+    //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
+    // --------------------- Object pointers section - END
+
+
+    // --------------------- Data section - START
+    dtyBaseArray_t* g_pDtyStr;
+    // --------------------- Data section - END
 
 };
 
 
-#endif 	// TUI_TEXT_USART_H
+#endif 	// TUI_BASE_EBOX_H

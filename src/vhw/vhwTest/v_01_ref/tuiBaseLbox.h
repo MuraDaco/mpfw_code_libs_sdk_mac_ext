@@ -48,6 +48,7 @@ public:
 
     void setThis            (void)                  override;
     void eventOn            (void)                  override;
+    event_t* pEventArrayGet	(void)                  override;
 
 protected:
 

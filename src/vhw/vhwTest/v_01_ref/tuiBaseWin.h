@@ -46,6 +46,8 @@ public:
     void setThis            (void)                  override;
 
     void eventOn            (void)                  override;
+    event_t* pEventArrayGet	(void)                  override;
+
     void select             (void)                  override;
     void deSelect           (void)                  override;
 

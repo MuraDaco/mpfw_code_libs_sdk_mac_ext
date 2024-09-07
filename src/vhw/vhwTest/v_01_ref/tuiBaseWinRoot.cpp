@@ -49,7 +49,7 @@ void tuiBaseWinRoot_t::init       (void) 	{
     eventOn();
     displayElements(true); // "true" means that the elements are displayed recursively
 
-
+    g_poSelected = this;
 }
 
 bool tuiBaseWinRoot_t::loop            (void)  {
@@ -58,7 +58,7 @@ bool tuiBaseWinRoot_t::loop            (void)  {
 
     if(uiEventStatus())   {
         int l_uiEventKeyCode = uiEventKeyCode();
-        if(('x' == l_uiEventKeyCode) || ('q' == l_uiEventKeyCode) ){
+        if((TUI_KEY_CTRL_Q == l_uiEventKeyCode) || (TUI_KEY_CTRL_X == l_uiEventKeyCode) ){
             l_result = false;
             deinitGraphEnv();
         } else {
@@ -84,7 +84,13 @@ bool tuiBaseWinRoot_t::loop            (void)  {
 
         }
     } else {
-        if(tuiEventCode_t::noEvent != l_handlerEventCode) tuiBaseAction_t::g_eventArray[tuiEventCodeNum(l_handlerEventCode)]();
+        if(
+            //(tuiEventCode_t::noEvent != l_handlerEventCode)
+            (tuiEventCode_t::noEvent != l_handlerEventCode) &&
+            (tuiEventCodeNum(l_handlerEventCode) < g_poEventOn->eventArraySizeGet())
+        )
+            //tuiBaseAction_t::g_eventArray[tuiEventCodeNum(l_handlerEventCode)]();
+            g_poEventOn->g_eventArray[tuiEventCodeNum(l_handlerEventCode)]();
     }
 
     return l_result;

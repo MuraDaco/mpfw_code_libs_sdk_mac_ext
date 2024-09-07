@@ -111,11 +111,17 @@ void tuiBaseLboxY_t::deSelect        (void)    {
 
 
 void tuiBaseLboxY_t::eventOn     (void)    {
-    char l_str[SIZE_OF_STATUS_STR];
     g_po = this;
-    tuiBaseAction_t::g_eventArray  = g_eventArray;
+    //tuiBaseAction_t::g_eventArray  = g_eventArray;
+    tuiBaseAction_t::eventOn();
+
+    char l_str[SIZE_OF_STATUS_STR];
     getStrStatus(l_str);
     frameNameNstatus(tuiMode_t::eventOn, l_str);
+}
+
+event_t* tuiBaseLboxY_t::pEventArrayGet	(void)      {
+    return g_eventArray;
 }
 
 void tuiBaseLboxY_t::vEventHndlKey_up	(void)  {

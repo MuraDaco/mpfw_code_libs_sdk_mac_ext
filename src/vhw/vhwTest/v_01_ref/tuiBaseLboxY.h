@@ -48,6 +48,7 @@ public:
     void display            (bool p_recursively)    override;
     void deSelect           (void)                  override;
     void eventOn            (void)                  override;
+    event_t* pEventArrayGet	(void)                  override;
 
 protected:
 

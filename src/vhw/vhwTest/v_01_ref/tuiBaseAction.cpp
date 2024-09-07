@@ -33,6 +33,7 @@
 
 event_t*            tuiBaseAction_t::g_eventArray = nullptr;
 tuiBaseAction_t*    tuiBaseAction_t::g_poSelected = nullptr;
+tuiBaseAction_t*    tuiBaseAction_t::g_poEventOn  = nullptr;
 
 tuiBaseAction_t::tuiBaseAction_t    (void)  :
     g_poFather  {nullptr}
@@ -85,6 +86,15 @@ void  tuiBaseAction_t::deselectBackNselect(tuiBaseAction_t* p_poFather) {
     select();
 }
 
+uint8_t tuiBaseAction_t::eventArraySizeGet     (void)    {
+    return constEventArraySize;
+}
+
 //void tuiBaseAction_t::eventOn     (void)    {
 //    tuiBaseAction_t::g_eventArray  = g_eventArray;
 //}
+
+void tuiBaseAction_t::eventOn     (void)    {
+    g_poEventOn = this;
+    tuiBaseAction_t::g_eventArray  = pEventArrayGet();
+}

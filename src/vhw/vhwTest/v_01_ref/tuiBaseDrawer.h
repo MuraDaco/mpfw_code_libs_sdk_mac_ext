@@ -40,10 +40,14 @@
 #include "tuiBaseDrawerColor.h"
 
 
-#define TUI_KEY_TAB             0x0009
-#define TUI_KEY_SHIFT_TAB       0x0161
-#define TUI_KEY_RETURN          0x000A
-#define TUI_KEY_ESC             0x001b
+#define TUI_KEY_CTRL_Q              0x0011
+#define TUI_KEY_CTRL_X              0x0018
+#define TUI_KEY_BACKSPACE           0x007f
+#define TUI_KEY_DEL                 0x014a
+#define TUI_KEY_TAB                 0x0009
+#define TUI_KEY_SHIFT_TAB           0x0161
+#define TUI_KEY_RETURN              0x000A
+#define TUI_KEY_ESC                 0x001b
 
 #define NCURS_MOUSE_TRACKING_ENABLE     // printf("\033[?1003h");            // Makes the terminal report mouse movement events           
 #define NCURS_MOUSE_TRACKING_DISABLE    // printf("\033[?1003l");            // Disable mouse movement events, as l = low
@@ -91,17 +95,25 @@ public:
     void rowPrint(uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength);
 
     void frame              (tuiMode_t p_mode);
-    void frameNname         (void);
     void frameNameNstatus   (char* p_str);
-    void frameDebug         (char* p_str);
-    void frameDebug         (uint8_t p_row, char* p_str);
-    void frameNname         (tuiMode_t p_mode);
-    void frameNameNstatus   (tuiMode_t p_mode, char* p_str);
-    void frameBox       (tuiMode_t p_mode);
-    void frameBox       (void);
-    void name           (tuiMode_t p_mode);
-    void nameNstatus    (void);
-    void nameNstatus    (tuiMode_t p_mode);
+
+    void positionCursor                     (bool p_status, uint8_t p_position);
+    void frameNname                         (void);
+    void content                            (char* p_str, uint8_t p_size);
+    void content                            (tuiMode_t p_mode, char* p_str, uint8_t p_size);
+    void content                            (uint8_t p_begin);
+    void content                            (char* p_str, uint8_t p_begin, uint8_t p_size);
+    void content                            (tuiMode_t p_mode, char* p_str, uint8_t p_begin, uint8_t p_size);
+
+    void frameDebug                         (char* p_str);
+    void frameDebug                         (uint8_t p_row, char* p_str);
+    void frameNname                         (tuiMode_t p_mode);
+    void frameNameNstatus                   (tuiMode_t p_mode, char* p_str);
+    void frameBox                           (tuiMode_t p_mode);
+    void frameBox                           (void);
+    void name                               (tuiMode_t p_mode);
+    void nameNstatus                        (void);
+    void nameNstatus                        (tuiMode_t p_mode);
     bool bMouseClickInsideBounds            (void);
 
     bool uiEventStatus                      (void);
@@ -137,6 +149,8 @@ private:
     //bool g_visible;
     static uint8_t g_xMouse;
     static uint8_t g_yMouse;
+//    static uint8_t g_typeChar;
+    static uint8_t g_position;
 
     static int g_ncursEventCode;
     static MEVENT g_mouseEvent;

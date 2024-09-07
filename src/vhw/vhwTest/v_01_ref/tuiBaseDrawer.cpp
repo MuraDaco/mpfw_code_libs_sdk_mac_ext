@@ -32,6 +32,8 @@
 
 uint8_t tuiBaseDrawer_t::g_xMouse;
 uint8_t tuiBaseDrawer_t::g_yMouse;
+uint8_t tuiBaseDrawer_t::g_position;
+
 int      tuiBaseDrawer_t::g_ncursEventCode;
 MEVENT   tuiBaseDrawer_t::g_mouseEvent;
 
@@ -167,24 +169,112 @@ void tuiBaseDrawer_t::frame (tuiMode_t p_mode)   {
 
 }
 
+//void tuiBaseDrawer_t::frameNname (void)   {
+//    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
+//
+//	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r               ,ACS_ULCORNER       );
+//	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r + g_w - 1     ,ACS_URCORNER       );
+//	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r               ,ACS_LLCORNER       );
+//	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + g_w - 1     ,ACS_LRCORNER       );
+//	mvwhline(g_pNcursWin, g_y0r              ,g_x0r + 1           ,0    ,g_w - 2      );
+//	mvwhline(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + 1           ,0    ,g_w - 2      );
+//	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r               ,0    ,g_h - 2      );
+//	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r + g_w - 1     ,0    ,g_h - 2      );
+//
+//    mvwprintw(g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
+//
+//    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
+//
+//    wrefresh(g_pNcursWin);
+//
+//}
+
+
+void tuiBaseDrawer_t::positionCursor     (bool p_status, uint8_t p_position)    {
+    //wmove(g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_position);
+    //curs_set(1);
+    if(p_status)    {
+        if(g_position != p_position)    {
+            mvwchgat(g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + g_position,1, A_NORMAL, 0, NULL);
+            g_position = p_position;
+        }
+        mvwchgat(g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + g_position,1, A_BLINK | A_UNDERLINE, 0, NULL);
+    } else {
+        g_position = p_position;
+        mvwchgat(g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_position,1, A_NORMAL, 0, NULL);    
+    }
+    wrefresh(g_pNcursWin);
+}
+
 void tuiBaseDrawer_t::frameNname (void)   {
     g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
 
-	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r               ,ACS_ULCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r + g_w - 1     ,ACS_URCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r               ,ACS_LLCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + g_w - 1     ,ACS_LRCORNER       );
-	mvwhline(g_pNcursWin, g_y0r              ,g_x0r + 1           ,0    ,g_w - 2      );
-	mvwhline(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + 1           ,0    ,g_w - 2      );
-	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r               ,0    ,g_h - 2      );
-	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r + g_w - 1     ,0    ,g_h - 2      );
+	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win               ,ACS_ULCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win               ,ACS_LLCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
+	mvwhline(g_pNcursWin, g_y0Win              ,g_x0Win + 1           ,0    ,g_w - 2      );
+	mvwhline(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1           ,0    ,g_w - 2      );
+	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win               ,0    ,g_h - 2      );
+	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win + g_w - 1     ,0    ,g_h - 2      );
 
-    mvwprintw(g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
+    mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
 
     g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
 
     wrefresh(g_pNcursWin);
+}
 
+void tuiBaseDrawer_t::content (char* p_str, uint8_t p_size)   {
+
+    mvwaddnstr  (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1        ,p_str  ,p_size);
+    if(p_size < g_w-2)
+        mvwhline    (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_size           ,' '    ,g_w - 2 - p_size      );
+
+    wrefresh(g_pNcursWin);
+}
+
+void tuiBaseDrawer_t::content (char* p_str, uint8_t p_begin, uint8_t p_size)   {
+
+    mvwaddnstr  (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_begin       ,p_str  ,p_size);
+    if(p_size < g_w-2)
+        mvwhline    (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_begin + p_size           ,' '    ,g_w - 2 - (p_begin + p_size)      );
+
+    wrefresh(g_pNcursWin);
+}
+
+void tuiBaseDrawer_t::content (uint8_t p_begin)   {
+
+    mvwhline    (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_begin           ,' '    ,g_w - 2 - p_begin      );
+
+    wrefresh(g_pNcursWin);
+}
+
+void tuiBaseDrawer_t::content (tuiMode_t p_mode, char* p_str, uint8_t p_size)   {
+    g_status = p_mode;
+    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
+
+    mvwaddnstr  (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1        ,p_str  ,p_size);
+    //if(p_rowLength < g_w-2)
+    //    mvwhline    (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_rowLength           ,' '    ,g_w - p_rowLength - 2      );
+
+    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
+
+    wrefresh(g_pNcursWin);
+}
+
+
+void tuiBaseDrawer_t::content (tuiMode_t p_mode, char* p_str, uint8_t p_begin, uint8_t p_size)   {
+    g_status = p_mode;
+    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
+
+    mvwaddnstr  (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_begin       ,p_str  ,p_size);
+    //if(p_rowLength < g_w-2)
+    //    mvwhline    (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_rowLength           ,' '    ,g_w - p_rowLength - 2      );
+
+    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
+
+    wrefresh(g_pNcursWin);
 }
 
 void tuiBaseDrawer_t::frameNameNstatus (char* p_str)   {
@@ -257,23 +347,22 @@ void tuiBaseDrawer_t::frameNname (tuiMode_t p_mode)   {
     g_status = p_mode;
     g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
 
-	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r               ,ACS_ULCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r + g_w - 1     ,ACS_URCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r               ,ACS_LLCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + g_w - 1     ,ACS_LRCORNER       );
-	mvwhline(g_pNcursWin, g_y0r              ,g_x0r + 1           ,0    ,g_w - 2      );
-	mvwhline(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + 1           ,0    ,g_w - 2      );
-	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r               ,0    ,g_h - 2      );
-	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r + g_w - 1     ,0    ,g_h - 2      );
+	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win               ,ACS_ULCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win               ,ACS_LLCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
+	mvwhline(g_pNcursWin, g_y0Win              ,g_x0Win + 1           ,0    ,g_w - 2      );
+	mvwhline(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1           ,0    ,g_w - 2      );
+	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win               ,0    ,g_h - 2      );
+	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win + g_w - 1     ,0    ,g_h - 2      );
 
-    mvwprintw(g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
+    mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
 
     g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
 
     wrefresh(g_pNcursWin);
 
 }
-
 
 void tuiBaseDrawer_t::frameNameNstatus (tuiMode_t p_mode, char* p_str)   {
     g_status = p_mode;
@@ -396,34 +485,47 @@ tuiEventCode_t  tuiBaseDrawer_t::uiHandlerEventCode                 (void)  {
             break;
         case KEY_DOWN:
         case TUI_KEY_TAB:
-            mvwprintw(g_pNcursWin, 2, 50, "KEY_DOWN");
+            mvwprintw(g_pNcursWin, 2, 50, "KEY_DOWN                            ");
             l_eventCode = tuiEventCode_t::keyDown;
             break;
         case KEY_UP:
         case TUI_KEY_SHIFT_TAB:
-            mvwprintw(g_pNcursWin, 2, 50, "KEY_UP");
+            mvwprintw(g_pNcursWin, 2, 50, "KEY_UP                              ");
             l_eventCode = tuiEventCode_t::keyUp;
             break;
         case KEY_LEFT:
-            mvwprintw(g_pNcursWin, 2, 50, "KEY_LEFT");
+            mvwprintw(g_pNcursWin, 2, 50, "KEY_LEFT                            ");
             l_eventCode = tuiEventCode_t::keyLeft;
             break;
         case KEY_RIGHT:
-            mvwprintw(g_pNcursWin, 2, 50, "KEY_RIGHT");
+            mvwprintw(g_pNcursWin, 2, 50, "KEY_RIGHT                           ");
             l_eventCode = tuiEventCode_t::keyRight;
             break;
         case KEY_ENTER:
         case TUI_KEY_RETURN:
-            mvwprintw(g_pNcursWin, 2, 50, "KEY_ENTER");
+            mvwprintw(g_pNcursWin, 2, 50, "KEY_ENTER                           ");
             l_eventCode = tuiEventCode_t::keyEnter;
             break;
         case KEY_HOME:
         case TUI_KEY_ESC:
-            mvwprintw(g_pNcursWin, 2, 50, "KEY_HOME");
+            mvwprintw(g_pNcursWin, 2, 50, "KEY_HOME                            ");
             l_eventCode = tuiEventCode_t::keyHome;
             break;
+        case TUI_KEY_DEL:
+            mvwprintw(g_pNcursWin, 2, 50, "KEY_DEL                             ");
+            l_eventCode = tuiEventCode_t::keyDel;
+            break;
+        case TUI_KEY_BACKSPACE:
+            mvwprintw(g_pNcursWin, 2, 50, "KEY_BACKSPACE                       ");
+            l_eventCode = tuiEventCode_t::keyBackspace;
+            break;
         default:
-            mvwprintw(g_pNcursWin, 2, 50, "UNKNOWN_EVENT - keyCode: %04x", g_ncursEventCode);
+            if((0x20 <= g_ncursEventCode) && (g_ncursEventCode < 0x7f)) {
+                mvwprintw(g_pNcursWin, 2, 50, "type character - keyCode: %04x", g_ncursEventCode);
+                l_eventCode = tuiEventCode_t::keyTypeChar;
+            } else {
+                mvwprintw(g_pNcursWin, 2, 50, "UNKNOWN_EVENT - keyCode: %04x", g_ncursEventCode);
+            }
             break;
     }
 

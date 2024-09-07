@@ -86,7 +86,8 @@ set(SOURCE_FILES_CPP
 
     ##-- utyFrmtUsart.cpp
 
-    dtyArray.cpp
+    ##-- dtyArray.cpp
+    dtyBaseArray.cpp
     dtyBaseUnit.cpp
     dtyUint8.cpp
     dtyBaseCntnrUnit.cpp
@@ -105,6 +106,7 @@ set(SOURCE_FILES_CPP
     tuiBaseListElem.cpp
     tuiBaseListUnitY.cpp
     tuiBaseDgtInOut.cpp
+    tuiBaseEbox.cpp
     tuiBaseLbox.cpp
     tuiBaseLboxY.cpp
     tuiBaseWin.cpp
