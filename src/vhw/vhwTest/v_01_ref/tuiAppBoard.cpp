@@ -35,6 +35,7 @@
 #include "tuiBaseDgtInOut.h"
 #include "tuiDigitalInOut.h"
 #include "tuiDigitalInOut2.h"
+#include "tuiAppUsart.h"
 
 #include "vhwPphTbl_Buttons.h"
 #include "vhwPphTbl_Leds.h"
@@ -58,6 +59,8 @@ TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_MAI       ,1 ,40 , 8
 TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_AND    ,1 ,40 , 9 ,1  )
 TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOT    ,1 ,40 ,10 ,1  )
 
+box_t boxAppUsarttest = {13,  73,  11, 1};
+tuiAppUsart_t appUsartTest1(&boxAppUsarttest);
 
 tuiBaseListUnit_t::element_t tuiAppBoard_t::g_baseElementList[] = {
     //{nullptr                   , 1 }
@@ -69,6 +72,7 @@ tuiBaseListUnit_t::element_t tuiAppBoard_t::g_baseElementList[] = {
     ,{&TUI_OBJ   (LED_MAI)      , 3 }
     ,{&TUI_OBJ   (SWITCH_AND)   , 6 }
     ,{&TUI_OBJ   (SWITCH_NOT)   , 6 }
+    ,{&appUsartTest1                   , 1 }
     ,{nullptr                   , 1 }
 };
 

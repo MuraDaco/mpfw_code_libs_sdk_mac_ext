@@ -27,6 +27,9 @@
 ## cmake --build build -j 1
 ## cmake --build build --clean-first -j 1
 
+## executing
+## v_01_ref % ./build/vhwTest.out -id 1  (160x60 terminal dimensions)
+
 
 message(STATUS "Start super-project CMAkeLists.txt")
 
@@ -101,6 +104,9 @@ set(SOURCE_FILES_CPP
 
     tuiBaseAction.cpp
     tuiBaseDrawer.cpp
+
+    tuiBaseButton.cpp
+
     tuiBase.cpp
     tuiBaseListUnit.cpp
     tuiBaseListElem.cpp
@@ -109,6 +115,7 @@ set(SOURCE_FILES_CPP
     tuiBaseEbox.cpp
     tuiBaseLbox.cpp
     tuiBaseLboxY.cpp
+    tuiBaseSubWin.cpp
     tuiBaseWin.cpp
     tuiBaseWinRoot.cpp
     
@@ -122,6 +129,7 @@ set(SOURCE_FILES_CPP
     ##-- tuiWin.cpp
     ##-- tuiWinRoot.cpp
 
+    tuiAppUsart.cpp
     tuiAppUSART_1.cpp
     tuiAppPinPort.cpp
     tuiAppBoard.cpp
