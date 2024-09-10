@@ -50,6 +50,11 @@ tuiBaseListUnitY_t::tuiBaseListUnitY_t      (const char* p_strName, box_t* p_pBo
     ,g_originWin            {0}
 {}
 
+void tuiBaseListUnitY_t::init       (void* p_poFather) 	{
+    tuiBase_t::init(p_poFather);
+    initElementsList();
+}
+
 void tuiBaseListUnitY_t::initElementsList       (void) 	{
     if(!g_elementList)   return;
     // c) initialize all elements of the its own element list that is

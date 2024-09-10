@@ -41,7 +41,8 @@ public:
     tuiBaseListUnitY_t      (const char* p_strName, box_t  p_box,   tuiBaseListElem_t* p_elementList);
     tuiBaseListUnitY_t      (const char* p_strName, box_t* p_pBox,  tuiBaseListElem_t* p_elementList);
 
-    void selectByMouse 	(void) override;
+    void init           (void* p_poFather)  override;
+    void selectByMouse 	(void)              override;
 
     void initElementsList               (void); // initElementsList
     bool selectElements                 (void);

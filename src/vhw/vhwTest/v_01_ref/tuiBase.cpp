@@ -43,3 +43,16 @@ tuiBase_t::tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStat
     tuiBaseDrawer_t(p_strName, p_box, p_pDtyStatus)
 {}
 
+
+void tuiBase_t::init       (void* p_poFather) 	{
+    g_poFather      = static_cast<tuiBase_t*>(p_poFather);
+    g_pNcursWin     = static_cast<tuiBase_t*>(p_poFather)->g_pNcursWin;
+    g_x0Win         = static_cast<tuiBase_t*>(p_poFather)->g_x0Win  + g_x0r;
+    g_y0Win         = static_cast<tuiBase_t*>(p_poFather)->g_y0Win  + g_y0r;
+    g_x0a           = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
+    g_y0a           = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
+    if(!g_w) g_w    = static_cast<tuiBase_t*>(p_poFather)->g_w - 2;
+
+}
+
+

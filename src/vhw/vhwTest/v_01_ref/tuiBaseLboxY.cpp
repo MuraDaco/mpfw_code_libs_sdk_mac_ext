@@ -42,38 +42,15 @@ tuiBaseLboxY_t::tuiBaseLboxY_t      (const char* p_strName, box_t* p_pBox       
      tuiBaseListUnitY_t         (p_strName, p_pBox, p_elementList)
 {}
 
-void tuiBaseLboxY_t::init       (void* p_poFather) 	{
-    // 1. backup pointer to my own [father]
-    //      - it will be usefull for move between tui elements
-    g_poFather  = static_cast<tuiBase_t*>(p_poFather);
-    g_pNcursWin = static_cast<tuiBase_t*>(p_poFather)->g_pNcursWin;
-    g_x0Win     = static_cast<tuiBase_t*>(p_poFather)->g_x0Win  + g_x0r;
-    g_y0Win     = static_cast<tuiBase_t*>(p_poFather)->g_y0Win  + g_y0r;
-    g_x0a       = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
-    g_y0a       = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
-
-    //frameNname();
-
-    initElementsList();
-
-}
+//void tuiBaseLboxY_t::init       (void* p_poFather) 	{
+//    tuiBase_t::init(p_poFather);
+//    initElementsList();
+//
+//}
 
 void tuiBaseLboxY_t::setThis            (void)  {
     g_po = this;
 }
-
-//void tuiBaseLboxY_t::selectByMouse         (void)    {
-//    if(selectElements()) {
-//        // a sub-element has been selected
-//        select();
-//    } else {
-//        // none sub-element has been selected
-//        deselectBackNselect();
-//        eventOn();
-//    }
-//    display();
-//    
-//}
 
 void tuiBaseLboxY_t::display               (bool p_recursively)    {
     display();

@@ -69,21 +69,10 @@ void tuiBaseWin_t::display               (bool p_recursively)    {
 
 void tuiBaseWin_t::select     (void)    {
     frameBox(tuiMode_t::select);
-    // wattron(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-    // box(g_ncursWin, 0, 0);
-    // mvwprintw(g_ncursWin, 0, 10, " *** window name: %s *** ", g_strName);
-    // wattroff(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-    // wrefresh(g_ncursWin);
-
 }
 
 void tuiBaseWin_t::deSelect     (void)    {
     frameBox(tuiMode_t::deselect);
-    // wattron(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
-    // box(g_ncursWin, 0, 0);
-    // mvwprintw(g_ncursWin, 0, 10, " *** window name: %s *** ", g_strName);
-    // wattroff(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
-    // wrefresh(g_ncursWin);
 }
 
 void tuiBaseWin_t::setThis            (void)  {
@@ -93,7 +82,6 @@ void tuiBaseWin_t::setThis            (void)  {
 
 void tuiBaseWin_t::eventOn     (void)    {
     g_po = this;
-    //tuiBaseAction_t::g_eventArray  = g_eventArray;
     tuiBaseAction_t::eventOn();
 
     frameBox(tuiMode_t::eventOn);

@@ -131,15 +131,15 @@ void tuiBaseDrawer_t::initWin           (void) {
 
 
 void tuiBaseDrawer_t::updateRelativeX   (uint8_t p_x0r) {
-
-    g_x0a = (g_x0a - g_x0r) + p_x0r; // N.B.: (g_x0a - g_x0r) = p_poFather)->g_x0a
-    g_x0r = p_x0r;
+    g_x0Win = (g_x0Win  - g_x0r) + p_x0r + 1;   // N.B.: (g_y0Win - g_y0r) = p_poFather->g_y0Win
+    g_x0a   = (g_x0a    - g_x0r) + p_x0r + 1;   // N.B.: (g_x0a - g_x0r) = p_poFather->g_x0a
+    g_x0r   = p_x0r + 1;
 }
 
 void tuiBaseDrawer_t::updateRelativeY   (uint8_t p_y0r) {
-
-    g_y0a = (g_y0a - g_y0r) + p_y0r + 1; // N.B.: (g_x0a - g_x0r) = p_poFather)->g_x0a
-    g_y0r = p_y0r + 1;
+    g_y0Win = (g_y0Win - g_y0r) + p_y0r + 1;    // N.B.: (g_y0Win - g_y0r) = p_poFather->g_y0Win
+    g_y0a   = (g_y0a   - g_y0r) + p_y0r + 1;    // N.B.: (g_y0a   - g_y0r) = p_poFather->g_x0a
+    g_y0r   = p_y0r + 1;
 }
 
 void tuiBaseDrawer_t::endGraphEnv       (void)  {
@@ -150,24 +150,24 @@ void tuiBaseDrawer_t::endGraphEnv       (void)  {
     endwin();                           /* Wait for user input */
 }
 
-void tuiBaseDrawer_t::frame (tuiMode_t p_mode)   {
-    g_status = p_mode;
-    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
-
-	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r               ,ACS_ULCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r + g_w - 1     ,ACS_URCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r               ,ACS_LLCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + g_w - 1     ,ACS_LRCORNER       );
-	mvwhline(g_pNcursWin, g_y0r              ,g_x0r + 1           ,0    ,g_w - 2      );
-	mvwhline(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + 1           ,0    ,g_w - 2      );
-	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r               ,0    ,g_h - 2      );
-	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r + g_w - 1     ,0    ,g_h - 2      );
-
-    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
-
-    wrefresh(g_pNcursWin);
-
-}
+//void tuiBaseDrawer_t::frame (tuiMode_t p_mode)   {
+//    g_status = p_mode;
+//    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
+//
+//	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r               ,ACS_ULCORNER       );
+//	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r + g_w - 1     ,ACS_URCORNER       );
+//	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r               ,ACS_LLCORNER       );
+//	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + g_w - 1     ,ACS_LRCORNER       );
+//	mvwhline(g_pNcursWin, g_y0r              ,g_x0r + 1           ,0    ,g_w - 2      );
+//	mvwhline(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + 1           ,0    ,g_w - 2      );
+//	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r               ,0    ,g_h - 2      );
+//	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r + g_w - 1     ,0    ,g_h - 2      );
+//
+//    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
+//
+//    wrefresh(g_pNcursWin);
+//
+//}
 
 //void tuiBaseDrawer_t::frameNname (void)   {
 //    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
@@ -368,14 +368,14 @@ void tuiBaseDrawer_t::frameNameNstatus (tuiMode_t p_mode, char* p_str)   {
     g_status = p_mode;
     g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
 
-	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r               ,ACS_ULCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r              ,g_x0r + g_w - 1     ,ACS_URCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r               ,ACS_LLCORNER       );
-	mvwaddch(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + g_w - 1     ,ACS_LRCORNER       );
-	mvwhline(g_pNcursWin, g_y0r              ,g_x0r + 1           ,0    ,g_w - 2      );
-	mvwhline(g_pNcursWin, g_y0r + g_h - 1    ,g_x0r + 1           ,0    ,g_w - 2      );
-	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r               ,0    ,g_h - 2      );
-	mvwvline(g_pNcursWin, g_y0r + 1          ,g_x0r + g_w - 1     ,0    ,g_h - 2      );
+	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win               ,ACS_ULCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win               ,ACS_LLCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
+	mvwhline(g_pNcursWin, g_y0Win              ,g_x0Win + 1           ,0    ,g_w - 2      );
+	mvwhline(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1           ,0    ,g_w - 2      );
+	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win               ,0    ,g_h - 2      );
+	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win + g_w - 1     ,0    ,g_h - 2      );
 
     mvwprintw(g_pNcursWin, g_y0Win + 0          ,g_x0Win + 4        ," *~ %s ~* ", g_strName);
     mvwprintw(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 21 ," >> %s << ", p_str);
@@ -412,22 +412,12 @@ void tuiBaseDrawer_t::frameBox (tuiMode_t p_mode)   {
 }
 
 
-void tuiBaseDrawer_t::name (tuiMode_t p_mode)   {
-    g_status = p_mode;
-    g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, ON);
-
-    mvwprintw(g_pNcursWin, g_y0Win + g_y0r, g_x0Win + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
-
-    g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, OFF);
-
-
-    wrefresh(g_pNcursWin);
-}
 
 void tuiBaseDrawer_t::nameNstatus (void)   {
 
     g_attributeMode_Line[static_cast<uint8_t>(g_status)](this, ON);
-    mvwprintw(g_pNcursWin, g_y0Win + g_y0r, g_x0Win + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+//    mvwprintw(g_pNcursWin, g_y0Win + g_y0r, g_x0Win + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
     g_attributeMode_Line[static_cast<uint8_t>(g_status)](this, OFF);
 
     wrefresh(g_pNcursWin);
@@ -437,7 +427,8 @@ void tuiBaseDrawer_t::nameNstatus (tuiMode_t p_mode)   {
     g_status = p_mode;
     g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, ON);
 
-    mvwprintw(g_pNcursWin, g_y0Win + g_y0r, g_x0Win + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+//    mvwprintw(g_pNcursWin, g_y0Win + g_y0r, g_x0Win + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+    mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
 
     g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, OFF);
 

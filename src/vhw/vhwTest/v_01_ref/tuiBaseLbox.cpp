@@ -40,33 +40,7 @@ tuiBaseLbox_t::tuiBaseLbox_t      (const char* p_strName, box_t* p_pBox, element
 {}
 
 void tuiBaseLbox_t::init       (void* p_poFather) 	{
-    // 1. backup pointer to my own [father]
-    //      - it will be usefull for move between tui elements
-    g_poFather = static_cast<tuiBase_t*>(p_poFather);
-    g_pNcursWin = static_cast<tuiBase_t*>(p_poFather)->g_pNcursWin;
-    g_x0Win     = static_cast<tuiBase_t*>(p_poFather)->g_x0Win  + g_x0r;
-    g_y0Win     = static_cast<tuiBase_t*>(p_poFather)->g_y0Win  + g_y0r;
-    g_x0a       = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
-    g_y0a       = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
-
-
-    //g_box.draw(g_ncursWin);    
-    //frameNname();
-
-    //tuiBaseDrawer__name(0, 85);
-
-    //g_box.drawFrame(g_ncursWin, SELECT/DESELECT);    
-    //g_box.drawName(g_ncursWin, SELECT/DESELECT);    
-    //g_box.drawStatus(g_ncursWin, SELECT/DESELECT);    
-    //g_box.draw(g_ncursWin, g_box.g_y0r, g_box.g_x0r + 5, " *~ %s ~* ", g_strName);
-
-    //g_box.draw_name(g_ncursWin);    
-    //g_box.draw_value(g_ncursWin, SELECT/DESELECT);    
-    //g_box.draw_element(g_ncursWin, DESELECT/SELECT, );    // the element has the coords where draw the name and the value
-    //g_box.draw_elements(g_ncursWin);
-    //tuiGraphicBox__draw(g_ncursWin, g_box.g_y0r, g_box.g_x0r + 5, " *~ %s ~* ", tuiDrawerBase_t::g_strName);
-    // point_t l_point0 = {g_x0r, g_y0r};
-    // initElementsList(l_point0);
+    tuiBase_t::init(p_poFather);
     initElementsList();
 
 }

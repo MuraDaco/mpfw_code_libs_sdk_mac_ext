@@ -40,21 +40,8 @@ tuiBaseSubWin_t::tuiBaseSubWin_t      (const char* p_strName, box_t* p_box, elem
 
 
 void tuiBaseSubWin_t::init       (void* p_poFather) 	{
-    // 1. set pointer to my own [father]
-    //      - it will be usefull for move between tui elements
-    g_poFather      = static_cast<tuiBase_t*>(p_poFather);
-
-    g_pNcursWin     = static_cast<tuiBase_t*>(p_poFather)->g_pNcursWin;
-    g_x0Win         = static_cast<tuiBase_t*>(p_poFather)->g_x0Win  + g_x0r;
-    g_y0Win         = static_cast<tuiBase_t*>(p_poFather)->g_y0Win  + g_y0r;
-    g_x0a           = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
-    g_y0a           = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
-    if(!g_w) g_w    = static_cast<tuiBase_t*>(p_poFather)->g_w - 2;
-
-    // init elements
+    tuiBase_t::init(p_poFather);
     initElementsList();
-    
-
 }
 
 void tuiBaseSubWin_t::display     (void)    {
@@ -69,21 +56,10 @@ void tuiBaseSubWin_t::display               (bool p_recursively)    {
 
 void tuiBaseSubWin_t::select     (void)    {
     frameNname(tuiMode_t::select);
-    // wattron(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-    // box(g_ncursWin, 0, 0);
-    // mvwprintw(g_ncursWin, 0, 10, " *** window name: %s *** ", g_strName);
-    // wattroff(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_SELECT);
-    // wrefresh(g_ncursWin);
-
 }
 
 void tuiBaseSubWin_t::deSelect     (void)    {
     frameNname(tuiMode_t::deselect);
-    // wattron(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
-    // box(g_ncursWin, 0, 0);
-    // mvwprintw(g_ncursWin, 0, 10, " *** window name: %s *** ", g_strName);
-    // wattroff(g_ncursWin,NCURS_COLOR_PAIR_WINDOW_DESELECT);
-    // wrefresh(g_ncursWin);
 }
 
 void tuiBaseSubWin_t::setThis            (void)  {
@@ -93,7 +69,6 @@ void tuiBaseSubWin_t::setThis            (void)  {
 
 void tuiBaseSubWin_t::eventOn     (void)    {
     g_po = this;
-    //tuiBaseAction_t::g_eventArray  = g_eventArray;
     tuiBaseAction_t::eventOn();
 
     frameNname(tuiMode_t::eventOn);
@@ -115,13 +90,9 @@ void tuiBaseSubWin_t::vEventHndlKey_down	(void)  {
 }
 
 void tuiBaseSubWin_t::vEventHndlKey_left	(void)  {
-    //mvwprintw(g_po->g_ncursWin, 0, 30, "event hndl - key left");
-    //g_po->g_pCurrentElement = g_po->g_elementList;
 }
 
 void tuiBaseSubWin_t::vEventHndlKey_right	(void)  {
-    //mvwprintw(g_po->g_ncursWin, 0, 30, "event hndl - key right");
-    //g_po->g_pCurrentElement = g_po->g_elementList;
 }
 
 void tuiBaseSubWin_t::vEventHndlKey_enter	(void)  {

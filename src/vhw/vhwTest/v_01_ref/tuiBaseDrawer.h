@@ -94,7 +94,7 @@ public:
 
     void rowPrint(uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength);
 
-    void frame              (tuiMode_t p_mode);
+    //void frame              (tuiMode_t p_mode);
     void frameNameNstatus   (char* p_str);
 
     void positionCursor                     (bool p_status, uint8_t p_position);
@@ -111,7 +111,6 @@ public:
     void frameNameNstatus                   (tuiMode_t p_mode, char* p_str);
     void frameBox                           (tuiMode_t p_mode);
     void frameBox                           (void);
-    void name                               (tuiMode_t p_mode);
     void nameNstatus                        (void);
     void nameNstatus                        (tuiMode_t p_mode);
     bool bMouseClickInsideBounds            (void);

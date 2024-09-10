@@ -43,6 +43,7 @@ public:
     tuiBase_t (const char* p_strName, box_t p_box);
     tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
 
+    void init               (void* p_poFather) 		override;
 
 };
 
