@@ -33,6 +33,7 @@
 
 #include "tuiBaseEbox.h"
 #include "tuiTextUsart.h"
+#include "tuiBaseButton.h"
 #include "tuiBaseSubWin.h"
 
 class tuiAppUsart_t: public tuiBaseSubWin_t {
@@ -53,9 +54,12 @@ private:
     tuiTextUsart_t  g_text;
 
     char usartBuffer[1000]; //"Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor";
-    dtyBaseArray_t  usartString;        //(usartBuffer, sizeof(usartBuffer));
-    tuiBaseEbox_t   g_ebox;
-    element_t       g_eList[3];
+    dtyBaseArray_t      usartString;        //(usartBuffer, sizeof(usartBuffer));
+    tuiBaseEbox_t       g_ebox;
+    tuiBaseButton_t     g_button;
+    element_t           g_eList[4];
+
+    static void buttonFunction  (void);
 
 };
 

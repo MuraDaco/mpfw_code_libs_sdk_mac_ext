@@ -66,9 +66,10 @@ void tuiBaseEbox_t::select         (void)    {
     positionCursor(false,l_position);
 }
 
-void tuiBaseEbox_t::selectByMouse       (void)    {
+bool tuiBaseEbox_t::selectByMouse       (void)    {
     deselectBackNselect(g_poFather);
     eventOn();
+    return true;
 }
 
 void tuiBaseEbox_t::display          (void)    {

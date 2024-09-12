@@ -87,7 +87,7 @@ void tuiBaseListUnit_t::initElementsList       (void) 	{
 //
 //}
 
-void tuiBaseListUnit_t::selectByMouse     (void)    {
+bool tuiBaseListUnit_t::selectByMouse     (void)    {
 
     if(selectElements()) {
         select();
@@ -95,7 +95,7 @@ void tuiBaseListUnit_t::selectByMouse     (void)    {
         deselectBackNselect();
         eventOn();
     }
-
+    return true;
 }
 
 bool tuiBaseListUnit_t::selectElements     (void)    {
@@ -106,8 +106,8 @@ bool tuiBaseListUnit_t::selectElements     (void)    {
         if(l_element->element->bMouseClickInsideBounds()) {
             //if(g_pCurrentElement) g_pCurrentElement->element->deSelect();   // because of mouse event management
             g_pCurrentElement = l_element;
-            l_element->element->selectByMouse();
-            l_result = true;
+            l_result = l_element->element->selectByMouse();
+            //l_result = true;
             break;
         } else {
             l_element->element->display();

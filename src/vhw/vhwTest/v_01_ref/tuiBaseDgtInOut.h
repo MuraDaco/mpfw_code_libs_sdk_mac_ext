@@ -42,12 +42,11 @@ public:
     tuiBaseDgtInOut_t       (const char* p_strName  ,uint8_t p_height   ,dtyUint8_t* p_pDtyStatus   );
     tuiBaseDgtInOut_t       (const char* p_strName  ,box_t p_box        ,dtyUint8_t* p_pDtyStatus   );
 
-    void init               (void* p_poFather) 		override;
     bool loop       	    (void)					override;
     void display            (void)                  override;
     void display            (bool p_recursively)    override;
     void select             (void)                  override;
-    void selectByMouse      (void)                  override;
+    bool selectByMouse      (void)                  override;
     void deSelect           (void)                  override;
     void setThis            (void)                  override;
     void eventOn            (void)                  override;

@@ -39,15 +39,13 @@
 class tuiBaseButton_t : public tuiBase_t  {
 
 public:
-    tuiBaseButton_t       (const char* p_strName  ,uint8_t p_height   ,dtyUint8_t* p_pDtyStatus   );
-    tuiBaseButton_t       (const char* p_strName  ,box_t p_box        ,dtyUint8_t* p_pDtyStatus   );
+    tuiBaseButton_t       (const char* p_strName  ,uint8_t p_sizeName   ,box_t p_box    ,func_t p_func);
 
-    void init               (void* p_poFather) 		override;
     bool loop       	    (void)					override;
     void display            (void)                  override;
     void display            (bool p_recursively)    override;
     void select             (void)                  override;
-    void selectByMouse      (void)                  override;
+    bool selectByMouse      (void)                  override;
     void deSelect           (void)                  override;
     void setThis            (void)                  override;
     void eventOn            (void)                  override;
@@ -55,35 +53,9 @@ public:
 
 
 private:
-//    const char* g_strName;
-    
-    // // --------------------- Events handler section - START
-	// // ..................... Events handler: functions
-    // the "event" & the "event array" is equal for all the instanticies of the current class therefore ...
-    // the event handler function & the event array must to be defined as static
-    // template <uint8_t keycode>
-    // static void vEventHndlKey	(void);
-    static void vEventHndlKey_down	(void);
-    static void vEventHndlKey_up	(void);
-    static void vEventHndlKey_left	(void);
-    static void vEventHndlKey_right	(void);
-    static void vEventHndlKey_enter	(void);
-    static void vEventHndlKey_home	(void);
-
-	// ..................... Events handler: array
-    static event_t g_eventArray[];
-    // --------------------- Events handler section - END
-
-    // --------------------- Object pointers section - START
-    // pointer to the list of uiBase objects belonging to one
-    // or more objects of the current class
-    static tuiBaseButton_t*	g_po;
-    //tuiBaseUnit_t*	    g_poFather; // to initialize in the init function
-    // --------------------- Object pointers section - END
-
 
     // --------------------- Data section - START
-    dtyUint8_t* g_pDtyStatus;
+    func_t g_func;
     // --------------------- Data section - END
 
 };

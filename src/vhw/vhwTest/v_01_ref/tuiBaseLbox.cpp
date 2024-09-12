@@ -50,7 +50,7 @@ void tuiBaseLbox_t::select         (void)    {
     frameNname(tuiMode_t::select);
 }
 
-void tuiBaseLbox_t::selectByMouse         (void)    {
+bool tuiBaseLbox_t::selectByMouse         (void)    {
     if(selectElements()) {
         select();
     } else {
@@ -58,7 +58,7 @@ void tuiBaseLbox_t::selectByMouse         (void)    {
         g_po = this;
         eventOn();
     }
-    
+    return true;
 }
 
 void tuiBaseLbox_t::display               (void)    {

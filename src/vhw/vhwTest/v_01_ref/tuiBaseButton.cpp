@@ -32,28 +32,15 @@
 #include "tuiBaseButton.h"
 
 
-tuiBaseButton_t*	tuiBaseButton_t::g_po = nullptr;
+//tuiBaseButton_t*	tuiBaseButton_t::g_po = nullptr;
 
-tuiBaseButton_t::tuiBaseButton_t      (const char* p_strName    ,uint8_t p_height   ,dtyUint8_t* p_pDtyStatus   )   :
-     tuiBase_t          (p_strName, {p_height, 0, 0, 1}, p_pDtyStatus)
-    ,g_pDtyStatus           {p_pDtyStatus}
-{}
-
-tuiBaseButton_t::tuiBaseButton_t      (const char* p_strName    ,box_t p_box        ,dtyUint8_t* p_pDtyStatus   )   :
-     tuiBase_t          (p_strName, p_box, p_pDtyStatus)
-    ,g_pDtyStatus           {p_pDtyStatus}
-{}
-
-
-void tuiBaseButton_t::init       (void* p_poFather) 	{
-    g_poFather      = static_cast<tuiBase_t*>(p_poFather);
-    g_pNcursWin     = static_cast<tuiBase_t*>(p_poFather)->g_pNcursWin;
-    g_x0Win         = static_cast<tuiBase_t*>(p_poFather)->g_x0Win  + g_x0r;
-    g_y0Win         = static_cast<tuiBase_t*>(p_poFather)->g_y0Win  + g_y0r;
-    g_x0a           = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
-    g_y0a           = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
-    if(!g_w) g_w    = static_cast<tuiBase_t*>(p_poFather)->g_w - 2;
+tuiBaseButton_t::tuiBaseButton_t      (const char* p_strName  ,uint8_t p_sizeName   ,box_t p_box    ,func_t p_func)   :
+     tuiBase_t          (p_strName, p_box)
+    ,g_func             {p_func}
+{
+    g_w = p_sizeName;
 }
+
 
 bool tuiBaseButton_t::loop            (void)  {
     bool l_result = false;
@@ -63,16 +50,17 @@ bool tuiBaseButton_t::loop            (void)  {
 
 
 void tuiBaseButton_t::select         (void)    {
-    nameNstatus(tuiMode_t::select);
+    nameOnly(tuiMode_t::select);
 }
 
-void tuiBaseButton_t::selectByMouse       (void)    {
+bool tuiBaseButton_t::selectByMouse       (void)    {
     deselectBackNselect(g_poFather);
     eventOn();
+    return false;
 }
 
 void tuiBaseButton_t::display          (void)    {
-    nameNstatus();
+    nameOnly();
 }
 
 void tuiBaseButton_t::display         ([[maybe_unused]] bool p_recursively)  {
@@ -80,53 +68,20 @@ void tuiBaseButton_t::display         ([[maybe_unused]] bool p_recursively)  {
 }  
 
 void tuiBaseButton_t::deSelect        (void)    {
-    nameNstatus(tuiMode_t::deselect);
+    nameOnly(tuiMode_t::deselect);
 }
 
 void tuiBaseButton_t::setThis            (void)  {
-    g_po = this;
 }
 
 void tuiBaseButton_t::eventOn         (void)    {
-    g_po = this;
-    //tuiBaseAction_t::g_eventArray  = g_eventArray;
-    tuiBaseAction_t::eventOn();
-    nameNstatus(tuiMode_t::eventOn);
+    ////tuiBaseAction_t::g_eventArray  = g_eventArray;
+    //tuiBaseAction_t::eventOn();
+    g_poFather->eventOn();
+    g_func();
 }
 
 event_t* tuiBaseButton_t::pEventArrayGet	(void)      {
-    return g_eventArray;
+    return nullptr;
 }
-
-void tuiBaseButton_t::vEventHndlKey_down	(void)  {
-}
-
-void tuiBaseButton_t::vEventHndlKey_up	(void)  {
-}
-
-void tuiBaseButton_t::vEventHndlKey_left	(void)  {
-}
-
-void tuiBaseButton_t::vEventHndlKey_right	(void)  {
-}
-
-void tuiBaseButton_t::vEventHndlKey_enter	(void)  {
-    g_po->g_pDtyStatus->vInc();
-}
-
-void tuiBaseButton_t::vEventHndlKey_home	(void)  {
-    g_po->deselectBackNselect();
-    g_po->g_poFather->eventOn();
-
-}
-
-event_t tuiBaseButton_t::g_eventArray[]  = {
-     vEventHndlKey_down
-    ,vEventHndlKey_up
-    ,vEventHndlKey_left
-    ,vEventHndlKey_right
-    ,vEventHndlKey_enter
-    ,vEventHndlKey_home
-};
-
 

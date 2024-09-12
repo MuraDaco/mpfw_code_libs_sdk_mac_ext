@@ -168,6 +168,10 @@ char* dtyBaseArray_t::pArrayGet                 (void)      {
     return g_pAry;
 }
 
+uint16_t dtyBaseArray_t::lengthGet              (void)      {
+    return g_length;
+}
+
 // display section
 
 // display section: public 

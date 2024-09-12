@@ -43,7 +43,7 @@ public:
 
     void initElementsList               (void); // initElementsList
     void displayElements                (bool p_recursively);
-    void selectByMouse 	                (void) override;
+    bool selectByMouse 	                (void) override;
     bool selectElements                 (void);
     static void nextElement             (tuiBaseCntnr_t* p_po);  // it is a static function because it will be called by a static function
     static void prevElement             (tuiBaseCntnr_t* p_po);  // it is a static function because it will be called by a static function

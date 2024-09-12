@@ -111,6 +111,8 @@ public:
     void frameNameNstatus                   (tuiMode_t p_mode, char* p_str);
     void frameBox                           (tuiMode_t p_mode);
     void frameBox                           (void);
+    void nameOnly                           (void);
+    void nameOnly                           (tuiMode_t p_mode);
     void nameNstatus                        (void);
     void nameNstatus                        (tuiMode_t p_mode);
     bool bMouseClickInsideBounds            (void);

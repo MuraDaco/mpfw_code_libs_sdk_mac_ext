@@ -53,14 +53,14 @@ public:
 
     virtual void display   	    (void)  {};
     virtual void display   	    ([[maybe_unused]] bool p_recursively)  {};
-    virtual void select     	(void)  {};
-    virtual void deSelect   	(void)  {};
+    virtual void select     	(void) = 0;
+    virtual void deSelect   	(void) = 0;
     virtual void setThis        (void) = 0;
-    virtual void selectByMouse 	(void) = 0;
+    virtual bool selectByMouse 	(void) = 0;
     virtual bool bDisplayable	(void)  {return true;};
 
     // common functions
-    void deselectBack           (tuiBaseAction_t* p_poDeselectEnd);
+    bool deselectBack           (tuiBaseAction_t* p_poDeselectEnd, bool p_isSelecting);
     void deselectBackNselect    (void);
     void deselectBackNselect    (tuiBaseAction_t* p_poFather);
 

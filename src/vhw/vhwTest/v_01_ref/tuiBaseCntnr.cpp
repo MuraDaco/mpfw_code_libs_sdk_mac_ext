@@ -82,7 +82,7 @@ void tuiBaseCntnr_t::displayElements     ([[maybe_unused]] bool p_recursively)  
     } while(g_pCntnr->setDisplayBoxNextRow());
 }
 
-void tuiBaseCntnr_t::selectByMouse     (void)    {
+bool tuiBaseCntnr_t::selectByMouse     (void)    {
 
 //    if(selectElements()) {
 //        select();
@@ -90,7 +90,7 @@ void tuiBaseCntnr_t::selectByMouse     (void)    {
         deselectBackNselect();
         eventOn();
 //    }
-
+    return true;
 }
 
 bool tuiBaseCntnr_t::selectElements     (void)    {

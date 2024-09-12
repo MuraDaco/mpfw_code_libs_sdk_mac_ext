@@ -55,11 +55,11 @@ void tuiTextUsart_t::select         (void)    {
     frameNname(tuiMode_t::select);
 }
 
-void tuiTextUsart_t::selectByMouse         (void)    {
+bool tuiTextUsart_t::selectByMouse         (void)    {
     deselectBackNselect();
     g_po = this;
     eventOn();
-    
+    return true;
 }
 
 #define SIZE_OF_STATUS_STR  200

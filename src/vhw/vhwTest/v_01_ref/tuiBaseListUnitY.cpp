@@ -98,7 +98,7 @@ void tuiBaseListUnitY_t::initElementsList       (void) 	{
 //
 //}
 
-void tuiBaseListUnitY_t::selectByMouse         (void)    {
+bool tuiBaseListUnitY_t::selectByMouse         (void)    {
     if(selectElements()) {
         // a sub-element has been selected
         select();
@@ -110,7 +110,7 @@ void tuiBaseListUnitY_t::selectByMouse         (void)    {
         eventOn();
     }
     display();
-    
+    return true;
 }
 
 bool tuiBaseListUnitY_t::selectElements     (void)    {

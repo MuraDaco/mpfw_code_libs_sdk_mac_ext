@@ -86,6 +86,7 @@ public:
     void    updateElement           (char p_char);
     uint16_t positionGet            (void);
     char*   pArrayGet               (void);
+    uint16_t lengthGet              (void);
 
 
     // display section

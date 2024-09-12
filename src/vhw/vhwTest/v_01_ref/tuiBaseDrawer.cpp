@@ -413,10 +413,29 @@ void tuiBaseDrawer_t::frameBox (tuiMode_t p_mode)   {
 
 
 
+void tuiBaseDrawer_t::nameOnly (void)   {
+
+    g_attributeMode_Line[static_cast<uint8_t>(g_status)](this, ON);
+    mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "%s", g_strName);
+    g_attributeMode_Line[static_cast<uint8_t>(g_status)](this, OFF);
+
+    wrefresh(g_pNcursWin);
+}
+
+void tuiBaseDrawer_t::nameOnly (tuiMode_t p_mode)   {
+    g_status = p_mode;
+    g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, ON);
+
+    mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "%s", g_strName);
+
+    g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, OFF);
+
+    wrefresh(g_pNcursWin);
+}
+
 void tuiBaseDrawer_t::nameNstatus (void)   {
 
     g_attributeMode_Line[static_cast<uint8_t>(g_status)](this, ON);
-//    mvwprintw(g_pNcursWin, g_y0Win + g_y0r, g_x0Win + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
     mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
     g_attributeMode_Line[static_cast<uint8_t>(g_status)](this, OFF);
 
@@ -427,7 +446,6 @@ void tuiBaseDrawer_t::nameNstatus (tuiMode_t p_mode)   {
     g_status = p_mode;
     g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, ON);
 
-//    mvwprintw(g_pNcursWin, g_y0Win + g_y0r, g_x0Win + g_x0r, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
     mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
 
     g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, OFF);

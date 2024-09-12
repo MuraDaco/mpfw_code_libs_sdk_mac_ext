@@ -55,35 +55,70 @@ tuiBaseAction_t::tuiBaseAction_t    (void)  :
 //    
 //}
 
-void tuiBaseAction_t::deselectBack(tuiBaseAction_t* p_poDeselectEnd) {
-    if(this != p_poDeselectEnd)   {
-        deSelect();
+bool tuiBaseAction_t::deselectBack(tuiBaseAction_t* p_poDeselectEnd, bool p_isSelecting) {
+    bool l_result = true;
+    if(this != p_poDeselectEnd) {
+        deSelect();    
         if(g_poFather) {
-            g_poFather->deselectBack(p_poDeselectEnd);
+            g_poFather->deselectBack(p_poDeselectEnd, p_isSelecting);
         } else {
             // the current function belong to rootWindow, therefore ...
             // no other deSelect functions have to be called
         }
+        
+        //if(
+        //        (p_isSelecting)   
+        //    &&  (p_poDeselectEnd == g_poFather)
+        //)
+        //{
+        //    // p_poDeselectEnd = selecting element
+        //    if(this == g_poEventOn) {
+        //        l_result = false;
+        //        select();
+        //    } else
+        //        deSelect();    
+        //} else {
+        //    deSelect();
+        //    if(g_poFather) {
+        //        g_poFather->deselectBack(p_poDeselectEnd, p_isSelecting);
+        //    } else {
+        //        // the current function belong to rootWindow, therefore ...
+        //        // no other deSelect functions have to be called
+        //    }
+        //}
 
     } else {
         // the elemet that is going to be selected is the element that the current function belong to, therefore ...
         // do nothing ...
         // 
+        // p_poDeselectEnd = selecting element
+
+    }
+    return l_result;
+}
+
+void  tuiBaseAction_t::deselectBackNselect  (void) {
+    if(g_poSelected)    {
+        if(g_poSelected->deselectBack(this, true))  {
+            g_poSelected = this;
+            select();
+        }
+    } else {
+        g_poSelected = this;
+        select();
     }
 }
 
-void  tuiBaseAction_t::deselectBackNselect() {
-    if(g_poSelected)
-        g_poSelected->deselectBack(this);
-    g_poSelected = this;
-    select();
-}
-
 void  tuiBaseAction_t::deselectBackNselect(tuiBaseAction_t* p_poFather) {
-    if(g_poSelected)
-        g_poSelected->deselectBack(p_poFather);
-    g_poSelected = this;
-    select();
+    if(g_poSelected)    {
+        if(g_poSelected->deselectBack(p_poFather, false))   {
+            g_poSelected = this;
+            select();
+        }
+    } else {
+        g_poSelected = this;
+        select();
+    }
 }
 
 uint8_t tuiBaseAction_t::eventArraySizeGet     (void)    {

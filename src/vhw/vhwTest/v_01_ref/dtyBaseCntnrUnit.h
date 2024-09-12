@@ -46,6 +46,12 @@ public:
         ,testTx   = 0x15      // end marker = 0xeb
     };
 
+    enum kDataType_t: int8_t  {
+         ascii
+        ,binary
+        };
+
+
     bool        bEmpty       (void);
 
     void        initDisplayBox          (uint8_t p_boxH, uint8_t p_boxW);
@@ -86,10 +92,6 @@ protected:
     // section **** GENERAL ****
 
 
-    enum kDataType_t: int8_t  {
-         ascii
-        ,binary
-        };
 
 
     dtyBaseCntnrUnit_t  (uint8_t* p_pBuf, uint32_t p_bufSize);

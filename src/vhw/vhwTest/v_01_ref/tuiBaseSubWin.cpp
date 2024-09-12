@@ -72,7 +72,7 @@ void tuiBaseSubWin_t::eventOn     (void)    {
     tuiBaseAction_t::eventOn();
 
     frameNname(tuiMode_t::eventOn);
-    if(!g_poFather) refreshElements();
+    //if(!g_poFather) refreshElements();
 }
 
 event_t* tuiBaseSubWin_t::pEventArrayGet	(void)      {

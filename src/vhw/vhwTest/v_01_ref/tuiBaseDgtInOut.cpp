@@ -45,10 +45,6 @@ tuiBaseDgtInOut_t::tuiBaseDgtInOut_t      (const char* p_strName    ,box_t p_box
 {}
 
 
-void tuiBaseDgtInOut_t::init       (void* p_poFather) 	{
-    tuiBase_t::init(p_poFather);
-}
-
 bool tuiBaseDgtInOut_t::loop            (void)  {
     bool l_result = false;
 
@@ -60,9 +56,10 @@ void tuiBaseDgtInOut_t::select         (void)    {
     nameNstatus(tuiMode_t::select);
 }
 
-void tuiBaseDgtInOut_t::selectByMouse       (void)    {
+bool tuiBaseDgtInOut_t::selectByMouse       (void)    {
     deselectBackNselect(g_poFather);
     eventOn();
+    return true;
 }
 
 void tuiBaseDgtInOut_t::display          (void)    {

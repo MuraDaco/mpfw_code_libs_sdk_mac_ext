@@ -151,35 +151,56 @@ tuiAppUsart_t::tuiAppUsart_t   (void)   :
 
     ,usartTextCntr                      (usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr))
     // tuiTextUsart_t  usartText        ("USART Text", {8, 71, 1,   1}, &usartTextCntr);
-    ,g_text                              {"USART Text", {8, 71, 1,   1}, nullptr}
+    ,g_text                              {"USART Text", {7, 71, 1,   1}, nullptr}
 
     ,usartBuffer            {"Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor"}
     ,usartString            {usartBuffer, sizeof(usartBuffer)}
     // tuiBaseEbox_t   usartSendEbox    ("USART send Ebox", {3,  71, 9, 1}, &usartString);
     ,g_ebox                              {"USART send Ebox", {3,  71, 9, 1}, &usartString}
+    ,g_button                           {"send", 4, {1,4,8,71-4}, buttonFunction}
     ,g_eList     {
-                     {&g_text, 1}
-                    ,{&g_ebox, 1}
-                    ,{nullptr, 1}
+                     {&g_text,      1}
+                    ,{&g_button,    1}
+                    ,{&g_ebox,      1}
+                    ,{nullptr,      1}
                     }
 {}
 
-
+    
 tuiAppUsart_t::tuiAppUsart_t   (box_t* p_pBox)   :
     // tuiBaseSubWin_t    usartSubWin   ("USART Sub Window", &boxUsartSubWin,  eListUsartSubWin   );
     tuiBaseSubWin_t                     ("USART Sub Window", p_pBox,  g_eList  )
 
     ,usartTextCntr                      (usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr))
     // tuiTextUsart_t  usartText        ("USART Text", {8, 71, 1,   1}, &usartTextCntr);
-    ,g_text                              {"USART Text", {8, 71, 1,   1}, &usartTextCntr}
+    ,g_text                              {"USART Text", {7, 71, 1,   1}, &usartTextCntr}
 
     ,usartBuffer            {"Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor"}
     ,usartString            {usartBuffer, sizeof(usartBuffer)}
     // tuiBaseEbox_t   usartSendEbox    ("USART send Ebox", {3,  71, 9, 1}, &usartString);
-    ,g_ebox                              {"USART send Ebox", {3,  71, 9, 1}, &usartString}
+    ,g_ebox                             {"USART send Ebox", {3,  71, 9, 1}, &usartString}
+    ,g_button                           {"send", 4, {1,4,8,71-4}, buttonFunction}
     ,g_eList     {
-                     {&g_text, 1}
-                    ,{&g_ebox, 1}
-                    ,{nullptr, 1}
+                     {&g_text,      1}
+                    ,{&g_button,    1}
+                    ,{&g_ebox,      1}
+                    ,{nullptr,      1}
                     }
 {}
+
+void tuiAppUsart_t::buttonFunction  (void)      {
+    if(g_po)    {
+        tuiAppUsart_t* l_this = static_cast<tuiAppUsart_t*>(g_po);
+
+        // read  from g_ebox/usartString
+        // write to   g_text/usartTextCntr
+        l_this->usartTextCntr.add(   
+            reinterpret_cast<uint8_t*>(l_this->usartString.pArrayGet()),
+            l_this->usartString.lengthGet(),
+            dtyStuf_t::kMarker_t::testTx,
+            dtyStuf_t::kDataType_t::ascii
+            );
+
+        //l_this->eventOn();      // frameNname(tuiMode_t::eventOn);
+    }
+}
