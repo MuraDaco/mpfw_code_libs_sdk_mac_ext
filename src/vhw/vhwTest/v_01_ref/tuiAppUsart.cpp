@@ -188,19 +188,17 @@ tuiAppUsart_t::tuiAppUsart_t   (box_t* p_pBox)   :
                     }
 {}
 
+// BE CAREFUL!!! who call this function MUST call the eventOn() function member of this class
+//                  because the g_po variable MUST BE PROPERLY SET
 void tuiAppUsart_t::buttonFunction  (void)      {
-    if(g_po)    {
-        tuiAppUsart_t* l_this = static_cast<tuiAppUsart_t*>(g_po);
+    tuiAppUsart_t* l_this = static_cast<tuiAppUsart_t*>(g_po);
 
-        // read  from g_ebox/usartString
-        // write to   g_text/usartTextCntr
-        l_this->usartTextCntr.add(   
-            reinterpret_cast<uint8_t*>(l_this->usartString.pArrayGet()),
-            l_this->usartString.lengthGet(),
-            dtyStuf_t::kMarker_t::testTx,
-            dtyStuf_t::kDataType_t::ascii
-            );
-
-        //l_this->eventOn();      // frameNname(tuiMode_t::eventOn);
-    }
+    // read  from g_ebox/usartString
+    // write to   g_text/usartTextCntr
+    l_this->usartTextCntr.add(   
+        reinterpret_cast<uint8_t*>(l_this->usartString.pArrayGet()),
+        l_this->usartString.lengthGet(),
+        dtyStuf_t::kMarker_t::testTx,
+        dtyStuf_t::kDataType_t::ascii
+        );
 }
