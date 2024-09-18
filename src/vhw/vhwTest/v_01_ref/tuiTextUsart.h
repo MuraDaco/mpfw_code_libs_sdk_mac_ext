@@ -42,11 +42,12 @@ public:
     //tuiTextUsart_t (const char* p_strName, box_t* p_pBox, dtyStuf_t* p_pCntnr);
 
     void init               (void* p_poFather) 		override;
-    void select             (void)                  override;
+    bool select             (void)                  override;
+    bool deSelect           (void)                  override;
+
     bool selectByMouse      (void)                  override;
     void display            (void)                  override;
     void display            (bool p_recursively)    override;
-    void deSelect           (void)                  override;
 
     void setThis            (void)                  override;
     void eventOn            (void)                  override;

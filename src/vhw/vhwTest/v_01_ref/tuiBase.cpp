@@ -55,4 +55,11 @@ void tuiBase_t::init       (void* p_poFather) 	{
 
 }
 
+bool tuiBase_t::selectTst   (void)  {
+    return (g_status == tuiMode_t::select) || (g_status == tuiMode_t::eventOn);
+}
+
+void tuiBase_t::debug_01    (void)  {
+    mvwprintw   (stdscr, 6, 10, "*** deselect status: %02d - %02d *** commmon ancestor: %s *** selected %s ***", g_debugStatus, g_debugStatusX, g_strName, static_cast<tuiBase_t*>(g_poSelected)->g_strName);
+}
 

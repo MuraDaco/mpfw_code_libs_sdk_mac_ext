@@ -46,7 +46,7 @@ public:
 
     bool loop       	        (void)      override;
     void end          	        (void)      override;
-    void deSelect               (void)      override;
+    bool deSelect               (void)      override;
 
 
 

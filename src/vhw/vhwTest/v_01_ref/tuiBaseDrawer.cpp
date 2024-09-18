@@ -51,7 +51,7 @@ tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox) :
     ,g_x0a          {0}
     ,g_y0Win        {0}
     ,g_x0Win        {0}
-    ,g_status       {tuiMode_t::deselect}
+    ,g_status       {tuiMode_t::undefined}
     ,g_strName      {p_strName}
     ,g_pDtyStatus   {nullptr}
 {}
@@ -66,7 +66,7 @@ tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box) :
     ,g_x0a          {0}
     ,g_y0Win        {0}
     ,g_x0Win        {0}
-    ,g_status       {tuiMode_t::deselect}
+    ,g_status       {tuiMode_t::undefined}
     ,g_strName      {p_strName}
     ,g_pDtyStatus   {nullptr}
 {}
@@ -81,7 +81,7 @@ tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t
     ,g_x0a          {0}
     ,g_y0Win        {0}
     ,g_x0Win        {0}
-    ,g_status       {tuiMode_t::deselect}
+    ,g_status       {tuiMode_t::undefined}
     ,g_strName      {p_strName      }
     ,g_pDtyStatus   {p_pDtyStatus   }
 {}
@@ -343,7 +343,8 @@ void tuiBaseDrawer_t::frameDebug (uint8_t p_row, char* p_str)   {
 
 }
 
-void tuiBaseDrawer_t::frameNname (tuiMode_t p_mode)   {
+bool tuiBaseDrawer_t::frameNname (tuiMode_t p_mode)   {
+    if(g_status == p_mode) return false; 
     g_status = p_mode;
     g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
 
@@ -362,9 +363,11 @@ void tuiBaseDrawer_t::frameNname (tuiMode_t p_mode)   {
 
     wrefresh(g_pNcursWin);
 
+    return true;
 }
 
-void tuiBaseDrawer_t::frameNameNstatus (tuiMode_t p_mode, char* p_str)   {
+bool tuiBaseDrawer_t::frameNameNstatus (tuiMode_t p_mode, char* p_str)   {
+    if(g_status == p_mode) return false; 
     g_status = p_mode;
     g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
 
@@ -383,7 +386,7 @@ void tuiBaseDrawer_t::frameNameNstatus (tuiMode_t p_mode, char* p_str)   {
     g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
 
     wrefresh(g_pNcursWin);
-
+    return true;
 }
 
 void tuiBaseDrawer_t::frameBox (void)   {
@@ -398,7 +401,8 @@ void tuiBaseDrawer_t::frameBox (void)   {
 
 }
 
-void tuiBaseDrawer_t::frameBox (tuiMode_t p_mode)   {
+bool tuiBaseDrawer_t::frameBox (tuiMode_t p_mode)   {
+    if(g_status == p_mode) return false; 
     g_status = p_mode;
     g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
 
@@ -408,7 +412,7 @@ void tuiBaseDrawer_t::frameBox (tuiMode_t p_mode)   {
     g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
 
     wrefresh(g_pNcursWin);
-
+    return true;
 }
 
 
@@ -442,7 +446,8 @@ void tuiBaseDrawer_t::nameNstatus (void)   {
     wrefresh(g_pNcursWin);
 }
 
-void tuiBaseDrawer_t::nameNstatus (tuiMode_t p_mode)   {
+bool tuiBaseDrawer_t::nameNstatus (tuiMode_t p_mode)   {
+    if(g_status == p_mode) return false; 
     g_status = p_mode;
     g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, ON);
 
@@ -451,6 +456,7 @@ void tuiBaseDrawer_t::nameNstatus (tuiMode_t p_mode)   {
     g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, OFF);
 
     wrefresh(g_pNcursWin);
+    return true;
 }
 
 bool tuiBaseDrawer_t::bMouseClickInsideBounds (void)      {
@@ -604,12 +610,14 @@ void tuiBaseDrawer_t::attributeMode_lineEventOn (tuiBaseDrawer_t* p_this, uint8_
 
 tuiBaseDrawer_t::attributeFunc_t  tuiBaseDrawer_t::g_attributeMode_Frame[] = {
      attributeMode_frameDeselect
+    ,attributeMode_frameDeselect
     ,attributeMode_frameSelect
     ,attributeMode_frameEventOn
 };
 
 tuiBaseDrawer_t::attributeFunc_t  tuiBaseDrawer_t::g_attributeMode_Line[] = {
      attributeMode_lineDeselect
+    ,attributeMode_lineDeselect
     ,attributeMode_lineSelect
     ,attributeMode_lineEventOn
 };

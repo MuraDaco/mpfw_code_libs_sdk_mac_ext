@@ -73,24 +73,25 @@ void tuiBaseLboxY_t::display               (void)    {
     frameNameNstatus(l_str);
 }
 
-void tuiBaseLboxY_t::select         (void)    {
+bool tuiBaseLboxY_t::select         (void)    {
     char l_str[SIZE_OF_STATUS_STR];
     getStrStatus(l_str);
-    frameNameNstatus(tuiMode_t::select, l_str);
+    return frameNameNstatus(tuiMode_t::select, l_str);
+    //return true;
 }
 
-
-void tuiBaseLboxY_t::deSelect        (void)    {
+bool tuiBaseLboxY_t::deSelect        (void)    {
     char l_str[SIZE_OF_STATUS_STR];
     getStrStatus(l_str);
-    frameNameNstatus(tuiMode_t::deselect, l_str);
+    return frameNameNstatus(tuiMode_t::deselect, l_str);
+    //return true;
 }
 
 
 void tuiBaseLboxY_t::eventOn     (void)    {
     g_po = this;
     //tuiBaseAction_t::g_eventArray  = g_eventArray;
-    tuiBaseAction_t::eventOn();
+    //deselectBackNeventOn();
 
     char l_str[SIZE_OF_STATUS_STR];
     getStrStatus(l_str);
@@ -121,14 +122,13 @@ void tuiBaseLboxY_t::vEventHndlKey_right	(void)  {
 
 void tuiBaseLboxY_t::vEventHndlKey_enter	(void)  {
     if(g_po->g_pCurrentElement->g_pUnit->isSelected())  {
-        g_po->frameNname(tuiMode_t::select);
-        g_po->g_pCurrentElement->g_pUnit->eventOn();
+        g_po->frameNname(tuiMode_t::select);    // to remove
+        g_po->g_pCurrentElement->g_pUnit->deselectBackNeventOn(true, true);
     }
 }
 
 void tuiBaseLboxY_t::vEventHndlKey_home	(void)  {
-    g_po->deselectBackNselect();
-    if(g_po->g_poFather) g_po->g_poFather->eventOn();
+    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn(true, true);
 
 }
 

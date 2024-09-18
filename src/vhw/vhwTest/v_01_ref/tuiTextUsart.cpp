@@ -51,14 +51,16 @@ void tuiTextUsart_t::init       (void* p_poFather) 	{
 }
 
 
-void tuiTextUsart_t::select         (void)    {
-    frameNname(tuiMode_t::select);
+bool tuiTextUsart_t::select         (void)    {
+    return frameNname(tuiMode_t::select);
+}
+
+bool tuiTextUsart_t::deSelect        (void)    {
+    return frameNname(tuiMode_t::deselect);
 }
 
 bool tuiTextUsart_t::selectByMouse         (void)    {
-    deselectBackNselect();
-    g_po = this;
-    eventOn();
+    deselectBackNeventOn(true, true);
     return true;
 }
 
@@ -122,11 +124,6 @@ void tuiTextUsart_t::display               (bool p_recursively)    {
     if(p_recursively) displayElements(p_recursively);
 }
 
-
-void tuiTextUsart_t::deSelect        (void)    {
-    frameNname(tuiMode_t::deselect);
-}
-
 void tuiTextUsart_t::setThis            (void)  {
     g_po = this;
 }
@@ -135,8 +132,7 @@ void tuiTextUsart_t::setThis            (void)  {
 void tuiTextUsart_t::eventOn     (void)    {
     g_po = this;
     //tuiBaseAction_t::g_eventArray  = g_eventArray;
-    tuiBaseAction_t::eventOn();
-    
+    //deselectBackNeventOn();
     frameNname(tuiMode_t::eventOn);
 }
 
@@ -170,8 +166,7 @@ void tuiTextUsart_t::vEventHndlKey_enter	(void)  {
 }
 
 void tuiTextUsart_t::vEventHndlKey_home	(void)  {
-    g_po->deselectBackNselect();
-    if(g_po->g_poFather) g_po->g_poFather->eventOn();
+    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn(true, true);
 
 }
 

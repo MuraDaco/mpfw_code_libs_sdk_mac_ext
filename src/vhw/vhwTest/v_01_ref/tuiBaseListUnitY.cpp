@@ -87,27 +87,13 @@ void tuiBaseListUnitY_t::initElementsList       (void) 	{
 
 }
 
-//void tuiBaseListUnitY_t::selectByMouse     (void)    {
-//
-//    if(selectElements()) {
-//        select();
-//    } else {
-//        deselectBackNselect();
-//        eventOn();
-//    }
-//
-//}
-
 bool tuiBaseListUnitY_t::selectByMouse         (void)    {
     if(selectElements()) {
         // a sub-element has been selected
-        select();
+        // select();   // to remove
     } else {
         // none sub-element has been selected
-        deselectBackNselect();
-        //g_po = this;
-        //setThis();
-        eventOn();
+        deselectBackNeventOn(true, true);
     }
     display();
     return true;
@@ -146,7 +132,7 @@ void tuiBaseListUnitY_t::prevElement     (tuiBaseListUnitY_t* p_po)    {
             //if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id) >= p_po->g_originWin)   {
             if(p_po->g_pCurrentElement->g_id >= p_po->g_originWin)   {
                 // repaint is NOT necessary
-                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(p_po);
+                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(true);
             } else {
                 // re-paint is necessary
 
@@ -185,7 +171,7 @@ void tuiBaseListUnitY_t::nextElement	(tuiBaseListUnitY_t* p_po)  {
         } else {
             if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id - (p_po->g_h - 2)) < p_po->g_originWin)   {
                 // repaint is NOT necessary
-                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(p_po);
+                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(true);
             } else {
                 // re-paint is necessary
 

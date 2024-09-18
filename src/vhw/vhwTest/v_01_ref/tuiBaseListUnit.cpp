@@ -90,10 +90,9 @@ void tuiBaseListUnit_t::initElementsList       (void) 	{
 bool tuiBaseListUnit_t::selectByMouse     (void)    {
 
     if(selectElements()) {
-        select();
+        //select();   // to remove
     } else {
-        deselectBackNselect();
-        eventOn();
+        deselectBackNeventOn(true, true);
     }
     return true;
 }
@@ -127,7 +126,8 @@ void tuiBaseListUnit_t::prevElement     (tuiBaseListUnit_t* p_po)    {
         } else {
             p_po->g_pCurrentElement = p_po->g_elementList;
         }
-        p_po->g_pCurrentElement->element->deselectBackNselect(p_po);
+        //p_po->g_pCurrentElement->element->deselectBackNselect(p_po);
+        p_po->g_pCurrentElement->element->deselectBackNselect(true);
     }
 }
 
@@ -140,7 +140,8 @@ void tuiBaseListUnit_t::nextElement	(tuiBaseListUnit_t* p_po)  {
         } else {
             p_po->g_pCurrentElement = p_po->g_elementList;
         }
-        p_po->g_pCurrentElement->element->deselectBackNselect(p_po);
+        //p_po->g_pCurrentElement->element->deselectBackNselect(p_po);
+        p_po->g_pCurrentElement->element->deselectBackNselect(true);
     }
 }
 

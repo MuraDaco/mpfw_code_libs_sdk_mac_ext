@@ -52,13 +52,18 @@ bool tuiBaseDgtInOut_t::loop            (void)  {
 }
 
 
-void tuiBaseDgtInOut_t::select         (void)    {
-    nameNstatus(tuiMode_t::select);
+bool tuiBaseDgtInOut_t::select         (void)    {
+    return nameNstatus(tuiMode_t::select);
+    //return true;
+}
+
+bool tuiBaseDgtInOut_t::deSelect        (void)    {
+    return nameNstatus(tuiMode_t::deselect);
+    //return true;
 }
 
 bool tuiBaseDgtInOut_t::selectByMouse       (void)    {
-    deselectBackNselect(g_poFather);
-    eventOn();
+    deselectBackNeventOn(true, true);
     return true;
 }
 
@@ -70,18 +75,12 @@ void tuiBaseDgtInOut_t::display         ([[maybe_unused]] bool p_recursively)  {
     display();
 }  
 
-void tuiBaseDgtInOut_t::deSelect        (void)    {
-    nameNstatus(tuiMode_t::deselect);
-}
-
 void tuiBaseDgtInOut_t::setThis            (void)  {
     g_po = this;
 }
 
 void tuiBaseDgtInOut_t::eventOn         (void)    {
     g_po = this;
-    //tuiBaseAction_t::g_eventArray  = g_eventArray;
-    tuiBaseAction_t::eventOn();
     nameNstatus(tuiMode_t::eventOn);
 }
 
@@ -106,8 +105,7 @@ void tuiBaseDgtInOut_t::vEventHndlKey_enter	(void)  {
 }
 
 void tuiBaseDgtInOut_t::vEventHndlKey_home	(void)  {
-    g_po->deselectBackNselect();
-    g_po->g_poFather->eventOn();
+    g_po->g_poFather->deselectBackNeventOn(true, true);
 
 }
 

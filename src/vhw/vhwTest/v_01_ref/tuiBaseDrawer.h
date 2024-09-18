@@ -107,14 +107,16 @@ public:
 
     void frameDebug                         (char* p_str);
     void frameDebug                         (uint8_t p_row, char* p_str);
-    void frameNname                         (tuiMode_t p_mode);
-    void frameNameNstatus                   (tuiMode_t p_mode, char* p_str);
-    void frameBox                           (tuiMode_t p_mode);
+
+    bool frameNname                         (tuiMode_t p_mode);
+    bool frameNameNstatus                   (tuiMode_t p_mode, char* p_str);
+    bool frameBox                           (tuiMode_t p_mode);
+    bool nameNstatus                        (tuiMode_t p_mode);
+
     void frameBox                           (void);
     void nameOnly                           (void);
     void nameOnly                           (tuiMode_t p_mode);
     void nameNstatus                        (void);
-    void nameNstatus                        (tuiMode_t p_mode);
     bool bMouseClickInsideBounds            (void);
 
     bool uiEventStatus                      (void);
@@ -156,8 +158,9 @@ private:
     static int g_ncursEventCode;
     static MEVENT g_mouseEvent;
 
-    typedef void (* attributeFunc_t)    (tuiBaseDrawer_t*, uint8_t);
     std::function<void(int)>  g_attributeModeX[2];
+
+    typedef void (* attributeFunc_t)    (tuiBaseDrawer_t*, uint8_t);
     static attributeFunc_t  g_attributeMode_Frame[static_cast<uint8_t>(tuiMode_t::num)];
     static void attributeMode_frameDeselect     (tuiBaseDrawer_t* p_this, uint8_t p_status);
     static void attributeMode_frameSelect       (tuiBaseDrawer_t* p_this, uint8_t p_status);

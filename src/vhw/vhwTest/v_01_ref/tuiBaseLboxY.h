@@ -41,12 +41,13 @@ public:
     tuiBaseLboxY_t (const char* p_strName, box_t* p_pBox    ,tuiBaseListElem_t* p_elementList);
 
     //void init               (void* p_poFather) 		override;
-    void select             (void)                  override;
+    bool select             (void)                  override;
+    bool deSelect           (void)                  override;
+
     void setThis            (void)                  override;
     //void selectByMouse      (void)                  override;
     void display            (void)                  override;
     void display            (bool p_recursively)    override;
-    void deSelect           (void)                  override;
     void eventOn            (void)                  override;
     event_t* pEventArrayGet	(void)                  override;
 

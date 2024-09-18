@@ -67,12 +67,14 @@ void tuiBaseWin_t::display               (bool p_recursively)    {
 }
 
 
-void tuiBaseWin_t::select     (void)    {
-    frameBox(tuiMode_t::select);
+bool tuiBaseWin_t::select     (void)    {
+    return frameBox(tuiMode_t::select);
+    //return true;
 }
 
-void tuiBaseWin_t::deSelect     (void)    {
-    frameBox(tuiMode_t::deselect);
+bool tuiBaseWin_t::deSelect     (void)    {
+    return frameBox(tuiMode_t::deselect);
+    //return true;
 }
 
 void tuiBaseWin_t::setThis            (void)  {
@@ -82,7 +84,7 @@ void tuiBaseWin_t::setThis            (void)  {
 
 void tuiBaseWin_t::eventOn     (void)    {
     g_po = this;
-    tuiBaseAction_t::eventOn();
+    //deselectBackNeventOn();
 
     frameBox(tuiMode_t::eventOn);
     if(!g_poFather) refreshElements();
@@ -114,16 +116,15 @@ void tuiBaseWin_t::vEventHndlKey_right	(void)  {
 
 void tuiBaseWin_t::vEventHndlKey_enter	(void)  {
     if(g_po->g_pCurrentElement->element->isSelected())  {
-        g_po->frameBox(tuiMode_t::select);
+        g_po->frameBox(tuiMode_t::select);  // to remove
         if(!g_po->g_poFather) g_po->refreshElements();
-        g_po->g_pCurrentElement->element->eventOn();
+        g_po->g_pCurrentElement->element->deselectBackNeventOn(true, true);
     }
 }
 
 void tuiBaseWin_t::vEventHndlKey_home	(void)  {
     if(g_po->g_poFather) {
-        g_po->deselectBackNselect();
-        g_po->g_poFather->eventOn();
+        g_po->g_poFather->deselectBackNeventOn(true, true);
     }
 
 }

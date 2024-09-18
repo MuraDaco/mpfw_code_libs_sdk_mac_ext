@@ -59,16 +59,24 @@ bool tuiBaseEbox_t::loop            (void)  {
 }
 
 
-void tuiBaseEbox_t::select         (void)    {
+bool tuiBaseEbox_t::select         (void)    {
     frameNname(tuiMode_t::select);
     //frameNameNcontent(tuiMode_t::select, g_pDtyStr->pDsplyStrBeginGet(), g_w-2);
     uint8_t l_position = g_pDtyStr->positionDsplyGet();
     positionCursor(false,l_position);
+    return true;
+}
+
+bool tuiBaseEbox_t::deSelect        (void)    {
+    frameNname(tuiMode_t::deselect);
+    //frameNameNcontent(tuiMode_t::deselect, g_pDtyStr->pDsplyStrBeginGet(), g_w-2);
+    uint8_t l_position = g_pDtyStr->positionDsplyGet();
+    positionCursor(false,l_position);
+    return true;
 }
 
 bool tuiBaseEbox_t::selectByMouse       (void)    {
-    deselectBackNselect(g_poFather);
-    eventOn();
+    deselectBackNeventOn(true, true);
     return true;
 }
 
@@ -86,21 +94,12 @@ void tuiBaseEbox_t::display         ([[maybe_unused]] bool p_recursively)  {
     display();
 }  
 
-void tuiBaseEbox_t::deSelect        (void)    {
-    frameNname(tuiMode_t::deselect);
-    //frameNameNcontent(tuiMode_t::deselect, g_pDtyStr->pDsplyStrBeginGet(), g_w-2);
-    uint8_t l_position = g_pDtyStr->positionDsplyGet();
-    positionCursor(false,l_position);
-}
-
 void tuiBaseEbox_t::setThis            (void)  {
     g_po = this;
 }
 
 void tuiBaseEbox_t::eventOn         (void)    {
     g_po = this;
-    //tuiBaseAction_t::g_eventArray  = g_eventArray;
-    tuiBaseAction_t::eventOn();
 
     frameNname(tuiMode_t::eventOn);
     // cursor management
@@ -153,8 +152,7 @@ void tuiBaseEbox_t::vEventHndlKey_enter	(void)  {
 }
 
 void tuiBaseEbox_t::vEventHndlKey_home	(void)  {
-    g_po->deselectBackNselect();
-    g_po->g_poFather->eventOn();
+    g_po->g_poFather->deselectBackNeventOn(true, true);
 
 }
 

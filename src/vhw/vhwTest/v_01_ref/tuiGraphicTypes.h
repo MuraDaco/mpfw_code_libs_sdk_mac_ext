@@ -48,7 +48,8 @@ enum class tuiEventCode_t: uint8_t {
 };
 
 enum class tuiMode_t: uint8_t {
-     deselect
+     undefined
+    ,deselect
     ,select
     ,eventOn
     ,num

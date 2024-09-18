@@ -47,14 +47,19 @@ public:
 
     virtual bool loop       	(void)  {return true;};
     virtual void end       	    (void)  {};
-    virtual void eventOn    	(void);
     virtual event_t* pEventArrayGet	(void) = 0;
     virtual uint8_t eventArraySizeGet   (void);
 
     virtual void display   	    (void)  {};
     virtual void display   	    ([[maybe_unused]] bool p_recursively)  {};
-    virtual void select     	(void) = 0;
-    virtual void deSelect   	(void) = 0;
+
+    virtual void debug_01    	(void) = 0;
+    
+    virtual void eventOn    	(void) = 0;
+    virtual bool selectTst   	(void) = 0;
+    virtual bool select     	(void) = 0;
+    virtual bool deSelect   	(void) = 0;
+
     virtual void setThis        (void) = 0;
     virtual bool selectByMouse 	(void) = 0;
     virtual bool bDisplayable	(void)  {return true;};
@@ -64,8 +69,18 @@ public:
     void deselectBackNselect    (void);
     void deselectBackNselect    (tuiBaseAction_t* p_poFather);
 
+    tuiBaseAction_t* searchCommonAncestor   (void);
+    tuiBaseAction_t* deselectBack           (tuiBaseAction_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON, uint8_t p_unused);
 
+    void selectBack                         (void);
+    void deselectBackNeventOn               (void);
+    bool deselectBackNeventOn               (bool p_unused);
+    void deselectBackNeventOn               (bool p_unused_1, bool p_unused_2);
+    void deselectBackNselect                (bool p_unused_1);
 
+    void debugDeselectBack (tuiBaseAction_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON);
+    static uint8_t g_debugStatus;
+    static uint8_t g_debugStatusX;
 
     //const char* g_strName;
 

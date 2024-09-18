@@ -48,8 +48,8 @@ public:
     void eventOn            (void)                  override;
     event_t* pEventArrayGet	(void)                  override;
 
-    void select             (void)                  override;
-    void deSelect           (void)                  override;
+    bool select             (void)                  override;
+    bool deSelect           (void)                  override;
 
 
 

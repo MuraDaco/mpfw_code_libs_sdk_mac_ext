@@ -49,14 +49,21 @@ bool tuiBaseButton_t::loop            (void)  {
 }
 
 
-void tuiBaseButton_t::select         (void)    {
+bool tuiBaseButton_t::select         (void)    {
     nameOnly(tuiMode_t::select);
+    return true;
+}
+
+bool tuiBaseButton_t::deSelect        (void)    {
+    nameOnly(tuiMode_t::deselect);
+    return true;
 }
 
 bool tuiBaseButton_t::selectByMouse       (void)    {
-    deselectBackNselect(g_poFather);
+    deselectBackNselect(true);
+    g_poFather->deselectBackNeventOn(true, true);
     eventOn();
-    return false;
+    return true;
 }
 
 void tuiBaseButton_t::display          (void)    {
@@ -67,17 +74,13 @@ void tuiBaseButton_t::display         ([[maybe_unused]] bool p_recursively)  {
     display();
 }  
 
-void tuiBaseButton_t::deSelect        (void)    {
-    nameOnly(tuiMode_t::deselect);
-}
-
 void tuiBaseButton_t::setThis            (void)  {
 }
 
 void tuiBaseButton_t::eventOn         (void)    {
     ////tuiBaseAction_t::g_eventArray  = g_eventArray;
     //tuiBaseAction_t::eventOn();
-    g_poFather->eventOn();
+    //g_poFather->deselectBackNeventOn();
     g_func();
 }
 

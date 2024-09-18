@@ -46,17 +46,21 @@ void tuiBaseLbox_t::init       (void* p_poFather) 	{
 }
 
 
-void tuiBaseLbox_t::select         (void)    {
+bool tuiBaseLbox_t::select         (void)    {
     frameNname(tuiMode_t::select);
+    return true;
+}
+
+bool tuiBaseLbox_t::deSelect        (void)    {
+    frameNname(tuiMode_t::deselect);
+    return true;
 }
 
 bool tuiBaseLbox_t::selectByMouse         (void)    {
     if(selectElements()) {
-        select();
+        // select();   // to remove
     } else {
-        deselectBackNselect();
-        g_po = this;
-        eventOn();
+        deselectBackNeventOn(true, true);
     }
     return true;
 }
@@ -71,19 +75,12 @@ void tuiBaseLbox_t::display               (bool p_recursively)    {
 }
 
 
-void tuiBaseLbox_t::deSelect        (void)    {
-    frameNname(tuiMode_t::deselect);
-}
-
 void tuiBaseLbox_t::setThis            (void)  {
     g_po = this;
 }
 
 void tuiBaseLbox_t::eventOn     (void)    {
     g_po = this;
-    //tuiBaseAction_t::g_eventArray  = g_eventArray;
-    tuiBaseAction_t::eventOn();
-
     frameNname(tuiMode_t::eventOn);
 }
 
@@ -111,14 +108,13 @@ void tuiBaseLbox_t::vEventHndlKey_right	(void)  {
 
 void tuiBaseLbox_t::vEventHndlKey_enter	(void)  {
     if(g_po->g_pCurrentElement->element->isSelected())  {
-        g_po->frameNname(tuiMode_t::select);
-        g_po->g_pCurrentElement->element->eventOn();
+        g_po->frameNname(tuiMode_t::select); // to remove
+        g_po->g_pCurrentElement->element->deselectBackNeventOn(true, true);
     }
 }
 
 void tuiBaseLbox_t::vEventHndlKey_home	(void)  {
-    g_po->deselectBackNselect();
-    if(g_po->g_poFather) g_po->g_poFather->eventOn();
+    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn(true, true);
 
 }
 
