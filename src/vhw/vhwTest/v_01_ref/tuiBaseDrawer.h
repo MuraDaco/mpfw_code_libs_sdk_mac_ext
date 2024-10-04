@@ -82,6 +82,8 @@ public:
         func_t hndl;
     } zone_t;
 
+    tuiBaseDrawer_t (void);
+    tuiBaseDrawer_t (                       box_t p_box);
     tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox);
     tuiBaseDrawer_t (const char* p_strName, box_t p_box);
     tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
@@ -92,7 +94,14 @@ public:
     void deinitGraphEnv         (void);
     void endGraphEnv            (void);
 
-    void rowPrint(uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength);
+    int16_t getRefX0            (void);
+    int16_t getDisplayMaxW      (void);
+    int16_t getRefY0            (void);
+    int16_t getDisplayMaxH      (void);
+
+    void rowPrint   (uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength);
+    void rowPrintX  (uint16_t p_rowUp, uint16_t p_rowDw, uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize);
+
 
     //void frame              (tuiMode_t p_mode);
     void frameNameNstatus   (char* p_str);
@@ -128,14 +137,30 @@ public:
     bool isSelectedOrEventOn                (void);
 
     WINDOW* g_pNcursWin;
-    uint8_t g_h;
-    uint8_t g_w;
-    uint8_t g_y0r;      // it is used to determine the "g_y0Win" & "g_y0a" coordinates and it is defined because it is easier to manage by the programmer user
-    uint8_t g_x0r;      // it is used to determine the "g_x0Win" & "g_x0a" coordinates and it is defined because it is easier to manage by the programmer user
-    uint8_t g_y0a;      // the origin/referiment is the ncurses "main" window, that is "stdscr"; it is used in mouse management
-    uint8_t g_x0a;      // the origin/referiment is the ncurses "main" window, that is "stdscr"; it is used in mouse management
-    uint8_t g_y0Win;    // the origin/referiment is the ncurses "secondary" windows, the windows that are created by "newwin" function; it is used in "print" functions
-    uint8_t g_x0Win;    // the origin/referiment is the ncurses "secondary" windows, the windows that are created by "newwin" function; it is used in "print" functions
+    int16_t g_h;
+    int16_t g_w;
+    int16_t g_y0r;      // it is used to determine the "g_y0Win" & "g_y0a" coordinates and it is defined because it is easier to manage by the programmer user
+    int16_t g_x0r;      // it is used to determine the "g_x0Win" & "g_x0a" coordinates and it is defined because it is easier to manage by the programmer user
+    int16_t g_y0a;      // the origin/referiment is the ncurses "main" window, that is "stdscr"; it is used in mouse management
+    int16_t g_x0a;      // the origin/referiment is the ncurses "main" window, that is "stdscr"; it is used in mouse management
+    int16_t g_y0Win;    // the origin/referiment is the ncurses "secondary" windows, the windows that are created by "newwin" function; it is used in "print" functions
+    int16_t g_x0Win;    // the origin/referiment is the ncurses "secondary" windows, the windows that are created by "newwin" function; it is used in "print" functions
+
+    uint8_t g_marginTop;
+    uint8_t g_marginBottom;
+    uint8_t g_marginLeft;
+    uint8_t g_marginRight;
+
+    int16_t g_x0aLvl1;
+    int16_t g_displayBoxW;
+    int16_t g_y0aLvl1;
+    int16_t g_displayBoxH;
+    
+
+    // init bound
+    int16_t g_boundUpper;
+    int16_t g_boundLower;
+
     tuiMode_t g_status;
 
     const char* g_strName;

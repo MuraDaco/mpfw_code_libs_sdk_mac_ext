@@ -22,49 +22,21 @@
 //  *******************************************************************************
 
 /*
- * tuiBase.h
+ * dtyTuiBaseUnit.cpp
  *
- *  Created on: Aug, 7th 2024
+ *  Created on: Sep, 24th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_BASE_H
-#define TUI_BASE_H
+
+#include "dtyTuiBaseUnit.h"
+
+// ****************************************************
+// section start **** GENERAL *****
 
 
-#include "tuiBaseAction.h"
-#include "tuiBaseDrawer.h"
-
-class tuiBase_t : public tuiBaseAction_t, public tuiBaseDrawer_t {
-
-public:
-
-    tuiBase_t (void);
-    tuiBase_t (const char* p_strName, box_t *p_pBox);
-    tuiBase_t (const char* p_strName, box_t p_box);
-    tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
-
-    void init               (void* p_poFather) 		override;
-    bool selectTst   	    (void)                  override;
-    void debug_01   	    (void)                  override;
-
-    void updCoordNbounds                (int16_t p_delta);
-    void updCoordNboundsForNewFather    (void);
-
-    virtual void updCoordNboundsChilds  (void);
-
-
-
-    bool bVisibleCompletely       (void);
-    int32_t getDistanceFromUpperBound   (void);
-    int32_t getDistanceFromLowerBound   (void);
-    int32_t getDistanceFromBound        (void);
-
-
-    int16_t g_boundUpper;
-    int16_t g_boundLower;
-
-};
-
-
-#endif  // TUI_BASE_H
+dtyTuiBaseUnit_t::dtyTuiBaseUnit_t   (tuiBase_t* p_unit) :
+     g_unit     {p_unit}
+    ,g_id       {0}
+    ,g_flag     {0}
+{}

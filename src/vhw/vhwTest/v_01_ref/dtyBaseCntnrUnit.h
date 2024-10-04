@@ -77,12 +77,14 @@ public:
 
     uint8_t  g_displayBoxH;
     uint8_t  g_displayBoxW;
-    uint32_t g_idDisplayHeaderCurrent;
-    uint32_t g_idDisplayHeaderBegin;
-    uint32_t g_idDisplayHeaderEnd;
-    uint32_t g_idDisplayDataCurrent;
-    uint32_t g_idDisplayDataBegin;
-    uint32_t g_idDisplayDataEnd;
+    uint32_t g_idDisplayHeaderSelected; // it is useed by the final user element to mark the block content that is selected
+    uint32_t g_idDisplayHeaderCurrent;  // it is useed by the final user element to display the block content
+    uint32_t g_idDisplayHeaderBegin;    // it defines the upper bound of the display box
+    uint32_t g_idDisplayHeaderEnd;      // it defines the lower bound of the display box
+    uint32_t g_idDisplayDataSelected;   // it is useed by the final user element to mark the block content that is selected
+    uint32_t g_idDisplayDataCurrent;    // it is useed by the final user element to display the block content
+    uint32_t g_idDisplayDataBegin;      // it defines the upper bound of the display box
+    uint32_t g_idDisplayDataEnd;        // it defines the lower bound of the display box
 
     uint8_t  g_debugDisplayRow;
     uint16_t g_debugBlockDataSize;
@@ -90,8 +92,6 @@ public:
 protected:
 
     // section **** GENERAL ****
-
-
 
 
     dtyBaseCntnrUnit_t  (uint8_t* p_pBuf, uint32_t p_bufSize);
@@ -117,8 +117,6 @@ protected:
     // section **** DISPLAY *****
 
     // section **** SELECT ****
-    uint32_t g_selectBlockCurrent;
-    uint32_t g_selectDataCurrent;
 
 };
 

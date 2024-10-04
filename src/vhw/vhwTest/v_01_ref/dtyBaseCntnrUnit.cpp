@@ -39,9 +39,11 @@ dtyBaseCntnrUnit_t::dtyBaseCntnrUnit_t		(uint8_t* p_pBuf, uint32_t p_bufSize)	:
      g_pBuf                         {p_pBuf         }
     ,g_idWriteHeaderCurrent         {0              }
     ,g_idWriteDataCurrent           {p_bufSize      }
+    ,g_idDisplayHeaderSelected      {0              }
     ,g_idDisplayHeaderCurrent       {0              }
     ,g_idDisplayHeaderBegin         {0              }
     ,g_idDisplayHeaderEnd           {0              }
+    ,g_idDisplayDataSelected        {p_bufSize      }
     ,g_idDisplayDataCurrent         {p_bufSize      }
     ,g_idDisplayDataBegin           {p_bufSize      }
     ,g_idDisplayDataEnd             {p_bufSize      }

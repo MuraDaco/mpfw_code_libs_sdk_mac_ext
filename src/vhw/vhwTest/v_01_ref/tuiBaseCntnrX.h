@@ -22,44 +22,48 @@
 //  *******************************************************************************
 
 /*
- * tuiBaseCntnr.h
+ * tuiBaseCntnrX.h
  *
- *  Created on: Aug, 12th 2024
+ *  Created on: Sep, 21st 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_BASE_CNTNR_H
-#define TUI_BASE_CNTNR_H
+#ifndef TUI_BASE_CNTNR_X_H
+#define TUI_BASE_CNTNR_X_H
 
 #include "tuiBase.h"
-#include "dtyBaseCntnrUnit.h"
+#include "dtyBaseCntnrUnitX.h"
 
-class tuiBaseCntnr_t : public tuiBase_t {
+class tuiBaseCntnrX_t : public tuiBase_t {
 
 public:
 
-    tuiBaseCntnr_t      (const char* p_strName, box_t  p_box,   dtyBaseCntnrUnit_t* p_pCntr);
+    tuiBaseCntnrX_t      (const char* p_strName, box_t  p_box,   dtyBaseCntnrUnitX_t* p_pCntr);
 
 
     void initElementsList               (void); // initElementsList
     void displayElements                (bool p_recursively);
+    
     bool selectByMouse 	                (void) override;
+    void updCoordNboundsChilds          (void) override;
+
     bool selectElements                 (void);
-    static void nextElement             (tuiBaseCntnr_t* p_po);  // it is a static function because it will be called by a static function
-    static void prevElement             (tuiBaseCntnr_t* p_po);  // it is a static function because it will be called by a static function
+    static void selectPrev              (tuiBaseCntnrX_t* p_po);
+    static void selectNext              (tuiBaseCntnrX_t* p_po);
+    static void rollUp                  (tuiBaseCntnrX_t* p_po);
+    static void rollDown                (tuiBaseCntnrX_t* p_po);
     void refreshElements                (void);
 
 
     // --------------------- Element pointers section - START
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
-    dtyBaseCntnrUnit_t* g_pCntnr;
+    dtyBaseCntnrUnitX_t* g_pCntnr;
     // --------------------- Element pointers section - END
 
 
 protected:
 
-    uint8_t markerToColor     (dtyBaseCntnrUnit_t::kMarker_t p_marker);
 
     uint16_t   g_elementNum;
 
@@ -68,4 +72,4 @@ protected:
 };
 
 
-#endif 	// TUI_BASE_CNTNR_H
+#endif 	// TUI_BASE_CNTNR_X_H

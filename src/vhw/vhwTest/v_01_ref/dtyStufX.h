@@ -22,9 +22,9 @@
 //  *******************************************************************************
 
 /*
- * dtyStuf.h
+ * dtyStufX.h
  *
- *  Created on: Aug, 20th 2024
+ *  Created on: Sep, 25th 2024
  *      Author: Marco Dau
  *
 
@@ -48,22 +48,66 @@
 
  */
  
-#ifndef UTY_STUF_H
-#define UTY_STUF_H
+#ifndef DTY_STUF_X_H
+#define DTY_STUF_X_H
 
 #include <cstdint>
-#include "dtyBaseCntnrUnit.h"
+#include "tuiData.h"
+#include "dtyBaseCntnrUnitX.h"
 
-class dtyStuf_t : public dtyBaseCntnrUnit_t  {
+class dtyStufX_t : public dtyBaseCntnrUnitX_t  {
 
 public:
     // ****************************************************
     // section start **** GENERAL *****
 
-    dtyStuf_t   (uint8_t* p_pBuf, uint32_t p_bufSize);
-    dtyStuf_t   (uint8_t* p_pBuf, uint32_t p_bufSize, uint8_t* p_pBufIn, uint16_t p_bufInSize);
-    dtyStuf_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize);
-    dtyStuf_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBaseCntnrUnit_t* p_cntnr);
+    enum kMarker_t: int8_t  {
+         defaultX = 0x18      // end marker = 0xe8
+        ,deviceRx = 0x07      // end marker = 0xf9
+        ,deviceTx = 0x06      // end marker = 0xfa
+        ,testTx   = 0x15      // end marker = 0xeb
+    };
+
+    enum kDataType_t: int8_t  {
+         ascii
+        ,binary
+        };
+
+    enum kPosition_t: int8_t  {
+         top
+        ,topButLastRowOnly
+        };
+
+
+    dtyStufX_t  (uint8_t* p_pBuf, uint32_t p_bufSize);
+    dtyStufX_t  (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize);
+
+    void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize)                                             ;
+    void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType) ;
+
+    void    initDisplay                     (void* p_poFather)  override;
+    bool    resetLoopElement                (void)  override;
+    void    shiftLoopElementBySelect        (void)  override;
+    void    shiftLoopElementRollUp          (void)  override;
+    void    shiftLoopElementRollDown        (void)  override;
+    void    updElementCoordNbounds          (void)  override;
+    void    dspElement                      ([[maybe_unused]] bool p_recursively)   override;
+    bool    nextLoopElement                 (void)  override;
+
+
+    uint8_t*    g_pBuf;
+    uint32_t    g_bufSize;
+    tuiData_t   g_dBLoop;
+
+    uint32_t g_loopIdHeader;
+    uint32_t g_loopIdData;
+    uint32_t g_loopDataSize;
+    int32_t  g_loopY0r;
+    uint32_t g_loopH;
+    uint8_t  g_loopMarker;
+    bool     g_loopSelect;
+    uint32_t g_loopRows;
+
 
     // section end   **** GENERAL ***** 
     // ****************************************************
@@ -71,10 +115,8 @@ public:
     // ****************************************************
     // section start **** WRITE *****
 
-    void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize)                                             override;
-    void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker)                         override;
-    void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType) override;
-
+    uint32_t g_writeIdHeaderCurrent;
+    uint32_t g_writeIdDataCurrent;
 
     // section end   **** WRITE ***** 
     // ****************************************************
@@ -82,6 +124,15 @@ public:
     // ****************************************************
     // section start **** DISPLAY *****
 
+    uint8_t  g_displayBoxH;
+    uint8_t  g_displayBoxW;
+
+    uint32_t g_displayBeginIdHeader;
+    uint32_t g_displayBeginIdData;
+    uint32_t g_displayBeginDataSize;
+    int32_t  g_displayBeginY0r;
+    uint32_t g_displayBeginH;
+    uint8_t  g_displayBeginMarker;
 
     // section end   **** DISPLAY ***** 
     // ****************************************************
@@ -89,26 +140,37 @@ public:
     // ****************************************************
     // section start **** SELECT *****
 
+    bool setSelectPrev                  (void) override;
+    bool setSelectNext                  (void) override;
+    bool bSelectVisibleCompletely       (void) override;
+
+    uint32_t g_selectIdHeader;
+    uint32_t g_selectIdData;
+
+    uint32_t g_selectOldIdHeader;
+    uint32_t g_selectOldIdData;
+
     // section end   **** SELECT ***** 
     // ****************************************************
 
-
-protected:
+private:
 
     // ****************************************************
     // section start **** GENERAL *****
 
-    kMarker_t   getBlockDataMarker      (uint32_t p_idHeader) override;                  
-    uint32_t    getBlockDataRowBegin    (uint32_t p_idHeader) override;                  
-    uint16_t    getBlockDataSize        (uint32_t p_idHeader) override;                  
+    uint32_t    getBlockDataIdHeaderPrev        (uint32_t p_idHeader);
+    uint32_t    getBlockDataIdHeaderNext        (uint32_t p_idHeader);
+    uint32_t    getBlockIdData                  (uint32_t p_idHeader);
+    uint16_t    getBlockDataSize                (uint32_t p_idHeader);
+    kMarker_t   getBlockDataMarker              (uint32_t p_idHeader);
 
-    bool        bBlockDataHeaderBegin   (uint32_t p_idHeader) override;
-    bool        bBlockDataHeaderEnd     (uint32_t p_idHeader) override;
+    void        loopTuiParamSet                 (void);
+    bool        loopInit                        (uint32_t p_idHeader);
+    bool        loopDisplayBegin                (void);
+    bool        loopDisplayEnd                  (void);
 
-    uint32_t    getBoxPrevHeader     (uint32_t p_pIdHeader) override;            
-    uint32_t    getBoxNextHeader     (uint32_t p_pIdHeader) override;            
 
-    // section end   **** DISPLAY ***** 
+    // section end   **** GENERAL ***** 
     // ****************************************************
     // --------------------------
     // ****************************************************
@@ -121,6 +183,8 @@ protected:
     // ****************************************************
     // section start **** DISPLAY *****
 
+    bool        initDisplayBeginParams          (uint32_t p_idHeader);
+    void        setDisplayBeginParams           (uint32_t p_idHeader, kPosition_t p_position);
 
     // section end   **** DISPLAY ***** 
     // ****************************************************
@@ -128,24 +192,12 @@ protected:
     // ****************************************************
     // section start **** SELECT *****
 
-	// void	    format          (kMarker_t p_marker ,uint8_t*   p_pBuffIn   ,uint8_t* p_pBuffOut);
-	// void	    formatStart     (kMarker_t p_marker ,uint8_t    p_data      ,uint8_t* p_buffOut);
-	// kMarker_t	getMarker       (uint8_t* p_buffOut);
-	// uint8_t*	getData         (uint8_t* p_buffOut);
-	// uint8_t	    getDataLength   (uint8_t* p_buffOut);
-    // void        search          (uint32_t p_pDataStart, uint16_t p_rowSize);
-    // void        next            (void);
-    // void        prev            (void);
-    // kMarker_t   getRowMarker    (void);
-    // uint8_t*    getRowData      (void);
-    // uint16_t    getRowInfo      (void);
 
     // section end   **** SELECT ***** 
     // ****************************************************
 
-private:
 
 };
 
 
-#endif 	// DTY_STUF_H
+#endif 	// DTY_STUF_X_H

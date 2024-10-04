@@ -32,7 +32,6 @@
 #define TUI_BASE_ACTION_H
 
 #include "uyTypesDefs.h"
-#include <ncurses.h>
 
 class tuiBaseAction_t  {
 
@@ -50,8 +49,8 @@ public:
     virtual event_t* pEventArrayGet	(void) = 0;
     virtual uint8_t eventArraySizeGet   (void);
 
-    virtual void display   	    (void)  {};
-    virtual void display   	    ([[maybe_unused]] bool p_recursively)  {};
+    virtual void display   	    (void)  = 0;
+    virtual void display   	    ([[maybe_unused]] bool p_recursively)  = 0;
 
     virtual void debug_01    	(void) = 0;
     
@@ -82,35 +81,17 @@ public:
     static uint8_t g_debugStatus;
     static uint8_t g_debugStatusX;
 
-    //const char* g_strName;
-
-    // --------------------- ncurses section - START
-    //WINDOW* g_ncursWin;
-    // --------------------- ncurses section - END
-
-    // // --------------------- Pointers section - START
-    // // pointer to the list of uiBase objects belonging to one
-    // // or more objects of the current class
-    // static Element_t*	ro_uiBase;
-    // tuiBaseAction_t*	ro_Father;
-    // // --------------------- Pointers section - END
-
-    //box_t*  g_pBox;
 
 protected:
 
-    // // --------------------- Events handler section - START
-	// // ..................... Events handler: functions
-    // template <uint8_t keycode>
-    // static void vEventHndlKey	(void);
+    // --------------------- Events handler section - START
+
 	// ..................... Events handler: array
     static event_t* g_eventArray;
     // --------------------- Events handler section - END
 
     tuiBaseAction_t* g_poFather;
 
-    //static point_t g_mouseXY;
-    //static void setMouseXY(point_t p_mouseXY);
     static tuiBaseAction_t* g_poSelected;
     static tuiBaseAction_t* g_poEventOn;
 

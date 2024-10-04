@@ -22,49 +22,53 @@
 //  *******************************************************************************
 
 /*
- * tuiBase.h
+ * tuiData.h
  *
- *  Created on: Aug, 7th 2024
+ *  Created on: Sep, 25th 2024
  *      Author: Marco Dau
  */
- 
-#ifndef TUI_BASE_H
-#define TUI_BASE_H
 
 
-#include "tuiBaseAction.h"
-#include "tuiBaseDrawer.h"
 
-class tuiBase_t : public tuiBaseAction_t, public tuiBaseDrawer_t {
+#ifndef TUI_DATA_H
+#define TUI_DATA_H
+
+
+#include "tuiBase.h"
+
+class tuiData_t : public tuiBase_t {
 
 public:
 
-    tuiBase_t (void);
-    tuiBase_t (const char* p_strName, box_t *p_pBox);
-    tuiBase_t (const char* p_strName, box_t p_box);
-    tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
-
-    void init               (void* p_poFather) 		override;
-    bool selectTst   	    (void)                  override;
-    void debug_01   	    (void)                  override;
-
-    void updCoordNbounds                (int16_t p_delta);
-    void updCoordNboundsForNewFather    (void);
-
-    virtual void updCoordNboundsChilds  (void);
+    tuiData_t (uint8_t* p_pBuf, uint32_t p_bufSize);
 
 
+    void display            (void)                  override;
+    void display            (bool p_recursively)    override;
+    bool select             (void)                  override;
+    bool deSelect           (void)                  override;
+    bool selectByMouse      (void)                  override;
+    void setThis            (void)                  override;
+    void eventOn            (void)                  override;
+    event_t* pEventArrayGet	(void)                  override;
+    uint8_t eventArraySizeGet   (void)              override;
 
-    bool bVisibleCompletely       (void);
-    int32_t getDistanceFromUpperBound   (void);
-    int32_t getDistanceFromLowerBound   (void);
-    int32_t getDistanceFromBound        (void);
+
+    void displayUpdate      (uint32_t p_loopIData, uint32_t p_loopDataSize, int32_t p_loopY0r, uint32_t p_loopH, bool p_loopSelect, uint8_t p_loopMarker);
 
 
-    int16_t g_boundUpper;
-    int16_t g_boundLower;
+
+    uint8_t* g_pBuf;
+    uint32_t g_bufSize;
+    uint32_t g_idData;
+    uint32_t g_dataSize;
+    bool     g_select;
+    uint8_t  g_marker;
+
+    uint32_t g_relBoundUpper;
+    uint32_t g_relBoundLower;
 
 };
 
 
-#endif  // TUI_BASE_H
+#endif 	// TUI_DATA_H

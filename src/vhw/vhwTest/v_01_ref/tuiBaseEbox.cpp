@@ -113,6 +113,7 @@ event_t* tuiBaseEbox_t::pEventArrayGet	(void)      {
 }
 
 uint8_t tuiBaseEbox_t::eventArraySizeGet   (void)   {
+    // N.B.: it is necessary override this function because "constEventArraySize" is different from default
     return constEventArraySize;
 }
 

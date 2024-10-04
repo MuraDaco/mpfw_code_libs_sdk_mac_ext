@@ -94,13 +94,19 @@ set(SOURCE_FILES_CPP
     dtyBaseUnit.cpp
     dtyUint8.cpp
     dtyBaseCntnrUnit.cpp
+    dtyBaseCntnrUnitX.cpp
     dtyStuf.cpp
+    dtyTuiBase.cpp
+    dtyStufX.cpp
     ##-- dtyStringList.cpp
 
     ##-- tuiGraphicBox.cpp
     
     tuiBaseCntnr.cpp
+    tuiBaseCntnrX.cpp
     tuiTextUsart.cpp
+    tuiTextUsartX.cpp
+    tuiData.cpp
 
     tuiBaseAction.cpp
     tuiBaseDrawer.cpp

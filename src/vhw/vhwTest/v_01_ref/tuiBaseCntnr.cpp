@@ -107,15 +107,6 @@ void tuiBaseCntnr_t::nextElement	([[maybe_unused]] tuiBaseCntnr_t* p_po)  {
 }
 
 void tuiBaseCntnr_t::refreshElements     (void)    {
-//    tuiBaseListElem_t* l_element = g_elementList + g_originWin;
-//
-//    // c.1) run [init] function for each [child] element
-//    while(l_element->g_pUnit)    {
-//        if(l_element->g_id < (g_originWin + g_h - 2))    {
-//            l_element->g_pUnit->display();
-//        } else break;
-//        l_element++;
-//    }
 
 }
 
