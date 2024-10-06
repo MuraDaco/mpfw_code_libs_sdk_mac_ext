@@ -38,6 +38,10 @@ tuiBaseSubWin_t::tuiBaseSubWin_t      (const char* p_strName, box_t* p_box, elem
      tuiBaseListUnit_t          (p_strName, p_box, p_elementList)
 {}
 
+tuiBaseSubWin_t::tuiBaseSubWin_t      (const char* p_strName, box_t* p_box, margins_t p_margins, element_t* p_elementList) :
+     tuiBaseListUnit_t          (p_strName, p_box, p_margins, p_elementList)
+{}
+
 
 void tuiBaseSubWin_t::init       (void* p_poFather) 	{
     tuiBase_t::init(p_poFather);

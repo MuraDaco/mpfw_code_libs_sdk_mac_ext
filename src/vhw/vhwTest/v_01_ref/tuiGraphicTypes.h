@@ -76,5 +76,12 @@ typedef struct __box__ {
     uint8_t xStart;
 } box_t;
 
+typedef struct __margins__ {
+    uint8_t Top;
+    uint8_t Bottom;
+    uint8_t Left;
+    uint8_t Right;
+} margins_t;
+
 
 #endif 	// TUI_GRAPHIC_TYPES_H

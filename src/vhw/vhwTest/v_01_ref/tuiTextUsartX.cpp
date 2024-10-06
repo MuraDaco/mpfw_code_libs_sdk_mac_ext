@@ -67,7 +67,7 @@ bool tuiTextUsartX_t::selectByMouse         (void)    {
 #define SIZE_OF_STATUS_STR  200
 
 void tuiTextUsartX_t::getStrStatus               (char* p_str)    {
-    snprintf(p_str, 1," " );
+    snprintf(p_str, 30," NOTHING - %04x - %04x", g_y0Win, g_lvl1Y0a );
 }
 
 void tuiTextUsartX_t::display               (void)    {

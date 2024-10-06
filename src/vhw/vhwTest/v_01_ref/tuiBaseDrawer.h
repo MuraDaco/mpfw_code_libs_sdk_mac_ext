@@ -86,6 +86,8 @@ public:
     tuiBaseDrawer_t (                       box_t p_box);
     tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox);
     tuiBaseDrawer_t (const char* p_strName, box_t p_box);
+    tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox,  margins_t p_margins);
+    tuiBaseDrawer_t (const char* p_strName, box_t p_box,    margins_t p_margins);
     tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
 
     void initWin                (void);
@@ -99,8 +101,11 @@ public:
     int16_t getRefY0            (void);
     int16_t getDisplayMaxH      (void);
 
-    void rowPrint   (uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength);
-    void rowPrintX  (uint16_t p_rowUp, uint16_t p_rowDw, uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize);
+    void rowPrint       (uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength);
+    void statusPrintX   (void);
+    void debugPrintX    (uint32_t p_dbgParam1, uint32_t p_dbgParam2);
+
+    void rowPrintX      (uint16_t p_rowUp, uint16_t p_rowDw, uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize);
 
 
     //void frame              (tuiMode_t p_mode);
@@ -151,9 +156,11 @@ public:
     uint8_t g_marginLeft;
     uint8_t g_marginRight;
 
-    int16_t g_x0aLvl1;
+    int16_t g_lvl1X0a;
+    int16_t g_lvl1X0r;
     int16_t g_displayBoxW;
-    int16_t g_y0aLvl1;
+    int16_t g_lvl1Y0a;
+    int16_t g_lvl1Y0r;
     int16_t g_displayBoxH;
     
 

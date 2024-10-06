@@ -56,6 +56,8 @@ public:
 
     void displayUpdate      (uint32_t p_loopIData, uint32_t p_loopDataSize, int32_t p_loopY0r, uint32_t p_loopH, bool p_loopSelect, uint8_t p_loopMarker);
 
+    void displayUpdateDebug (uint32_t p_dbgParam1, uint32_t p_dbgParam2);
+    void displayDebug       (void);
 
 
     uint8_t* g_pBuf;
@@ -67,6 +69,9 @@ public:
 
     uint32_t g_relBoundUpper;
     uint32_t g_relBoundLower;
+
+    uint32_t g_dbgParam1;
+    uint32_t g_dbgParam2;
 
 };
 

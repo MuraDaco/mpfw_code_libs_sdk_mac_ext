@@ -34,7 +34,7 @@
 #include "tuiDigitalInOut2.h"
 
 #include "tuiBaseEbox.h"
-#include "tuiTextUsart.h"
+#include "tuiTextUsartX.h"
 #include "tuiBaseSubWin.h"
 
 #include "vhwPphTbl_Buttons.h"
@@ -87,22 +87,26 @@ dtyBuffer_t initUsartTextCntnr[] = {
     ,{initBufferIn2, sizeof(initBufferIn2)}
     ,{initBufferIn3, sizeof(initBufferIn3)}
 };
-
+/*
 uint8_t usartTextBuffer[1000000]; dtyStuf_t       usartTextCntr(usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr));
 tuiTextUsart_t  usartText("USART Text", {8, 71, 1,   1}, &usartTextCntr);
+*/
+uint8_t usartTextBuffer[1000000]; dtyStufX_t       usartTextCntrX(usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr));
+tuiTextUsartX_t  usartTextX("USART Text-X", {8, 71, 1,   1}, &usartTextCntrX);
 
 char usartBuffer[1000] = "Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor";
 dtyBaseArray_t usartString(usartBuffer, sizeof(usartBuffer));
 tuiBaseEbox_t   usartSendEbox("USART send Ebox", {3,  71, 9, 1}, &usartString);
 
-box_t boxUsartSubWin = {13,  73,  11, 1};
+//box_t boxUsartSubWin = {13,  73,  11, 1};
+box_t boxUsartSubWin = {16,  73,  8, 1};
 tuiBaseListUnit_t::element_t eListUsartSubWin[] = {
     //{nullptr                   , 1 }
-     {&usartText                , 1 }
+     {&usartTextX               , 1 }
     ,{&usartSendEbox            , 1 }
     ,{nullptr                   , 1 }
 };
-tuiBaseSubWin_t    usartSubWin  ("USART Sub Window", &boxUsartSubWin,  eListUsartSubWin   );
+tuiBaseSubWin_t    usartSubWin  ("USART Sub Window", &boxUsartSubWin,  {2,1,1,1}, eListUsartSubWin   );
 
 tuiBaseListUnit_t::element_t tuiAppPinPort_t::g_baseElementList[] = {
     //{nullptr                   , 1 }
@@ -111,9 +115,9 @@ tuiBaseListUnit_t::element_t tuiAppPinPort_t::g_baseElementList[] = {
     ,{&TUI_OBJ   (BUTTON_LEO)   , 3 }
     ,{&TUI_OBJ   (LED_RAI)      , 3 }
     ,{&TUI_OBJ   (LED_REO)      , 3 }
-    ,{&TUI_OBJ   (LED_REI)      , 3 }
-    ,{&TUI_OBJ   (SWITCH_XOR)   , 6 }
-    ,{&TUI_OBJ   (SWITCH_NOR)   , 6 }
+    //,{&TUI_OBJ   (LED_REI)      , 3 }
+    //,{&TUI_OBJ   (SWITCH_XOR)   , 6 }
+    //,{&TUI_OBJ   (SWITCH_NOR)   , 6 }
     ,{&usartSubWin              , 8 }
     ,{nullptr                   , 1 }
 };
@@ -122,5 +126,5 @@ tuiBaseListUnit_t::element_t tuiAppPinPort_t::g_baseElementList[] = {
 
 // **********************************************************
 // -------- MAIN WINDOW define - start
-tuiBaseWin_t    tuiAppPinPort_t::g_baseWin  ("PinPort Window", &g_box,              g_baseElementList   );
+tuiBaseWin_t    tuiAppPinPort_t::g_baseWin  ("PinPort Window", &g_box, {3,1,1,1},              g_baseElementList   );
 // -------- MAIN WINDOW define - end

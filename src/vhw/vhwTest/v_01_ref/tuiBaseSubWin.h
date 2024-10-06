@@ -38,6 +38,7 @@ class tuiBaseSubWin_t : public tuiBaseListUnit_t  {
 public:
 
     tuiBaseSubWin_t        (const char* p_strName, box_t* p_box, element_t* p_elementList);
+    tuiBaseSubWin_t        (const char* p_strName, box_t* p_box, margins_t p_margins, element_t* p_elementList);
 
     void init               (void* p_poFather)      override;
     void display            (void)                  override;

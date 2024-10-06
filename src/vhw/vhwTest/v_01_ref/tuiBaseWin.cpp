@@ -31,6 +31,7 @@
 
 #include "tuiBaseWin.h"
 
+#define P_PO_FATHER static_cast<tuiBase_t*>(p_poFather)
 
 tuiBaseWin_t*	tuiBaseWin_t::g_po = nullptr;
 
@@ -38,13 +39,31 @@ tuiBaseWin_t::tuiBaseWin_t      (const char* p_strName, box_t* p_box, element_t*
      tuiBaseListUnit_t          (p_strName, p_box, p_elementList)
 {}
 
+tuiBaseWin_t::tuiBaseWin_t      (const char* p_strName, box_t* p_box, margins_t p_margins, element_t* p_elementList) :
+     tuiBaseListUnit_t          (p_strName, p_box, p_margins, p_elementList)
+{}
 
 void tuiBaseWin_t::init       (void* p_poFather) 	{
     // 1. set pointer to my own [father]
     //      - it will be usefull for move between tui elements
-    g_poFather  = static_cast<tuiBase_t*>(p_poFather);
-    g_x0a       = static_cast<tuiBase_t*>(p_poFather)->g_x0a    + g_x0r;
-    g_y0a       = static_cast<tuiBase_t*>(p_poFather)->g_y0a    + g_y0r;
+    g_poFather  = P_PO_FATHER;
+    g_x0a       = P_PO_FATHER->g_x0a    + g_x0r;
+    g_y0a       = P_PO_FATHER->g_y0a    + g_y0r;
+
+    //g_x0a           = P_PO_FATHER->getRefX0()    + g_x0r;
+    //g_y0a           = P_PO_FATHER->getRefX0()    + g_y0r;
+    //l_rootX0a       = P_PO_FATHER->getRefX0() + g_lvl1X0r;
+    //l_rootY0a       = P_PO_FATHER->getRefY0() + g_lvl1Y0r;
+
+    g_lvl1X0a       = 0;
+    g_displayBoxW   = P_PO_FATHER->getDisplayMaxW();
+    g_lvl1Y0a       = 0;
+    g_displayBoxH   = P_PO_FATHER->getDisplayMaxH();
+
+    g_boundUpper = 0;
+    g_boundLower = g_h;
+    //g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
+    //g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h);
 
     // crete new ncurses window
     initWin();

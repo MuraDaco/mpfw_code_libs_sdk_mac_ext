@@ -40,6 +40,14 @@ tuiBaseListUnit_t::tuiBaseListUnit_t      (const char* p_strName, box_t* p_box, 
     ,g_bElementList         {false}
 {}
 
+tuiBaseListUnit_t::tuiBaseListUnit_t      (const char* p_strName, box_t* p_box, margins_t p_margins, element_t* p_elementList) :
+     tuiBase_t              (p_strName, p_box, p_margins)
+    ,g_elementList          {p_elementList}
+    ,g_pCurrentElement      {p_elementList}
+    ,g_pLastElement         {p_elementList}
+    ,g_bElementList         {false}
+{}
+
 void tuiBaseListUnit_t::initElementsList       (void) 	{
     if(!g_elementList)   return;
     // c) initialize all elements of the its own element list that is

@@ -51,15 +51,15 @@
 
 #define P_PO_FATHER static_cast<tuiBase_t*>(p_poFather)
 
-dtyStufX_t::dtyStufX_t   (uint8_t* p_pBuf, uint32_t p_bufSize)  :
-     g_pBuf                         {p_pBuf             }
-    ,g_bufSize                      {p_bufSize          }
-    ,g_dBLoop                       {p_pBuf, p_bufSize  }
-    ,g_writeIdHeaderCurrent         {0                  }
-    ,g_writeIdDataCurrent           {p_bufSize          }
-    ,g_selectIdHeader               {DB_HEADER_UNDEFINED}
-    ,g_selectOldIdHeader            {DB_HEADER_UNDEFINED}
-{}
+//dtyStufX_t::dtyStufX_t   (uint8_t* p_pBuf, uint32_t p_bufSize)  :
+//     g_pBuf                         {p_pBuf             }
+//    ,g_bufSize                      {p_bufSize          }
+//    ,g_dBLoop                       {p_pBuf, p_bufSize  }
+//    ,g_writeIdHeaderCurrent         {0                  }
+//    ,g_writeIdDataCurrent           {p_bufSize          }
+//    ,g_selectIdHeader               {DB_HEADER_UNDEFINED}
+//    ,g_selectOldIdHeader            {DB_HEADER_UNDEFINED}
+//{}
 
 
 dtyStufX_t::dtyStufX_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize) :
@@ -118,7 +118,7 @@ void dtyStufX_t::add         (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t
     uint8_t* l_pBufInfo = &l_pBuf[DATA_BLOCK_INFO_POS+1];
 
     // update header block id/pointer
-    g_writeIdHeaderCurrent = getBlockDataIdHeaderNext(g_writeIdHeaderCurrent);
+    g_writeIdHeaderCurrent = getWriteIdHeaderNext(g_writeIdHeaderCurrent);
 
     // data block
 
@@ -152,6 +152,11 @@ void dtyStufX_t::add         (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t
 
 uint32_t dtyStufX_t::getBlockDataIdHeaderPrev    (uint32_t p_idHeader)  {                            
     return (HEADER_SIZE < p_idHeader) ? (p_idHeader - HEADER_SIZE) : 0;
+}
+
+uint32_t dtyStufX_t::getWriteIdHeaderNext    (uint32_t p_idHeader)  {         
+
+    return ((p_idHeader + HEADER_SIZE) < g_bufSize) ? p_idHeader + HEADER_SIZE : p_idHeader;
 }
 
 uint32_t dtyStufX_t::getBlockDataIdHeaderNext    (uint32_t p_idHeader)  {         
@@ -369,6 +374,7 @@ void dtyStufX_t::updElementCoordNbounds       (void)    {
 
 void dtyStufX_t::dspElement                   ([[maybe_unused]] bool p_recursively)  {
 
+    initDisplayBeginParams(g_writeIdHeaderCurrent);
     if(loopInit(g_displayBeginIdHeader))    {
         // container is NOT empty, therefore ...
 
@@ -387,6 +393,10 @@ void dtyStufX_t::dspElement                   ([[maybe_unused]] bool p_recursive
             // update tui element parameter
             loopTuiParamSet();
         }
+    } else {
+        g_dBLoop.displayUpdateDebug(g_writeIdHeaderCurrent, g_displayBeginIdHeader);
+        // display tui element
+        g_dBLoop.displayDebug();
     }
 
 }

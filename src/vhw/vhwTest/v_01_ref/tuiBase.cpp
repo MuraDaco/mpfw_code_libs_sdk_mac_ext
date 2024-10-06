@@ -51,6 +51,15 @@ tuiBase_t::tuiBase_t (const char* p_strName, box_t p_box) :
     tuiBaseDrawer_t(p_strName, p_box)
 {}
 
+tuiBase_t::tuiBase_t (const char* p_strName, box_t *p_pBox,    margins_t p_margins ) :
+    tuiBaseDrawer_t(p_strName, p_pBox, p_margins)
+{}
+
+tuiBase_t::tuiBase_t (const char* p_strName, box_t p_box,      margins_t p_margins ) :
+    tuiBaseDrawer_t(p_strName, p_box,  p_margins)
+{}
+
+
 tuiBase_t::tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus) :
     tuiBaseDrawer_t(p_strName, p_box, p_pDtyStatus)
 {}
@@ -65,15 +74,15 @@ void tuiBase_t::init       (void* p_poFather) 	{
     g_y0a           = P_PO_FATHER->g_y0a    + g_y0r;
     if(!g_w) g_w    = P_PO_FATHER->g_w - 2;
 
-    g_x0aLvl1       = P_PO_FATHER->getRefX0() + g_x0r;
+    g_lvl1X0a       = P_PO_FATHER->getRefX0() + g_lvl1X0r;
     g_displayBoxW   = P_PO_FATHER->getDisplayMaxW();
-    g_y0aLvl1       = P_PO_FATHER->getRefY0() + g_y0r;
+    g_lvl1Y0a       = P_PO_FATHER->getRefY0() + g_lvl1Y0r;
     g_displayBoxH   = P_PO_FATHER->getDisplayMaxH();
     
 
     // init bounds
-    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_y0aLvl1);
-    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_y0aLvl1 + g_h);
+    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
+    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h);
 
 }
 
@@ -107,10 +116,10 @@ void tuiBase_t::updCoordNbounds    (int16_t p_delta)       {
     g_y0a   += p_delta;
     g_y0r   += p_delta;
 
-    g_y0aLvl1   += p_delta;
+    g_lvl1Y0a   += p_delta;
 
-    g_boundUpper = MAX(g_boundUpper, g_y0aLvl1);
-    g_boundLower = MIN(g_boundLower, g_y0aLvl1 + g_h - 1);
+    g_boundUpper = MAX(g_boundUpper, g_lvl1Y0a);
+    g_boundLower = MIN(g_boundLower, g_lvl1Y0a + g_h - 1);
 
     updCoordNboundsChilds();
 }
@@ -136,11 +145,11 @@ void tuiBase_t::updCoordNboundsForNewFather   (void) {
     g_y0Win = G_PO_FATHER->g_y0Win + g_y0r;
     g_y0a   = G_PO_FATHER->g_y0a   + g_y0r;
 
-    g_y0aLvl1   = G_PO_FATHER->getRefY0() + g_y0r;
+    g_lvl1Y0a   = G_PO_FATHER->getRefY0() + g_y0r;
 
 
-    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_y0aLvl1);
-    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_y0aLvl1 + g_h) - 1;
+    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
+    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h) - 1;
 
     updCoordNboundsChilds();
 }

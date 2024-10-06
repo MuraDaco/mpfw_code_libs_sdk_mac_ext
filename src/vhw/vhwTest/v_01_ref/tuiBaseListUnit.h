@@ -43,6 +43,7 @@ public:
     } element_t;
 
     tuiBaseListUnit_t      (const char* p_strName, box_t* p_box, element_t* p_elementList);
+    tuiBaseListUnit_t      (const char* p_strName, box_t* p_box, margins_t p_margins, element_t* p_elementList);
 
     bool selectByMouse 	(void)              override;
 

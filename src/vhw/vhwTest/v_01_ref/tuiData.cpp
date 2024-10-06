@@ -58,9 +58,9 @@ void tuiData_t::displayUpdate      (uint32_t p_loopIdData, uint32_t p_loopDataSi
     g_y0r   = p_y0r;
     g_h     = p_h;
 
-    g_y0aLvl1   = G_PO_FATHER->getRefY0() + p_y0r;
-    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_y0aLvl1);
-    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_y0aLvl1 + g_h) - 1;
+    g_lvl1Y0a   = G_PO_FATHER->getRefY0() + p_y0r;
+    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
+    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h) - 1;
 
 
     // - g_relBoundUpper = g_y0Win - g_boundUpper;
@@ -87,13 +87,26 @@ void tuiData_t::display                (void)   {
         )   {
             // element is visible
 
-            rowPrintX(g_relBoundUpper, g_relBoundUpper, g_marker, g_select, reinterpret_cast<char*>(&g_pBuf[g_idData]), g_dataSize);
+            //rowPrintX(g_relBoundUpper, g_relBoundUpper, g_marker, g_select, reinterpret_cast<char*>(&g_pBuf[g_idData]), g_dataSize);
+            statusPrintX();
+        } else {
+            statusPrintX();
         }
-    }
+    } else statusPrintX();
 
 }
 
-void       tuiData_t::display              (bool p_recursively)    {
+void tuiData_t::displayUpdateDebug (uint32_t p_dbgParam1, uint32_t p_dbgParam2)     {
+    g_dbgParam1 = p_dbgParam1;
+    g_dbgParam2 = p_dbgParam2;
+}
+
+void tuiData_t::displayDebug       (void)       {
+    debugPrintX(g_dbgParam1, g_dbgParam1);
+}
+
+
+void       tuiData_t::display              ([[maybe_unused]] bool p_recursively)    {
 
 }
 

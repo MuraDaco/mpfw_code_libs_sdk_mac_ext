@@ -79,7 +79,7 @@ public:
         };
 
 
-    dtyStufX_t  (uint8_t* p_pBuf, uint32_t p_bufSize);
+    //dtyStufX_t  (uint8_t* p_pBuf, uint32_t p_bufSize);
     dtyStufX_t  (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize);
 
     void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize)                                             ;
@@ -158,6 +158,8 @@ private:
     // ****************************************************
     // section start **** GENERAL *****
 
+    
+    uint32_t    getWriteIdHeaderNext            (uint32_t p_idHeader);
     uint32_t    getBlockDataIdHeaderPrev        (uint32_t p_idHeader);
     uint32_t    getBlockDataIdHeaderNext        (uint32_t p_idHeader);
     uint32_t    getBlockIdData                  (uint32_t p_idHeader);

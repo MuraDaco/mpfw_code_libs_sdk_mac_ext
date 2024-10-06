@@ -48,6 +48,7 @@ public:
     void end          	        (void)      override;
     bool deSelect               (void)      override;
 
+    void debugStatus            (void);
 
 
 };

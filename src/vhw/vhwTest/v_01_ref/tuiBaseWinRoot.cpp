@@ -42,6 +42,9 @@ void tuiBaseWinRoot_t::init       (void) 	{
     initGraphEnv();
     initGraphEnvColor();
 
+    g_lvl1X0a = 0;
+    g_lvl1Y0a = 0;
+
     // 3. init elements and its sub-elements
     initElementsList();
 
@@ -74,23 +77,24 @@ bool tuiBaseWinRoot_t::loop            (void)  {
             if(uiMouseEventCode_ButtonPressed())
             {
 
-                if(!selectElements()) {
-                    deselectBackNeventOn(true, true);
-                } else {
+                if(selectElements()) {
                     frameBox(tuiMode_t::select);
                     refreshElements();
+                    debugStatus();
+                } else {
+                    deselectBackNeventOn(true, true);
                 }
             }
 
         }
     } else {
         if(
-            //(tuiEventCode_t::noEvent != l_handlerEventCode)
             (tuiEventCode_t::noEvent != l_handlerEventCode) &&
             (tuiEventCodeNum(l_handlerEventCode) < g_poEventOn->eventArraySizeGet())
-        )
-            //tuiBaseAction_t::g_eventArray[tuiEventCodeNum(l_handlerEventCode)]();
+        )   {
             g_poEventOn->g_eventArray[tuiEventCodeNum(l_handlerEventCode)]();
+            debugStatus();
+        }
     }
 
     return l_result;
@@ -113,3 +117,6 @@ bool tuiBaseWinRoot_t::deSelect     (void)    {
     return false;
 }
 
+void tuiBaseWinRoot_t::debugStatus  (void)  {
+
+}
