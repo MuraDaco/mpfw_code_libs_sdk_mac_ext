@@ -45,20 +45,20 @@
 // **********************************************************
 // -------- BOX define - start
 // ............................ H   W  Yo  Xo
-box_t tuiAppPinPort_t::g_box = {25,  75,  8, 80};
+box_t tuiAppPinPort_t::g_box = {25,  75,  0, 75};
 // -------- BOX define - end
 
 
 // **********************************************************
 // -------- ELEMENT LIST define - start
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_NEO    ,1 ,40 , 3 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_MAO    ,1 ,40 , 4 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_LEO    ,1 ,40 , 5 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_RAI       ,1 ,40 , 6 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REO       ,1 ,40 , 7 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REI       ,1 ,40 , 8 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_XOR    ,1 ,40 , 9 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOR    ,1 ,40 ,10 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_NEO    ,1 ,40 , 0 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_MAO    ,1 ,40 , 1 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_LEO    ,1 ,40 , 2 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_RAI       ,1 ,40 , 3 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REO       ,1 ,40 , 4 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REI       ,1 ,40 , 5 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_XOR    ,1 ,40 , 6 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOR    ,1 ,40 , 7 ,1  )
 
 
 uint8_t initBufferIn1[] = {
@@ -92,14 +92,14 @@ uint8_t usartTextBuffer[1000000]; dtyStuf_t       usartTextCntr(usartTextBuffer,
 tuiTextUsart_t  usartText("USART Text", {8, 71, 1,   1}, &usartTextCntr);
 */
 uint8_t usartTextBuffer[1000000]; dtyStufX_t       usartTextCntrX(usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr));
-tuiTextUsartX_t  usartTextX("USART Text-X", {8, 71, 1,   1}, &usartTextCntrX);
+tuiTextUsartX_t  usartTextX("USART Text-X", {8, 71, 0,   0}, &usartTextCntrX);
 
 char usartBuffer[1000] = "Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor";
 dtyBaseArray_t usartString(usartBuffer, sizeof(usartBuffer));
-tuiBaseEbox_t   usartSendEbox("USART send Ebox", {3,  71, 9, 1}, &usartString);
+tuiBaseEbox_t   usartSendEbox("USART send Ebox", {3,  71, 8, 0}, &usartString);
 
 //box_t boxUsartSubWin = {13,  73,  11, 1};
-box_t boxUsartSubWin = {16,  73,  8, 1};
+box_t boxUsartSubWin = {16,  73,  5, 0};
 tuiBaseListUnit_t::element_t eListUsartSubWin[] = {
     //{nullptr                   , 1 }
      {&usartTextX               , 1 }

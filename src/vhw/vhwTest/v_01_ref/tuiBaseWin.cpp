@@ -47,13 +47,13 @@ void tuiBaseWin_t::init       (void* p_poFather) 	{
     // 1. set pointer to my own [father]
     //      - it will be usefull for move between tui elements
     g_poFather  = P_PO_FATHER;
-    g_x0a       = P_PO_FATHER->g_x0a    + g_x0r;
-    g_y0a       = P_PO_FATHER->g_y0a    + g_y0r;
+    //g_x0a       = P_PO_FATHER->g_x0a    + g_x0r;
+    //g_y0a       = P_PO_FATHER->g_y0a    + g_y0r;
 
-    //g_x0a           = P_PO_FATHER->getRefX0()    + g_x0r;
-    //g_y0a           = P_PO_FATHER->getRefX0()    + g_y0r;
-    //l_rootX0a       = P_PO_FATHER->getRefX0() + g_lvl1X0r;
-    //l_rootY0a       = P_PO_FATHER->getRefY0() + g_lvl1Y0r;
+    g_x0a           = P_PO_FATHER->getRootRefX0() + g_lvl1X0r;
+    g_y0a           = P_PO_FATHER->getRootRefY0() + g_lvl1Y0r;
+    //uint16_t l_rootX0a       = P_PO_FATHER->getRefX0() + g_lvl1X0r;
+    //uint16_t l_rootY0a       = P_PO_FATHER->getRefY0() + g_lvl1Y0r;
 
     g_lvl1X0a       = 0;
     g_displayBoxW   = P_PO_FATHER->getDisplayMaxW();
@@ -67,6 +67,7 @@ void tuiBaseWin_t::init       (void* p_poFather) 	{
 
     // crete new ncurses window
     initWin();
+    //initWin(l_rootX0a, l_rootY0a);
 
     //initTuiNcursesBox();
     //frameBox();

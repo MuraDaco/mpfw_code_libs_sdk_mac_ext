@@ -31,92 +31,6 @@
 #include "tuiAppUsart.h"
 
 
-/*
-
-// **********************************************************
-// -------- BOX define - start
-// ............................ H   W  Yo  Xo
-box_t tuiAppUsart::g_box = {25,  75,  8, 80};
-// -------- BOX define - end
-
-
-// **********************************************************
-// -------- ELEMENT LIST define - start
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_NEO    ,1 ,40 , 3 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_MAO    ,1 ,40 , 4 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_LEO    ,1 ,40 , 5 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_RAI       ,1 ,40 , 6 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REO       ,1 ,40 , 7 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REI       ,1 ,40 , 8 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_XOR    ,1 ,40 , 9 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOR    ,1 ,40 ,10 ,1  )
-
-
-uint8_t initBufferIn1[] = {
-//  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
-    '1', '1', '1', '1', '1', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5',
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x11,0x11,0x11,0x11
-};
-
-uint8_t initBufferIn2[] = {
-//  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
-    '2', '2', '2', '2', '2', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5',
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x22,0x22,0x22,0x22
-};
-
-uint8_t initBufferIn3[] = {
-//  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
-    '3', '3', '3', '3', '3', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5',
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x33,0x33,0x33,0x33
-};
-
-dtyBuffer_t initUsartTextCntnr[] = {
-     {initBufferIn1, sizeof(initBufferIn1)}
-    ,{initBufferIn2, sizeof(initBufferIn2)}
-    ,{initBufferIn3, sizeof(initBufferIn3)}
-};
-
-uint8_t usartTextBuffer[1000000]; dtyStuf_t       usartTextCntr(usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr));
-tuiTextUsart_t  usartText("USART Text", {8, 71, 1,   1}, &usartTextCntr);
-
-char usartBuffer[1000] = "Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor";
-dtyBaseArray_t usartString(usartBuffer, sizeof(usartBuffer));
-tuiBaseEbox_t   usartSendEbox("USART send Ebox", {3,  71, 9, 1}, &usartString);
-
-box_t boxUsartSubWin = {13,  73,  11, 1};
-tuiBaseListUnit_t::element_t eListUsartSubWin[] = {
-    //{nullptr                   , 1 }
-     {&usartText                , 1 }
-    ,{&usartSendEbox            , 1 }
-    ,{nullptr                   , 1 }
-};
-tuiBaseSubWin_t    usartSubWin  ("USART Sub Window", &boxUsartSubWin,  eListUsartSubWin   );
-
-tuiBaseListUnit_t::element_t tuiAppUsart::g_baseElementList[] = {
-    //{nullptr                   , 1 }
-     {&TUI_OBJ   (BUTTON_NEO)   , 1 }
-    ,{&TUI_OBJ   (BUTTON_MAO)   , 0 }
-    ,{&TUI_OBJ   (BUTTON_LEO)   , 3 }
-    ,{&TUI_OBJ   (LED_RAI)      , 3 }
-    ,{&TUI_OBJ   (LED_REO)      , 3 }
-    ,{&TUI_OBJ   (LED_REI)      , 3 }
-    ,{&TUI_OBJ   (SWITCH_XOR)   , 6 }
-    ,{&TUI_OBJ   (SWITCH_NOR)   , 6 }
-    ,{&usartSubWin              , 8 }
-    ,{nullptr                   , 1 }
-};
-
-// -------- ELEMENT LIST define - end
-
-// **********************************************************
-// -------- MAIN WINDOW define - start
-tuiBaseWin_t    tuiAppUsart::g_baseWin  ("PinPort Window", &g_box,              g_baseElementList   );
-// -------- MAIN WINDOW define - end
-
-*/
 
 uint8_t tuiAppUsart_t::initBufferIn1[] = {
 //  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,
@@ -145,47 +59,22 @@ dtyBuffer_t tuiAppUsart_t::initUsartTextCntnr[] = {
     ,{initBufferIn3, sizeof(initBufferIn3)}
 };
 
-tuiAppUsart_t::tuiAppUsart_t   (void)   :
-    // tuiBaseSubWin_t    usartSubWin   ("USART Sub Window", &boxUsartSubWin,  eListUsartSubWin   );
-    tuiBaseSubWin_t                     ("USART Sub Window", nullptr,  g_eList  )
-
-    ,usartTextCntr                      (usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr))
-    // tuiTextUsart_t  usartText        ("USART Text", {8, 71, 1,   1}, &usartTextCntr);
-    ,g_text                              {"USART Text", {7, 71, 1,   1}, nullptr}
-
-    ,usartBuffer            {"Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor"}
-    ,usartString            {usartBuffer, sizeof(usartBuffer)}
-    // tuiBaseEbox_t   usartSendEbox    ("USART send Ebox", {3,  71, 9, 1}, &usartString);
-    ,g_ebox                              {"USART send Ebox", {3,  71, 9, 1}, &usartString}
-    ,g_button                           {"send", 4, {1,4,8,71-4}, buttonFunction}
-    ,g_eList     {
-                     {&g_text,      1}
-                    ,{&g_button,    1}
-                    ,{&g_ebox,      1}
-                    ,{nullptr,      1}
-                    }
-{}
-
     
 tuiAppUsart_t::tuiAppUsart_t   (box_t* p_pBox)   :
-    // tuiBaseSubWin_t    usartSubWin   ("USART Sub Window", &boxUsartSubWin,  eListUsartSubWin   );
-    tuiBaseSubWin_t                     ("USART Sub Window", p_pBox,  g_eList  )
+    tuiBaseSubWin_t                     ("USART Sub Window", p_pBox, g_eList  )
 
-    ,usartTextCntr                      (usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr))
-    // tuiTextUsart_t  usartText        ("USART Text", {8, 71, 1,   1}, &usartTextCntr);
-    ,g_text                              {"USART Text", {7, 71, 1,   1}, &usartTextCntr}
-
+    ,usartTextCntr          (usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr))
+    ,g_text                 {"USART Text", {7, 71, 0,   0}, &usartTextCntr}
     ,usartBuffer            {"Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor"}
     ,usartString            {usartBuffer, sizeof(usartBuffer)}
-    // tuiBaseEbox_t   usartSendEbox    ("USART send Ebox", {3,  71, 9, 1}, &usartString);
-    ,g_ebox                             {"USART send Ebox", {3,  71, 9, 1}, &usartString}
-    ,g_button                           {"send", 4, {1,4,8,71-4}, buttonFunction}
-    ,g_eList     {
-                     {&g_text,      1}
-                    ,{&g_button,    1}
-                    ,{&g_ebox,      1}
-                    ,{nullptr,      1}
-                    }
+    ,g_ebox                 {"USART send Ebox", {3,  71, 8, 0}, &usartString}
+    ,g_button               {"send", 4, {1,4, 7,70-4}, buttonFunction}
+    ,g_eList                {
+                                {&g_text,      1}
+                               ,{&g_button,    1}
+                               ,{&g_ebox,      1}
+                               ,{nullptr,      1}
+                            }
 {}
 
 // BE CAREFUL!!! who call this function MUST call the eventOn() function member of this class

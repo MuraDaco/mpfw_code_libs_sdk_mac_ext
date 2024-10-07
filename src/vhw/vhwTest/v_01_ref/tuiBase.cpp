@@ -68,10 +68,14 @@ tuiBase_t::tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStat
 void tuiBase_t::init       (void* p_poFather) 	{
     g_poFather      = P_PO_FATHER;
     g_pNcursWin     = P_PO_FATHER->g_pNcursWin;
-    g_x0Win         = P_PO_FATHER->g_x0Win  + g_x0r;
-    g_y0Win         = P_PO_FATHER->g_y0Win  + g_y0r;
-    g_x0a           = P_PO_FATHER->g_x0a    + g_x0r;
-    g_y0a           = P_PO_FATHER->g_y0a    + g_y0r;
+    g_x0Win         = P_PO_FATHER->getRefX0() + g_x0r;
+    g_y0Win         = P_PO_FATHER->getRefY0() + g_y0r;
+    g_x0a           = P_PO_FATHER->getRootRefX0() + g_lvl1X0r;    // g_x0r;
+    g_y0a           = P_PO_FATHER->getRootRefY0() + g_lvl1Y0r;    // g_y0r;
+    g_x0Win         = P_PO_FATHER->getRefX0() + g_lvl1X0r;
+    g_y0Win         = P_PO_FATHER->getRefY0() + g_lvl1Y0r;
+    //g_x0a           = P_PO_FATHER->getRefX0() + g_lvl1X0r;
+    //g_y0a           = P_PO_FATHER->getRefY0() + g_lvl1Y0r;
     if(!g_w) g_w    = P_PO_FATHER->g_w - 2;
 
     g_lvl1X0a       = P_PO_FATHER->getRefX0() + g_lvl1X0r;

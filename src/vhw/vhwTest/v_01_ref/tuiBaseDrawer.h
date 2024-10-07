@@ -83,22 +83,27 @@ public:
     } zone_t;
 
     tuiBaseDrawer_t (void);
-    tuiBaseDrawer_t (                       box_t p_box);
+
     tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox);
     tuiBaseDrawer_t (const char* p_strName, box_t p_box);
-    tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox,  margins_t p_margins);
-    tuiBaseDrawer_t (const char* p_strName, box_t p_box,    margins_t p_margins);
     tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
 
+    tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox,  margins_t p_margins);
+    tuiBaseDrawer_t (const char* p_strName, box_t p_box,    margins_t p_margins);
+    tuiBaseDrawer_t (const char* p_strName, box_t p_box,    margins_t p_margins, dtyUint8_t* p_pDtyStatus);
+
     void initWin                (void);
+    void initWin                (uint16_t p_rootX0a, uint16_t p_rootY0a);
     void initGraphEnv           (void);
     void initGraphEnvColor      (void);
     void deinitGraphEnv         (void);
     void endGraphEnv            (void);
 
     int16_t getRefX0            (void);
+    int16_t getRootRefX0        (void);
     int16_t getDisplayMaxW      (void);
     int16_t getRefY0            (void);
+    int16_t getRootRefY0        (void);
     int16_t getDisplayMaxH      (void);
 
     void rowPrint       (uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength);
@@ -114,10 +119,8 @@ public:
     void positionCursor                     (bool p_status, uint8_t p_position);
     void frameNname                         (void);
     void content                            (char* p_str, uint8_t p_size);
-    void content                            (tuiMode_t p_mode, char* p_str, uint8_t p_size);
     void content                            (uint8_t p_begin);
     void content                            (char* p_str, uint8_t p_begin, uint8_t p_size);
-    void content                            (tuiMode_t p_mode, char* p_str, uint8_t p_begin, uint8_t p_size);
 
     void frameDebug                         (char* p_str);
     void frameDebug                         (uint8_t p_row, char* p_str);

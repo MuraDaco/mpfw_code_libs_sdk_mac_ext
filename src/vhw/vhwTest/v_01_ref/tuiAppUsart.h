@@ -39,7 +39,6 @@
 class tuiAppUsart_t: public tuiBaseSubWin_t {
 
 public:
-    tuiAppUsart_t   (void);
     tuiAppUsart_t   (box_t* p_pBox);
 
 

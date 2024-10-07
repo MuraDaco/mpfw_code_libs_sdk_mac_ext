@@ -56,21 +56,6 @@ tuiBaseDrawer_t::tuiBaseDrawer_t (void) :
     ,g_pDtyStatus   {nullptr}
 {}
 
-tuiBaseDrawer_t::tuiBaseDrawer_t (                       box_t p_pBox) :
-     g_pNcursWin    {nullptr}
-    ,g_h            {p_pBox.height}
-    ,g_w            {p_pBox.width}
-    ,g_y0r          {p_pBox.yStart}
-    ,g_x0r          {p_pBox.xStart}
-    ,g_y0a          {0}
-    ,g_x0a          {0}
-    ,g_y0Win        {0}
-    ,g_x0Win        {0}
-    ,g_status       {tuiMode_t::undefined}
-    ,g_strName      {nullptr}
-    ,g_pDtyStatus   {nullptr}
-{}
-
 tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox) :
      g_pNcursWin    {nullptr}
     ,g_h            {p_pBox->height}
@@ -116,6 +101,30 @@ tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box) :
     ,g_strName      {p_strName}
     ,g_pDtyStatus   {nullptr}
 {}
+
+tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus) :
+     g_pNcursWin    {nullptr}
+    ,g_h            {p_box.height   }
+    ,g_w            {p_box.width    }
+    ,g_y0r          {p_box.yStart   }
+    ,g_x0r          {p_box.xStart   }
+    ,g_y0a          {0}
+    ,g_x0a          {0}
+    ,g_y0Win        {0}
+    ,g_x0Win        {0}
+    ,g_marginTop    {1}
+    ,g_marginBottom {1}
+    ,g_marginLeft   {1}
+    ,g_marginRight  {1}
+    ,g_lvl1X0r      {p_box.xStart}
+    ,g_lvl1Y0r      {p_box.yStart}
+//    ,g_boundUpper   {}
+//    ,g_boundLower   {}
+    ,g_status       {tuiMode_t::undefined}
+    ,g_strName      {p_strName      }
+    ,g_pDtyStatus   {p_pDtyStatus   }
+{}
+
 
 tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t *p_pBox, margins_t p_margins) :
      g_pNcursWin    {nullptr}
@@ -163,7 +172,7 @@ tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box, margins_t 
     ,g_pDtyStatus   {nullptr}
 {}
 
-tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus) :
+tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box,  margins_t p_margins, dtyUint8_t* p_pDtyStatus) :
      g_pNcursWin    {nullptr}
     ,g_h            {p_box.height   }
     ,g_w            {p_box.width    }
@@ -173,6 +182,14 @@ tuiBaseDrawer_t::tuiBaseDrawer_t (const char* p_strName, box_t p_box, dtyUint8_t
     ,g_x0a          {0}
     ,g_y0Win        {0}
     ,g_x0Win        {0}
+    ,g_marginTop    {p_margins.Top}
+    ,g_marginBottom {p_margins.Bottom}
+    ,g_marginLeft   {p_margins.Left}
+    ,g_marginRight  {p_margins.Right}
+    ,g_lvl1X0r      {p_box.xStart}
+    ,g_lvl1Y0r      {p_box.yStart}
+//    ,g_boundUpper   {}
+//    ,g_boundLower   {}
     ,g_status       {tuiMode_t::undefined}
     ,g_strName      {p_strName      }
     ,g_pDtyStatus   {p_pDtyStatus   }
@@ -219,9 +236,13 @@ void tuiBaseDrawer_t::deinitGraphEnv    (void)    {
 
 void tuiBaseDrawer_t::initWin           (void) {
 
-    // g_pNcursWin = newwin(g_h, g_w, g_lvl1Y0a, g_lvl1X0a);
+    g_pNcursWin = newwin(g_h, g_w, g_y0a, g_x0a);
+}
 
-    g_pNcursWin = newwin(g_h, g_w, g_y0r, g_x0r);
+void tuiBaseDrawer_t::initWin           (uint16_t p_rootX0a, uint16_t p_rootY0a) {
+
+    g_pNcursWin = newwin(g_h, g_w, p_rootY0a, p_rootX0a);
+
 }
 
 
@@ -250,12 +271,20 @@ int16_t tuiBaseDrawer_t::getRefX0            (void)  {
     return g_lvl1X0a + g_marginLeft;
 }
 
+int16_t tuiBaseDrawer_t::getRootRefX0            (void)  {
+    return g_x0a + g_marginLeft;
+}
+
 int16_t tuiBaseDrawer_t::getDisplayMaxW      (void)  {
     return g_w - (g_marginLeft + g_marginRight);
 }
 
 int16_t tuiBaseDrawer_t::getRefY0            (void)  {
     return g_lvl1Y0a + g_marginTop;
+}
+
+int16_t tuiBaseDrawer_t::getRootRefY0            (void)  {
+    return g_y0a + g_marginTop;
 }
 
 int16_t tuiBaseDrawer_t::getDisplayMaxH      (void)  {
@@ -280,25 +309,6 @@ void tuiBaseDrawer_t::positionCursor     (bool p_status, uint8_t p_position)    
     wrefresh(g_pNcursWin);
 }
 
-void tuiBaseDrawer_t::frameNname (void)   {
-    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
-
-	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win               ,ACS_ULCORNER       );
-	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
-	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win               ,ACS_LLCORNER       );
-	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
-	mvwhline(g_pNcursWin, g_y0Win              ,g_x0Win + 1           ,0    ,g_w - 2      );
-	mvwhline(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1           ,0    ,g_w - 2      );
-	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win               ,0    ,g_h - 2      );
-	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win + g_w - 1     ,0    ,g_h - 2      );
-
-    //mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
-    mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~*~ %04x - %04x ~* ", g_strName, g_y0Win, g_lvl1Y0a);
-
-    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
-
-    wrefresh(g_pNcursWin);
-}
 
 void tuiBaseDrawer_t::content (char* p_str, uint8_t p_size)   {
 
@@ -321,33 +331,6 @@ void tuiBaseDrawer_t::content (char* p_str, uint8_t p_begin, uint8_t p_size)   {
 void tuiBaseDrawer_t::content (uint8_t p_begin)   {
 
     mvwhline    (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_begin           ,' '    ,g_w - 2 - p_begin      );
-
-    wrefresh(g_pNcursWin);
-}
-
-void tuiBaseDrawer_t::content (tuiMode_t p_mode, char* p_str, uint8_t p_size)   {
-    g_status = p_mode;
-    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
-
-    mvwaddnstr  (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1        ,p_str  ,p_size);
-    //if(p_rowLength < g_w-2)
-    //    mvwhline    (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_rowLength           ,' '    ,g_w - p_rowLength - 2      );
-
-    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
-
-    wrefresh(g_pNcursWin);
-}
-
-
-void tuiBaseDrawer_t::content (tuiMode_t p_mode, char* p_str, uint8_t p_begin, uint8_t p_size)   {
-    g_status = p_mode;
-    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
-
-    mvwaddnstr  (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_begin       ,p_str  ,p_size);
-    //if(p_rowLength < g_w-2)
-    //    mvwhline    (g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1 + p_rowLength           ,' '    ,g_w - p_rowLength - 2      );
-
-    g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
 
     wrefresh(g_pNcursWin);
 }
@@ -483,6 +466,26 @@ bool tuiBaseDrawer_t::frameNname (tuiMode_t p_mode)   {
     wrefresh(g_pNcursWin);
 
     return true;
+}
+
+void tuiBaseDrawer_t::frameNname (void)   {
+    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
+
+	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win               ,ACS_ULCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win               ,ACS_LLCORNER       );
+	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
+	mvwhline(g_pNcursWin, g_y0Win              ,g_x0Win + 1           ,0    ,g_w - 2      );
+	mvwhline(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1           ,0    ,g_w - 2      );
+	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win               ,0    ,g_h - 2      );
+	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win + g_w - 1     ,0    ,g_h - 2      );
+
+    //mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
+    mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~*~ %04x - %04x ~* ", g_strName, g_y0Win, g_lvl1Y0a);
+
+    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
+
+    wrefresh(g_pNcursWin);
 }
 
 bool tuiBaseDrawer_t::frameNameNstatus (tuiMode_t p_mode, char* p_str)   {

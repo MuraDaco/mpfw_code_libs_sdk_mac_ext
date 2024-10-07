@@ -38,6 +38,7 @@ class tuiBaseWinRoot_t : public tuiBaseWin_t  {
 public:
 
     tuiBaseWinRoot_t        (const char* p_strName, box_t* p_box, element_t* p_elementList);
+    tuiBaseWinRoot_t        (const char* p_strName, box_t* p_box, margins_t p_margins, element_t* p_elementList);
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Woverloaded-virtual"

@@ -44,22 +44,22 @@
 // **********************************************************
 // -------- BOX define - start
 // .......................... H   W  Yo  Xo
-box_t tuiAppBoard_t::g_box = {25,  75,  8,  5};
+box_t tuiAppBoard_t::g_box = {25,  75,  0,  0};
 // -------- BOX define - end
 
 
 // **********************************************************
 // -------- ELEMENT LIST define - start
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_VIA    ,1 ,40 , 3 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_BIO    ,1 ,40 , 4 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_VAI    ,1 ,40 , 5 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_PER       ,1 ,40 , 6 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_PUR       ,1 ,40 , 7 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_MAI       ,1 ,40 , 8 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_AND    ,1 ,40 , 9 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOT    ,1 ,40 ,10 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_VIA    ,1 ,40 , 0 ,0  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_BIO    ,1 ,40 , 1 ,0  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_VAI    ,1 ,40 , 2 ,0  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_PER       ,1 ,40 , 3 ,0  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_PUR       ,1 ,40 , 4 ,0  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_MAI       ,1 ,40 , 5 ,0  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_AND    ,1 ,40 , 6 ,0  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOT    ,1 ,40 , 7 ,0  )
 
-box_t boxAppUsarttest = {13,  73,  11, 1};
+box_t boxAppUsarttest = {13,  73,  8, 0};
 tuiAppUsart_t appUsartTest1(&boxAppUsarttest);
 
 tuiBaseListUnit_t::element_t tuiAppBoard_t::g_baseElementList[] = {
@@ -81,5 +81,5 @@ tuiBaseListUnit_t::element_t tuiAppBoard_t::g_baseElementList[] = {
 
 // **********************************************************
 // -------- MAIN WINDOW define - start
-tuiBaseWin_t    tuiAppBoard_t::g_baseWin   ("Board Window", &g_box,             g_baseElementList   );
+tuiBaseWin_t    tuiAppBoard_t::g_baseWin   ("Board Window", &g_box,     {3,1,1,1},      g_baseElementList   );
 // -------- MAIN WINDOW define - end

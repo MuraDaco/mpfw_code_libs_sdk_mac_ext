@@ -43,7 +43,8 @@
 // **********************************************************
 // -------- BOX define - start
 // ............................ H   W  Yo  Xo
-box_t tuiAppUSART_1_t::g_box = {25, 150, 33,  5};
+//box_t tuiAppUSART_1_t::g_box = {25, 150, 33,  5};
+box_t tuiAppUSART_1_t::g_box = {25, 150, 25,  0};
 // -------- BOX define - end
 
 // **********************************************************
@@ -149,13 +150,13 @@ tuiBaseListElem_t   g_elementBaseListLboxY2[] = {
 // ******************
 
 
-box_t testLboxBox0 = {14,30,2,5};
+box_t testLboxBox0 = {14,30, 0,  0};
 tuiBaseLbox_t   testBaseLbox0("testBaseLbox 0", &testLboxBox0, g_elementBaseListLbox0);
 
-box_t testLboxBoxY1 = {5,30,2,45};
+box_t testLboxBoxY1 = {5,30, 0, 40};
 tuiBaseLboxY_t  testBaseLboxY1("testBaseLboxY 1", &testLboxBoxY1, g_elementBaseListLboxY1);
 
-box_t testLboxBoxY2 = {5,30,7,45};
+box_t testLboxBoxY2 = {5,30, 5, 40};
 tuiBaseLboxY_t  testBaseLboxY2("testBaseLboxY 2", &testLboxBoxY2, g_elementBaseListLboxY2);
 
 uint8_t appBufferLog[1000000];
@@ -205,21 +206,21 @@ uint8_t appBufferLog4[1000000]; dtyStuf_t       testBuffer4(appBufferLog4, sizeo
 //dtyStuf_t       testBuffer3(appBufferLog, sizeof(appBufferLog), appBufferInnn, sizeof(appBufferInnn));
 //dtyStuf_t       testBuffer4(appBufferLog, sizeof(appBufferLog), appBufferIn, sizeof(appBufferIn));
 
-tuiTextUsart_t  testTextUsart1("testTextUsart1", {5,  60,  2,  85}, &testBuffer1);
-tuiTextUsart_t  testTextUsart2("testTextUsart2", {9,  35,  7,  75}, &testBuffer2);
-tuiTextUsart_t  testTextUsart3("testTextUsart3", {5,  35,  7, 110}, &testBuffer3);
-tuiTextUsart_t  testTextUsart4("testTextUsart4", {7, 140, 16,   5}, &testBuffer4);
+tuiTextUsart_t  testTextUsart1("testTextUsart1", {5,  60,  0,  80}, &testBuffer1);
+tuiTextUsart_t  testTextUsart2("testTextUsart2", {9,  35,  5,  70}, &testBuffer2);
+tuiTextUsart_t  testTextUsart3("testTextUsart3", {5,  35,  5, 105}, &testBuffer3);
+tuiTextUsart_t  testTextUsart4("testTextUsart4", {7, 140, 14,   0}, &testBuffer4);
 
 // edit box test section
 
 //box_t testLboxBoxY2 = {3,40,12,35};
 char testStr[1000] = "Pippo Lippo Crisippo";
 dtyBaseArray_t testString(testStr, sizeof(testStr));
-tuiBaseEbox_t   testEbox1("testEbox1", {3,40,12,35}, &testString);
+tuiBaseEbox_t   testEbox1("testEbox1", {3,40,10,30}, &testString);
 
 char testStr2[1000] = "Gennaro Pasquale Natale Nando Nunzio Nicandro";
 dtyBaseArray_t testString2(testStr2, sizeof(testStr2));
-tuiBaseEbox_t   testEbox2("testEbox2", {3,  35, 12, 110}, &testString2);
+tuiBaseEbox_t   testEbox2("testEbox2", {3,  35, 10, 105}, &testString2);
 
 tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
      {&testBaseLbox0, 1}
@@ -239,5 +240,5 @@ tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
 
 // **********************************************************
 // -------- MAIN WINDOW define - start
-tuiBaseWin_t    tuiAppUSART_1_t::g_baseWin  ("USART_1 base window"   ,&g_box                 ,g_elementBaseList);
+tuiBaseWin_t    tuiAppUSART_1_t::g_baseWin  ("USART_1 base window"   ,&g_box    ,{3,1,5,1}      ,g_elementBaseList);
 // -------- MAIN WINDOW define - end

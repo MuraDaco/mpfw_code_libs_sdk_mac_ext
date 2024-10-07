@@ -57,7 +57,7 @@ tuiBaseListUnit_t::element_t tuiAppMain_t::g_baseElementList[] = {
 
 // **********************************************************
 // -------- MAIN WINDOW define - start
-tuiBaseWinRoot_t    tuiAppMain_t::g_baseWin ("Base Main Window" ,&g_box             ,g_baseElementList);
+tuiBaseWinRoot_t    tuiAppMain_t::g_baseWin ("Base Main Window" ,&g_box ,{8,2,5,5}             ,g_baseElementList);
 // -------- MAIN WINDOW define - end
 
 

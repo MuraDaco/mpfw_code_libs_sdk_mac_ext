@@ -37,6 +37,10 @@ tuiBaseWinRoot_t::tuiBaseWinRoot_t      (const char* p_strName, box_t* p_box, el
      tuiBaseWin_t       (p_strName, p_box, p_elementList)
 {}
 
+tuiBaseWinRoot_t::tuiBaseWinRoot_t      (const char* p_strName, box_t* p_box, margins_t p_margins, element_t* p_elementList) :
+     tuiBaseWin_t       (p_strName, p_box, p_margins, p_elementList)
+{}
+
 void tuiBaseWinRoot_t::init       (void) 	{
     // 1. init TUI environment
     initGraphEnv();
