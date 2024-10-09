@@ -109,6 +109,7 @@ set(SOURCE_FILES_CPP
     tuiData.cpp
 
     tuiBaseAction.cpp
+    tuiBaseGraphic.cpp
     tuiBaseDrawer.cpp
 
     tuiBaseButton.cpp

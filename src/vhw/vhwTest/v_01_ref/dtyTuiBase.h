@@ -76,6 +76,7 @@ protected:
 
     bool resetLoopElement           (void)  override;
     void initDisplay                (void* p_poFather)  override;
+    bool selectElementBySelect      (void)  override;
     void shiftLoopElementBySelect   (void)  override;
     void shiftLoopElementRollUp     (void)  override;
     void shiftLoopElementRollDown   (void)  override;

@@ -92,13 +92,12 @@ uint8_t usartTextBuffer[1000000]; dtyStuf_t       usartTextCntr(usartTextBuffer,
 tuiTextUsart_t  usartText("USART Text", {8, 71, 1,   1}, &usartTextCntr);
 */
 uint8_t usartTextBuffer[1000000]; dtyStufX_t       usartTextCntrX(usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr));
-tuiTextUsartX_t  usartTextX("USART Text-X", {8, 71, 0,   0}, &usartTextCntrX);
+tuiTextUsartX_t  usartTextX("USART Text-X", {7, 71, 0,   0}, &usartTextCntrX);
 
 char usartBuffer[1000] = "Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor";
 dtyBaseArray_t usartString(usartBuffer, sizeof(usartBuffer));
 tuiBaseEbox_t   usartSendEbox("USART send Ebox", {3,  71, 8, 0}, &usartString);
 
-//box_t boxUsartSubWin = {13,  73,  11, 1};
 box_t boxUsartSubWin = {16,  73,  5, 0};
 tuiBaseListUnit_t::element_t eListUsartSubWin[] = {
     //{nullptr                   , 1 }

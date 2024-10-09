@@ -51,14 +51,14 @@ void tuiBaseCntnrX_t::updCoordNboundsChilds    (void)       {
     g_pCntnr->updCoordNboundsChilds();
 }
 
+
 bool tuiBaseCntnrX_t::selectByMouse     (void)    {
 
-    deselectBackNeventOn(true, true);
-    return true;
-}
-
-bool tuiBaseCntnrX_t::selectElements     (void)    {
-
+    if(g_pCntnr->selectElementsByMouse()) {
+        //select();   // to remove
+    } else {
+        deselectBackNeventOn(true, true);
+    }
     return true;
 }
 

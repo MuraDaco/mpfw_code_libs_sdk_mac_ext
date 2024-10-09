@@ -87,7 +87,17 @@ void dtyBaseCntnrUnitX_t::selectDisplayBoxMoveTo        (void) {
         }
     }
 
+}
 
+bool dtyBaseCntnrUnitX_t::selectElementsByMouse        (void) {
+    bool l_result = false;
+    if(resetLoopElement())  {
+        do {
+            l_result = selectElementBySelect();
+        } while (nextLoopElement() || !l_result);
+    }
+
+    return l_result;
 }
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°

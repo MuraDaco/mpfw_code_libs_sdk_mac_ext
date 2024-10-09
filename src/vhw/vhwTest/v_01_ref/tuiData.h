@@ -35,8 +35,9 @@
 
 
 #include "tuiBase.h"
+#include "dtyStufXTypesDefs.h"
 
-class tuiData_t : public tuiBase_t {
+class tuiData_t : public tuiBase_t,  dtyStufXTypesDefs_t {
 
 public:
 
@@ -54,10 +55,10 @@ public:
     uint8_t eventArraySizeGet   (void)              override;
 
 
-    void displayUpdate      (uint32_t p_loopIData, uint32_t p_loopDataSize, int32_t p_loopY0r, uint32_t p_loopH, bool p_loopSelect, uint8_t p_loopMarker);
+    void displayUpdate      (uint32_t p_loopIData, uint32_t p_loopDataSize, int32_t p_loopY0r, uint32_t p_loopH, bool p_loopSelect, kMarker_t p_loopMarker);
 
-    void displayUpdateDebug (uint32_t p_dbgParam1, uint32_t p_dbgParam2);
-    void displayDebug       (void);
+    void displayDebug       (uint32_t p_dbgParam1, uint32_t p_dbgParam2);
+    void displayDebugTest   (void);
 
 
     uint8_t* g_pBuf;
@@ -65,13 +66,14 @@ public:
     uint32_t g_idData;
     uint32_t g_dataSize;
     bool     g_select;
-    uint8_t  g_marker;
+    kMarker_t  g_marker;
 
-    uint32_t g_relBoundUpper;
-    uint32_t g_relBoundLower;
+    //uint32_t g_relBoundUpper;
+    //uint32_t g_relBoundLower;
 
-    uint32_t g_dbgParam1;
-    uint32_t g_dbgParam2;
+private:
+    uint8_t markerToColor     (kMarker_t p_marker);
+
 
 };
 

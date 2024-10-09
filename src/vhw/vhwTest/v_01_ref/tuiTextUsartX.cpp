@@ -59,8 +59,11 @@ bool tuiTextUsartX_t::deSelect        (void)    {
     return frameNname(tuiMode_t::deselect);
 }
 
-bool tuiTextUsartX_t::selectByMouse         (void)    {
+bool tuiTextUsartX_t::selectByMouse     (void)    {
+
+    g_pCntnr->selectElementsByMouse();
     deselectBackNeventOn(true, true);
+
     return true;
 }
 

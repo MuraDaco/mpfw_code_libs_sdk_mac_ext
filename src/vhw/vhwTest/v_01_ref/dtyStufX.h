@@ -54,24 +54,13 @@
 #include <cstdint>
 #include "tuiData.h"
 #include "dtyBaseCntnrUnitX.h"
+#include "dtyStufXTypesDefs.h"
 
-class dtyStufX_t : public dtyBaseCntnrUnitX_t  {
+class dtyStufX_t : public dtyBaseCntnrUnitX_t, dtyStufXTypesDefs_t  {
 
 public:
     // ****************************************************
     // section start **** GENERAL *****
-
-    enum kMarker_t: int8_t  {
-         defaultX = 0x18      // end marker = 0xe8
-        ,deviceRx = 0x07      // end marker = 0xf9
-        ,deviceTx = 0x06      // end marker = 0xfa
-        ,testTx   = 0x15      // end marker = 0xeb
-    };
-
-    enum kDataType_t: int8_t  {
-         ascii
-        ,binary
-        };
 
     enum kPosition_t: int8_t  {
          top
@@ -79,7 +68,6 @@ public:
         };
 
 
-    //dtyStufX_t  (uint8_t* p_pBuf, uint32_t p_bufSize);
     dtyStufX_t  (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize);
 
     void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize)                                             ;
@@ -87,6 +75,7 @@ public:
 
     void    initDisplay                     (void* p_poFather)  override;
     bool    resetLoopElement                (void)  override;
+    bool    selectElementBySelect           (void)  override;
     void    shiftLoopElementBySelect        (void)  override;
     void    shiftLoopElementRollUp          (void)  override;
     void    shiftLoopElementRollDown        (void)  override;
@@ -104,9 +93,9 @@ public:
     uint32_t g_loopDataSize;
     int32_t  g_loopY0r;
     uint32_t g_loopH;
-    uint8_t  g_loopMarker;
+    kMarker_t  g_loopMarker;
     bool     g_loopSelect;
-    uint32_t g_loopRows;
+    int32_t  g_loopRows;
 
 
     // section end   **** GENERAL ***** 
@@ -132,7 +121,7 @@ public:
     uint32_t g_displayBeginDataSize;
     int32_t  g_displayBeginY0r;
     uint32_t g_displayBeginH;
-    uint8_t  g_displayBeginMarker;
+    kMarker_t  g_displayBeginMarker;
 
     // section end   **** DISPLAY ***** 
     // ****************************************************
@@ -166,8 +155,10 @@ private:
     uint16_t    getBlockDataSize                (uint32_t p_idHeader);
     kMarker_t   getBlockDataMarker              (uint32_t p_idHeader);
 
+    bool bDisplayLastRowVsLowerBound           (void);
+
     void        loopTuiParamSet                 (void);
-    bool        loopInit                        (uint32_t p_idHeader);
+    bool        loopInit                        (uint32_t p_idHeader, int32_t p_y0r);
     bool        loopDisplayBegin                (void);
     bool        loopDisplayEnd                  (void);
 

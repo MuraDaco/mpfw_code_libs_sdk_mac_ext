@@ -206,7 +206,7 @@ uint8_t appBufferLog4[1000000]; dtyStuf_t       testBuffer4(appBufferLog4, sizeo
 //dtyStuf_t       testBuffer3(appBufferLog, sizeof(appBufferLog), appBufferInnn, sizeof(appBufferInnn));
 //dtyStuf_t       testBuffer4(appBufferLog, sizeof(appBufferLog), appBufferIn, sizeof(appBufferIn));
 
-tuiTextUsart_t  testTextUsart1("testTextUsart1", {5,  60,  0,  80}, &testBuffer1);
+tuiTextUsart_t  testTextUsart1("testTextUsart1", {5,  70,  0,  73}, &testBuffer1);
 tuiTextUsart_t  testTextUsart2("testTextUsart2", {9,  35,  5,  70}, &testBuffer2);
 tuiTextUsart_t  testTextUsart3("testTextUsart3", {5,  35,  5, 105}, &testBuffer3);
 tuiTextUsart_t  testTextUsart4("testTextUsart4", {7, 140, 14,   0}, &testBuffer4);

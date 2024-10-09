@@ -108,9 +108,11 @@ public:
 
     void rowPrint       (uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength);
     void statusPrintX   (void);
-    void debugPrintX    (uint32_t p_dbgParam1, uint32_t p_dbgParam2);
+    void statusPrintX   (char* p_pStr, uint32_t p_strSize);
+    void debugPrintX    (uint32_t p_dbgParam1, uint32_t p_dbgParam2, char* p_pStr);
+    void debugPrintXTest    (void);
 
-    void rowPrintX      (uint16_t p_rowUp, uint16_t p_rowDw, uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize);
+    void rowPrintX      (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize);
 
 
     //void frame              (tuiMode_t p_mode);

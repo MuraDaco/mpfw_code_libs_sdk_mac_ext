@@ -41,6 +41,7 @@ public:
     void        initDisplayBox          (void* p_poFather);
     void        selectSubBoxUp          (void);
     void        selectSubBoxDown        (void);
+    bool        selectElementsByMouse   (void);
     void        displayBoxRollUp        (void);
     void        displayBoxRollDown      (void);
     void        updCoordNboundsChilds   (void);
@@ -55,6 +56,7 @@ protected:
     // section **** GENERAL ****
     virtual void initDisplay                (void* p_poFather) = 0;
     virtual bool resetLoopElement           (void) = 0;
+    virtual bool selectElementBySelect      (void) = 0;
     virtual void shiftLoopElementBySelect   (void) = 0;
     virtual void shiftLoopElementRollUp     (void) = 0;
     virtual void shiftLoopElementRollDown   (void) = 0;

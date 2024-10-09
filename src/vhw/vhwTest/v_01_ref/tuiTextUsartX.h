@@ -44,8 +44,8 @@ public:
     void init               (void* p_poFather) 		override;
     bool select             (void)                  override;
     bool deSelect           (void)                  override;
-
     bool selectByMouse      (void)                  override;
+
     void display            (void)                  override;
     void display            (bool p_recursively)    override;
 

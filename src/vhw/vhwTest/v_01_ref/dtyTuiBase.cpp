@@ -64,6 +64,10 @@ void dtyTuiBase_t::initDisplay                (void* p_poFather)   {
     (*g_loopElement)->init(p_poFather);
 }
 
+bool dtyTuiBase_t::selectElementBySelect      (void)      {
+    return false;
+}
+
 void dtyTuiBase_t::shiftLoopElementBySelect       (void)    {
     // determine the delta
     int32_t l_delta = (*g_selectElement)->getDistanceFromBound();

@@ -86,7 +86,7 @@ void tuiBase_t::init       (void* p_poFather) 	{
 
     // init bounds
     g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
-    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h);
+    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h - 1);
 
 }
 
@@ -153,7 +153,7 @@ void tuiBase_t::updCoordNboundsForNewFather   (void) {
 
 
     g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
-    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h) - 1;
+    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h - 1);
 
     updCoordNboundsChilds();
 }

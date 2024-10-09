@@ -347,7 +347,7 @@ void tuiBaseDrawer_t::frameNameNstatus (char* p_str)   {
 	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win               ,0    ,g_h - 2      );
 	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win + g_w - 1     ,0    ,g_h - 2      );
 
-    mvwprintw(g_pNcursWin, g_y0Win + 0          ,g_x0Win + 4        ," *~ %s ~*~ %04x - %04x ~* ", g_strName, g_y0Win, g_lvl1Y0a);
+    mvwprintw(g_pNcursWin, g_y0Win + 0          ,g_x0Win + 4        ," *~ %s ~*~ %04x - %04x | %04x - %04x ~* ", g_strName, g_lvl1Y0a, g_h, g_boundUpper, g_boundLower);
     mvwprintw(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1        ,"~ %s ~", p_str);
 
     g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
@@ -381,42 +381,118 @@ void tuiBaseDrawer_t::rowPrint  (uint8_t p_row, bool p_bRowBegin, uint8_t p_rowM
 
 void tuiBaseDrawer_t::statusPrintX  (void)  {
     //mvwprintw(g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1        ,"~ %04x - %04x - %04x - %04x | %04x - %04x - %04x - %04x ~", g_y0Win, g_lvl1Y0a, g_displayBoxW, g_displayBoxH, g_relBoundUpper, g_relBoundLower, g_boundUpper, g_boundLower);
-    mvwprintw(g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1        ,"~ %04x - %04x - %04x - %04x | %04x - %04x ~", g_y0Win, g_lvl1Y0a, g_displayBoxW, g_displayBoxH, g_boundUpper, g_boundLower);
+    mvwprintw   (g_pNcursWin, g_lvl1Y0a     ,g_lvl1Y0a        ,"~ %04x - %04x - %04x - %04x | %04x - %04x ~", g_y0Win, g_lvl1Y0a, g_displayBoxW, g_displayBoxH, g_boundUpper, g_boundLower);
 }
 
-void tuiBaseDrawer_t::debugPrintX    (uint32_t p_dbgParam1, uint32_t p_dbgParam2)       {
-    mvwprintw(g_pNcursWin, g_y0Win + 1          ,g_x0Win + 1        ,"~ %08x - %08x ~", p_dbgParam1, p_dbgParam2);
+void tuiBaseDrawer_t::statusPrintX  (char* p_pStr, uint32_t p_strSize)  {
+    uint16_t l_strSize = p_strSize;
+    uint16_t l_lenghtStrMax = g_displayBoxW - 1; // the first column is reserved for info about string (if it is the first row or not)
+    // synchronization between row and string id to display
+    uint16_t l_row0     = (g_lvl1Y0r < 0) ? (0 + (-g_lvl1Y0r)) : 0;
+    uint16_t l_strId    = (g_lvl1Y0r < 0) ? (l_lenghtStrMax*(-g_lvl1Y0r)) : 0;
+    l_strSize          -= (g_lvl1Y0r < 0) ?  l_strId         : 0;
+    uint16_t l_strSizeRow  = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
+
+        if(0 == l_strId) 
+            mvwaddch(g_pNcursWin,   g_lvl1Y0a + l_row0          ,g_lvl1X0a    ,'1'       );
+        else
+            mvwaddch(g_pNcursWin,   g_lvl1Y0a + l_row0          ,g_lvl1X0a    ,' '       );
+
+        // mvwprintw   (g_pNcursWin, g_lvl1Y0a + l_row0     ,g_lvl1X0a      ,"~ %08x - %08x ~", p_dbgParam1, p_dbgParam2);
+        // mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_row0     ,g_lvl1X0a + 24 , &p_pStr[l_strId]  ,5);
+        mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_row0     ,g_lvl1X0a + 1     ,&p_pStr[l_strId]  ,l_strSizeRow);
+        if(l_strSizeRow < l_lenghtStrMax)    {
+      	    mvwhline    (g_pNcursWin, g_lvl1Y0a + l_row0          ,g_lvl1X0a + 1 + l_strSizeRow           ,' '    ,l_lenghtStrMax - l_strSizeRow);
+            // the last row is displayed, therefore ...
+        }
+        if(g_boundLower == (g_lvl1Y0a + l_row0)) return;
+
+        l_row0++;
+        l_strId         += l_lenghtStrMax;
+        l_strSize       -= (l_strSize < l_lenghtStrMax) ? 0         : l_lenghtStrMax;
+        l_strSizeRow     = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
+        // mvwprintw   (g_pNcursWin, g_lvl1Y0a + l_row1   ,g_lvl1X0a      ,"~ %04x - %04x - %04x - %04x | %04x - %04x ~", g_y0Win, g_lvl1Y0a, g_displayBoxW, g_displayBoxH, g_boundUpper, g_boundLower);
+        // mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_row1   ,g_lvl1X0a + 44 ,&p_pStr[l_strId]  ,5);
+        mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_row0     ,g_lvl1X0a + 1     ,&p_pStr[l_strId]  ,l_strSizeRow);
+        if(l_strSizeRow < l_lenghtStrMax)    {
+      	    mvwhline    (g_pNcursWin, g_lvl1Y0a + l_row0          ,g_lvl1X0a + 1 + l_strSizeRow           ,' '    ,l_lenghtStrMax - l_strSizeRow);
+            // the last row is displayed, therefore ...
+        }
+        if(g_boundLower == (g_lvl1Y0a + l_row0)) return;
+
+        l_row0++;
+        l_strId         += l_lenghtStrMax;
+        l_strSize       -= (l_strSize < l_lenghtStrMax) ? 0         : l_lenghtStrMax;
+        l_strSizeRow     = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
+        // mvwprintw   (g_pNcursWin, g_lvl1Y0a + l_row1   ,g_lvl1X0a      ,"~ %04x - %04x - %04x - %04x | %04x - %04x ~", g_y0Win, g_lvl1Y0a, g_displayBoxW, g_displayBoxH, g_boundUpper, g_boundLower);
+        // mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_row1   ,g_lvl1X0a + 44 ,&p_pStr[l_strId]  ,5);
+        mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_row0     ,g_lvl1X0a + 1     ,&p_pStr[l_strId]  ,l_strSizeRow);
+        if(l_strSizeRow < l_lenghtStrMax)    {
+      	    mvwhline    (g_pNcursWin, g_lvl1Y0a + l_row0          ,g_lvl1Y0a + 1 + l_strSizeRow           ,' '    ,l_lenghtStrMax - l_strSizeRow);
+            // the last row is displayed, therefore ...
+        }
 }
 
-void tuiBaseDrawer_t::rowPrintX  (uint16_t p_rowUp, uint16_t p_rowDw, uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize) {
+void tuiBaseDrawer_t::debugPrintX    (uint32_t p_dbgParam1, uint32_t p_dbgParam2, char* p_pStr)       {
+    uint16_t l_lenghtStrMax = g_displayBoxW - 1; // the first column is reserved for info about string (if it is the first row or not)
+    uint16_t l_strId    = (g_lvl1Y0r < 0) ? (l_lenghtStrMax*(-g_lvl1Y0r)) : 0;
+    //uint16_t l_strSizeRow  = (p_strSize < l_lenghtStrMax) ? (p_strSize - (l_strId * l_lenghtStrMax)) : l_lenghtStrMax;
+    uint16_t l_rowUp    = (g_lvl1Y0r < 0) ? (0 + (-g_lvl1Y0r)) : 0;
+    //uint16_t l_rowDw = (g_lvl1Y0r < 0) ? (1 + (-g_lvl1Y0r)) : 1;
+
+    mvwprintw   (g_pNcursWin, g_lvl1Y0a + l_rowUp     ,g_lvl1X0a      ,"~ %08x - %08x - %04x ~", p_dbgParam1, p_dbgParam2, l_lenghtStrMax);
+    mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_rowUp     ,g_lvl1X0a + 8 , &p_pStr[l_strId]  ,5);
+
+}
+void tuiBaseDrawer_t::debugPrintXTest    (void)       {
+
+    mvwprintw   (g_pNcursWin, 1     ,1  ,"~ test ~");
+    wrefresh(g_pNcursWin);
+
+}
+
+void tuiBaseDrawer_t::rowPrintX  (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize) {
     wattron (g_pNcursWin,COLOR_PAIR(p_rowMarker));
     if(p_select) wattron (g_pNcursWin,A_UNDERLINE);
 
-    uint16_t l_strSize;
-    uint16_t l_displayBoxW = g_displayBoxW - 1;
-    uint16_t l_strId    = 0;
-    uint16_t l_strSizeRow  = (p_strSize < l_displayBoxW) ? p_strSize : l_displayBoxW;
-    for(uint16_t l_row = p_rowUp; l_row <= p_rowDw; l_row++)   {
 
-        if(0 == l_row) 
-            mvwaddch(g_pNcursWin,   g_lvl1Y0a + l_row          ,g_lvl1X0a    ,'1'       );
+    uint16_t l_strSize = p_strSize;
+    uint16_t l_lenghtStrMax = g_displayBoxW - 1; // the first column is reserved for info about string (if it is the first row or not)
+
+    // synchronization between row and string id to display
+    uint16_t l_row0     = (g_lvl1Y0r < 0) ? (0 + (-g_lvl1Y0r)) : 0;
+    uint16_t l_strId    = (g_lvl1Y0r < 0) ? (l_lenghtStrMax*(-g_lvl1Y0r)) : 0;
+    l_strSize          -= (g_lvl1Y0r < 0) ?  l_strId         : 0;
+    uint16_t l_strSizeRow  = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
+
+    for(;;)    {
+
+        if(0 == l_strId) 
+            mvwaddch(g_pNcursWin,   g_lvl1Y0a + l_row0          ,g_lvl1X0a    ,'1'       );
         else
-            mvwaddch(g_pNcursWin,   g_lvl1Y0a + l_row          ,g_lvl1X0a    ,' '       );
+            mvwaddch(g_pNcursWin,   g_lvl1Y0a + l_row0          ,g_lvl1X0a    ,' '       );
 
-        mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_row          ,g_lvl1X0a + 1       ,&p_pStr[l_strId]  ,l_strSizeRow);
-        if(l_strSizeRow < l_displayBoxW)    {
-      	    mvwhline    (g_pNcursWin, g_lvl1Y0a + l_row          ,g_lvl1Y0a + 1 + l_strSizeRow           ,' '    ,l_displayBoxW - l_strSizeRow);
+        // ---------------------
+
+        mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_row0     ,g_lvl1X0a + 1     ,&p_pStr[l_strId]  ,l_strSizeRow);
+        if(l_strSizeRow < l_lenghtStrMax)    {
+            if(p_select) wattroff (g_pNcursWin,A_UNDERLINE);
+            wattron (g_pNcursWin,A_NORMAL);
+      	    mvwhline    (g_pNcursWin, g_lvl1Y0a + l_row0          ,g_lvl1X0a + 1 + l_strSizeRow           ,' '    ,l_lenghtStrMax - l_strSizeRow);
             // the last row is displayed, therefore ...
-            // exit from loop
-            break;
         }
+        mvwprintw   (g_pNcursWin, g_lvl1Y0a + l_row0     ,g_lvl1X0a + 10    ,"~~ %04x - %04x | %04x - %04x ~~", g_boundUpper, g_boundLower, g_lvl1Y0a, l_row0);
+        if(g_boundLower == (g_lvl1Y0a + l_row0)) break;
 
-        l_strId += l_displayBoxW;
-        l_strSize = p_strSize - (l_strId * l_displayBoxW);
-        l_strSizeRow  = (l_strSize < l_displayBoxW) ? l_strSize : l_displayBoxW;
+        l_row0++;
+        l_strId         += l_lenghtStrMax;
+        l_strSize       -= (l_strSize < l_lenghtStrMax) ? 0         : l_lenghtStrMax;
+        l_strSizeRow     = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
+
     }
 
     if(p_select) wattroff (g_pNcursWin,A_UNDERLINE);
+    wattron (g_pNcursWin,A_NORMAL);
     wattroff(g_pNcursWin,COLOR_PAIR(p_rowMarker));
 
     wrefresh(g_pNcursWin);
@@ -502,7 +578,8 @@ bool tuiBaseDrawer_t::frameNameNstatus (tuiMode_t p_mode, char* p_str)   {
 	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win               ,0    ,g_h - 2      );
 	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win + g_w - 1     ,0    ,g_h - 2      );
 
-    mvwprintw(g_pNcursWin, g_y0Win + 0          ,g_x0Win + 4        ," *~ %s ~* ", g_strName);
+    //mvwprintw(g_pNcursWin, g_y0Win + 0          ,g_x0Win + 4        ," *~ %s ~* ", g_strName);
+    mvwprintw(g_pNcursWin, g_y0Win + 0          ,g_x0Win + 4        ," *~ %s ~*~ %04x - %04x | %04x - %04x ~* ", g_strName, g_lvl1Y0a, g_h, g_boundUpper, g_boundLower);
     mvwprintw(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 21 ," >> %s << ", p_str);
 
     g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
