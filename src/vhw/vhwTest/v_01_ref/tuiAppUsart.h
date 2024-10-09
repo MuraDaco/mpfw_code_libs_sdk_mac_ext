@@ -32,7 +32,7 @@
 #define TUI_APP_USART_H
 
 #include "tuiBaseEbox.h"
-#include "tuiTextUsart.h"
+#include "tuiTextUsartX.h"
 #include "tuiBaseButton.h"
 #include "tuiBaseSubWin.h"
 
@@ -49,8 +49,8 @@ private:
     static uint8_t initBufferIn3[];
     static dtyBuffer_t initUsartTextCntnr[];
     uint8_t usartTextBuffer[1000000]; 
-    dtyStuf_t       usartTextCntr;  //(usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr));
-    tuiTextUsart_t  g_text;
+    dtyStufX_t       usartTextCntr;  //(usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr));
+    tuiTextUsartX_t  g_text;
 
     char usartBuffer[1000]; //"Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor";
     dtyBaseArray_t      usartString;        //(usartBuffer, sizeof(usartBuffer));

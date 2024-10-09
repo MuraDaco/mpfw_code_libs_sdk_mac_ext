@@ -87,7 +87,7 @@ void tuiAppUsart_t::buttonFunction  (void)      {
     l_this->usartTextCntr.add(   
         reinterpret_cast<uint8_t*>(l_this->usartString.pArrayGet()),
         l_this->usartString.lengthGet(),
-        dtyStuf_t::kMarker_t::testTx,
-        dtyStuf_t::kDataType_t::ascii
+        dtyStufX_t::kMarker_t::testTx,
+        dtyStufX_t::kDataType_t::ascii
         );
 }

@@ -44,21 +44,6 @@ tuiBaseAction_t::tuiBaseAction_t    (void)  :
 {}
 
 
-//void tuiBaseAction_t::selectByMouse         (void)    {
-//    if(selectElements()) {
-//        // a sub-element has been selected
-//        select();
-//    } else {
-//        // none sub-element has been selected
-//        deselectBackNselect();
-//        //g_po = this;
-//        setThis();
-//        eventOn();
-//    }
-//    display();
-//    
-//}
-
 bool tuiBaseAction_t::deselectBack(tuiBaseAction_t* p_poDeselectEnd, bool p_isSelecting) {
     bool l_result = true;
     if(this != p_poDeselectEnd) {
@@ -70,27 +55,6 @@ bool tuiBaseAction_t::deselectBack(tuiBaseAction_t* p_poDeselectEnd, bool p_isSe
             // no other deSelect functions have to be called
         }
         
-        //if(
-        //        (p_isSelecting)   
-        //    &&  (p_poDeselectEnd == g_poFather)
-        //)
-        //{
-        //    // p_poDeselectEnd = selecting element
-        //    if(this == g_poEventOn) {
-        //        l_result = false;
-        //        select();
-        //    } else
-        //        deSelect();    
-        //} else {
-        //    deSelect();
-        //    if(g_poFather) {
-        //        g_poFather->deselectBack(p_poDeselectEnd, p_isSelecting);
-        //    } else {
-        //        // the current function belong to rootWindow, therefore ...
-        //        // no other deSelect functions have to be called
-        //    }
-        //}
-
     } else {
         // the elemet that is going to be selected is the element that the current function belong to, therefore ...
         // do nothing ...
@@ -147,16 +111,6 @@ void  tuiBaseAction_t::deselectBackNselect      ([[maybe_unused]] bool p_unused_
 uint8_t tuiBaseAction_t::eventArraySizeGet     (void)    {
     return constEventArraySize;
 }
-
-//void tuiBaseAction_t::eventOn     (void)    {
-//    tuiBaseAction_t::g_eventArray  = g_eventArray;
-//}
-
-//void tuiBaseAction_t::eventOn     (void)    {
-//    g_poEventOn = this;
-//    tuiBaseAction_t::g_eventArray  = pEventArrayGet();
-//}
-
 
 tuiBaseAction_t* tuiBaseAction_t::searchCommonAncestor       (void)      {
     if(g_poFather)    {
@@ -244,18 +198,6 @@ void tuiBaseAction_t::debugDeselectBack (tuiBaseAction_t* p_poCommonAncestor, bo
     }
 
 }
-
-
-//tuiBaseAction_t* tuiBaseAction_t::deselectBack ([[maybe_unused]]  tuiBaseAction_t* p_poCommonAncestor, [[maybe_unused]] bool p_commonAncestorIsNextEventON, [[maybe_unused]] uint8_t p_unused)   {
-//    tuiBaseAction_t* l_result = nullptr;
-//    if(g_poFather)  {
-//        l_result = g_poFather->deselectBack(p_poCommonAncestor, p_commonAncestorIsNextEventON, 0);
-//        g_debugStatusX = 99;
-//    } else {
-//        l_result = this;
-//    }
-//    return l_result;
-//}
 
 
 tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON, [[maybe_unused]] uint8_t p_unused)   {

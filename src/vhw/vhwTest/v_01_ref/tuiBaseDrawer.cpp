@@ -481,7 +481,6 @@ void tuiBaseDrawer_t::rowPrintX  (uint8_t p_rowMarker, bool p_select, char* p_pS
       	    mvwhline    (g_pNcursWin, g_lvl1Y0a + l_row0          ,g_lvl1X0a + 1 + l_strSizeRow           ,' '    ,l_lenghtStrMax - l_strSizeRow);
             // the last row is displayed, therefore ...
         }
-        mvwprintw   (g_pNcursWin, g_lvl1Y0a + l_row0     ,g_lvl1X0a + 10    ,"~~ %04x - %04x | %04x - %04x ~~", g_boundUpper, g_boundLower, g_lvl1Y0a, l_row0);
         if(g_boundLower == (g_lvl1Y0a + l_row0)) break;
 
         l_row0++;

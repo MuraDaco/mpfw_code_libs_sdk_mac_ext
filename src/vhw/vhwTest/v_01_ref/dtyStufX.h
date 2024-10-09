@@ -56,7 +56,7 @@
 #include "dtyBaseCntnrUnitX.h"
 #include "dtyStufXTypesDefs.h"
 
-class dtyStufX_t : public dtyBaseCntnrUnitX_t, dtyStufXTypesDefs_t  {
+class dtyStufX_t : public dtyBaseCntnrUnitX_t, public dtyStufXTypesDefs_t  {
 
 public:
     // ****************************************************
