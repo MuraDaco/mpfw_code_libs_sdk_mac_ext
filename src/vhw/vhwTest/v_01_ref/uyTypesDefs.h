@@ -36,8 +36,9 @@
 typedef void    (* func_t)              (void);
 typedef void    (* funcCallback_t)      (void);
 typedef void    (* event_t)             (void);
+typedef void    (* event_pVoid_t)       (void*);
 typedef void    (* void_f_uint8_t)      (uint8_t);
-typedef void    (* void_f_void_ptr_t)   (void*);
+typedef void    (* void_f_pVoid_t)      (void*);
 typedef int     (* int_f_int_x_2)       (int, int);
 
 #endif 	// UY_TYPES_DEFS_H

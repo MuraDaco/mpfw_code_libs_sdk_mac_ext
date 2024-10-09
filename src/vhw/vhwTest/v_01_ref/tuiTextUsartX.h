@@ -52,6 +52,7 @@ public:
     void setThis            (void)                  override;
     void eventOn            (void)                  override;
     event_t* pEventArrayGet	(void)                  override;
+    void_f_pVoid_t* pEventMouseArrayGet	(void)      override;
 
 protected:
 
@@ -82,7 +83,9 @@ private:
     static event_t g_eventArray[];
     // --------------------- Events handler section - END
 
-
+    static void vEventHndlMouse_rollUp	(void* p_this);
+    static void vEventHndlMouse_rollDown	(void* p_this);
+    static void_f_pVoid_t g_eventMouseArray[];
 };
 
 

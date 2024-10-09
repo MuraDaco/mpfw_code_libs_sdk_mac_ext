@@ -44,6 +44,8 @@ enum class tuiEventCode_t: uint8_t {
     ,keyBackspace
     ,keyTypeChar
     ,mouse
+    ,mouseRollUp
+    ,mouseRollDown
     ,noEvent = 0xff
 };
 

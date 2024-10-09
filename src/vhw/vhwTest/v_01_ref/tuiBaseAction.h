@@ -47,6 +47,7 @@ public:
     virtual bool loop       	(void)  {return true;};
     virtual void end       	    (void)  {};
     virtual event_t* pEventArrayGet	(void) = 0;
+    virtual void_f_pVoid_t* pEventMouseArrayGet	(void) {return nullptr;};
     virtual uint8_t eventArraySizeGet   (void);
 
     virtual void display   	    (void)  = 0;
@@ -88,6 +89,7 @@ protected:
 
 	// ..................... Events handler: array
     static event_t* g_eventArray;
+    static void_f_pVoid_t* g_eventMouseArray;
     // --------------------- Events handler section - END
 
     tuiBaseAction_t* g_poFather;

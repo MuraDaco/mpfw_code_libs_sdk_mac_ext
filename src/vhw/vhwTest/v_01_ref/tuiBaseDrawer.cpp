@@ -694,8 +694,8 @@ tuiEventCode_t  tuiBaseDrawer_t::uiHandlerEventCode                 (void)  {
             mvwprintw(g_pNcursWin, 3, 50, "MOUSE_coordinates: %s",l_str);
             snprintf(l_str, sizeof l_str,"%08lx", g_mouseEvent.bstate);
             mvwprintw(g_pNcursWin, 4, 50, "MOUSE_status: %s",l_str);
-            if(0x00080000 == g_mouseEvent.bstate) l_eventCode = tuiEventCode_t::keyUp;
-            if(0x08000000 == g_mouseEvent.bstate) l_eventCode = tuiEventCode_t::keyDown;            
+            if(TUI_MOUSE_ROLL_UP    == g_mouseEvent.bstate) l_eventCode = tuiEventCode_t::mouseRollUp;
+            if(TUI_MOUSE_ROLL_DOWN  == g_mouseEvent.bstate) l_eventCode = tuiEventCode_t::mouseRollDown;            
             break;
         case KEY_DOWN:
         case TUI_KEY_TAB:
@@ -759,8 +759,11 @@ bool tuiBaseDrawer_t::uiMouseEventStatus                            (void)  {
 
 bool tuiBaseDrawer_t::uiMouseEventCode_ButtonPressed             (void)  {
     bool l_result;
-    l_result = ((g_mouseEvent.bstate & BUTTON1_PRESSED)  ||
-                (g_mouseEvent.bstate & BUTTON1_CLICKED)     );
+    l_result = (
+                    (g_mouseEvent.bstate & BUTTON1_PRESSED  )
+                ||  (g_mouseEvent.bstate & BUTTON1_CLICKED  )     
+                //||  (g_mouseEvent.bstate & BUTTON1_RELEASED )     
+            );
     return l_result;
 }
 

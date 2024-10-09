@@ -49,6 +49,9 @@
 #define TUI_KEY_RETURN              0x000A
 #define TUI_KEY_ESC                 0x001b
 
+#define TUI_MOUSE_ROLL_UP           0x08000000
+#define TUI_MOUSE_ROLL_DOWN         0x00080000
+
 #define NCURS_MOUSE_TRACKING_ENABLE     // printf("\033[?1003h");            // Makes the terminal report mouse movement events           
 #define NCURS_MOUSE_TRACKING_DISABLE    // printf("\033[?1003l");            // Disable mouse movement events, as l = low
 

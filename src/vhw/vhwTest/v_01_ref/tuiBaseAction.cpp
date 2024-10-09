@@ -32,6 +32,7 @@
 #include "tuiBaseAction.h"
 
 event_t*            tuiBaseAction_t::g_eventArray = nullptr;
+void_f_pVoid_t*     tuiBaseAction_t::g_eventMouseArray = nullptr;
 tuiBaseAction_t*    tuiBaseAction_t::g_poSelected = nullptr;
 tuiBaseAction_t*    tuiBaseAction_t::g_poEventOn  = nullptr;
 
@@ -474,7 +475,8 @@ bool tuiBaseAction_t::deselectBackNeventOn ([[maybe_unused]] bool p_unused)   {
 
 void tuiBaseAction_t::deselectBackNeventOn      (void)    {
     g_poEventOn = this;
-    tuiBaseAction_t::g_eventArray  = pEventArrayGet();
+    tuiBaseAction_t::g_eventArray       = pEventArrayGet();
+    tuiBaseAction_t::g_eventMouseArray  = pEventMouseArrayGet();
 }
 
 
@@ -492,6 +494,7 @@ void tuiBaseAction_t::deselectBackNeventOn     ([[maybe_unused]] bool p_unused_1
         g_poEventOn = this;
         eventOn();
         tuiBaseAction_t::g_eventArray  = pEventArrayGet();
+        tuiBaseAction_t::g_eventMouseArray  = pEventMouseArrayGet();
         if(g_poFather) g_poFather->selectBack();
     } else {
         // the current element has an empty event array as a tuiBaseButton component, therefore ...

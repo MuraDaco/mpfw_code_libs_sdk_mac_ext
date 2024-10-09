@@ -125,6 +125,22 @@ void tuiTextUsartX_t::vEventHndlKey_home	(void)  {
 
 }
 
+#define P_THIS static_cast<tuiTextUsartX_t*>(p_this)
+
+void_f_pVoid_t* tuiTextUsartX_t::pEventMouseArrayGet	(void)      {
+    return g_eventMouseArray;
+}
+
+
+void tuiTextUsartX_t::vEventHndlMouse_rollUp	(void* p_this)  {
+    P_THIS->rollUp(P_THIS);
+
+}
+
+void tuiTextUsartX_t::vEventHndlMouse_rollDown	(void* p_this)  {
+    P_THIS->rollDown(P_THIS);
+}
+
 
 event_t tuiTextUsartX_t::g_eventArray[]  = {
      vEventHndlKey_down
@@ -133,4 +149,9 @@ event_t tuiTextUsartX_t::g_eventArray[]  = {
     ,vEventHndlKey_right
     ,vEventHndlKey_enter
     ,vEventHndlKey_home
+};
+
+void_f_pVoid_t tuiTextUsartX_t::g_eventMouseArray[]  = {
+     vEventHndlMouse_rollUp
+    ,vEventHndlMouse_rollDown
 };

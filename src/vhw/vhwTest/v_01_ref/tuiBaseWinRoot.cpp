@@ -74,7 +74,10 @@ bool tuiBaseWinRoot_t::loop            (void)  {
         }
     }
 
-    if(tuiEventCode_t::mouse == l_handlerEventCode) {
+    if(
+            (tuiEventCode_t::noEvent != l_handlerEventCode)
+        &&  (tuiEventCode_t::mouse <= l_handlerEventCode)
+    ) {
         if(uiMouseEventStatus())
         {
 
@@ -84,20 +87,27 @@ bool tuiBaseWinRoot_t::loop            (void)  {
                 if(selectElements()) {
                     frameBox(tuiMode_t::select);
                     refreshElements();
-                    debugStatus();
                 } else {
                     deselectBackNeventOn(true, true);
+                }
+            } else {
+                if(
+                        (g_poEventOn->g_eventMouseArray)  
+                    &&  (tuiEventCode_t::mouse < l_handlerEventCode)
+                )
+                {
+                    g_poEventOn->g_eventMouseArray[tuiEventCodeNum(l_handlerEventCode) - (static_cast<uint8_t>(tuiEventCode_t::mouse)+1)](g_poEventOn);
+                    
                 }
             }
 
         }
     } else {
         if(
-            (tuiEventCode_t::noEvent != l_handlerEventCode) &&
-            (tuiEventCodeNum(l_handlerEventCode) < g_poEventOn->eventArraySizeGet())
+                (tuiEventCode_t::noEvent != l_handlerEventCode)
+            &&  (tuiEventCodeNum(l_handlerEventCode) < g_poEventOn->eventArraySizeGet())
         )   {
             g_poEventOn->g_eventArray[tuiEventCodeNum(l_handlerEventCode)]();
-            debugStatus();
         }
     }
 
@@ -121,6 +131,3 @@ bool tuiBaseWinRoot_t::deSelect     (void)    {
     return false;
 }
 
-void tuiBaseWinRoot_t::debugStatus  (void)  {
-
-}
