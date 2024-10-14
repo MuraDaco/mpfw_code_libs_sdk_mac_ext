@@ -39,64 +39,104 @@
 
 dtyTuiBase_t::dtyTuiBase_t   (tuiBase_t** p_array) :
      g_array                 {p_array}
-    ,g_selectElement         {p_array}
-    ,g_loopElement           {p_array}
-{}
+{
+    resetSelectElement();
+}
 
 
 dtyTuiBase_t::dtyTuiBase_t   (dtyTuiBaseUnit_t* p_unitArray)   :
      g_unitArray                {p_unitArray}
-    ,g_unitSelectElement        {p_unitArray}
-    ,g_unitLoopElement          {p_unitArray}
-{}
+{
+    resetSelectElement();
+}
 
+
+void dtyTuiBase_t::resetSelectElement         (void)    {
+    uint8_t l_id = 0;
+    while(g_array[l_id])    {
+        l_id++;
+    }
+    g_idSelectItem      = l_id;
+    g_idArrayItemLast   = l_id;
+
+}
 
 bool dtyTuiBase_t::resetLoopElement         (void)    {
     bool l_result = false;  // "false" means empty list
-    g_loopElement = g_array;
+    g_idLoopItem = 0;
     // check wether the list is empty
-    if(*g_loopElement) l_result = true;
+    if(g_array[g_idLoopItem]) l_result = true;
+    return l_result;
+}
+
+bool dtyTuiBase_t::bLoopInitDisplay           (uint8_t p_id, void* p_poFather)    {
+    bool l_result = false;
+    if(p_id)    {
+        // check the null-terminator array
+        if(g_array[p_id])   {
+            g_array[p_id]->init(p_poFather);
+            //g_array[p_id]->
+            l_result = true;
+        } else {
+            // end of loop, therefore ...
+            // do nothing
+        }
+    } else {
+        // first step of the loop
+
+        // 
+        g_array[p_id]->init(p_poFather);
+        l_result = true;
+    }
     return l_result;
 }
 
 
-void dtyTuiBase_t::initDisplay                (void* p_poFather)   {
-    (*g_loopElement)->init(p_poFather);
+uint8_t dtyTuiBase_t::getLoopInitCycles       (void)    {
+    return 0;
 }
 
-bool dtyTuiBase_t::selectElementBySelect      (void)      {
+void dtyTuiBase_t::initDisplay                (uint8_t p_id, void* p_poFather)  {
+     g_array[p_id]->init(p_poFather);
+}
+
+void dtyTuiBase_t::initDisplay                (void* p_poFather)   {
+    g_array[g_idLoopItem]->init(p_poFather);
+}
+
+bool dtyTuiBase_t::selectElementByMouse      (void)      {
     return false;
 }
 
 void dtyTuiBase_t::shiftLoopElementBySelect       (void)    {
     // determine the delta
-    int32_t l_delta = (*g_selectElement)->getDistanceFromBound();
+    int32_t l_delta = g_array[g_idSelectItem]->getDistanceFromBound();
 
-    if(l_delta) (*g_loopElement)->updCoordNbounds(l_delta);
+    if(l_delta) g_array[g_idLoopItem]->updCoordNbounds(l_delta);
 }
 
 void dtyTuiBase_t::shiftLoopElementRollUp       (void)    {
-    (*g_loopElement)->updCoordNbounds(-1);
+    g_array[g_idLoopItem]->updCoordNbounds(-1);
 }
 
 void dtyTuiBase_t::shiftLoopElementRollDown       (void)    {
-    (*g_loopElement)->updCoordNbounds(1);
+    g_array[g_idLoopItem]->updCoordNbounds(1);
 }
 
 void dtyTuiBase_t::updElementCoordNbounds       (void)    {
-    (*g_loopElement)->updCoordNboundsForNewFather();
+    g_array[g_idLoopItem]->updCoordNboundsForNewFather();
 }
 
 void dtyTuiBase_t::dspElement                 (bool p_recursively)  {
-    (*g_loopElement)->display(p_recursively);
+    g_array[g_idLoopItem]->display(p_recursively);
 }
 
 bool dtyTuiBase_t::nextLoopElement          (void)    {
     bool l_result = true;
-    g_loopElement++;
-    if(!(*g_loopElement)) {
+    g_idLoopItem++;
+    if((g_idLoopItem+1) < g_idArrayItemLast) {
         l_result = false;
-        g_loopElement = g_array;
+        g_idLoopItem = 0;
     }
     return l_result;
 }
@@ -123,10 +163,14 @@ bool dtyTuiBase_t::nextLoopElement          (void)    {
 // ****************************************************
 // section start **** SELECT *****
 
+void* dtyTuiBase_t::getSelectedItem               (void)      {
+    return g_array[g_idSelectItem];
+}
+
 bool dtyTuiBase_t::setSelectPrev                  (void)    {
     bool l_result = false;
-    if(g_array != g_selectElement)  {
-        g_selectElement--;
+    if(g_idSelectItem)  {
+        g_idSelectItem--;
         l_result = true;
     }
     return l_result;
@@ -134,11 +178,9 @@ bool dtyTuiBase_t::setSelectPrev                  (void)    {
 
 bool dtyTuiBase_t::setSelectNext                  (void)    {
     bool l_result = true;
-    g_selectElement++;
-    if(*g_selectElement) {
+    if((g_idSelectItem+1) < g_idArrayItemLast) {
+        g_idSelectItem++;
         l_result = false;
-        // go back
-        g_selectElement--;
     }
     return l_result;
 }
@@ -146,7 +188,7 @@ bool dtyTuiBase_t::setSelectNext                  (void)    {
 
 bool dtyTuiBase_t::bSelectVisibleCompletely       (void)    {
 
-    return (*g_selectElement)->bVisibleCompletely();
+    return g_array[g_idSelectItem]->bVisibleCompletely();
 }
 
 

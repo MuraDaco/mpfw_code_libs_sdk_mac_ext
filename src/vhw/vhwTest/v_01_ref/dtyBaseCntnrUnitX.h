@@ -39,6 +39,7 @@ class dtyBaseCntnrUnitX_t   {
 
 public:
     void        initDisplayBox          (void* p_poFather);
+    void*       getSelect               (void);
     void        selectSubBoxUp          (void);
     void        selectSubBoxDown        (void);
     bool        selectElementsByMouse   (void);
@@ -54,9 +55,12 @@ private:
 protected:
 
     // section **** GENERAL ****
+    virtual uint8_t getLoopInitCycles       (void) = 0;
+    virtual bool bLoopInitDisplay           (uint8_t p_id, void* p_poFather) = 0;
+    virtual void initDisplay                (uint8_t p_id, void* p_poFather) = 0;
     virtual void initDisplay                (void* p_poFather) = 0;
     virtual bool resetLoopElement           (void) = 0;
-    virtual bool selectElementBySelect      (void) = 0;
+    virtual bool selectElementByMouse       (void) = 0;
     virtual void shiftLoopElementBySelect   (void) = 0;
     virtual void shiftLoopElementRollUp     (void) = 0;
     virtual void shiftLoopElementRollDown   (void) = 0;
@@ -71,9 +75,10 @@ protected:
 
     // section **** SELECT ****
 
-    virtual bool setSelectPrev                  (void) = 0;
-    virtual bool setSelectNext                  (void) = 0;
-    virtual bool bSelectVisibleCompletely       (void) = 0;
+    virtual void*   getSelectedItem                 (void)  {return nullptr;};
+    virtual bool    setSelectPrev                  (void) = 0;
+    virtual bool    setSelectNext                  (void) = 0;
+    virtual bool    bSelectVisibleCompletely       (void) = 0;
 };
 
 

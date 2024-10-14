@@ -53,12 +53,12 @@ bool tuiBaseDgtInOut_t::loop            (void)  {
 
 
 bool tuiBaseDgtInOut_t::select         (void)    {
-    return nameNstatus(tuiMode_t::select);
+    return nameNstatus(tuiMode_t::select), true;
     //return true;
 }
 
 bool tuiBaseDgtInOut_t::deSelect        (void)    {
-    return nameNstatus(tuiMode_t::deselect);
+    return nameNstatus(tuiMode_t::deselect, true);
     //return true;
 }
 
@@ -81,7 +81,7 @@ void tuiBaseDgtInOut_t::setThis            (void)  {
 
 void tuiBaseDgtInOut_t::eventOn         (void)    {
     g_po = this;
-    nameNstatus(tuiMode_t::eventOn);
+    nameNstatus(tuiMode_t::eventOn, true);
 }
 
 event_t* tuiBaseDgtInOut_t::pEventArrayGet	(void)      {

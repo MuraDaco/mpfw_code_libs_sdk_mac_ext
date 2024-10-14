@@ -49,13 +49,14 @@
 
 void dtyBaseCntnrUnitX_t::initDisplayBox                (void* p_poFather)  {
     
+    for(uint8_t l_id = 0; l_id < getLoopInitCycles(); l_id++ ) initDisplay(l_id, p_poFather);
+    //for(uint8_t l_id = 0; bLoopInitDisplay(l_id, p_poFather); l_id++ ) {}
 
-    // update relative coordinates of every elements
-    if(resetLoopElement())  {
-        do {
-            initDisplay(p_poFather);;
-        } while (nextLoopElement());
-    }
+}
+
+void* dtyBaseCntnrUnitX_t::getSelect                (void) {
+
+    return getSelectedItem();
 
 }
 
@@ -93,7 +94,7 @@ bool dtyBaseCntnrUnitX_t::selectElementsByMouse        (void) {
     bool l_result = false;
     if(resetLoopElement())  {
         do {
-            l_result = selectElementBySelect();
+            l_result = selectElementByMouse();
         } while (nextLoopElement() || !l_result);
     }
 

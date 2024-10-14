@@ -83,7 +83,6 @@ public:
     void    positionEnd             (void);
     void    shiftAhead              (void);
     void    shiftBack               (void);
-    void    updateElement           (char p_char);
     uint16_t positionGet            (void);
     char*   pArrayGet               (void);
     uint16_t lengthGet              (void);

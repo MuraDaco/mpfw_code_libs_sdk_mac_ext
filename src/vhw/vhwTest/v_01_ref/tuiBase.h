@@ -47,14 +47,33 @@ public:
     tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
 
     void init               (void* p_poFather) 		override;
+
+    void updateRelativeX    (uint8_t p_x0r);
+    void updateRelativeY    (uint8_t p_y0r);
+
+    void updParams          (void);
+    void updCoordNboundX    (void);
+    void updCoordNboundY    (void);
+    void updCoordNboundS    (void);
+    void updDspBoxDimX      (void);
+    void updDspBoxDimY      (void);
+    void updDspBoxDimS      (void);
+
+    void setRelCoordX       (int16_t p_deltaX);
+    void incRelCoordX       (int16_t p_x);
+    void setRelCoordY       (int16_t p_deltaY);
+    void incRelCoordY       (int16_t p_y);
+
     bool selectTst   	    (void)                  override;
     void debug_01   	    (void)                  override;
 
-    void updCoordNbounds                (int16_t p_delta);
-    void updCoordNboundsForNewFather    (void);
+    void updCoordNbounds                    (int16_t p_delta);
+    void updCoordNboundsForNewFather        (void);
+    void updAbsParams                       (void);
+    void updRelCoordY                       (int16_t p_delta);
+    void updCoordNboundsAfterParentMod      (void);
 
-    virtual void updCoordNboundsChilds  (void);
-
+    virtual void updCoordNboundsChilds      (void);
 
 
     bool bVisibleCompletely       (void);

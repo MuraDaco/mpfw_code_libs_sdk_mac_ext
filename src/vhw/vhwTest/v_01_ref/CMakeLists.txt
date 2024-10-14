@@ -121,6 +121,7 @@ set(SOURCE_FILES_CPP
     tuiBaseDgtInOut.cpp
     tuiBaseEbox.cpp
     tuiBaseLbox.cpp
+    tuiBaseLboxX.cpp
     tuiBaseLboxY.cpp
     tuiBaseSubWin.cpp
     tuiBaseWin.cpp

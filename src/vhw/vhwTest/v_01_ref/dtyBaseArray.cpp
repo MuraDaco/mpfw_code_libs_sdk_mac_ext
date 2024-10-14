@@ -53,7 +53,6 @@ dtyBaseArray_t::dtyBaseArray_t		(char* p_pAry, uint16_t p_sizeAry)	:
 
 bool	dtyBaseArray_t::ins		                (char p_char)   {
     shiftAhead();
-    //updateElement(p_char);
     g_pAry[g_position] = p_char;
     bool l_result = positionInc();
 
@@ -155,11 +154,6 @@ bool    dtyBaseArray_t::positionDec             (void)      {
     return l_result;
 }
 
-void    dtyBaseArray_t::updateElement           ([[maybe_unused]] char p_char)      {
-    //g_pAry[g_position] = p_char;
-    g_pAry[g_position] = 'K';
-}
-
 uint16_t dtyBaseArray_t::positionGet            (void)      {
     return g_position;
 }
@@ -200,30 +194,22 @@ bool    dtyBaseArray_t::dsplyPositionDec             (void)     {
     return positionDec();
 }
 
-// sizeDsplyStrFromBeginGet
 char* dtyBaseArray_t::pDsplyStrBeginGet         (void)      {
     return &g_pAry[g_idDsplyBoxBegin];
 }
 
-// sizeDsplyStrFromPositionGet
 char* dtyBaseArray_t::pDsplyStrPositionGet              (void)      {
-    //uint16_t l_begin = g_idDsplyPositionCursor;
-    //g_idDsplyPositionCursor = g_idDsplyBoxBegin;
     return &g_pAry[g_idDsplyPositionCursor];
 }
 
 char* dtyBaseArray_t::pDsplyStrPositionPrevGet              (void)      {
-    //uint16_t l_begin = g_idDsplyPositionCursor;
-    //g_idDsplyPositionCursor = g_idDsplyBoxBegin;
     return &g_pAry[g_idDsplyPositionCursor-1];
 }
 
-//sizeDsplyStrFromBeginGet
 uint8_t dtyBaseArray_t::sizeDsplyStrFromBeginGet         (void)     {
     return (g_idDsplyBoxBegin + g_idDsplyBoxWidth < g_length) ? g_idDsplyBoxWidth : (g_length - g_idDsplyBoxBegin);
 }
 
-//sizeDsplyStrFromPositionGet
 uint8_t dtyBaseArray_t::sizeDsplyStrFromPositionGet     (void)      {
     uint8_t l_return = g_idDsplyLength;
     g_idDsplyLength = 0;
@@ -260,13 +246,10 @@ void dtyBaseArray_t::dsplyBeginDec              (void)        {
 
 
 void dtyBaseArray_t::dsplyCurrentUpd            (uint16_t p_position)      {
-    //if(!g_idDsplyLength) {
-        g_idDsplyPositionCursor = p_position;
-        if(g_idDsplyBoxBegin + g_idDsplyBoxWidth < g_length)
-            g_idDsplyLength         = g_idDsplyBoxBegin + g_idDsplyBoxWidth - g_idDsplyPositionCursor;
-        else
-            g_idDsplyLength         = g_length - g_idDsplyPositionCursor;
-
-    //}
+    g_idDsplyPositionCursor = p_position;
+    if(g_idDsplyBoxBegin + g_idDsplyBoxWidth < g_length)
+        g_idDsplyLength         = g_idDsplyBoxBegin + g_idDsplyBoxWidth - g_idDsplyPositionCursor;
+    else
+        g_idDsplyLength         = g_length - g_idDsplyPositionCursor;
 }
 

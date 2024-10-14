@@ -134,6 +134,7 @@ public:
     bool frameNameNstatus                   (tuiMode_t p_mode, char* p_str);
     bool frameBox                           (tuiMode_t p_mode);
     bool nameNstatus                        (tuiMode_t p_mode);
+    bool nameNstatus                        (tuiMode_t p_mode, bool p_repaint);
 
     void frameBox                           (void);
     void nameOnly                           (void);
@@ -183,8 +184,8 @@ public:
     dtyUint8_t* g_pDtyStatus;
     // --------------------- Data section - END
 
-    void updateRelativeX    (uint8_t p_x0r);
-    void updateRelativeY    (uint8_t p_y0r);
+    //void updateRelativeX    (uint8_t p_x0r);
+    //void updateRelativeY    (uint8_t p_y0r);
 
 private:
 

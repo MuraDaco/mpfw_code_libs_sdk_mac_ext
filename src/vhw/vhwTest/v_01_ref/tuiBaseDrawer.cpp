@@ -246,17 +246,17 @@ void tuiBaseDrawer_t::initWin           (uint16_t p_rootX0a, uint16_t p_rootY0a)
 }
 
 
-void tuiBaseDrawer_t::updateRelativeX   (uint8_t p_x0r) {
-    g_x0Win = (g_x0Win  - g_x0r) + p_x0r + 1;   // N.B.: (g_y0Win - g_y0r) = p_poFather->g_y0Win
-    g_x0a   = (g_x0a    - g_x0r) + p_x0r + 1;   // N.B.: (g_x0a - g_x0r) = p_poFather->g_x0a
-    g_x0r   = p_x0r + 1;
-}
-
-void tuiBaseDrawer_t::updateRelativeY   (uint8_t p_y0r) {
-    g_y0Win = (g_y0Win - g_y0r) + p_y0r + 1;    // N.B.: (g_y0Win - g_y0r) = p_poFather->g_y0Win
-    g_y0a   = (g_y0a   - g_y0r) + p_y0r + 1;    // N.B.: (g_y0a   - g_y0r) = p_poFather->g_x0a
-    g_y0r   = p_y0r + 1;
-}
+//void tuiBaseDrawer_t::updateRelativeX   (uint8_t p_x0r) {
+//    g_x0Win = (g_x0Win  - g_x0r) + p_x0r + 0;   // N.B.: (g_y0Win - g_y0r) = p_poFather->g_y0Win
+//    g_x0a   = (g_x0a    - g_x0r) + p_x0r + 0;   // N.B.: (g_x0a - g_x0r) = p_poFather->g_x0a
+//    g_x0r   = p_x0r + 0;
+//}
+//
+//void tuiBaseDrawer_t::updateRelativeY   (uint8_t p_y0r) {
+//    g_y0Win = (g_y0Win - g_y0r) + p_y0r + 0;    // N.B.: (g_y0Win - g_y0r) = p_poFather->g_y0Win
+//    g_y0a   = (g_y0a   - g_y0r) + p_y0r + 0;    // N.B.: (g_y0a   - g_y0r) = p_poFather->g_x0a
+//    g_y0r   = p_y0r + 0;
+//}
 
 void tuiBaseDrawer_t::endGraphEnv       (void)  {
     nodelay(stdscr, false);
@@ -452,49 +452,51 @@ void tuiBaseDrawer_t::debugPrintXTest    (void)       {
 }
 
 void tuiBaseDrawer_t::rowPrintX  (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize) {
-    wattron (g_pNcursWin,COLOR_PAIR(p_rowMarker));
-    if(p_select) wattron (g_pNcursWin,A_UNDERLINE);
+    if(g_boundUpper <= g_boundLower)  {
+        wattron (g_pNcursWin,COLOR_PAIR(p_rowMarker));
+        if(p_select) wattron (g_pNcursWin,A_UNDERLINE);
 
 
-    uint16_t l_strSize = p_strSize;
-    uint16_t l_lenghtStrMax = g_displayBoxW - 1; // the first column is reserved for info about string (if it is the first row or not)
+        uint16_t l_strSize = p_strSize;
+        uint16_t l_lenghtStrMax = g_displayBoxW - 1; // the first column is reserved for info about string (if it is the first row or not)
 
-    // synchronization between row and string id to display
-    uint16_t l_row0     = (g_lvl1Y0r < 0) ? (0 + (-g_lvl1Y0r)) : 0;
-    uint16_t l_strId    = (g_lvl1Y0r < 0) ? (l_lenghtStrMax*(-g_lvl1Y0r)) : 0;
-    l_strSize          -= (g_lvl1Y0r < 0) ?  l_strId         : 0;
-    uint16_t l_strSizeRow  = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
+        // synchronization between row and string id to display
+        uint16_t l_row0     = (g_lvl1Y0r < 0) ? (0 + (-g_lvl1Y0r)) : 0;
+        uint16_t l_strId    = (g_lvl1Y0r < 0) ? (l_lenghtStrMax*(-g_lvl1Y0r)) : 0;
+        l_strSize          -= (g_lvl1Y0r < 0) ?  l_strId         : 0;
+        uint16_t l_strSizeRow  = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
 
-    for(;;)    {
+        for(;;)    {
 
-        if(0 == l_strId) 
-            mvwaddch(g_pNcursWin,   g_lvl1Y0a + l_row0          ,g_lvl1X0a    ,'1'       );
-        else
-            mvwaddch(g_pNcursWin,   g_lvl1Y0a + l_row0          ,g_lvl1X0a    ,' '       );
+            if(0 == l_strId) 
+                mvwaddch(g_pNcursWin,   g_lvl1Y0a + l_row0          ,g_lvl1X0a    ,'1'       );
+            else
+                mvwaddch(g_pNcursWin,   g_lvl1Y0a + l_row0          ,g_lvl1X0a    ,' '       );
 
-        // ---------------------
+            // ---------------------
 
-        mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_row0     ,g_lvl1X0a + 1     ,&p_pStr[l_strId]  ,l_strSizeRow);
-        if(l_strSizeRow < l_lenghtStrMax)    {
-            if(p_select) wattroff (g_pNcursWin,A_UNDERLINE);
-            wattron (g_pNcursWin,A_NORMAL);
-      	    mvwhline    (g_pNcursWin, g_lvl1Y0a + l_row0          ,g_lvl1X0a + 1 + l_strSizeRow           ,' '    ,l_lenghtStrMax - l_strSizeRow);
-            // the last row is displayed, therefore ...
+            mvwaddnstr  (g_pNcursWin, g_lvl1Y0a + l_row0     ,g_lvl1X0a + 1     ,&p_pStr[l_strId]  ,l_strSizeRow);
+            if(l_strSizeRow < l_lenghtStrMax)    {
+                if(p_select) wattroff (g_pNcursWin,A_UNDERLINE);
+                wattron (g_pNcursWin,A_NORMAL);
+          	    mvwhline    (g_pNcursWin, g_lvl1Y0a + l_row0          ,g_lvl1X0a + 1 + l_strSizeRow           ,' '    ,l_lenghtStrMax - l_strSizeRow);
+                // the last row is displayed, therefore ...
+            }
+            if(g_boundLower == (g_lvl1Y0a + l_row0)) break;
+
+            l_row0++;
+            l_strId         += l_lenghtStrMax;
+            l_strSize       -= (l_strSize < l_lenghtStrMax) ? 0         : l_lenghtStrMax;
+            l_strSizeRow     = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
+
         }
-        if(g_boundLower == (g_lvl1Y0a + l_row0)) break;
 
-        l_row0++;
-        l_strId         += l_lenghtStrMax;
-        l_strSize       -= (l_strSize < l_lenghtStrMax) ? 0         : l_lenghtStrMax;
-        l_strSizeRow     = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
+        if(p_select) wattroff (g_pNcursWin,A_UNDERLINE);
+        wattron (g_pNcursWin,A_NORMAL);
+        wattroff(g_pNcursWin,COLOR_PAIR(p_rowMarker));
 
+        wrefresh(g_pNcursWin);
     }
-
-    if(p_select) wattroff (g_pNcursWin,A_UNDERLINE);
-    wattron (g_pNcursWin,A_NORMAL);
-    wattroff(g_pNcursWin,COLOR_PAIR(p_rowMarker));
-
-    wrefresh(g_pNcursWin);
 }
 
 void tuiBaseDrawer_t::frameDebug (char* p_str)   {
@@ -647,6 +649,22 @@ void tuiBaseDrawer_t::nameNstatus (void)   {
 
 bool tuiBaseDrawer_t::nameNstatus (tuiMode_t p_mode)   {
     if(g_status == p_mode) return false; 
+    g_status = p_mode;
+    g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, ON);
+
+    mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "-- %s -- %02d", g_strName, *g_pDtyStatus->g_pValue);
+
+    g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, OFF);
+
+    wrefresh(g_pNcursWin);
+    return true;
+}
+
+bool tuiBaseDrawer_t::nameNstatus (tuiMode_t p_mode, bool p_repaint)   {
+    if(
+            (g_status == p_mode)
+        &&  (!p_repaint)
+    )   return false; 
     g_status = p_mode;
     g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, ON);
 

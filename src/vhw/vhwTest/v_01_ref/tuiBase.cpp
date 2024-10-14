@@ -90,6 +90,121 @@ void tuiBase_t::init       (void* p_poFather) 	{
 
 }
 
+void tuiBase_t::updateRelativeX   (uint8_t p_x0r) {
+    g_x0Win = (g_x0Win  - g_x0r) + p_x0r + 0;   // N.B.: (g_y0Win - g_y0r) = p_poFather->g_y0Win
+    g_x0a   = (g_x0a    - g_x0r) + p_x0r + 0;   // N.B.: (g_x0a - g_x0r) = p_poFather->g_x0a
+    g_x0r   = p_x0r + 0;
+}
+
+void tuiBase_t::updateRelativeY   (uint8_t p_y0r) {
+//    g_y0Win = (g_y0Win - g_y0r) + p_y0r + 0;    // N.B.: (g_y0Win - g_y0r) = p_poFather->g_y0Win
+//    g_y0a   = (g_y0a   - g_y0r) + p_y0r + 0;    // N.B.: (g_y0a   - g_y0r) = p_poFather->g_x0a
+    g_y0r       = p_y0r;
+    g_lvl1Y0r   = p_y0r;
+    updCoordNboundY();
+}
+
+
+
+void tuiBase_t::updParams              (void)       {
+
+    updCoordNboundS();
+    updDspBoxDimS();
+}
+
+void tuiBase_t::updCoordNboundX        (void)       {
+    g_x0Win     = G_PO_FATHER->getRefX0()       + g_lvl1X0r;
+    g_x0a       = G_PO_FATHER->getRootRefX0()   + g_lvl1X0r;
+    g_lvl1X0a   = G_PO_FATHER->getRefX0()       + g_lvl1X0r;
+
+    if(!g_w) g_w    = G_PO_FATHER->g_w - 2;
+
+    //g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
+    //g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h - 1);
+}
+
+void tuiBase_t::updCoordNboundY        (void)       {
+    g_y0Win     = G_PO_FATHER->getRefY0()       + g_lvl1Y0r;
+    g_y0a       = G_PO_FATHER->getRootRefY0()   + g_lvl1Y0r;
+    g_lvl1Y0a   = G_PO_FATHER->getRefY0()       + g_lvl1Y0r;
+
+
+    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
+    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h - 1);
+}
+
+/*
+
+//  parent bounds  ------U------------------L-------------------------------------
+//  element box    ---------u-----------l-----------------------------------------
+//  element bounds ---------u-----------l-----------------------------------------
+
+//  parent bounds  ---------------U---------L-------------------------------------
+//  element box    ---------u-----------l-----------------------------------------
+//  element bounds ---------------U-----l----------------------------------------- 
+
+//  parent bounds  ------U--------L-----------------------------------------------
+//  element box    ---------u-----------l-----------------------------------------
+//  element bounds ---------u-----L----------------------------------------------- 
+
+//  parent bounds  ---------------------------U--------L--------------------------
+//  element box    ---------u-----------l-----------------------------------------
+//  element bounds ---------------------l-----U----------------------------------- 
+
+N.B.: the bounds definitions implie that
+    if
+        (g_boundUpper <= g_boundLower)
+    then
+            (              (g_boundUpper+1) <= (g_lvl1Y0a + g_h)  )
+        ||  (g_lvl1Y0a <=   g_boundLower                          )
+        
+ */
+
+
+void tuiBase_t::updCoordNboundS        (void)       {
+    updCoordNboundX();
+    updCoordNboundY();
+}
+
+void tuiBase_t::updDspBoxDimX                (void)       {
+    g_displayBoxW   = G_PO_FATHER->getDisplayMaxW();
+}
+
+void tuiBase_t::updDspBoxDimY                (void)       {
+    g_displayBoxH   = G_PO_FATHER->getDisplayMaxH();
+}
+
+void tuiBase_t::updDspBoxDimS                (void)       {
+    updDspBoxDimX();
+    updDspBoxDimY();
+}
+
+
+void tuiBase_t::setRelCoordX           (int16_t p_x)        {
+    g_x0r       = p_x;
+    g_lvl1X0r   = p_x;
+    updCoordNboundX();
+}
+
+void tuiBase_t::incRelCoordX           (int16_t p_deltaX)        {
+    g_x0r       += p_deltaX;
+    g_lvl1X0r    = g_x0r;
+    updCoordNboundX();
+}
+
+void tuiBase_t::setRelCoordY           (int16_t p_y)        {
+    g_y0r       = p_y;
+    g_lvl1Y0r   = p_y;
+    updCoordNboundY();
+}
+
+void tuiBase_t::incRelCoordY           (int16_t p_deltaY)        {
+    g_y0r       += p_deltaY;
+    g_lvl1Y0r    = g_y0r;
+    updCoordNboundY();
+}
+
+
 bool tuiBase_t::selectTst   (void)  {
     return (g_status == tuiMode_t::select) || (g_status == tuiMode_t::eventOn);
 }
@@ -115,23 +230,34 @@ void tuiBase_t::debug_01    (void)  {
 // by this example you can understand where to call this function
 // that is, inside of all functions of the container class that are associated to the evnt key/mouse
 void tuiBase_t::updCoordNbounds    (int16_t p_delta)       {
-    // update coordinates
-    g_y0Win += p_delta;
-    g_y0a   += p_delta;
-    g_y0r   += p_delta;
-
-    g_lvl1Y0a   += p_delta;
-
-    g_boundUpper = MAX(g_boundUpper, g_lvl1Y0a);
-    g_boundLower = MIN(g_boundLower, g_lvl1Y0a + g_h - 1);
+//    // update coordinates
+//    g_y0Win += p_delta;
+//    g_y0a   += p_delta;
+//    g_y0r   += p_delta;
+//    g_lvl1Y0a   += p_delta;
+//
+//    g_boundUpper = MAX(g_boundUpper, g_lvl1Y0a);
+//    g_boundLower = MIN(g_boundLower, g_lvl1Y0a + g_h - 1);
+    updRelCoordY(p_delta);
 
     updCoordNboundsChilds();
+}
+
+void tuiBase_t::updRelCoordY(int16_t p_delta)   {
+
+    g_y0r       += p_delta;
+    g_lvl1Y0r    = g_y0r;
+//    g_y0a           = P_PO_FATHER->getRootRefY0()   + g_lvl1Y0r;    // g_y0r;
+//    g_y0Win         = P_PO_FATHER->getRefY0()       + g_lvl1Y0r;
+//    g_lvl1Y0a       = P_PO_FATHER->getRefY0()       + g_lvl1Y0r;
+
+    updAbsParams();
 }
 
 // ----/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/-|-\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\----
 // ___/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--|--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\___
 // to use when bounds father has been modified
-// N.B.: the relative coords do not change but the absloyte one only do
+// N.B.: the relative coords do not change but the absolute one only do
 // this function is called indirectly by the updCoordNbounds function of its father by means container function via updCoordNboundsChilds function
 // tui<Father>::updCoordNbounds ==> dty<Container>::updCoordNboundsChilds ==> tui<Child>::updCoordNboundsForNewFather ==> dty<Container>::updCoordNboundsChilds ==> ... ==> tui<Child>::updCoordNboundsForNewFather
 // how you can see, the updCoordNbounds() function is called at the first step of the recursive calling inside links tree of the tui elements
@@ -146,18 +272,33 @@ void tuiBase_t::updCoordNbounds    (int16_t p_delta)       {
 // by this example you can understand where to call this function
 // that is, inside the updElementCoordNbounds function of the container class 
 void tuiBase_t::updCoordNboundsForNewFather   (void) {
-    g_y0Win = G_PO_FATHER->g_y0Win + g_y0r;
-    g_y0a   = G_PO_FATHER->g_y0a   + g_y0r;
+//    g_y0Win = G_PO_FATHER->g_y0Win + g_y0r;
+//    g_y0a   = G_PO_FATHER->g_y0a   + g_y0r;
+//
+//    g_lvl1Y0a   = G_PO_FATHER->getRefY0() + g_y0r;
+//
+//
+//    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
+//    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h - 1);
 
-    g_lvl1Y0a   = G_PO_FATHER->getRefY0() + g_y0r;
+    updAbsParams();
+    updCoordNboundsChilds();
+}
+
+void tuiBase_t::updAbsParams   (void)     {
+
+    g_y0Win     = G_PO_FATHER->getRefY0()       + g_lvl1Y0r;
+    g_y0a       = G_PO_FATHER->getRootRefY0()   + g_lvl1Y0r;
+    g_lvl1Y0a   = G_PO_FATHER->getRefY0()       + g_lvl1Y0r;
 
 
     g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
     g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h - 1);
 
-    updCoordNboundsChilds();
+    // updAbsCoords();
+    // updDspBoxDims();
+    // updBounds();
 }
-
 
 void tuiBase_t::updCoordNboundsChilds    (void)       {
     // g_cntr->updCoordNboundsChilds();

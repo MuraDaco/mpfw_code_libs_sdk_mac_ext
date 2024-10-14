@@ -65,6 +65,7 @@ public:
     enum kPosition_t: int8_t  {
          top
         ,topButLastRowOnly
+        ,bottom
         };
 
 
@@ -73,9 +74,12 @@ public:
     void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize)                                             ;
     void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType) ;
 
+    uint8_t getLoopInitCycles       (void)  override;
+    bool bLoopInitDisplay           (uint8_t p_id, void* p_poFather)    override;
+    void initDisplay                (uint8_t p_id, void* p_poFather)    override;
     void    initDisplay                     (void* p_poFather)  override;
     bool    resetLoopElement                (void)  override;
-    bool    selectElementBySelect           (void)  override;
+    bool    selectElementByMouse            (void)  override;
     void    shiftLoopElementBySelect        (void)  override;
     void    shiftLoopElementRollUp          (void)  override;
     void    shiftLoopElementRollDown        (void)  override;
@@ -86,16 +90,16 @@ public:
 
     uint8_t*    g_pBuf;
     uint32_t    g_bufSize;
-    tuiData_t   g_dBLoop;
 
-    uint32_t g_loopIdHeader;
-    uint32_t g_loopIdData;
-    uint32_t g_loopDataSize;
-    int32_t  g_loopY0r;
-    uint32_t g_loopH;
-    kMarker_t  g_loopMarker;
-    bool     g_loopSelect;
-    int32_t  g_loopRows;
+    tuiData_t   g_dBLoop;           // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to update its g_pBuf & g_bufSize paramters every time you use it
+    uint32_t    g_loopIdHeader;     // it can be defined as static; it is a temporary variable
+    uint32_t    g_loopIdData;       // it can be defined as static; it is a temporary variable
+    uint32_t    g_loopDataSize;     // it can be defined as static; it is a temporary variable
+    int32_t     g_loopY0r;          // it can be defined as static; it is a temporary variable
+    uint32_t    g_loopH;            // it can be defined as static; it is a temporary variable
+    kMarker_t   g_loopMarker;       // it can be defined as static; it is a temporary variable
+    bool        g_loopSelect;       // it can be defined as static; it is a temporary variable
+    int32_t     g_loopRows;         // it can be defined as static; it is a temporary variable
 
 
     // section end   **** GENERAL ***** 

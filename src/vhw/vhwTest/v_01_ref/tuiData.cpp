@@ -81,20 +81,23 @@ void tuiData_t::displayUpdate      (uint32_t p_loopIdData, uint32_t p_loopDataSi
 
 
 void tuiData_t::display                (void)   {
-    if(g_boundUpper <= g_boundLower)  {
-        if(
-                (               g_boundUpper <= static_cast<uint16_t>(g_lvl1Y0a + g_h - 1)  )
-            ||  (g_lvl1Y0a <=   g_boundLower                                                )
-        )   {
-            // element is visible
+    rowPrintX(markerToColor(g_marker), g_select, reinterpret_cast<char*>(&g_pBuf[g_idData]), g_dataSize);
 
-            rowPrintX(markerToColor(g_marker), g_select, reinterpret_cast<char*>(&g_pBuf[g_idData]), g_dataSize);
-            //statusPrintX();
-            //statusPrintX(reinterpret_cast<char*>(&g_pBuf[g_idData]), g_dataSize);
-        } else {
-            statusPrintX();
-        }
-    } else statusPrintX();
+//    if(g_boundUpper <= g_boundLower)  {
+//        if(
+//                //(               g_boundUpper <= static_cast<uint16_t>(g_lvl1Y0a + g_h - 1)  )
+//                (              (g_boundUpper+1) <= (g_lvl1Y0a + g_h)  )
+//            ||  (g_lvl1Y0a <=   g_boundLower                            )
+//        )   {
+//            // element is visible
+//
+//            rowPrintX(markerToColor(g_marker), g_select, reinterpret_cast<char*>(&g_pBuf[g_idData]), g_dataSize);
+//            //statusPrintX();
+//            //statusPrintX(reinterpret_cast<char*>(&g_pBuf[g_idData]), g_dataSize);
+//        } else {
+//            statusPrintX();
+//        }
+//    } else statusPrintX();
 
 }
 

@@ -75,8 +75,11 @@ protected:
     // section start **** GENERAL *****
 
     bool resetLoopElement           (void)  override;
+    uint8_t getLoopInitCycles       (void)  override;
+    bool bLoopInitDisplay           (uint8_t p_id, void* p_poFather)    override;
+    void initDisplay                (uint8_t p_id, void* p_poFather)    override;
     void initDisplay                (void* p_poFather)  override;
-    bool selectElementBySelect      (void)  override;
+    bool selectElementByMouse      (void)  override;
     void shiftLoopElementBySelect   (void)  override;
     void shiftLoopElementRollUp     (void)  override;
     void shiftLoopElementRollDown   (void)  override;
@@ -107,6 +110,7 @@ protected:
 
     // section **** SELECT ****
 
+    void* getSelectedItem               (void) override;
     bool setSelectPrev                  (void) override;
     bool setSelectNext                  (void) override;
     bool bSelectVisibleCompletely       (void) override;
@@ -116,12 +120,14 @@ protected:
 
 private:
 
-    tuiBase_t**     g_array;
-    tuiBase_t**     g_selectElement;
-    tuiBase_t**     g_loopElement;
+    void resetSelectElement         (void);
+
+    tuiBase_t** g_array;
+    uint8_t     g_idSelectItem;
+    uint8_t     g_idArrayItemLast; // this id points to the list terminator that is equal to null pointer (nullptr)
+    uint8_t     g_idLoopItem;
 
     [[maybe_unused]] dtyTuiBaseUnit_t* g_unitArray;
-    [[maybe_unused]] dtyTuiBaseUnit_t* g_unitSelectElement;
     [[maybe_unused]] dtyTuiBaseUnit_t* g_unitLoopElement;
 
 };

@@ -22,55 +22,52 @@
 //  *******************************************************************************
 
 /*
- * tuiBaseCntnrX.h
+ * tuiBaseListUnit.h
  *
- *  Created on: Sep, 21st 2024
+ *  Created on: Aug, 7th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_BASE_CNTNR_X_H
-#define TUI_BASE_CNTNR_X_H
+#ifndef TUI_BASE_LIST_UNIT_H
+#define TUI_BASE_LIST_UNIT_H
 
 #include "tuiBase.h"
-#include "dtyBaseCntnrUnitX.h"
 
-class tuiBaseCntnrX_t : public tuiBase_t {
+class tuiBaseListUnit_t : public tuiBase_t {
 
 public:
 
-    tuiBaseCntnrX_t      (const char* p_strName, box_t  p_box,  dtyBaseCntnrUnitX_t* p_pCntr)   ;
-    tuiBaseCntnrX_t      (const char* p_strName, box_t* p_pBox, dtyBaseCntnrUnitX_t* p_pCntr)   ;
+    typedef struct __element__	{
+    	tuiBase_t*	element;
+    	uint8_t	    flag;
+    } element_t;
 
+    tuiBaseListUnit_t      (const char* p_strName, box_t* p_box, element_t* p_elementList);
+    tuiBaseListUnit_t      (const char* p_strName, box_t* p_box, margins_t p_margins, element_t* p_elementList);
 
-    void initElementsList               (void); // initElementsList
-    void displayElements                (bool p_recursively);
-    
-    bool selectByMouse 	                (void) override;
-    void updCoordNboundsChilds          (void) override;
+    bool selectByMouse 	(void)              override;
 
-    bool selectElements                 (void);
-    static void selectPrev              (tuiBaseCntnrX_t* p_po);
-    static void selectNext              (tuiBaseCntnrX_t* p_po);
-    static void rollUp                  (tuiBaseCntnrX_t* p_po);
-    static void rollDown                (tuiBaseCntnrX_t* p_po);
-    void refreshElements                (void);
-
-
+    void initElementsList           (void); // initElementsList
+    //void initElementsList       (point_t p_point0);
+    bool selectElements             (void);
+    static void nextElement         (tuiBaseListUnit_t* p_po);  // it is a static function because it will be called by a static function
+    static void prevElement         (tuiBaseListUnit_t* p_po);  // it is a static function because it will be called by a static function
+    void refreshElements            (void);
+    void displayElements            (bool p_recursively);
     // --------------------- Element pointers section - START
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
-    dtyBaseCntnrUnitX_t* g_pCntnr;
+    element_t*	g_elementList;
+    element_t*  g_pCurrentElement;
+    element_t*  g_pLastElement;
+    bool g_bElementList;
     // --------------------- Element pointers section - END
 
 
 protected:
 
 
-    uint16_t   g_elementNum;
-
-
-
 };
 
 
-#endif 	// TUI_BASE_CNTNR_X_H
+#endif 	// TUI_BASE_LIST_UNIT_H

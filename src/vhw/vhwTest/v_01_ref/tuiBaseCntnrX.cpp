@@ -37,6 +37,11 @@ tuiBaseCntnrX_t::tuiBaseCntnrX_t      (const char* p_strName, box_t p_box, dtyBa
     ,g_pCntnr               {p_pCntr}
 {}
 
+tuiBaseCntnrX_t::tuiBaseCntnrX_t      (const char* p_strName, box_t* p_pBox, dtyBaseCntnrUnitX_t* p_pCntr) :
+     tuiBase_t              (p_strName, p_pBox)
+    ,g_pCntnr               {p_pCntr}
+{}
+
 void tuiBaseCntnrX_t::initElementsList       (void) 	{
     // 1. init Box parameter & pointers
     g_pCntnr->initDisplayBox(this);

@@ -35,7 +35,7 @@
 #include "tuiBaseLbox.h"
 #include "tuiBaseLboxY.h"
 
-#include "tuiTextUsart.h"
+#include "tuiTextUsartX.h"
 
 #include "dtyArray.h"
 #include "tuiBaseEbox.h"
@@ -194,22 +194,17 @@ dtyBuffer_t appArrayCntnr[] = {
     ,{appBufferIn2, sizeof(appBufferIn2)}
     ,{appBufferIn3, sizeof(appBufferIn3)}
 };
-//dtyArray_t      testArrayBufferIn(appArrayCntnr,sizeof(appArrayCntnr));
-//dtyStuf_t       testBuffer0(appBufferLog, sizeof(appBufferLog), testArrayBufferIn);
-uint8_t appBufferLog1[1000000]; dtyStuf_t       testBuffer1(appBufferLog1, sizeof(appBufferLog1), appArrayCntnr, sizeof(appArrayCntnr));
-uint8_t appBufferLog2[1000000]; dtyStuf_t       testBuffer2(appBufferLog2, sizeof(appBufferLog2), appArrayCntnr, sizeof(appArrayCntnr));
-dtyStuf_t       testBuffer3(appBufferLog, sizeof(appBufferLog), appBufferInnn, sizeof(appBufferInnn));
-uint8_t appBufferLog4[1000000]; dtyStuf_t       testBuffer4(appBufferLog4, sizeof(appBufferLog4), appArrayCntnr, sizeof(appArrayCntnr));
 
-//dtyStuf_t       testBuffer1(appBufferLog, sizeof(appBufferLog), appBufferIn, sizeof(appBufferIn));
-//dtyStuf_t       testBuffer2(appBufferLog, sizeof(appBufferLog), appBufferInnn, sizeof(appBufferInnn));
+uint8_t appBufferLog1[1000000]; dtyStufX_t       testBuffer1(appBufferLog1, sizeof(appBufferLog1), appArrayCntnr, sizeof(appArrayCntnr));
+uint8_t appBufferLog2[1000000]; dtyStufX_t       testBuffer2(appBufferLog2, sizeof(appBufferLog2), appArrayCntnr, sizeof(appArrayCntnr));
 //dtyStuf_t       testBuffer3(appBufferLog, sizeof(appBufferLog), appBufferInnn, sizeof(appBufferInnn));
-//dtyStuf_t       testBuffer4(appBufferLog, sizeof(appBufferLog), appBufferIn, sizeof(appBufferIn));
+uint8_t appBufferLog4[1000000]; dtyStufX_t       testBuffer4(appBufferLog4, sizeof(appBufferLog4), appArrayCntnr, sizeof(appArrayCntnr));
 
-tuiTextUsart_t  testTextUsart1("testTextUsart1", {5,  70,  0,  73}, &testBuffer1);
-tuiTextUsart_t  testTextUsart2("testTextUsart2", {9,  35,  5,  70}, &testBuffer2);
-tuiTextUsart_t  testTextUsart3("testTextUsart3", {5,  35,  5, 105}, &testBuffer3);
-tuiTextUsart_t  testTextUsart4("testTextUsart4", {7, 140, 14,   0}, &testBuffer4);
+
+tuiTextUsartX_t  testTextUsart1("testTextUsartX_1", {5,  70,  0,  73}, &testBuffer1);
+tuiTextUsartX_t  testTextUsart2("testTextUsartX_2", {9,  35,  5,  70}, &testBuffer2);
+//tuiTextUsartX_t  testTextUsart3("testTextUsartX_3", {5,  35,  5, 105}, &testBuffer3);
+tuiTextUsartX_t  testTextUsart4("testTextUsartX_4", {7, 140, 14,   0}, &testBuffer4);
 
 // edit box test section
 
@@ -229,7 +224,7 @@ tuiBaseWin_t::element_t tuiAppUSART_1_t::g_elementBaseList[] = {
     ,{&testEbox1, 1}
     ,{&testTextUsart1, 1}
     ,{&testTextUsart2, 1}
-    ,{&testTextUsart3, 1}
+    //,{&testTextUsart3, 1}
     ,{&testEbox2, 2}
     ,{&testTextUsart4, 1}
     ,{nullptr, 1}

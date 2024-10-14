@@ -129,7 +129,6 @@ void tuiBaseListUnitY_t::prevElement     (tuiBaseListUnitY_t* p_po)    {
         } else {
             // 
             p_po->g_pCurrentElement--;
-            //if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id) >= p_po->g_originWin)   {
             if(p_po->g_pCurrentElement->g_id >= p_po->g_originWin)   {
                 // repaint is NOT necessary
                 p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(true);
@@ -140,16 +139,17 @@ void tuiBaseListUnitY_t::prevElement     (tuiBaseListUnitY_t* p_po)    {
                 p_po->g_originWin--;
                 // update relative coordinates
                 p_po->g_pCurrentElement->g_pUnit->updateRelativeY(0);
-                g_poSelected = p_po->g_pCurrentElement->g_pUnit;
-                p_po->g_pCurrentElement->g_pUnit->select();
+                // g_poSelected = p_po->g_pCurrentElement->g_pUnit;
+                // p_po->g_pCurrentElement->g_pUnit->select();
+                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(true);
 
-                tuiBaseListElem_t* l_element = p_po->g_pCurrentElement + 1;
+                tuiBaseListElem_t* l_element = p_po->g_pCurrentElement;
                 for(uint8_t l_id = 1; l_id < (p_po->g_h-2); l_id++) {
-                    if(l_element->g_pUnit) {
-                        l_element->g_pUnit->updateRelativeY(l_id);
-                        l_element->g_pUnit->deSelect();
+                    if(l_element[l_id].g_pUnit) {
+                        l_element[l_id].g_pUnit->updateRelativeY(l_id);
+                        //l_element[l_id].g_pUnit->deSelect();
+                        l_element[l_id].g_pUnit->display();
                     } else break;
-                    l_element++;
                 }
             }
             p_po->display();
@@ -169,7 +169,8 @@ void tuiBaseListUnitY_t::nextElement	(tuiBaseListUnitY_t* p_po)  {
 
             // do not other things
         } else {
-            if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id - (p_po->g_h - 2)) < p_po->g_originWin)   {
+            //if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id - (p_po->g_h - 2)) < p_po->g_originWin)   {
+            if((p_po->g_pCurrentElement->g_id + 2) < (p_po->g_originWin + p_po->g_h))   {
                 // repaint is NOT necessary
                 p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(true);
             } else {
@@ -179,16 +180,17 @@ void tuiBaseListUnitY_t::nextElement	(tuiBaseListUnitY_t* p_po)  {
                 p_po->g_originWin++;
                 // update relative coordinates
                 p_po->g_pCurrentElement->g_pUnit->updateRelativeY(p_po->g_h-3);
-                g_poSelected = p_po->g_pCurrentElement->g_pUnit;
-                p_po->g_pCurrentElement->g_pUnit->select();
+                //g_poSelected = p_po->g_pCurrentElement->g_pUnit;
+                //p_po->g_pCurrentElement->g_pUnit->select();
+                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(true);
 
-                tuiBaseListElem_t* l_element = p_po->g_pCurrentElement - 1;
-                for(int8_t l_id = (p_po->g_h-4); l_id >= 0; l_id--) {
-                    if(l_element->g_pUnit) {
-                        l_element->g_pUnit->updateRelativeY(l_id);
-                        l_element->g_pUnit->deSelect();
+                tuiBaseListElem_t* l_element = p_po->g_elementList + p_po->g_originWin;
+                for(uint8_t l_id = 0; l_id < (p_po->g_h-3); l_id++) {
+                    if(l_element[l_id].g_pUnit) {
+                        l_element[l_id].g_pUnit->updateRelativeY(l_id);
+                        //l_element[l_id].g_pUnit->deSelect();
+                        l_element[l_id].g_pUnit->display();
                     } else break;
-                    l_element--;
                 }
             }
             p_po->display();
