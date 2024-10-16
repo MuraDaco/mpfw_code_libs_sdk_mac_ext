@@ -49,8 +49,12 @@
 
 void dtyBaseCntnrUnitX_t::initDisplayBox                (void* p_poFather)  {
     
-    for(uint8_t l_id = 0; l_id < getLoopInitCycles(); l_id++ ) initDisplay(l_id, p_poFather);
+    uint8_t l_loopCycles = getLoopInitCycles();
+    for(uint8_t l_id = 0; l_id < l_loopCycles; l_id++ ) initDisplay(l_id, p_poFather);
+    //for(uint8_t l_id = 0; l_id < getLoopInitCycles(); l_id++ ) initDisplay(l_id, p_poFather);
     //for(uint8_t l_id = 0; bLoopInitDisplay(l_id, p_poFather); l_id++ ) {}
+
+    // determine the container height
 
 }
 
@@ -78,14 +82,28 @@ void dtyBaseCntnrUnitX_t::selectDisplayBoxMoveTo        (void) {
     if(bSelectVisibleCompletely())    {
         // it is not necessary shift any elements
 
-        // do nothing
+        // update select display status
+        updSelectElement();
     } else {
-        // update relative coordinates of every elements
+        // completely clear the display box 
+        clearDisplayBox();
+
+        // determine "delta" shift
+        int32_t l_delta = getDeltaShiftBySelect();
+
+        // update relative coord of container
+        updCntnrRelCoord(-l_delta);
+
+        // update relative coordinates of every elements 
+        // with "delta" shift previously determined
         if(resetLoopElement())  {
             do {
-                shiftLoopElementBySelect();
+                shiftLoopElementBySelect(l_delta);
             } while (nextLoopElement());
         }
+        
+        // update select display status
+        updSelectElement();
     }
 
 }
@@ -95,7 +113,7 @@ bool dtyBaseCntnrUnitX_t::selectElementsByMouse        (void) {
     if(resetLoopElement())  {
         do {
             l_result = selectElementByMouse();
-        } while (nextLoopElement() || !l_result);
+        } while (nextLoopElement() && !l_result);
     }
 
     return l_result;
@@ -109,12 +127,16 @@ bool dtyBaseCntnrUnitX_t::selectElementsByMouse        (void) {
 // this function update the coordinates coordinates of all elements
 void dtyBaseCntnrUnitX_t::displayBoxRollUp(void) {
 
-    // update relative coordinates of every elements
-    if(resetLoopElement())  {
-        do {
-            shiftLoopElementRollUp();
-        } while (nextLoopElement());
+    // update relative coord of container
+    if(updCntnrRelCoord(+1))  {
+        // update relative coordinates of every elements
+        if(resetLoopElement())  {
+            do {
+                shiftLoopElementRollUp();
+            } while (nextLoopElement());
+        }
     }
+
 
 }
 
@@ -124,11 +146,14 @@ void dtyBaseCntnrUnitX_t::displayBoxRollUp(void) {
 // this function update the coordinates coordinates of all elements
 void dtyBaseCntnrUnitX_t::displayBoxRollDown(void) {
 
-    // update relative coordinates of every elements
-    if(resetLoopElement())  {
-        do {
-            shiftLoopElementRollDown();
-        } while (nextLoopElement());
+    // update relative coord of container
+    if(updCntnrRelCoord(-1))  {
+        // update relative coordinates of every elements
+        if(resetLoopElement())  {
+            do {
+                shiftLoopElementRollDown();
+            } while (nextLoopElement());
+        }
     }
 
 }

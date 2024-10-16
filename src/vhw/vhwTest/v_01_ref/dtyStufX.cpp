@@ -289,7 +289,7 @@ void dtyStufX_t::setDisplayBeginParams                (uint32_t p_idHeader, kPos
 bool dtyStufX_t::bLoopInitDisplay           (uint8_t p_id, void* p_poFather)    {
     bool l_result = false;
     if(p_id)    {
-        // run loop step
+        // run body loop step
 
         // the container is NOT empty, 
         // the display-BEGIN parameters are already set to <p_idHeader> header, therefore ...
@@ -327,6 +327,7 @@ bool dtyStufX_t::bLoopInitDisplay           (uint8_t p_id, void* p_poFather)    
             g_displayBeginH             = g_loopH;
             g_displayBeginY0r           = g_loopY0r;
 
+            // it can be omitted
             l_result = false;
         }
 
@@ -351,10 +352,6 @@ uint8_t dtyStufX_t::getLoopInitCycles       (void)    {
 }
 
 void dtyStufX_t::initDisplay                ([[maybe_unused]]uint8_t p_id, void* p_poFather)  {
-    initDisplay(p_poFather);
-}
-
-void dtyStufX_t::initDisplay                (void* p_poFather)   {
     g_dBLoop.init(p_poFather);
 
     g_displayBoxH = P_PO_FATHER->getDisplayMaxH();
@@ -363,6 +360,7 @@ void dtyStufX_t::initDisplay                (void* p_poFather)   {
     initDisplayBeginParams(getBlockDataIdHeaderPrev(g_writeIdHeaderCurrent));    
     g_selectIdHeader = getBlockDataIdHeaderPrev(g_writeIdHeaderCurrent);
 }
+
 
 bool dtyStufX_t::resetLoopElement           (void)    {
     return true;
@@ -385,11 +383,11 @@ bool dtyStufX_t::selectElementByMouse      (void)      {
                     // element shift is not necessary
                 } else {
                     // be carefull !!! "bSelectVisibleCompletely" function resets "loop" parameters
-                    shiftLoopElementBySelect();
+                    shiftLoopElementBySelect(0);
                 }
 
                 dspElement(false);
-                // important !!! here you must break because "loop" parameters have been modified by prevoius functions
+                // important !!! here you must break the loop because "loop" parameters have been modified by prevoius functions
                 return true;
             }
 
@@ -407,7 +405,12 @@ bool dtyStufX_t::selectElementByMouse      (void)      {
     return false;
 }
 
-void dtyStufX_t::shiftLoopElementBySelect                (void)    {
+
+int32_t dtyStufX_t::getDeltaShiftBySelect                ()    {
+    return 0;
+}
+
+void dtyStufX_t::shiftLoopElementBySelect                ([[maybe_unused]] int32_t p_delta)    {
     // set display-Element parameters to select-Element parameters
     // and 
     // determine the postion inside the display-BOX of the display-Element
@@ -424,6 +427,12 @@ void dtyStufX_t::shiftLoopElementBySelect                (void)    {
         setDisplayBeginParams(g_selectIdHeader, kPosition_t::bottom);
     }
 
+}
+
+void dtyStufX_t::updSelectElement                (void)    {
+}
+
+void dtyStufX_t::clearDisplayBox       (void)    {
 }
 
 bool dtyStufX_t::bDisplayLastRowVsLowerBound           (void)    {
@@ -449,6 +458,11 @@ bool dtyStufX_t::bDisplayLastRowVsLowerBound           (void)    {
 
     }
     return false;
+}
+
+
+bool dtyStufX_t::updCntnrRelCoord           ([[maybe_unused]]int32_t p_delta)    {
+    return true;
 }
 
 void dtyStufX_t::shiftLoopElementRollUp           (void)    {

@@ -78,6 +78,12 @@ private:
     static event_t g_eventArray[];
     // --------------------- Events handler section - END
 
+public:
+    void_f_pVoid_t* pEventMouseArrayGet	(void)      override;
+private:
+    static void vEventHndlMouse_rollUp	    (void* p_this);
+    static void vEventHndlMouse_rollDown	(void* p_this);
+    static void_f_pVoid_t g_eventMouseArray[];
 
 };
 

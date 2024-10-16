@@ -108,6 +108,9 @@ public:
     int16_t getRefY0            (void);
     int16_t getRootRefY0        (void);
     int16_t getDisplayMaxH      (void);
+    int16_t     getBoundYupper      (void);
+    int16_t     getBoundYlower      (void);
+
 
     void rowPrint       (uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength);
     void statusPrintX   (void);

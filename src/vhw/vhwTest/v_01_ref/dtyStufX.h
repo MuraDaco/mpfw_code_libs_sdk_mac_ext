@@ -74,13 +74,16 @@ public:
     void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize)                                             ;
     void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType) ;
 
-    uint8_t getLoopInitCycles       (void)  override;
-    bool bLoopInitDisplay           (uint8_t p_id, void* p_poFather)    override;
-    void initDisplay                (uint8_t p_id, void* p_poFather)    override;
-    void    initDisplay                     (void* p_poFather)  override;
+    uint8_t getLoopInitCycles               (void)  override;
+    bool    bLoopInitDisplay                (uint8_t p_id, void* p_poFather)    override;
+    void    initDisplay                     (uint8_t p_id, void* p_poFather)    override;
     bool    resetLoopElement                (void)  override;
     bool    selectElementByMouse            (void)  override;
-    void    shiftLoopElementBySelect        (void)  override;
+    int32_t getDeltaShiftBySelect           (void)  override;
+    void    shiftLoopElementBySelect        (int32_t p_delta)  override;
+    void    updSelectElement                (void)  override;
+    void    clearDisplayBox                 (void)  override;
+    bool    updCntnrRelCoord                (int32_t p_delta)  override;
     void    shiftLoopElementRollUp          (void)  override;
     void    shiftLoopElementRollDown        (void)  override;
     void    updElementCoordNbounds          (void)  override;

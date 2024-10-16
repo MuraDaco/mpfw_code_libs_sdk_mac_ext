@@ -85,9 +85,14 @@ void tuiBase_t::init       (void* p_poFather) 	{
     
 
     // init bounds
-    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
-    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h - 1);
+    g_boundUpper = MAX(G_PO_FATHER->getBoundYupper(), g_lvl1Y0a);
+    g_boundLower = MIN(G_PO_FATHER->getBoundYlower(), g_lvl1Y0a + g_h - 1);
 
+}
+
+void tuiBase_t::setParent       (void* p_poFather) 	{
+    g_poFather      = P_PO_FATHER;
+    g_pNcursWin     = P_PO_FATHER->g_pNcursWin;
 }
 
 void tuiBase_t::updateRelativeX   (uint8_t p_x0r) {
@@ -119,8 +124,6 @@ void tuiBase_t::updCoordNboundX        (void)       {
 
     if(!g_w) g_w    = G_PO_FATHER->g_w - 2;
 
-    //g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
-    //g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h - 1);
 }
 
 void tuiBase_t::updCoordNboundY        (void)       {
@@ -129,8 +132,8 @@ void tuiBase_t::updCoordNboundY        (void)       {
     g_lvl1Y0a   = G_PO_FATHER->getRefY0()       + g_lvl1Y0r;
 
 
-    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
-    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h - 1);
+    g_boundUpper = MAX(G_PO_FATHER->getBoundYupper(), g_lvl1Y0a);
+    g_boundLower = MIN(G_PO_FATHER->getBoundYlower(), g_lvl1Y0a + g_h - 1);
 }
 
 /*
@@ -151,7 +154,7 @@ void tuiBase_t::updCoordNboundY        (void)       {
 //  element box    ---------u-----------l-----------------------------------------
 //  element bounds ---------------------l-----U----------------------------------- 
 
-N.B.: the bounds definitions implie that
+N.B.: the bounds definitions imply that
     if
         (g_boundUpper <= g_boundLower)
     then
@@ -204,6 +207,9 @@ void tuiBase_t::incRelCoordY           (int16_t p_deltaY)        {
     updCoordNboundY();
 }
 
+uint16_t tuiBase_t::getDimH         (void)   {
+    return g_h;
+}
 
 bool tuiBase_t::selectTst   (void)  {
     return (g_status == tuiMode_t::select) || (g_status == tuiMode_t::eventOn);
@@ -292,8 +298,8 @@ void tuiBase_t::updAbsParams   (void)     {
     g_lvl1Y0a   = G_PO_FATHER->getRefY0()       + g_lvl1Y0r;
 
 
-    g_boundUpper = MAX(G_PO_FATHER->g_boundUpper, g_lvl1Y0a);
-    g_boundLower = MIN(G_PO_FATHER->g_boundLower, g_lvl1Y0a + g_h - 1);
+    g_boundUpper = MAX(G_PO_FATHER->getBoundYupper(), g_lvl1Y0a);
+    g_boundLower = MIN(G_PO_FATHER->getBoundYlower(), g_lvl1Y0a + g_h - 1);
 
     // updAbsCoords();
     // updDspBoxDims();
@@ -306,24 +312,27 @@ void tuiBase_t::updCoordNboundsChilds    (void)       {
 
 
 bool tuiBase_t::bVisibleCompletely   (void)  {
-    return (g_boundUpper == g_y0Win) && (g_boundLower == (g_y0Win + g_h - 1));
+    return (g_boundUpper == g_lvl1Y0a) && (g_boundLower == (g_lvl1Y0a + g_h - 1));
 }
 
 
 int32_t tuiBase_t::getDistanceFromUpperBound   (void)   {
-    return g_boundUpper - g_y0Win;
+    return g_boundUpper - g_lvl1Y0a;
 }
 
 int32_t tuiBase_t::getDistanceFromLowerBound   (void)   {
-    return g_boundUpper - (g_y0Win + g_h);
+    return g_boundLower - (g_lvl1Y0a + g_h);
 }
 
 int32_t tuiBase_t::getDistanceFromBound   (void)   {
-    if(g_y0Win < g_boundUpper)
-        return g_boundUpper - g_y0Win;
+    if(g_lvl1Y0a < g_boundUpper)
+        return g_boundUpper - g_lvl1Y0a;
 
-    if(g_boundLower < (g_y0Win + g_h))
-        return g_boundUpper - (g_y0Win + g_h);
+    //  parent bounds         ----U-L---------
+    //  select element box    -------o--------  o = u & l (element with g_h=1)
+    //  select element bounds ------Lu--------
+    if(g_boundLower < (g_lvl1Y0a + g_h - 1))
+        return g_boundLower - (g_lvl1Y0a + g_h - 1);
         
     return 0;
 }

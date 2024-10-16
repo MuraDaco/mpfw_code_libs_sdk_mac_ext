@@ -47,6 +47,7 @@ public:
     tuiBase_t (const char* p_strName, box_t p_box, dtyUint8_t* p_pDtyStatus);
 
     void init               (void* p_poFather) 		override;
+    void setParent          (void* p_poFather);
 
     void updateRelativeX    (uint8_t p_x0r);
     void updateRelativeY    (uint8_t p_y0r);
@@ -63,6 +64,7 @@ public:
     void incRelCoordX       (int16_t p_x);
     void setRelCoordY       (int16_t p_deltaY);
     void incRelCoordY       (int16_t p_y);
+    uint16_t getDimH        (void);
 
     bool selectTst   	    (void)                  override;
     void debug_01   	    (void)                  override;

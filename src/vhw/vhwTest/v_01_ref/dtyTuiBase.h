@@ -74,18 +74,21 @@ protected:
     // ****************************************************
     // section start **** GENERAL *****
 
-    bool resetLoopElement           (void)  override;
-    uint8_t getLoopInitCycles       (void)  override;
-    bool bLoopInitDisplay           (uint8_t p_id, void* p_poFather)    override;
-    void initDisplay                (uint8_t p_id, void* p_poFather)    override;
-    void initDisplay                (void* p_poFather)  override;
-    bool selectElementByMouse      (void)  override;
-    void shiftLoopElementBySelect   (void)  override;
-    void shiftLoopElementRollUp     (void)  override;
-    void shiftLoopElementRollDown   (void)  override;
-    void updElementCoordNbounds     (void)  override;
-    void dspElement                 (bool p_recursively)  override;
-    bool nextLoopElement            (void)  override;
+    bool    resetLoopElement            (void)  override;
+    uint8_t getLoopInitCycles           (void)  override;
+    bool    bLoopInitDisplay            (uint8_t p_id, void* p_poFather)    override;
+    void    initDisplay                 (uint8_t p_id, void* p_poFather)    override;
+    bool    selectElementByMouse        (void)  override;
+    int32_t getDeltaShiftBySelect       (void)  override;
+    void    shiftLoopElementBySelect    (int32_t p_delta)  override;
+    void    updSelectElement            (void)  override;
+    void    clearDisplayBox             (void)  override;
+    bool    updCntnrRelCoord            (int32_t p_delta)  override;
+    void    shiftLoopElementRollUp      (void)  override;
+    void    shiftLoopElementRollDown    (void)  override;
+    void    updElementCoordNbounds      (void)  override;
+    void    dspElement                  (bool p_recursively)  override;
+    bool    nextLoopElement             (void)  override;
 
 
     // section end   **** DISPLAY ***** 
@@ -110,10 +113,10 @@ protected:
 
     // section **** SELECT ****
 
-    void* getSelectedItem               (void) override;
-    bool setSelectPrev                  (void) override;
-    bool setSelectNext                  (void) override;
-    bool bSelectVisibleCompletely       (void) override;
+    void*   getSelectedItem                 (void) override;
+    bool    setSelectPrev                   (void) override;
+    bool    setSelectNext                   (void) override;
+    bool    bSelectVisibleCompletely        (void) override;
 
     // section end   **** SELECT ***** 
     // ****************************************************
@@ -123,12 +126,19 @@ private:
     void resetSelectElement         (void);
 
     tuiBase_t** g_array;
-    uint8_t     g_idSelectItem;
-    uint8_t     g_idArrayItemLast; // this id points to the list terminator that is equal to null pointer (nullptr)
-    uint8_t     g_idLoopItem;
+    tuiBase_t*  g_poParent;
+    uint8_t     g_arraySize;
+    uint8_t     g_selectIdElement;
+    uint8_t     g_loopIdElement;
+    uint16_t    g_loopY0rElement;
 
     [[maybe_unused]] dtyTuiBaseUnit_t* g_unitArray;
     [[maybe_unused]] dtyTuiBaseUnit_t* g_unitLoopElement;
+
+
+    //int32_t     g_x0r;
+    int32_t     g_y0r;
+    uint16_t    g_h;
 
 };
 

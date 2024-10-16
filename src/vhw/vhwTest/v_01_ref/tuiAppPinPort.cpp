@@ -31,8 +31,9 @@
 #include "tuiAppPinPort.h"
 #include "tuiBaseDgtInOut.h"
 #include "tuiDigitalInOut.h"
-#include "tuiDigitalInOut2.h"
+//#include "tuiDigitalInOut2.h"
 
+#include "tuiBaseLboxX.h"
 #include "tuiBaseEbox.h"
 #include "tuiTextUsartX.h"
 #include "tuiBaseSubWin.h"
@@ -49,16 +50,58 @@ box_t tuiAppPinPort_t::g_box = {25,  75,  0, 75};
 // -------- BOX define - end
 
 
+
+// ******************
+// ***** list 3 *****
+
+uint8_t par3A;  dtyUint8_t testPar3A(&par3A);
+uint8_t par3B;  dtyUint8_t testPar3B(&par3B);
+uint8_t par3C;  dtyUint8_t testPar3C(&par3C);
+uint8_t par3D;  dtyUint8_t testPar3D(&par3D);
+uint8_t par3E;  dtyUint8_t testPar3E(&par3E);
+uint8_t par3F;  dtyUint8_t testPar3F(&par3F);
+uint8_t par3G;  dtyUint8_t testPar3G(&par3G);
+uint8_t par3H;  dtyUint8_t testPar3H(&par3H);
+
+
+tuiBaseDgtInOut_t testBaseDgtInOut3A("BaseDgtInOut 3A", 1, &testPar3A);
+tuiBaseDgtInOut_t testBaseDgtInOut3B("BaseDgtInOut 3B", 1, &testPar3B);
+tuiBaseDgtInOut_t testBaseDgtInOut3C("BaseDgtInOut 3C", 1, &testPar3C);
+tuiBaseDgtInOut_t testBaseDgtInOut3D("BaseDgtInOut 3D", 1, &testPar3D);
+tuiBaseDgtInOut_t testBaseDgtInOut3E("BaseDgtInOut 3E", 1, &testPar3E);
+tuiBaseDgtInOut_t testBaseDgtInOut3F("BaseDgtInOut 3F", 1, &testPar3F);
+tuiBaseDgtInOut_t testBaseDgtInOut3G("BaseDgtInOut 3G", 1, &testPar3G);
+tuiBaseDgtInOut_t testBaseDgtInOut3H("BaseDgtInOut 3H", 1, &testPar3H);
+
+tuiBase_t*   elementListCntnrX1[] = {
+     &testBaseDgtInOut3A
+    ,&testBaseDgtInOut3B
+    ,&testBaseDgtInOut3C
+    ,&testBaseDgtInOut3D
+    ,&testBaseDgtInOut3E
+    ,&testBaseDgtInOut3F
+    ,&testBaseDgtInOut3G
+    ,&testBaseDgtInOut3H
+    ,nullptr  
+};
+
+dtyTuiBase_t testCntrX1 (elementListCntnrX1);
+box_t boxTestLboxX1 = {5,  30,  0, 30};
+tuiBaseLboxX_t testLboxX1 ("testLboxX 1", &boxTestLboxX1 ,&testCntrX1);
+
+// ***** list 2 - end
+// ******************
+
 // **********************************************************
 // -------- ELEMENT LIST define - start
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_NEO    ,1 ,40 , 0 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_MAO    ,1 ,40 , 1 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_LEO    ,1 ,40 , 2 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_RAI       ,1 ,40 , 3 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REO       ,1 ,40 , 4 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REI       ,1 ,40 , 5 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_XOR    ,1 ,40 , 6 ,1  )
-TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOR    ,1 ,40 , 7 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_NEO    ,1 ,25 , 0 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_MAO    ,1 ,25 , 1 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_LEO    ,1 ,25 , 2 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_RAI       ,1 ,25 , 3 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REO       ,1 ,25 , 4 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_REI       ,1 ,25 , 5 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_XOR    ,1 ,25 , 6 ,1  )
+TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOR    ,1 ,25 , 7 ,1  )
 
 
 uint8_t initBufferIn1[] = {
@@ -114,6 +157,7 @@ tuiBaseListUnit_t::element_t tuiAppPinPort_t::g_baseElementList[] = {
     ,{&TUI_OBJ   (BUTTON_LEO)   , 3 }
     ,{&TUI_OBJ   (LED_RAI)      , 3 }
     ,{&TUI_OBJ   (LED_REO)      , 3 }
+    ,{&testLboxX1               , 6 }
     //,{&TUI_OBJ   (LED_REI)      , 3 }
     //,{&TUI_OBJ   (SWITCH_XOR)   , 6 }
     //,{&TUI_OBJ   (SWITCH_NOR)   , 6 }

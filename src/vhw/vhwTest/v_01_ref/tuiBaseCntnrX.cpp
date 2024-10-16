@@ -47,8 +47,8 @@ void tuiBaseCntnrX_t::initElementsList       (void) 	{
     g_pCntnr->initDisplayBox(this);
 }
 
-void tuiBaseCntnrX_t::displayElements     ([[maybe_unused]] bool p_recursively)    {
-    g_pCntnr->displayChilds(false);
+void tuiBaseCntnrX_t::displayElements     (bool p_recursively)    {
+    g_pCntnr->displayChilds(p_recursively);
 
 }
 

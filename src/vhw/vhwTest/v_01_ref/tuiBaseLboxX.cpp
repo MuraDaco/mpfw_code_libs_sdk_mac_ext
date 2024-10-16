@@ -118,3 +118,23 @@ event_t tuiBaseLboxX_t::g_eventArray[]  = {
     ,vEventHndlKey_enter
     ,vEventHndlKey_home
 };
+
+#define P_THIS static_cast<tuiBaseLboxX_t*>(p_this)
+
+void_f_pVoid_t* tuiBaseLboxX_t::pEventMouseArrayGet	(void)      {
+    return g_eventMouseArray;
+}
+
+void tuiBaseLboxX_t::vEventHndlMouse_rollUp	(void* p_this)  {
+    P_THIS->rollUp(P_THIS);
+
+}
+
+void tuiBaseLboxX_t::vEventHndlMouse_rollDown	(void* p_this)  {
+    P_THIS->rollDown(P_THIS);
+}
+
+void_f_pVoid_t tuiBaseLboxX_t::g_eventMouseArray[]  = {
+     vEventHndlMouse_rollUp
+    ,vEventHndlMouse_rollDown
+};

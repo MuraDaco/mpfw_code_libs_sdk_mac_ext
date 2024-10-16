@@ -35,7 +35,7 @@
 tuiBaseDgtInOut_t*	tuiBaseDgtInOut_t::g_po = nullptr;
 
 tuiBaseDgtInOut_t::tuiBaseDgtInOut_t      (const char* p_strName    ,uint8_t p_height   ,dtyUint8_t* p_pDtyStatus   )   :
-     tuiBase_t          (p_strName, {p_height, 0, 0, 1}, p_pDtyStatus)
+     tuiBase_t          (p_strName, {p_height, 0, 0, 0}, p_pDtyStatus)
     ,g_pDtyStatus           {p_pDtyStatus}
 {}
 
