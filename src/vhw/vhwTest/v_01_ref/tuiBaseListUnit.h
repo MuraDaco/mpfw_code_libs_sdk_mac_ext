@@ -45,7 +45,8 @@ public:
     tuiBaseListUnit_t      (const char* p_strName, box_t* p_box, element_t* p_elementList);
     tuiBaseListUnit_t      (const char* p_strName, box_t* p_box, margins_t p_margins, element_t* p_elementList);
 
-    bool selectByMouse 	(void)              override;
+    bool selectByMouse 	            (void)  override;
+    void updCoordNboundsChilds      (void)  override;
 
     void initElementsList           (void); // initElementsList
     //void initElementsList       (point_t p_point0);

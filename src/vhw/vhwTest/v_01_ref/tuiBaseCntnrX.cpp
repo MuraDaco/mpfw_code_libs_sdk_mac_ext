@@ -69,26 +69,26 @@ bool tuiBaseCntnrX_t::selectByMouse     (void)    {
 
 void tuiBaseCntnrX_t::rollUp     (tuiBaseCntnrX_t* p_po)    {
     p_po->g_pCntnr->displayBoxRollUp();
-    p_po->g_pCntnr->displayChilds(false);
+    p_po->g_pCntnr->displayChilds(true);
 
 }
 
 void tuiBaseCntnrX_t::rollDown	(tuiBaseCntnrX_t* p_po)  {
     p_po->g_pCntnr->displayBoxRollDown();
-    p_po->g_pCntnr->displayChilds(false);
+    p_po->g_pCntnr->displayChilds(true);
 
 }
 
 void tuiBaseCntnrX_t::selectPrev     (tuiBaseCntnrX_t* p_po)    {
     p_po->g_pCntnr->selectSubBoxUp();
-    p_po->g_pCntnr->displayChilds(false);
+    p_po->g_pCntnr->displayChilds(true);
 
 }
 
 // to use when arrow up key event occur
 void tuiBaseCntnrX_t::selectNext	(tuiBaseCntnrX_t* p_po)  {
     p_po->g_pCntnr->selectSubBoxDown();
-    p_po->g_pCntnr->displayChilds(false);
+    p_po->g_pCntnr->displayChilds(true);
 }
 
 void tuiBaseCntnrX_t::refreshElements     (void)    {

@@ -35,6 +35,7 @@
 #include "tuiBaseDgtInOut.h"
 #include "tuiDigitalInOut.h"
 #include "tuiDigitalInOut2.h"
+#include "tuiBaseLboxX.h"
 #include "tuiAppUsart.h"
 
 #include "vhwPphTbl_Buttons.h"
@@ -48,19 +49,44 @@ box_t tuiAppBoard_t::g_box = {25,  75,  0,  0};
 // -------- BOX define - end
 
 
+
 // **********************************************************
 // -------- ELEMENT LIST define - start
 TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_VIA    ,1 ,40 , 0 ,0  )
 TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_BIO    ,1 ,40 , 1 ,0  )
 TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,BUTTON_VAI    ,1 ,40 , 2 ,0  )
 TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_PER       ,1 ,40 , 3 ,0  )
+
 TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_PUR       ,1 ,40 , 4 ,0  )
 TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,LED_MAI       ,1 ,40 , 5 ,0  )
+
 TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_AND    ,1 ,40 , 6 ,0  )
 TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOT    ,1 ,40 , 7 ,0  )
 
-box_t boxAppUsarttest = {13,  73,  8, 0};
+
+box_t boxAppUsarttest = {13,  71,  2, 0};
 tuiAppUsart_t appUsartTest1(&boxAppUsarttest);
+
+// ******************
+// ***** list 3 *****
+
+tuiBase_t*   elementListCntnrX2[] = {
+     &TUI_OBJ   (LED_PUR)
+    ,&TUI_OBJ   (LED_MAI)     
+    ,&appUsartTest1
+    ,&TUI_OBJ   (SWITCH_AND)  
+    ,&TUI_OBJ   (SWITCH_NOT)  
+    ,nullptr  
+};
+
+dtyTuiBase_t testCntrX2 (elementListCntnrX2);
+box_t boxTestLboxX2 = {17,  73,  4, 0};
+tuiBaseLboxX_t testLboxX2 ("testLboxX 2", &boxTestLboxX2 ,&testCntrX2);
+
+// ***** list 2 - end
+// ******************
+
+
 
 tuiBaseListUnit_t::element_t tuiAppBoard_t::g_baseElementList[] = {
     //{nullptr                   , 1 }
@@ -68,11 +94,7 @@ tuiBaseListUnit_t::element_t tuiAppBoard_t::g_baseElementList[] = {
     ,{&TUI_OBJ   (BUTTON_BIO)   , 0 }
     ,{&TUI_OBJ   (BUTTON_VAI)   , 3 }
     ,{&TUI_OBJ   (LED_PER)      , 3 }
-    ,{&TUI_OBJ   (LED_PUR)      , 3 }
-    ,{&TUI_OBJ   (LED_MAI)      , 3 }
-    ,{&TUI_OBJ   (SWITCH_AND)   , 6 }
-    ,{&TUI_OBJ   (SWITCH_NOT)   , 6 }
-    ,{&appUsartTest1                   , 1 }
+    ,{&testLboxX2               , 1 }
     ,{nullptr                   , 1 }
 };
 

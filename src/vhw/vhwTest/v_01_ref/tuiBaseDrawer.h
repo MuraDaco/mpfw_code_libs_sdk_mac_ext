@@ -125,6 +125,7 @@ public:
     void frameNameNstatus   (char* p_str);
 
     void positionCursor                     (bool p_status, uint8_t p_position);
+    void frameClear                         (void);
     void frameNname                         (void);
     void content                            (char* p_str, uint8_t p_size);
     void content                            (uint8_t p_begin);

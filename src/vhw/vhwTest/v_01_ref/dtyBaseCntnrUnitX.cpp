@@ -129,6 +129,8 @@ void dtyBaseCntnrUnitX_t::displayBoxRollUp(void) {
 
     // update relative coord of container
     if(updCntnrRelCoord(+1))  {
+        // completely clear the display box 
+        clearDisplayBox();
         // update relative coordinates of every elements
         if(resetLoopElement())  {
             do {
@@ -148,6 +150,8 @@ void dtyBaseCntnrUnitX_t::displayBoxRollDown(void) {
 
     // update relative coord of container
     if(updCntnrRelCoord(-1))  {
+        // completely clear the display box 
+        clearDisplayBox();
         // update relative coordinates of every elements
         if(resetLoopElement())  {
             do {

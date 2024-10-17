@@ -64,6 +64,9 @@ public:
     void incRelCoordX       (int16_t p_x);
     void setRelCoordY       (int16_t p_deltaY);
     void incRelCoordY       (int16_t p_y);
+    void initRelCoordX      (int16_t p_x);
+    void initRelCoordY      (int16_t p_y);
+    void initRelCoordS      (int16_t p_x, int16_t p_y);
     uint16_t getDimH        (void);
 
     bool selectTst   	    (void)                  override;

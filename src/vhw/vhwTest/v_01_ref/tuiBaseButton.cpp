@@ -71,7 +71,7 @@ void tuiBaseButton_t::display          (void)    {
 }
 
 void tuiBaseButton_t::display         ([[maybe_unused]] bool p_recursively)  {
-    display();
+    nameOnly();
 }  
 
 void tuiBaseButton_t::setThis            (void)  {

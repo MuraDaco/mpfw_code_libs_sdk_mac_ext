@@ -207,6 +207,22 @@ void tuiBase_t::incRelCoordY           (int16_t p_deltaY)        {
     updCoordNboundY();
 }
 
+void tuiBase_t::initRelCoordX      (int16_t p_x)        {
+    g_x0r       = p_x;
+    g_lvl1X0r   = p_x;
+}
+
+void tuiBase_t::initRelCoordY      (int16_t p_y)        {
+    g_y0r       = p_y;
+    g_lvl1Y0r   = p_y;
+}
+
+void tuiBase_t::initRelCoordS      (int16_t p_x, int16_t p_y)       {
+    initRelCoordX(p_x);
+    initRelCoordY(p_y);
+}
+
+
 uint16_t tuiBase_t::getDimH         (void)   {
     return g_h;
 }

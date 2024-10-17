@@ -534,14 +534,20 @@ bool tuiBaseDrawer_t::frameNname (tuiMode_t p_mode)   {
     g_status = p_mode;
     g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
 
-	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win               ,ACS_ULCORNER       );
-	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
-	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win               ,ACS_LLCORNER       );
-	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
-	mvwhline(g_pNcursWin, g_y0Win              ,g_x0Win + 1           ,0    ,g_w - 2      );
-	mvwhline(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1           ,0    ,g_w - 2      );
-	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win               ,0    ,g_h - 2      );
-	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win + g_w - 1     ,0    ,g_h - 2      );
+	mvwvline(g_pNcursWin, g_boundUpper          ,g_x0Win               ,0    ,g_boundLower - g_boundUpper      );
+	mvwvline(g_pNcursWin, g_boundUpper          ,g_x0Win + g_w - 1     ,0    ,g_boundLower - g_boundUpper      );
+
+    if(g_boundUpper == g_lvl1Y0a)   {
+    	mvwaddch(g_pNcursWin, g_boundUpper      ,g_x0Win               ,ACS_ULCORNER       );
+    	mvwaddch(g_pNcursWin, g_boundUpper      ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
+    	mvwhline(g_pNcursWin, g_boundUpper      ,g_x0Win + 1           ,0    ,g_w - 2      );
+    }
+
+    if(g_boundLower == g_lvl1Y0a + g_h - 1)   {
+    	mvwaddch(g_pNcursWin, g_boundLower    ,g_x0Win               ,ACS_LLCORNER       );
+    	mvwaddch(g_pNcursWin, g_boundLower    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
+    	mvwhline(g_pNcursWin, g_boundLower    ,g_x0Win + 1           ,0    ,g_w - 2      );
+    }
 
     // mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
     mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~*~ %04x - %04x ~* ", g_strName, g_y0a,  g_h);
@@ -553,20 +559,61 @@ bool tuiBaseDrawer_t::frameNname (tuiMode_t p_mode)   {
     return true;
 }
 
+void tuiBaseDrawer_t::frameClear (void)   {
+
+    for(uint16_t l_row = g_boundUpper+1; l_row < g_boundLower; l_row++)  {
+        wattron  (g_pNcursWin,A_NORMAL);
+        mvwhline    (g_pNcursWin, l_row          ,g_lvl1X0a + 1           ,' '    ,g_w - 2);
+    }
+    wrefresh(g_pNcursWin);
+}
+
+//void tuiBaseDrawer_t::frameNnameX (void)   {
+//    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
+//
+//	mvwvline(g_pNcursWin, g_boundUpper          ,g_x0Win               ,0    ,g_boundUpper - g_boundLower      );
+//	mvwvline(g_pNcursWin, g_boundUpper          ,g_x0Win + g_w - 1     ,0    ,g_boundUpper - g_boundLower      );
+//
+//    if(g_boundUpper == g_lvl1Y0a)   {
+//    	mvwaddch(g_pNcursWin, g_boundUpper      ,g_x0Win               ,ACS_ULCORNER       );
+//    	mvwaddch(g_pNcursWin, g_boundUpper      ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
+//    	mvwhline(g_pNcursWin, g_boundUpper      ,g_x0Win + 1           ,0    ,g_w - 2      );
+//    }
+//
+//    if(g_boundLower == g_lvl1Y0a + g_h - 1)   {
+//    	mvwaddch(g_pNcursWin, g_boundLower    ,g_x0Win               ,ACS_LLCORNER       );
+//    	mvwaddch(g_pNcursWin, g_boundLower    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
+//    	mvwhline(g_pNcursWin, g_boundLower    ,g_x0Win + 1           ,0    ,g_w - 2      );
+//    }
+//
+//    //mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
+//    mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~*~ %04x - %04x | %04x - %04x ~* ", g_strName,  g_lvl1Y0a,  g_h, g_w, g_boundLower);
+//
+//    g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
+//
+//    wrefresh(g_pNcursWin);
+//}
+
 void tuiBaseDrawer_t::frameNname (void)   {
     g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
 
-	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win               ,ACS_ULCORNER       );
-	mvwaddch(g_pNcursWin, g_y0Win              ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
-	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win               ,ACS_LLCORNER       );
-	mvwaddch(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
-	mvwhline(g_pNcursWin, g_y0Win              ,g_x0Win + 1           ,0    ,g_w - 2      );
-	mvwhline(g_pNcursWin, g_y0Win + g_h - 1    ,g_x0Win + 1           ,0    ,g_w - 2      );
-	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win               ,0    ,g_h - 2      );
-	mvwvline(g_pNcursWin, g_y0Win + 1          ,g_x0Win + g_w - 1     ,0    ,g_h - 2      );
+	mvwvline(g_pNcursWin, g_boundUpper          ,g_x0Win               ,0    ,g_boundLower - g_boundUpper      );
+	mvwvline(g_pNcursWin, g_boundUpper          ,g_x0Win + g_w - 1     ,0    ,g_boundLower - g_boundUpper      );
+
+    if(g_boundUpper == g_lvl1Y0a)   {
+    	mvwaddch(g_pNcursWin, g_boundUpper      ,g_x0Win               ,ACS_ULCORNER       );
+    	mvwaddch(g_pNcursWin, g_boundUpper      ,g_x0Win + g_w - 1     ,ACS_URCORNER       );
+    	mvwhline(g_pNcursWin, g_boundUpper      ,g_x0Win + 1           ,0    ,g_w - 2      );
+    }
+
+    if(g_boundLower == g_lvl1Y0a + g_h - 1)   {
+    	mvwaddch(g_pNcursWin, g_boundLower    ,g_x0Win               ,ACS_LLCORNER       );
+    	mvwaddch(g_pNcursWin, g_boundLower    ,g_x0Win + g_w - 1     ,ACS_LRCORNER       );
+    	mvwhline(g_pNcursWin, g_boundLower    ,g_x0Win + 1           ,0    ,g_w - 2      );
+    }
 
     //mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~* ", g_strName);
-    mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~*~ %04x - %04x ~* ", g_strName,  g_y0a,  g_h);
+    mvwprintw   (g_pNcursWin, g_y0Win + 0, g_x0Win + 4, " *~ %s ~*~ %04x - %04x | %04x - %04x ~* ", g_strName,  g_lvl1Y0a,  g_h, g_w, g_boundLower);
 
     g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, OFF);
 
@@ -629,7 +676,12 @@ bool tuiBaseDrawer_t::frameBox (tuiMode_t p_mode)   {
 void tuiBaseDrawer_t::nameOnly (void)   {
 
     g_attributeMode_Line[static_cast<uint8_t>(g_status)](this, ON);
-    mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "%s", g_strName);
+
+    if(g_pNcursWin)
+        mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "%s", g_strName);
+    else
+        mvprintw(1,1, "%s *** %04x - %04x  - %04x  - %04x  - %04x ***", g_strName, g_y0Win, g_lvl1Y0a, g_h, g_boundUpper, g_boundLower);
+
     g_attributeMode_Line[static_cast<uint8_t>(g_status)](this, OFF);
 
     wrefresh(g_pNcursWin);
@@ -639,7 +691,10 @@ void tuiBaseDrawer_t::nameOnly (tuiMode_t p_mode)   {
     g_status = p_mode;
     g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, ON);
 
-    mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "%s", g_strName);
+    if(g_pNcursWin)
+        mvwprintw(g_pNcursWin, g_y0Win, g_x0Win, "%s", g_strName);
+    else
+        mvprintw(1,1, "%s *** %04x - %04x  - %04x  - %04x  - %04x ***", g_strName, g_y0Win, g_lvl1Y0a, g_h, g_boundUpper, g_boundLower);
 
     g_attributeMode_Line[static_cast<uint8_t>(p_mode)](this, OFF);
 

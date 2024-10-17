@@ -117,7 +117,7 @@ bool tuiBaseListUnit_t::selectElements     (void)    {
             //l_result = true;
             break;
         } else {
-            l_element->element->display();
+            //l_element->element->display();
         }
         l_element++;
     }
@@ -173,4 +173,13 @@ void tuiBaseListUnit_t::displayElements     (bool p_recursively)    {
     }
 }
 
+void tuiBaseListUnit_t::updCoordNboundsChilds    (void)       {
+    element_t* l_element = g_elementList;
+
+    // c.1) run [init] function for each [child] element
+    while(l_element->element)    {
+        l_element->element->updCoordNboundsForNewFather();
+        l_element++;
+    }
+}
 

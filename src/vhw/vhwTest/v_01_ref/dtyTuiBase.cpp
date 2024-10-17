@@ -78,15 +78,18 @@ bool dtyTuiBase_t::bLoopInitDisplay           (uint8_t p_id, void* p_poFather)  
         g_loopY0rElement = (p_id) ? g_loopY0rElement : 0;
 
         // set data to element
-        g_array[p_id]->setParent(p_poFather);
-        g_array[p_id]->setRelCoordX(0);
-        g_array[p_id]->setRelCoordY(g_loopY0rElement);
+        g_array[p_id]->initRelCoordS(0, g_loopY0rElement);
+        g_array[p_id]->init(p_poFather);
+        //g_array[p_id]->setParent(p_poFather);
+        //g_array[p_id]->setRelCoordX(0);
+        //g_array[p_id]->setRelCoordY(g_loopY0rElement);
 
-        // determine the "g_loopY0rElement" global parameter for the next cycle
+        // determine the "g_loopY0rElement" (global parameter) for the next cycle
         g_loopY0rElement += g_array[p_id]->getDimH();
 
         l_result = true;
     } else {
+        // Be carefull!! it seems wrong
         g_h = g_loopY0rElement;
     }
     return l_result;
@@ -100,10 +103,17 @@ uint8_t dtyTuiBase_t::getLoopInitCycles       (void)    {
 void dtyTuiBase_t::initDisplay                (uint8_t p_id, void* p_poFather)  {
     g_poParent = static_cast<tuiBase_t*>(p_poFather);
 
+    // init "g_loopY0rElement" global parameter
     g_loopY0rElement = (p_id) ? g_loopY0rElement : 0;
-    g_array[p_id]->setParent(p_poFather);
-    g_array[p_id]->setRelCoordX(0);
-    g_array[p_id]->setRelCoordY(g_loopY0rElement);
+
+    // set data to element
+    g_array[p_id]->initRelCoordS(0, g_loopY0rElement);
+    g_array[p_id]->init(p_poFather);
+    //g_array[p_id]->setParent(p_poFather);
+    //g_array[p_id]->setRelCoordX(0);
+    //g_array[p_id]->setRelCoordY(g_loopY0rElement);
+
+    // determine the "g_loopY0rElement" (global parameter) for the next cycle
     g_loopY0rElement += g_array[p_id]->getDimH();
     g_h = g_loopY0rElement;
 }
@@ -137,6 +147,7 @@ void dtyTuiBase_t::updSelectElement       (void)    {
 }
 
 void dtyTuiBase_t::clearDisplayBox       (void)    {
+    g_poParent->clear();
 }
 
 bool dtyTuiBase_t::updCntnrRelCoord           (int32_t p_delta)    {

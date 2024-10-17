@@ -44,6 +44,7 @@ public:
     bool select             (void)                  override;
     bool deSelect           (void)                  override;
 
+    void clear              (void)                  override;
     void display            (void)                  override;
     void display            (bool p_recursively)    override;
 

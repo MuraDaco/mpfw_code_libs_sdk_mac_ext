@@ -51,6 +51,7 @@ public:
     virtual uint8_t eventArraySizeGet   (void);
 
     virtual void display   	    (void)  = 0;
+    virtual void clear   	    (void)  {};
     virtual void display   	    ([[maybe_unused]] bool p_recursively)  = 0;
 
     virtual void debug_01    	(void) = 0;

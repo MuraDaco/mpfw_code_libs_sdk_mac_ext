@@ -64,13 +64,13 @@ tuiAppUsart_t::tuiAppUsart_t   (box_t* p_pBox)   :
     tuiBaseSubWin_t                     ("USART Sub Window", p_pBox, g_eList  )
 
     ,usartTextCntr          (usartTextBuffer, sizeof(usartTextBuffer), initUsartTextCntnr, sizeof(initUsartTextCntnr))
-    ,g_text                 {"USART Text", {7, 71, 0,   0}, &usartTextCntr}
+    ,g_text                 {"USART Text", {7, 69, 0,   0}, &usartTextCntr}
     ,usartBuffer            {"Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor"}
     ,usartString            {usartBuffer, sizeof(usartBuffer)}
-    ,g_ebox                 {"USART send Ebox", {3,  71, 8, 0}, &usartString}
-    ,g_button               {"send", 4, {1,4, 7,70-4}, buttonFunction}
+    ,g_ebox                 {"USART send Ebox", {3,  69, 8, 0}, &usartString}
+    ,g_button               {"send", 4, {1, 4, 7,70-6}, buttonFunction}
     ,g_eList                {
-                                {&g_text,      1}
+                               {&g_text,      1}
                                ,{&g_button,    1}
                                ,{&g_ebox,      1}
                                ,{nullptr,      1}

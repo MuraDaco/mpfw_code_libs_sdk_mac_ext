@@ -56,6 +56,10 @@ bool tuiBaseLboxX_t::deSelect        (void)    {
     return true;
 }
 
+void tuiBaseLboxX_t::clear               (void)    {
+    frameClear();
+}
+
 void tuiBaseLboxX_t::display               (void)    {
     frameNname();
 }
