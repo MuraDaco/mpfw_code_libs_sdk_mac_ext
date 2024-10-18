@@ -102,6 +102,8 @@ public:
     void deinitGraphEnv         (void);
     void endGraphEnv            (void);
 
+    static void updAbsMouseCoordY(int16_t p_deltaY);
+
     int16_t getRefX0            (void);
     int16_t getRootRefX0        (void);
     int16_t getDisplayMaxW      (void);
@@ -164,6 +166,7 @@ public:
     int16_t g_y0Win;    // the origin/referiment is the ncurses "secondary" windows, the windows that are created by "newwin" function; it is used in "print" functions
     int16_t g_x0Win;    // the origin/referiment is the ncurses "secondary" windows, the windows that are created by "newwin" function; it is used in "print" functions
 
+
     uint8_t g_marginTop;
     uint8_t g_marginBottom;
     uint8_t g_marginLeft;
@@ -193,10 +196,10 @@ public:
 
 private:
 
+    static int16_t g_xMouse;
+    static int16_t g_yMouse;
 
     //bool g_visible;
-    static uint8_t g_xMouse;
-    static uint8_t g_yMouse;
 //    static uint8_t g_typeChar;
     static uint8_t g_position;
 

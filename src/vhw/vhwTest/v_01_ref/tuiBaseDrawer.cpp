@@ -30,8 +30,8 @@
 
 #include "tuiBaseDrawer.h"
 
-uint8_t tuiBaseDrawer_t::g_xMouse;
-uint8_t tuiBaseDrawer_t::g_yMouse;
+int16_t tuiBaseDrawer_t::g_xMouse;
+int16_t tuiBaseDrawer_t::g_yMouse;
 uint8_t tuiBaseDrawer_t::g_position;
 
 int      tuiBaseDrawer_t::g_ncursEventCode;
@@ -266,6 +266,9 @@ void tuiBaseDrawer_t::endGraphEnv       (void)  {
     endwin();                           /* Wait for user input */
 }
 
+void tuiBaseDrawer_t::updAbsMouseCoordY       (int16_t p_deltaY)   {
+    g_yMouse += p_deltaY;
+}
 
 int16_t tuiBaseDrawer_t::getRefX0            (void)  {
     return g_lvl1X0a + g_marginLeft;

@@ -127,6 +127,35 @@ bool dtyTuiBase_t::selectElementByMouse      (void)      {
     if(g_array[g_loopIdElement]->bMouseClickInsideBounds()) {
         //if(g_pCurrentElement) g_pCurrentElement->element->deSelect();   // because of mouse event management
         g_selectIdElement = g_loopIdElement;
+        if(!bSelectVisibleCompletely()) {
+            // the element selected is not completely visible, therefore ...
+
+            // it is necessary make it completely visibile
+
+            // completely clear the display box 
+            clearDisplayBox();
+
+            // determine "delta" shift
+            int32_t l_delta = getDeltaShiftBySelect();
+
+            // update container relative coord
+            updCntnrRelCoord(-l_delta);
+
+            // update mouse absolute coord
+            tuiBaseDrawer_t::updAbsMouseCoordY(l_delta);
+
+            // update relative coordinates of every elements 
+            // with "delta" shift previously determined
+            for(uint8_t l_id = 0; l_id < g_arraySize; l_id++)   {
+                if(l_delta) {
+                    // update relative coord of element recursively
+                    g_array[l_id]->updCoordNbounds(l_delta);
+                    // refresh element content recursively
+                    g_array[l_id]->display(true);
+                }
+            }
+
+        }
         l_result = g_array[g_loopIdElement]->selectByMouse();
     }
     return l_result;
@@ -185,8 +214,7 @@ void dtyTuiBase_t::updElementCoordNbounds       (void)    {
 }
 
 void dtyTuiBase_t::dspElement                 (bool p_recursively)  {
-    //if(g_array[g_loopIdElement]->bVisibleCompletely())
-        g_array[g_loopIdElement]->display(p_recursively);
+    g_array[g_loopIdElement]->display(p_recursively);
 }
 
 bool dtyTuiBase_t::nextLoopElement          (void)    {
