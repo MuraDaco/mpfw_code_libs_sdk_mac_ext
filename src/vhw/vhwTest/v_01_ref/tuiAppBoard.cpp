@@ -67,13 +67,16 @@ TUI_DEF_CPP_BOX (tuiBaseDgtInOut_t     ,mcuPinPort_t   ,SWITCH_NOT    ,1 ,40 , 7
 box_t boxAppUsarttest = {13,  71,  2, 0};
 tuiAppUsart_t appUsartTest1(&boxAppUsarttest);
 
+box_t boxAppUsarttest2 = {13,  71,  5, 0};
+tuiAppUsart_t appUsartTest2(&boxAppUsarttest2);
 // ******************
 // ***** list 3 *****
 
 tuiBase_t*   elementListCntnrX2[] = {
-     &TUI_OBJ   (LED_PUR)
+     &appUsartTest1
+    ,&appUsartTest2
+    ,&TUI_OBJ   (LED_PUR)
     ,&TUI_OBJ   (LED_MAI)     
-    ,&appUsartTest1
     ,&TUI_OBJ   (SWITCH_AND)  
     ,&TUI_OBJ   (SWITCH_NOT)  
     ,nullptr  
