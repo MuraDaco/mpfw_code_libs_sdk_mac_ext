@@ -2,3 +2,4 @@
 obdash_branches_owner.cfg
 obdash_branches.cfg
 src/vhw/vhwTest/v_01_ref/build
+src/vhw/vhwTest/v_02_ref/build
