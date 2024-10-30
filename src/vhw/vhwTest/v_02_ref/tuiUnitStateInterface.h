@@ -22,17 +22,31 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.cpp
+ * tuiUnitStateInterface.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Oct, 22nd 2024
  *      Author: Marco Dau
  */
+ 
+#ifndef TUI_UNIT_STATE_INTERFACE_H
+#define TUI_UNIT_STATE_INTERFACE_H
 
 
-#include "tuiManager.h"
+class tuiGraphicAbstract_t; // cross dependency -> #include "tuiGraphicAbstract.h"
 
-#include "tuiAppMain.h"
-#include "tuiGraphicAppMain.h"
+class tuiUnitStateInterface_t {
 
-//tuiBaseWinRoot_t*       tuiManager_t::g_baseMainWin = &tuiAppMain_t::g_baseWin;
-tuiGraphicUnitRoot_t*   tuiManager_t::g_baseMainWin = &tuiGraphicAppMain_t::g_boxRoot;
+public:
+
+
+    virtual bool select     	    (tuiGraphicAbstract_t* p_this) = 0;
+    virtual bool deSelect   	    (tuiGraphicAbstract_t* p_this) = 0;
+    virtual void eventOn    	    (tuiGraphicAbstract_t* p_this) = 0;
+    virtual bool selectByMouse 	    (tuiGraphicAbstract_t* p_this) = 0;
+    virtual bool clickingChild      (tuiGraphicAbstract_t* p_this) = 0;
+    virtual bool selectTst          (tuiGraphicAbstract_t* p_this) = 0;
+    virtual bool eventOnTst         (tuiGraphicAbstract_t* p_this) = 0;
+
+};
+
+#endif 	// TUI_UNIT_STATE_INTERFACE_H

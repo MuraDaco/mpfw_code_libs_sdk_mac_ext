@@ -22,37 +22,41 @@
 //  *******************************************************************************
 
 /*
- * tuiBaseAction.cpp
+ * tuiGraphicState.cpp
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Oct, 21st 2024
  *      Author: Marco Dau
  */
  
 
-#include "tuiBaseAction.h"
-
-event_t*            tuiBaseAction_t::g_eventArray = nullptr;
-void_f_pVoid_t*     tuiBaseAction_t::g_eventMouseArray = nullptr;
-tuiBaseAction_t*    tuiBaseAction_t::g_poSelected = nullptr;
-tuiBaseAction_t*    tuiBaseAction_t::g_poEventOn  = nullptr;
-
-uint8_t             tuiBaseAction_t::g_debugStatus = 0;
-uint8_t             tuiBaseAction_t::g_debugStatusX = 0;
+#include "tuiGraphicState.h"
 
 
-tuiBaseAction_t::tuiBaseAction_t    (void)  :
-    g_poFather  {nullptr}
-{}
+#define G_P_PARENT  static_cast<tuiGraphicState_t*>(g_pParent)
+
+tuiGraphicState_t*    tuiGraphicState_t::g_poSelected = nullptr;
+tuiGraphicState_t*    tuiGraphicState_t::g_poEventOn  = nullptr;
+
+//event_t*            tuiGraphicState_t::g_eventKeyArray = nullptr;
+//void_f_pVoid_t*     tuiGraphicState_t::g_eventMouseArray = nullptr;
+
+uint8_t             tuiGraphicState_t::g_debugStatus = 0;
+uint8_t             tuiGraphicState_t::g_debugStatusX = 0;
 
 
-void  tuiBaseAction_t::deselectBackNselect      (void) {
+void tuiGraphicState_t::selectNeventOnInit          (void)  {
+    g_poSelected    = this;
+    g_poEventOn     = this;
+}
+
+void  tuiGraphicState_t::deselectBackNselect        (void) {
     if(g_poSelected != this)    {
-        tuiBaseAction_t* l_poCommonAncestor = searchCommonAncestor();
-        if(g_poSelected->g_poFather == g_poFather)  {
+        tuiGraphicState_t* l_poCommonAncestor = searchCommonAncestor();
+        if(g_poSelected->g_pParent == g_pParent)  {
             g_poSelected->deSelect();
         } else {
             // N.B.: the father of the current element is acquiring the event management or is already the event manager
-            g_poSelected->deselectBack(searchCommonAncestor(), (g_poFather == l_poCommonAncestor));
+            g_poSelected->deselectBack(searchCommonAncestor(), (g_pParent == l_poCommonAncestor));
         }
         g_poSelected = this;
         selectBack();
@@ -64,23 +68,19 @@ void  tuiBaseAction_t::deselectBackNselect      (void) {
 }
 
 
-uint8_t tuiBaseAction_t::eventArraySizeGet     (void)    {
-    return constEventArraySize;
-}
-
-tuiBaseAction_t* tuiBaseAction_t::searchCommonAncestor       (void)      {
-    if(g_poFather)    {
+tuiGraphicState_t* tuiGraphicState_t::searchCommonAncestor       (void)      {
+    if(g_pParent)    {
         // the current element is not the root window
         // N.B.: root window cannot be deselected
         if(!selectTst())
             // the current element is not displayed as selected
-            return g_poFather->searchCommonAncestor();
+            return G_P_PARENT->searchCommonAncestor();
     }
 
     return this;
 }
 
-void tuiBaseAction_t::debugDeselectBack (tuiBaseAction_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON)   {
+void tuiGraphicState_t::debugDeselectBack (tuiGraphicState_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON)   {
     // STATUS 1
     if(
             (p_poCommonAncestor == g_poSelected)    
@@ -156,8 +156,8 @@ void tuiBaseAction_t::debugDeselectBack (tuiBaseAction_t* p_poCommonAncestor, bo
 }
 
 
-tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON)   {
-    tuiBaseAction_t* l_result = nullptr;
+tuiGraphicState_t* tuiGraphicState_t::deselectBack (tuiGraphicState_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON)   {
+    tuiGraphicState_t* l_result = nullptr;
     if(p_poCommonAncestor == this) {
         // the current element is the common ancestor, therefore ...
         //return l_result;
@@ -186,7 +186,7 @@ tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAnces
 
                     // the father of the current element is the current event management
                     // therefore ...
-                    if(g_poFather) g_poFather->select();
+                    if(g_pParent) G_P_PARENT->select();
                 } else {
                     // STATUS 4
                     g_debugStatusX = 4;
@@ -253,7 +253,7 @@ tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAnces
 
                     // the father of the current element is the current event management
                     // therefore ...
-                    if(g_poFather) g_poFather->select();
+                    if(g_pParent) G_P_PARENT->select();
                     // and ... stop deselectBack
                 } else {
                     // STATUS 8
@@ -281,8 +281,8 @@ tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAnces
             // remark ->         // N.B.: this is the first deselectBack function call
             // remark ->         // STATUS B.1
             // remark ->         // ... -> [CA, eON next] -> ... -> [Cur, eON, selected & start deselectBack procedure]
-            // remark ->         // particular case where (p_poCommonAncestor == g_poFather)
-            // remark ->         if(p_poCommonAncestor == g_poFather)    {
+            // remark ->         // particular case where (p_poCommonAncestor == g_pParent)
+            // remark ->         if(p_poCommonAncestor == g_pParent)    {
             // remark ->              // ... -> [CA, eON next] -> [Cur, eON, selected & start deselectBack procedure]
             // remark ->             select();
             // remark ->             l_result = this;
@@ -290,8 +290,8 @@ tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAnces
             // remark ->     } else {
             // remark ->         // STATUS B.2
             // remark ->         // ... -> [CA, eON next] -> ... -> [Cur, eON] -> [selected & start deselectBack procedure]
-            // remark ->         // particular case where (p_poCommonAncestor == g_poFather)
-            // remark ->         if(p_poCommonAncestor == g_poFather)    {
+            // remark ->         // particular case where (p_poCommonAncestor == g_pParent)
+            // remark ->         if(p_poCommonAncestor == g_pParent)    {
             // remark ->             // ... -> [CA, eON next] -> [Cur, eON] -> [selected & start deselectBack procedure]
             // remark ->             select();
             // remark ->             l_result = this;
@@ -302,8 +302,8 @@ tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAnces
             // remark ->         // N.B.: this is the first deselectBack function call
             // remark ->         // STATUS B.3 
             // remark ->         // ... -> [CA, eON next] -> ... -> [eON] -> [Cur, selected & start deselectBack procedure]
-            // remark ->         // particular case where (p_poCommonAncestor == g_poFather) -> got to STATUS 2
-            // remark ->         if(p_poCommonAncestor == g_poFather)    {
+            // remark ->         // particular case where (p_poCommonAncestor == g_pParent) -> got to STATUS 2
+            // remark ->         if(p_poCommonAncestor == g_pParent)    {
             // remark ->             // ... -> [CA, eON next, eON] -> [Cur, selected & start deselectBack procedure]
             // remark ->             // do nothing
             // remark ->             // leave all unchanged
@@ -312,8 +312,8 @@ tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAnces
             // remark ->     } else {
             // remark ->         // STATUS B.4
             // remark ->         // ... -> [CA, eON next] -> ... -> [Cur] -> ... -> [eON] -> [selected & start deselectBack procedure]
-            // remark ->         // particular case where (p_poCommonAncestor == g_poFather)
-            // remark ->         if(p_poCommonAncestor == g_poFather)    {
+            // remark ->         // particular case where (p_poCommonAncestor == g_pParent)
+            // remark ->         if(p_poCommonAncestor == g_pParent)    {
             // remark ->             // ... -> [CA, eON next] -> [Cur] -> ... -> [eON] -> [selected & start deselectBack procedure]
             // remark ->             // it is not necessary select the element
             // remark ->             // select();
@@ -322,8 +322,8 @@ tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAnces
             // remark ->     }
             // remark -> }
 
-            // particular case where (p_poCommonAncestor == g_poFather)
-            if(p_poCommonAncestor == g_poFather)    {
+            // particular case where (p_poCommonAncestor == g_pParent)
+            if(p_poCommonAncestor == g_pParent)    {
                 g_debugStatusX = 99;
                 select();
                 l_result = this;
@@ -333,9 +333,9 @@ tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAnces
                 // and
                 // common ancestor is eventOn next
                 g_debugStatusX = 91;
-                if(g_poFather) {
+                if(g_pParent) {
                     deSelect();
-                    l_result = g_poFather->deselectBack(p_poCommonAncestor, p_commonAncestorIsNextEventON);
+                    l_result = G_P_PARENT->deselectBack(p_poCommonAncestor, p_commonAncestorIsNextEventON);
                 }
             }
 
@@ -370,10 +370,10 @@ tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAnces
             // remark ->     }
             // remark -> }
             
-            if(g_poFather) {
+            if(g_pParent) {
                 g_debugStatusX = 11;
                 deSelect();
-                l_result = g_poFather->deselectBack(p_poCommonAncestor, p_commonAncestorIsNextEventON);
+                l_result = G_P_PARENT->deselectBack(p_poCommonAncestor, p_commonAncestorIsNextEventON);
             } else {
                 g_debugStatusX = 19;
             }
@@ -384,11 +384,12 @@ tuiBaseAction_t* tuiBaseAction_t::deselectBack (tuiBaseAction_t* p_poCommonAnces
 }
 
 
-void tuiBaseAction_t::selectBack (void)     {
+void tuiGraphicState_t::selectBack (void)     {
     if(this != g_poEventOn) {
-        if(g_poFather) {
+        if(g_pParent) {
             // the current element is NOT the root window, therefore ...
-            if(select()) g_poFather->selectBack();
+            if(select()) G_P_PARENT->selectBack();
+            // N.B.: if the current element is already in select state then do nothing and stop the recusive procedure
         } else {
             // the current element is the root window, therefore ...
             // do not show select() mode
@@ -401,27 +402,32 @@ void tuiBaseAction_t::selectBack (void)     {
     }
 }
 
-void tuiBaseAction_t::deselectBackNeventOn     (void)    {
-    if(pEventArrayGet())    {
+
+void tuiGraphicState_t::deselectBackNeventOn     (void)    {
+    // check status of the current eventOn element to avoid unuseful operations
+    if(this == g_poEventOn) 
+        return; // the current eventOn element is equal to the next eventOn element, therefore ... do nothing!!! exit
+
+    
+    if(eventOnTst())    {
         // the current element has a plenty event array
-        tuiBaseAction_t* l_poCommonAncestor = searchCommonAncestor();
+        tuiGraphicState_t* l_poCommonAncestor = searchCommonAncestor();
         if(g_poSelected)    {
             g_poSelected->debugDeselectBack(l_poCommonAncestor, (l_poCommonAncestor == this));
-            tuiBaseAction_t* l_poSelected = g_poSelected->deselectBack(l_poCommonAncestor, (l_poCommonAncestor == this));
+            tuiGraphicState_t* l_poSelected = g_poSelected->deselectBack(l_poCommonAncestor, (l_poCommonAncestor == this));
             g_poSelected = l_poSelected ? l_poSelected : this;
         }
         l_poCommonAncestor->debug_01();
 
         g_poEventOn = this;
         eventOn();
-        tuiBaseAction_t::g_eventArray  = pEventArrayGet();
-        tuiBaseAction_t::g_eventMouseArray  = pEventMouseArrayGet();
-        if(g_poFather) g_poFather->selectBack();
+        // select all anchestor of the current element
+        if(g_pParent) G_P_PARENT->selectBack();
     } else {
         // the current element has an empty event array as a tuiBaseButton component, therefore ...
-        // call only its eventOn() function
+        // call only its eventOn() function and do not change the current eventOn element
         eventOn();
-    }
+   }
 
 }
 

@@ -60,8 +60,8 @@ bool tuiBaseButton_t::deSelect        (void)    {
 }
 
 bool tuiBaseButton_t::selectByMouse       (void)    {
-    deselectBackNselect(true);
-    g_poFather->deselectBackNeventOn(true, true);
+    deselectBackNselect();
+    g_poFather->deselectBackNeventOn();
     eventOn();
     return true;
 }
@@ -78,9 +78,6 @@ void tuiBaseButton_t::setThis            (void)  {
 }
 
 void tuiBaseButton_t::eventOn         (void)    {
-    ////tuiBaseAction_t::g_eventArray  = g_eventArray;
-    //tuiBaseAction_t::eventOn();
-    //g_poFather->deselectBackNeventOn();
     g_func();
 }
 

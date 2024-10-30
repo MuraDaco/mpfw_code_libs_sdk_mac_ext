@@ -75,10 +75,8 @@ void tuiBaseSubWin_t::setThis            (void)  {
 
 void tuiBaseSubWin_t::eventOn     (void)    {
     g_po = this;
-    //deselectBackNeventOn();
 
     frameNname(tuiMode_t::eventOn);
-    //if(!g_poFather) refreshElements();
 }
 
 event_t* tuiBaseSubWin_t::pEventArrayGet	(void)      {
@@ -105,13 +103,13 @@ void tuiBaseSubWin_t::vEventHndlKey_enter	(void)  {
     if(g_po->g_pCurrentElement->element->isSelected())  {
         // g_po->frameNname(tuiMode_t::select);    // to remove
         if(!g_po->g_poFather) g_po->refreshElements();
-        g_po->g_pCurrentElement->element->deselectBackNeventOn(true, true);
+        g_po->g_pCurrentElement->element->deselectBackNeventOn();
     }
 }
 
 void tuiBaseSubWin_t::vEventHndlKey_home	(void)  {
     if(g_po->g_poFather) {
-        g_po->g_poFather->deselectBackNeventOn(true, true);
+        g_po->g_poFather->deselectBackNeventOn();
     }
 
 }

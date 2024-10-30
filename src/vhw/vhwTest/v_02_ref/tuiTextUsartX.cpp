@@ -62,7 +62,7 @@ bool tuiTextUsartX_t::deSelect        (void)    {
 bool tuiTextUsartX_t::selectByMouse     (void)    {
 
     g_pCntnr->selectElementsByMouse();
-    deselectBackNeventOn(true, true);
+    deselectBackNeventOn();
 
     return true;
 }
@@ -92,8 +92,7 @@ void tuiTextUsartX_t::setThis            (void)  {
 
 void tuiTextUsartX_t::eventOn     (void)    {
     g_po = this;
-    //tuiBaseAction_t::g_eventArray  = g_eventArray;
-    //deselectBackNeventOn();
+
     frameNname(tuiMode_t::eventOn);
 }
 
@@ -121,7 +120,7 @@ void tuiTextUsartX_t::vEventHndlKey_enter	(void)  {
 }
 
 void tuiTextUsartX_t::vEventHndlKey_home	(void)  {
-    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn(true, true);
+    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn();
 
 }
 

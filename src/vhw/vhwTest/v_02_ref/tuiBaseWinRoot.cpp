@@ -54,8 +54,8 @@ void tuiBaseWinRoot_t::init       (void) 	{
 
     g_poSelected = this;
 
-    // 4. activate the ehandler event array of the current root window
-    deselectBackNeventOn(true, true);
+    // 4. activate the handler event array of the current root window
+    deselectBackNeventOn();
     displayElements(true); // "true" means that the elements are displayed recursively
 
 }
@@ -88,7 +88,7 @@ bool tuiBaseWinRoot_t::loop            (void)  {
                     frameBox(tuiMode_t::select);
                     refreshElements();
                 } else {
-                    deselectBackNeventOn(true, true);
+                    deselectBackNeventOn();
                 }
             } else {
                 if(

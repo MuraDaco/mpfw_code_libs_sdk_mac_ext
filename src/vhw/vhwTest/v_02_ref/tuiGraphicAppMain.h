@@ -22,17 +22,36 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.cpp
+ * tuiGraphicAppMain.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Oct, 23rd 2024
  *      Author: Marco Dau
  */
+ 
+#ifndef TUI_GRAPHIC_APP_MAIN_H
+#define TUI_GRAPHIC_APP_MAIN_H
 
+#include "tuiUnitDebug.h"
+#include "tuiUnitDebugList.h"
+#include "tuiGraphicUnitBase.h"
+#include "tuiGraphicUnitRoot.h"
 
-#include "tuiManager.h"
+class tuiGraphicAppMain_t {
 
-#include "tuiAppMain.h"
-#include "tuiGraphicAppMain.h"
+public:
+    static tuiGraphicUnitBase_t     g_setDebug[];
+    static tuiUnitDebug_t           g_unitDebug_1;
+    static tuiUnitDebug_t           g_unitDebug_2;
+    static tuiUnitDebug_t           g_unitDebug_3;
+    static tuiUnitDebug_t           g_unitDebug_4;
+    static tuiUnitDebug_t           g_unitDebug;
+    static tuiUnitDebugList_t       g_unitDebugList;
+    static tuiGraphicUnitRoot_t     g_boxRoot;
 
-//tuiBaseWinRoot_t*       tuiManager_t::g_baseMainWin = &tuiAppMain_t::g_baseWin;
-tuiGraphicUnitRoot_t*   tuiManager_t::g_baseMainWin = &tuiGraphicAppMain_t::g_boxRoot;
+// private:
+//     static tuiUnitRoot_t                    g_unitRoot;
+//     static tuiBaseListUnit_t::element_t     g_baseElementList[];
+
+};
+
+#endif 	// TUI_GRAPHIC_APP_MAIN_H

@@ -22,17 +22,27 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.cpp
+ * tuiUnitDsiplayInterface.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Oct, 22nd 2024
  *      Author: Marco Dau
  */
+ 
+#ifndef TUI_UNIT_DISPLAY_INTERFACE_H
+#define TUI_UNIT_DISPLAY_INTERFACE_H
 
+class tuiGraphicAbstract_t; // cross dependency -> #include "tuiGraphicAbstract.h"
 
-#include "tuiManager.h"
+class tuiUnitDisplayInterface_t {
 
-#include "tuiAppMain.h"
-#include "tuiGraphicAppMain.h"
+public:
 
-//tuiBaseWinRoot_t*       tuiManager_t::g_baseMainWin = &tuiAppMain_t::g_baseWin;
-tuiGraphicUnitRoot_t*   tuiManager_t::g_baseMainWin = &tuiGraphicAppMain_t::g_boxRoot;
+    virtual void clear   	        (tuiGraphicAbstract_t* p_this)  = 0;
+    virtual void display            (tuiGraphicAbstract_t* p_this)  = 0;
+    virtual void display            (tuiGraphicAbstract_t* p_this, bool p_recursively)  = 0;
+    virtual void displayChildren    (tuiGraphicAbstract_t* p_this, bool p_recursively)  = 0;
+    virtual void refreshChildren    (tuiGraphicAbstract_t* p_this)  = 0;
+
+};
+
+#endif 	// TUI_UNIT_DISPLAY_INTERFACE_H

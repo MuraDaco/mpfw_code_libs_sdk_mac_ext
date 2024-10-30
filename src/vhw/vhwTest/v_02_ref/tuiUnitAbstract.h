@@ -22,17 +22,35 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.cpp
+ * tuiUnitAbstract.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Oct, 22nd 2024
  *      Author: Marco Dau
+
+    - genealogical & dependence tree
+        - [dr] tuiGraphicEvent_t
+            - [dp] tuiGraphicAbstract_t
+        - [dr] tuiGraphicStateInterface2_t
+        - [dp] dtyUint8_t
+            - [dp] tuiGraphicAbstract_t
+
  */
+ 
+#ifndef TUI_UNIT_ABSTRACT_H
+#define TUI_UNIT_ABSTRACT_H
+
+#include "tuiMacroDefine.h"
+#include "tuiUnitEvent.h"
+#include "tuiUnitDisplayInterface.h"
+#include "tuiUnitStateInterface.h"
+#include "tuiUnitProcessInterface.h"
 
 
-#include "tuiManager.h"
+class tuiUnitAbstract_t :    public tuiUnitEvent_t 
+                            ,public tuiUnitDisplayInterface_t  
+                            ,public tuiUnitStateInterface_t  
+                            ,public tuiUnitProcessInterface_t  
+{};
 
-#include "tuiAppMain.h"
-#include "tuiGraphicAppMain.h"
 
-//tuiBaseWinRoot_t*       tuiManager_t::g_baseMainWin = &tuiAppMain_t::g_baseWin;
-tuiGraphicUnitRoot_t*   tuiManager_t::g_baseMainWin = &tuiGraphicAppMain_t::g_boxRoot;
+#endif 	// TUI_UNIT_ABSTRACT_H

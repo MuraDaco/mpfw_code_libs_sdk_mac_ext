@@ -84,7 +84,7 @@ void tuiBaseCntnr_t::displayElements     ([[maybe_unused]] bool p_recursively)  
 
 bool tuiBaseCntnr_t::selectByMouse     (void)    {
 
-    deselectBackNeventOn(true, true);
+    deselectBackNeventOn();
     return true;
 }
 

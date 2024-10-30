@@ -66,22 +66,19 @@ public:
     virtual bool bDisplayable	(void)  {return true;};
 
     // common functions
-    bool deselectBack           (tuiBaseAction_t* p_poDeselectEnd, bool p_isSelecting);
-    void deselectBackNselect    (void);
-    void deselectBackNselect    (tuiBaseAction_t* p_poFather);
 
-    tuiBaseAction_t* searchCommonAncestor   (void);
-    tuiBaseAction_t* deselectBack           (tuiBaseAction_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON, uint8_t p_unused);
-
-    void selectBack                         (void);
     void deselectBackNeventOn               (void);
-    bool deselectBackNeventOn               (bool p_unused);
-    void deselectBackNeventOn               (bool p_unused_1, bool p_unused_2);
-    void deselectBackNselect                (bool p_unused_1);
+    void deselectBackNselect                (void);
 
     void debugDeselectBack (tuiBaseAction_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON);
     static uint8_t g_debugStatus;
     static uint8_t g_debugStatusX;
+
+
+private:
+    void selectBack                         (void);
+    tuiBaseAction_t* searchCommonAncestor   (void);
+    tuiBaseAction_t* deselectBack           (tuiBaseAction_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON);
 
 
 protected:

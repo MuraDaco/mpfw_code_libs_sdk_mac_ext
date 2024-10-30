@@ -90,8 +90,6 @@ bool tuiBaseLboxY_t::deSelect        (void)    {
 
 void tuiBaseLboxY_t::eventOn     (void)    {
     g_po = this;
-    //tuiBaseAction_t::g_eventArray  = g_eventArray;
-    //deselectBackNeventOn();
 
     char l_str[SIZE_OF_STATUS_STR];
     getStrStatus(l_str);
@@ -123,12 +121,12 @@ void tuiBaseLboxY_t::vEventHndlKey_right	(void)  {
 void tuiBaseLboxY_t::vEventHndlKey_enter	(void)  {
     if(g_po->g_pCurrentElement->g_pUnit->isSelected())  {
         g_po->frameNname(tuiMode_t::select);    // to remove
-        g_po->g_pCurrentElement->g_pUnit->deselectBackNeventOn(true, true);
+        g_po->g_pCurrentElement->g_pUnit->deselectBackNeventOn();
     }
 }
 
 void tuiBaseLboxY_t::vEventHndlKey_home	(void)  {
-    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn(true, true);
+    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn();
 
 }
 

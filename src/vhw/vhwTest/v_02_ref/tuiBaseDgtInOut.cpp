@@ -63,7 +63,7 @@ bool tuiBaseDgtInOut_t::deSelect        (void)    {
 }
 
 bool tuiBaseDgtInOut_t::selectByMouse       (void)    {
-    deselectBackNeventOn(true, true);
+    deselectBackNeventOn();
     return true;
 }
 
@@ -105,7 +105,7 @@ void tuiBaseDgtInOut_t::vEventHndlKey_enter	(void)  {
 }
 
 void tuiBaseDgtInOut_t::vEventHndlKey_home	(void)  {
-    g_po->g_poFather->deselectBackNeventOn(true, true);
+    g_po->g_poFather->deselectBackNeventOn();
 
 }
 

@@ -96,6 +96,21 @@ set(SOURCE_FILES_CPP
     dtyTuiBase.cpp
     dtyUint8.cpp
 
+    tuiGraphicCoord.cpp
+    tuiGraphicState.cpp
+    tuiGraphicAbstract.cpp
+    tuiDrvGraphic.cpp
+    tuiGraphicUnit.cpp
+    tuiGraphicUnitRoot.cpp
+    tuiGraphicUnitBase.cpp
+    tuiGraphicAppMain.cpp
+    tuiUnitDgtInOut.cpp
+    tuiUnitList.cpp
+    tuiUnitSet.cpp
+    tuiUnitDebug.cpp
+    tuiUnitListAbstract.cpp
+    tuiUnitDebugList.cpp
+
     tuiBase.cpp
     tuiBaseAction.cpp
     tuiBaseButton.cpp

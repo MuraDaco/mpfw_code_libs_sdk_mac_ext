@@ -62,7 +62,7 @@ bool tuiBaseCntnrX_t::selectByMouse     (void)    {
     if(g_pCntnr->selectElementsByMouse()) {
         //select();   // to remove
     } else {
-        deselectBackNeventOn(true, true);
+        deselectBackNeventOn();
     }
     return true;
 }

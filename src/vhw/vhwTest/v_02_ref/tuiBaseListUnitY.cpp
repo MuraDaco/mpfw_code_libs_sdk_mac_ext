@@ -93,7 +93,7 @@ bool tuiBaseListUnitY_t::selectByMouse         (void)    {
         // select();   // to remove
     } else {
         // none sub-element has been selected
-        deselectBackNeventOn(true, true);
+        deselectBackNeventOn();
     }
     display();
     return true;
@@ -131,7 +131,7 @@ void tuiBaseListUnitY_t::prevElement     (tuiBaseListUnitY_t* p_po)    {
             p_po->g_pCurrentElement--;
             if(p_po->g_pCurrentElement->g_id >= p_po->g_originWin)   {
                 // repaint is NOT necessary
-                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(true);
+                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect();
             } else {
                 // re-paint is necessary
 
@@ -141,7 +141,7 @@ void tuiBaseListUnitY_t::prevElement     (tuiBaseListUnitY_t* p_po)    {
                 p_po->g_pCurrentElement->g_pUnit->updateRelativeY(0);
                 // g_poSelected = p_po->g_pCurrentElement->g_pUnit;
                 // p_po->g_pCurrentElement->g_pUnit->select();
-                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(true);
+                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect();
 
                 tuiBaseListElem_t* l_element = p_po->g_pCurrentElement;
                 for(uint8_t l_id = 1; l_id < (p_po->g_h-2); l_id++) {
@@ -172,7 +172,7 @@ void tuiBaseListUnitY_t::nextElement	(tuiBaseListUnitY_t* p_po)  {
             //if(static_cast<int16_t>(p_po->g_pCurrentElement->g_id - (p_po->g_h - 2)) < p_po->g_originWin)   {
             if((p_po->g_pCurrentElement->g_id + 2) < (p_po->g_originWin + p_po->g_h))   {
                 // repaint is NOT necessary
-                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(true);
+                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect();
             } else {
                 // re-paint is necessary
 
@@ -182,7 +182,7 @@ void tuiBaseListUnitY_t::nextElement	(tuiBaseListUnitY_t* p_po)  {
                 p_po->g_pCurrentElement->g_pUnit->updateRelativeY(p_po->g_h-3);
                 //g_poSelected = p_po->g_pCurrentElement->g_pUnit;
                 //p_po->g_pCurrentElement->g_pUnit->select();
-                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect(true);
+                p_po->g_pCurrentElement->g_pUnit->deselectBackNselect();
 
                 tuiBaseListElem_t* l_element = p_po->g_elementList + p_po->g_originWin;
                 for(uint8_t l_id = 0; l_id < (p_po->g_h-3); l_id++) {

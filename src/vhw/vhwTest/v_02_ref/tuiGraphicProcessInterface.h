@@ -22,17 +22,30 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.cpp
+ * tuiGraphicProcessInterface.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Oct, 22nd 2024
  *      Author: Marco Dau
  */
+ 
+#ifndef TUI_GRAPHIC_PROCESS_INTERFACE_H
+#define TUI_GRAPHIC_PROCESS_INTERFACE_H
+
+class tuiGraphicUnit_t; // cross or derived element dependency
+
+class tuiGraphicProcessInterface_t {
+
+public:
 
 
-#include "tuiManager.h"
+    virtual bool init   	    (void) = 0;
+    virtual bool initChildren   (void) = 0;
+    virtual bool init     	    (tuiGraphicUnit_t* p_pParent) = 0;
+    virtual bool loop   	    (void) = 0;
+    virtual bool loopChildren   (void) = 0;
+    virtual void end       	    (void) = 0;
+    virtual void endChildren    (void) = 0;
 
-#include "tuiAppMain.h"
-#include "tuiGraphicAppMain.h"
+};
 
-//tuiBaseWinRoot_t*       tuiManager_t::g_baseMainWin = &tuiAppMain_t::g_baseWin;
-tuiGraphicUnitRoot_t*   tuiManager_t::g_baseMainWin = &tuiGraphicAppMain_t::g_boxRoot;
+#endif 	// TUI_GRAPHIC_PROCESS_INTERFACE_H

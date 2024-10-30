@@ -22,17 +22,25 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.cpp
+ * tuiGraphicParent.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Oct, 21st 2024
  *      Author: Marco Dau
  */
+ 
+#ifndef TUI_GRAPHIC_PARENT_H
+#define TUI_GRAPHIC_PARENT_H
 
+#include "tuiGraphicTypes.h"
+#include "uyTypesDefs.h"
 
-#include "tuiManager.h"
+class tuiGraphicParent_t   {
 
-#include "tuiAppMain.h"
-#include "tuiGraphicAppMain.h"
+public:
 
-//tuiBaseWinRoot_t*       tuiManager_t::g_baseMainWin = &tuiAppMain_t::g_baseWin;
-tuiGraphicUnitRoot_t*   tuiManager_t::g_baseMainWin = &tuiGraphicAppMain_t::g_boxRoot;
+protected:
+    void* g_pParent;
+
+};
+
+#endif 	// TUI_GRAPHIC_PARENT_H

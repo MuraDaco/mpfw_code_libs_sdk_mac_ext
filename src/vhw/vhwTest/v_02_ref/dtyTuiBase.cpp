@@ -164,7 +164,7 @@ void dtyTuiBase_t::shiftLoopElementBySelect       (int32_t p_delta)    {
 }
 
 void dtyTuiBase_t::updSelectElement       (void)    {
-    g_array[g_selectIdElement]->deselectBackNselect(true);
+    g_array[g_selectIdElement]->deselectBackNselect();
 }
 
 void dtyTuiBase_t::clearDisplayBox       (void)    {

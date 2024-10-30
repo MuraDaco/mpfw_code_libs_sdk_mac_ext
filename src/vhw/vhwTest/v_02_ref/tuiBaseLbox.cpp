@@ -60,7 +60,7 @@ bool tuiBaseLbox_t::selectByMouse         (void)    {
     if(selectElements()) {
         // select();   // to remove
     } else {
-        deselectBackNeventOn(true, true);
+        deselectBackNeventOn();
     }
     return true;
 }
@@ -109,12 +109,12 @@ void tuiBaseLbox_t::vEventHndlKey_right	(void)  {
 void tuiBaseLbox_t::vEventHndlKey_enter	(void)  {
     if(g_po->g_pCurrentElement->element->isSelected())  {
         g_po->frameNname(tuiMode_t::select); // to remove
-        g_po->g_pCurrentElement->element->deselectBackNeventOn(true, true);
+        g_po->g_pCurrentElement->element->deselectBackNeventOn();
     }
 }
 
 void tuiBaseLbox_t::vEventHndlKey_home	(void)  {
-    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn(true, true);
+    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn();
 
 }
 

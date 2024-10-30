@@ -22,17 +22,28 @@
 //  *******************************************************************************
 
 /*
- * tuiManager.cpp
+ * tuiGraphicStateInterface.h
  *
- *  Created on: Jul, 16th 2024
+ *  Created on: Oct, 22nd 2024
  *      Author: Marco Dau
  */
+ 
+#ifndef TUI_GRAPHIC_STATE_INTERFACE_H
+#define TUI_GRAPHIC_STATE_INTERFACE_H
 
 
-#include "tuiManager.h"
+class tuiGraphicStateInterface_t {
 
-#include "tuiAppMain.h"
-#include "tuiGraphicAppMain.h"
+public:
 
-//tuiBaseWinRoot_t*       tuiManager_t::g_baseMainWin = &tuiAppMain_t::g_baseWin;
-tuiGraphicUnitRoot_t*   tuiManager_t::g_baseMainWin = &tuiGraphicAppMain_t::g_boxRoot;
+
+    virtual bool select     	    (void) = 0;
+    virtual bool deSelect   	    (void) = 0;
+    virtual void eventOn    	    (void) = 0;
+    virtual bool selectByMouse 	    (void) = 0;
+    virtual bool selectTst          (void) = 0;
+    virtual bool eventOnTst         (void) = 0;
+
+};
+
+#endif 	// TUI_GRAPHIC_STATE_INTERFACE_H

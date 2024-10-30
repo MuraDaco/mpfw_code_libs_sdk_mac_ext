@@ -104,12 +104,12 @@ void tuiBaseLboxX_t::vEventHndlKey_right	(void)  {
 void tuiBaseLboxX_t::vEventHndlKey_enter	(void)  {
     tuiBase_t* l_element = static_cast<tuiBase_t*>(g_po->g_pCntnr->getSelect());
     if(l_element->isSelected())  {
-       l_element->deselectBackNeventOn(true, true);
+       l_element->deselectBackNeventOn();
     }
 }
 
 void tuiBaseLboxX_t::vEventHndlKey_home	(void)  {
-    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn(true, true);
+    if(g_po->g_poFather) g_po->g_poFather->deselectBackNeventOn();
 
 }
 
