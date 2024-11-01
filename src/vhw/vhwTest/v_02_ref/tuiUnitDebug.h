@@ -69,8 +69,6 @@ protected:
     void eventOn    	        (tuiGraphicAbstract_t* p_this) override;
     bool selectByMouse 	        (tuiGraphicAbstract_t* p_this) override;
     bool clickingChild          (tuiGraphicAbstract_t* p_this) override;
-    //bool selectTst              (tuiGraphicAbstract_t* p_this) override;  // to be deleted
-    //bool eventOnTst             (tuiGraphicAbstract_t* p_this) override;
     // --------------------- State management section - END
 
     // --------------------- Events handler section - START

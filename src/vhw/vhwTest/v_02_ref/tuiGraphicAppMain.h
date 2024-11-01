@@ -48,10 +48,6 @@ public:
     static tuiUnitDebugList_t       g_unitDebugList;
     static tuiGraphicUnitRoot_t     g_boxRoot;
 
-// private:
-//     static tuiUnitRoot_t                    g_unitRoot;
-//     static tuiBaseListUnit_t::element_t     g_baseElementList[];
-
 };
 
 #endif 	// TUI_GRAPHIC_APP_MAIN_H

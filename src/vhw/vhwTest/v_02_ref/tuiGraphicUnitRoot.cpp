@@ -107,12 +107,7 @@ bool tuiGraphicUnitRoot_t::loop            (void)  {
 
             if(uiMouseEventCode_ButtonPressed())
             {
-
-                if(g_pUnit->clickingChild(this)) {
-                    // to improve
-                    g_pUnit->select(this);
-                    g_pUnit->refreshChildren(this);
-                } else {
+                if(!g_pUnit->clickingChild(this)) {
                     deselectBackNeventOn();
                 }
             } else {

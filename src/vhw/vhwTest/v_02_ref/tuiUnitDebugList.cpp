@@ -65,7 +65,6 @@ void tuiUnitDebugList_t::clear     	        (tuiGraphicAbstract_t* p_this)  {
 }
 
 void tuiUnitDebugList_t::display     	    (tuiGraphicAbstract_t* p_this)  {
-    //p_this->frameBox(g_strName);
     p_this->frameNnameTest(g_strName);
 }
 
@@ -89,7 +88,6 @@ bool tuiUnitDebugList_t::deSelect   	        (tuiGraphicAbstract_t* p_this)  {
 }
 
 void tuiUnitDebugList_t::eventOn    	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-    //p_this->frameBox(tuiMode_t::eventOn, g_strName);
     p_this->frameNnameTest(tuiMode_t::eventOn, g_strName);
 }
 

@@ -76,16 +76,6 @@ protected:
 
 
 
-// **** --------------------- Events handler section - START
-
-private:
-	// // ..................... Events handler: array
-    // static event_t*         g_eventKeyArray;
-    // static void_f_pVoid_t*  g_eventMouseArray;
-
-// **** --------------------- Events handler section - END
-
-
 // **** --------------------- Debug section - START
 
 public:

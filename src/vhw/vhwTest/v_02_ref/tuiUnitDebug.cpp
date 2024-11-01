@@ -73,7 +73,6 @@ void tuiUnitDebug_t::clear     	        (tuiGraphicAbstract_t* p_this)  {
 }
 
 void tuiUnitDebug_t::display     	    (tuiGraphicAbstract_t* p_this)  {
-    //p_this->frameBox(g_strName);
     p_this->frameNnameTest(g_strName);
 }
 
@@ -106,6 +105,7 @@ void tuiUnitDebug_t::eventOn    	        ([[maybe_unused]] tuiGraphicAbstract_t*
 }
 
 bool tuiUnitDebug_t::selectByMouse          ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
+    p_this->deselectBackNeventOn();
     return true;
 }
 

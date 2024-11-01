@@ -46,8 +46,8 @@ public:
 protected:
    
     // --------------------- Process section - START
-    // bool init                    (tuiGraphicUnit_t* p_this) override;
-    // bool initChildren           (tuiGraphicUnit_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
+    // bool init                    (tuiGraphicUnit_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
+    // bool initChildren            (tuiGraphicUnit_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
     bool loop                    (tuiGraphicUnit_t* p_this) override;
     bool loopChildren            (tuiGraphicUnit_t* p_this) override;
     void end                     (tuiGraphicUnit_t* p_this) override;
@@ -68,8 +68,6 @@ protected:
     void eventOn                 (tuiGraphicAbstract_t* p_this) override;
     // bool selectByMouse           (tuiGraphicAbstract_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
     // bool clickingChild           (tuiGraphicAbstract_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
-    //bool selectTst              (tuiGraphicAbstract_t* p_this) override;  // to be delete
-    //bool eventOnTst             (tuiGraphicAbstract_t* p_this) override;  // to be delete
     // --------------------- State management section - END
 
     // --------------------- Events handler section - START

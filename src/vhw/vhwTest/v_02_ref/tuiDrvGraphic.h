@@ -122,7 +122,6 @@ public:
 
     // ************************************************************************
     // OUTPUT function section - START
-    // N.B.: the following functions will be called by unit "display" & unit "state" functions (see unitStateInterface & unitStateInterface files)
 
     public:
 

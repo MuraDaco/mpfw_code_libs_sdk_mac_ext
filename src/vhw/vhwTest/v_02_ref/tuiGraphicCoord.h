@@ -47,36 +47,6 @@ private:
     tuiGraphicCoord_t* g_pParent;
 
 public:
-    // old use / to remove
-
-    void    old_updAbsMouseCoordY      (int16_t p_deltaY);
-    int16_t old_getRefX0               (void);
-    int16_t old_getRootRefX0           (void);
-    int16_t old_getDisplayMaxW         (void);
-    int16_t old_getRefY0               (void);
-    int16_t old_getRootRefY0           (void);
-    int16_t old_getDisplayMaxH         (void);
-    int16_t old_getBoundYupper         (void);
-    int16_t old_getBoundYlower         (void);
-
-
-    void old_updCoordNboundS        (void);
-    void old_updDspBoxDimX          (void);
-    void old_updDspBoxDimY          (void);
-    void old_updDspBoxDimS          (void);
-
-    void old_init               (void* p_poFather);
-    void old_setParent          (void* p_poFather);
-    void old_updateRelativeY    (uint8_t p_y0r);
-
-    void old_updParams          (void);
-    void old_updCoordNboundX        (void);
-    void old_updCoordNboundY        (void);
-
-    void old_updAbsParams                       (void);
-    void old_updRelCoordY                       (int16_t p_delta);
-    void old_updCoordNbounds                    (int16_t p_delta);
-    void old_updCoordNboundsForNewFather        (void);
 
     int32_t g_lvl1X0r, g_lvl1Y0r, g_lvl1X0a, g_lvl1Y0a, g_x0Win, g_y0Win;
     uint16_t g_displayBoxW, g_displayBoxH;

@@ -69,8 +69,6 @@ public:
     // --------------------- State management section - END
 
     // --------------------- Events handler section - START
-    //protected:
-    //void_f_pVoid_t* pEventKeyArrayGet	(void);
     private:
 	// ..................... Events KEY handler: functions
     // the "event" & the "event array" is equal for all the instanticies of the current class therefore ...
@@ -90,8 +88,6 @@ public:
     protected:
     static eventHandler_t g_eventKeyArray[];
 
-    //protected:
-    //void_f_pVoid_t* pEventMouseArrayGet	(void)      override;
     private:
 	// ..................... Events MOUSE handler: functions
     static void vEventHndlMouse_rollUp	    (tuiGraphicAbstract_t* p_this);

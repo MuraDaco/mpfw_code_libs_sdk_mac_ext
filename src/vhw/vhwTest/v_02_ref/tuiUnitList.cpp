@@ -83,7 +83,6 @@ void tuiUnitList_t::vEventHndlKey_enter	([[maybe_unused]] tuiGraphicAbstract_t* 
 }
 
 void tuiUnitList_t::vEventHndlKey_home	(tuiGraphicAbstract_t* p_this)  {
-    //static_cast<tuiGraphicAbstract_t*>(p_this->g_pParent)->deselectBackNeventOn();
     p_this->parentDeselectBackNeventOn();
 
 }

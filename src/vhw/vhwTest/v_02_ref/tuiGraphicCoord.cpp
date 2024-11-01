@@ -107,130 +107,6 @@ tuiGraphicCoord_t::tuiGraphicCoord_t    (box_t p_box    ,margins_t p_margin)    
 {}
 
 
-void tuiGraphicCoord_t::old_updAbsMouseCoordY         (int16_t p_deltaY)   {
-    g_yMouse += p_deltaY;
-}
-
-int16_t tuiGraphicCoord_t::old_getRefX0               (void)  {
-    return g_lvl1X0a + g_marginLeft;
-}
-
-int16_t tuiGraphicCoord_t::old_getRootRefX0           (void)  {
-    return g_x0a + g_marginLeft;
-}
-
-int16_t tuiGraphicCoord_t::old_getDisplayMaxW         (void)  {
-    return g_w - (g_marginLeft + g_marginRight);
-}
-
-int16_t tuiGraphicCoord_t::old_getRefY0               (void)  {
-    return g_lvl1Y0a + g_marginTop;
-}
-
-int16_t tuiGraphicCoord_t::old_getRootRefY0           (void)  {
-    return g_y0a + g_marginTop;
-}
-
-int16_t tuiGraphicCoord_t::old_getDisplayMaxH         (void)  {
-    return g_h - (g_marginTop + g_marginBottom);
-}
-
-int16_t tuiGraphicCoord_t::old_getBoundYupper         (void)      {
-    return (g_boundUpper == g_lvl1Y0a)                  ? g_boundUpper + 1 : g_boundUpper;
-}
-
-int16_t tuiGraphicCoord_t::old_getBoundYlower         (void)      {
-    //return g_boundLower - 1;
-    return ((g_boundLower + 1)  == (g_lvl1Y0a + g_h))   ? g_boundLower - 1 : g_boundLower;
-}
-
-
-
-void tuiGraphicCoord_t::old_init       (void* p_pParent) 	{
-    g_pParent      = P_PO_FATHER;
-//    g_pNcursWin     = P_PO_FATHER->g_pNcursWin;
-    g_x0Win         = P_PO_FATHER->old_getRefX0() + g_x0r;
-    g_y0Win         = P_PO_FATHER->old_getRefY0() + g_y0r;
-    g_x0a           = P_PO_FATHER->old_getRootRefX0() + g_lvl1X0r;    // g_x0r;
-    g_y0a           = P_PO_FATHER->old_getRootRefY0() + g_lvl1Y0r;    // g_y0r;
-    g_x0Win         = P_PO_FATHER->old_getRefX0() + g_lvl1X0r;
-    g_y0Win         = P_PO_FATHER->old_getRefY0() + g_lvl1Y0r;
-    //g_x0a           = P_PO_FATHER->getRefX0() + g_lvl1X0r;
-    //g_y0a           = P_PO_FATHER->getRefY0() + g_lvl1Y0r;
-    if(!g_w) g_w    = P_PO_FATHER->g_w - 2;
-
-    g_lvl1X0a       = P_PO_FATHER->old_getRefX0() + g_lvl1X0r;
-    g_displayBoxW   = P_PO_FATHER->old_getDisplayMaxW();
-    g_lvl1Y0a       = P_PO_FATHER->old_getRefY0() + g_lvl1Y0r;
-    g_displayBoxH   = P_PO_FATHER->old_getDisplayMaxH();
-    
-
-    // init bounds
-    g_boundUpper = MAX(G_PO_FATHER->old_getBoundYupper(), g_lvl1Y0a);
-    g_boundLower = MIN(G_PO_FATHER->old_getBoundYlower(), g_lvl1Y0a + g_h - 1);
-
-}
-
-void tuiGraphicCoord_t::old_setParent       (void* p_pParent) 	{
-    g_pParent      = P_PO_FATHER;
-//    g_pNcursWin     = P_PO_FATHER->g_pNcursWin;
-}
-
-void tuiGraphicCoord_t::old_updateRelativeY   (uint8_t p_y0r) {
-    g_y0r       = p_y0r;
-    g_lvl1Y0r   = p_y0r;
-    old_updCoordNboundY();
-}
-
-
-void tuiGraphicCoord_t::old_updCoordNboundS        (void)       {
-    old_updCoordNboundX();
-    old_updCoordNboundY();
-}
-
-void tuiGraphicCoord_t::old_updDspBoxDimX                (void)       {
-    g_displayBoxW   = G_PO_FATHER->old_getDisplayMaxW();
-}
-
-void tuiGraphicCoord_t::old_updDspBoxDimY                (void)       {
-    g_displayBoxH   = G_PO_FATHER->old_getDisplayMaxH();
-}
-
-void tuiGraphicCoord_t::old_updDspBoxDimS                (void)       {
-    old_updDspBoxDimX();
-    old_updDspBoxDimY();
-}
-
-
-void tuiGraphicCoord_t::old_updParams              (void)       {
-
-    old_updCoordNboundS();
-    old_updDspBoxDimS();
-}
-
-void tuiGraphicCoord_t::old_updCoordNboundX        (void)       {
-    g_x0Win     = G_PO_FATHER->old_getRefX0()       + g_lvl1X0r;
-    g_x0a       = G_PO_FATHER->old_getRootRefX0()   + g_lvl1X0r;
-    g_lvl1X0a   = G_PO_FATHER->old_getRefX0()       + g_lvl1X0r;
-
-    if(!g_w) g_w    = G_PO_FATHER->g_w - 2;
-
-}
-
-void tuiGraphicCoord_t::old_updCoordNboundY        (void)       {
-    g_y0Win     = G_PO_FATHER->old_getRefY0()       + g_lvl1Y0r;
-    g_y0a       = G_PO_FATHER->old_getRootRefY0()   + g_lvl1Y0r;
-    g_lvl1Y0a   = G_PO_FATHER->old_getRefY0()       + g_lvl1Y0r;
-
-
-    g_boundUpper = MAX(G_PO_FATHER->getBoundYupper(), g_lvl1Y0a);
-    g_boundLower = MIN(G_PO_FATHER->getBoundYlower(), g_lvl1Y0a + g_h - 1);
-}
-
-
-// **** OLD SECTION - END *************
-
-
 #define G_P_PARENT  static_cast<tuiGraphicCoord_t*>(g_pParent)
 
 
@@ -486,11 +362,11 @@ void tuiGraphicCoord_t::updCoordNboundsChilds    (void)       {
 bool tuiGraphicCoord_t::bMouseClickInsideBounds (void)      {
     bool l_result = false;
 
-    if(g_boundUpper <= g_boundLower)    {
-        uint16_t l_boundUpper = g_boundUpper + (g_y0a - g_y0Win);
-        uint16_t l_boundLower = g_boundLower + (g_y0a - g_y0Win);
+    if(g_boundYupper <= g_boundYlower)    {
+        uint16_t l_boundUpper = g_boundYupper + (g_mouseY0a - g_y0a);
+        uint16_t l_boundLower = g_boundYlower + (g_mouseY0a - g_y0a);
         if(
-                ( (g_x0a        <= g_xMouse) && (g_xMouse <  (g_x0a + g_w )) )
+                ( (g_mouseX0a   <= g_xMouse) && (g_xMouse <   (g_mouseX0a + g_w )) )
             &&  ( (l_boundUpper <= g_yMouse) && (g_yMouse <=  l_boundLower)  )
         ) {
             l_result = true;

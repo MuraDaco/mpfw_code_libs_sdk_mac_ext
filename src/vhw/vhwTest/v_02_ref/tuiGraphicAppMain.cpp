@@ -41,14 +41,12 @@ tuiGraphicUnitBase_t    tuiGraphicAppMain_t::g_setDebug[] = {
     {   &g_unitDebug_1, box_t({10, 30,  0,  0})                         },
     {   &g_unitDebug_2, box_t({10, 30, 10, 30}), margins_t({2,1,2,1})   },
     {   &g_unitDebug_3, box_t({10, 30, 10, 60}), margins_t({1,2,1,1})   },
-    //{   &g_unitDebug_2, box_t({10, 30,  0, 30}), margins_t({1,1,1,2})   },
+    {   &g_unitDebug_2, box_t({10, 30,  0, 90}), margins_t({1,1,1,2})   },
     {   &g_unitDebug_4, box_t({10, 30, 20, 60}), margins_t({2,1,1,2})   },
-    {   nullptr                                                         }  // null element to mark the and of array; 
+    {}  // null element to mark the and of array; 
 };
 
 tuiUnitDebugList_t      tuiGraphicAppMain_t::g_unitDebugList("Unit debug List", g_setDebug);
 
 tuiUnitDebug_t          tuiGraphicAppMain_t::g_unitDebug    ("Unit Debug");
-//tuiGraphicUnitRoot_t    tuiGraphicAppMain_t::g_boxRoot      (&g_unitDebug);
 tuiGraphicUnitRoot_t    tuiGraphicAppMain_t::g_boxRoot      (&g_unitDebugList   ,margins_t({5,2,1,1}));
-//tuiGraphicUnitRoot_t tuiGraphicAppMain_t::g_boxRoot({0,0,0,0});
