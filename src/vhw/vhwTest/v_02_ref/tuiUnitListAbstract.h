@@ -47,7 +47,7 @@ protected:
     // --------------------- Element pointers section - START
     // pointer to the list of uiBase objects belonging to one
     // or more objects of the current class
-    tuiGraphicUnit_t*	   g_childrenSet;
+    tuiGraphicUnit_t*  g_childrenSet;
     tuiGraphicUnit_t*  g_pChildCurrent;
     tuiGraphicUnit_t*  g_pChildLast;
     bool g_bChildrenSetEmpty;
@@ -89,7 +89,7 @@ protected:
     void vEventHndlKey_up       (tuiGraphicAbstract_t* p_this)  override;
     //void vEventHndlKey_left       (tuiGraphicAbstract_t* p_this)  override;
     //void vEventHndlKey_right      (tuiGraphicAbstract_t* p_this)  override;
-    //void vEventHndlKey_enter      (tuiGraphicAbstract_t* p_this)  override;
+    void vEventHndlKey_enter      (tuiGraphicAbstract_t* p_this)  override;
     //void vEventHndlKey_home       (tuiGraphicAbstract_t* p_this)  override;
     // --------------------- Events handler section - END
 

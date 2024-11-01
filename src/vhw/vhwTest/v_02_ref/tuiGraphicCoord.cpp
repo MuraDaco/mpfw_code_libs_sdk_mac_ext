@@ -237,9 +237,7 @@ void tuiGraphicCoord_t::old_updCoordNboundY        (void)       {
 // *************
 
 // element init procedure
-void tuiGraphicCoord_t::initCoord       (void* p_pParent) 	{
-    g_pParent = p_pParent;
-
+void tuiGraphicCoord_t::initCoord       () 	{
 // - // -    updParams();
 
 // -     updAbsCoords();
@@ -264,6 +262,13 @@ void tuiGraphicCoord_t::initCoord       (void* p_pParent) 	{
 //    if(0 == g_h) updDimH();
 }
 
+void tuiGraphicCoord_t::setParent                       (tuiGraphicCoord_t* p_pParent) {
+    g_pParent = p_pParent;
+}
+
+tuiGraphicCoord_t* tuiGraphicCoord_t::getParent         (void)  {
+    return g_pParent;
+}
 
 void tuiGraphicCoord_t::updCoordNboundX   (void)     {
     updAbsCoordX();

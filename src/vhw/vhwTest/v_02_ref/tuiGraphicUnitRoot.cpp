@@ -50,6 +50,8 @@ tuiGraphicUnitRoot_t::tuiGraphicUnitRoot_t      (tuiUnitAbstract_t* p_pUnit     
 
 bool tuiGraphicUnitRoot_t::init       (void) 	{
     // 1. init TUI environment
+    tuiGraphicState_t::setParent(nullptr);
+    tuiGraphicCoord_t::setParent(nullptr);
     initGraphEnv();
     initGraphEnvColor();
     initDimsNbounds();

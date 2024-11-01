@@ -31,7 +31,8 @@
 
 #include "tuiGraphicAbstract.h"
 
-#define G_P_PARENT  static_cast<tuiGraphicAbstract_t*>(g_pParent)
+#define G_P_PARENT          static_cast<tuiGraphicAbstract_t*>(g_pParent)
+#define L_P_PARENT_STATE    static_cast<tuiGraphicState_t*>(g_pParent)
 
 tuiGraphicAbstract_t::tuiGraphicAbstract_t    (tuiUnitAbstract_t* p_pUnit   )      :
      tuiGraphicCoord_t      ()
@@ -52,11 +53,6 @@ tuiGraphicAbstract_t::tuiGraphicAbstract_t    (tuiUnitAbstract_t* p_pUnit   ,box
      tuiGraphicCoord_t      (p_box, p_margin)
     ,g_pUnit                {p_pUnit}
 {}
-
-void tuiGraphicAbstract_t::parentDeselectBackNeventOn     	    (void)  {
-    if(G_P_PARENT)
-        G_P_PARENT->deselectBackNeventOn();
-}
 
 bool tuiGraphicAbstract_t::bNull       	    (void)  {
     return (nullptr == g_pUnit);

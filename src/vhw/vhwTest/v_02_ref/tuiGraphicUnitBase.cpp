@@ -55,27 +55,12 @@ bool tuiGraphicUnitBase_t::initChildren       (void) 	{
 }
 
 bool tuiGraphicUnitBase_t::init       (tuiGraphicUnit_t* p_pParent) 	{
-    initCoord(p_pParent);
+    tuiGraphicState_t::setParent(static_cast<tuiGraphicState_t*>(p_pParent));
+    tuiGraphicCoord_t::setParent(static_cast<tuiGraphicCoord_t*>(p_pParent));
+
+    initCoord();
     setNcursesWindow(p_pParent);
     g_status = tuiMode_t::undefined;
-
-//    g_x0a           = p_pParent->getDspBoxAbsRefX() + g_x0r;
-//    g_y0a           = p_pParent->getDspBoxAbsRefY() + g_y0r;
-//
-//    g_mouseX0a      = p_pParent->getMouseAbsRefX() + g_x0r;
-//    g_mouseY0a      = p_pParent->getMouseAbsRefY() + g_y0r;
-//
-//    if(!g_w) g_w    = p_pParent->g_w - 2;
-//
-//    g_lvl1X0a       = p_pParent->getRefX0() + g_lvl1X0r;
-//    g_displayBoxW   = p_pParent->getDisplayMaxW();
-//    g_lvl1Y0a       = p_pParent->getRefY0() + g_lvl1Y0r;
-//    g_displayBoxH   = p_pParent->getDisplayMaxH();
-//    
-//
-//    // init bounds
-//    g_boundUpper = MAX(p_pParent->getBoundYupper(), g_lvl1Y0a);
-//    g_boundLower = MIN(p_pParent->getBoundYlower(), g_lvl1Y0a + g_h - 1);
 
     return true;
 }

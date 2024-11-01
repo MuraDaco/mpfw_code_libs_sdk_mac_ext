@@ -98,11 +98,10 @@ bool tuiUnitDebug_t::select     	        (tuiGraphicAbstract_t* p_this)  {
 }
 
 bool tuiUnitDebug_t::deSelect   	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-    return true;
+    return p_this->frameNnameTest(tuiMode_t::deselect, g_strName);
 }
 
 void tuiUnitDebug_t::eventOn    	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-    //p_this->frameBox(tuiMode_t::eventOn, g_strName);
     p_this->frameNnameTest(tuiMode_t::eventOn, g_strName);
 }
 
@@ -112,14 +111,6 @@ bool tuiUnitDebug_t::selectByMouse          ([[maybe_unused]] tuiGraphicAbstract
 
 bool tuiUnitDebug_t::clickingChild          ([[maybe_unused]] tuiGraphicAbstract_t* p_this) {
     return false;
-}
-
-bool tuiUnitDebug_t::selectTst              ([[maybe_unused]] tuiGraphicAbstract_t* p_this) {
-    return true;
-}
-
-bool tuiUnitDebug_t::eventOnTst             ([[maybe_unused]] tuiGraphicAbstract_t* p_this) {
-    return true;
 }
 
 

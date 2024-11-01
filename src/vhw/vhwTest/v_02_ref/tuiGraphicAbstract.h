@@ -62,8 +62,6 @@ public:
     tuiGraphicAbstract_t (tuiUnitAbstract_t* p_pUnit                    ,margins_t p_margin );
     tuiGraphicAbstract_t (tuiUnitAbstract_t* p_pUnit     ,box_t p_box   ,margins_t p_margin );
 
-    void parentDeselectBackNeventOn (void);
-
 public:
     //// --------------------- General section - START
     bool bNull              (void);

@@ -31,9 +31,10 @@
 #ifndef TUI_GRAPHIC_COORD_H
 #define TUI_GRAPHIC_COORD_H
 
-#include "tuiGraphicParent.h"
+#include "tuiGraphicTypes.h"
+#include "uyTypesDefs.h"
 
-class tuiGraphicCoord_t: public virtual tuiGraphicParent_t  {
+class tuiGraphicCoord_t  {
 
 public:
 
@@ -42,6 +43,10 @@ public:
     tuiGraphicCoord_t (              margins_t p_margin);
     tuiGraphicCoord_t (box_t p_box  ,margins_t p_margin);
 
+private:
+    tuiGraphicCoord_t* g_pParent;
+
+public:
     // old use / to remove
 
     void    old_updAbsMouseCoordY      (int16_t p_deltaY);
@@ -94,7 +99,9 @@ public:
     virtual void updCoordNboundsChilds  (void);
 
     // element init procedure
-    void initCoord          (void* p_pParent);
+    void initCoord          (void);
+    void setParent          (tuiGraphicCoord_t* p_pParent);
+    tuiGraphicCoord_t* getParent            (void);
     void updParams          (void);
     void updCoordNboundX    (void);
     void updCoordNboundY    (void);

@@ -66,10 +66,6 @@ bool tuiUnitSet_t::selectByMouse   ([[maybe_unused]] tuiGraphicAbstract_t* p_thi
     return true;
 }
 
-bool tuiUnitSet_t::selectTst       ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-    return true;
-}
-
 void tuiUnitSet_t::vEventHndlKey_down	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
 }
 

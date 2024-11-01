@@ -44,8 +44,6 @@ public:
     virtual void eventOn    	    (tuiGraphicAbstract_t* p_this) = 0;
     virtual bool selectByMouse 	    (tuiGraphicAbstract_t* p_this) = 0;
     virtual bool clickingChild      (tuiGraphicAbstract_t* p_this) = 0;
-    virtual bool selectTst          (tuiGraphicAbstract_t* p_this) = 0;
-    virtual bool eventOnTst         (tuiGraphicAbstract_t* p_this) = 0;
 
 };
 

@@ -68,8 +68,8 @@ protected:
     void eventOn                 (tuiGraphicAbstract_t* p_this) override;
     // bool selectByMouse           (tuiGraphicAbstract_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
     // bool clickingChild           (tuiGraphicAbstract_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
-    bool selectTst              (tuiGraphicAbstract_t* p_this) override;
-    bool eventOnTst             (tuiGraphicAbstract_t* p_this) override;
+    //bool selectTst              (tuiGraphicAbstract_t* p_this) override;  // to be delete
+    //bool eventOnTst             (tuiGraphicAbstract_t* p_this) override;  // to be delete
     // --------------------- State management section - END
 
     // --------------------- Events handler section - START
@@ -78,7 +78,7 @@ protected:
     // void vEventHndlKey_up        (tuiGraphicAbstract_t* p_this)  override; --> implemented in derived class tuiUnitListAbstract_t
     void vEventHndlKey_left     (tuiGraphicAbstract_t* p_this)  override;
     void vEventHndlKey_right    (tuiGraphicAbstract_t* p_this)  override;
-    void vEventHndlKey_enter    (tuiGraphicAbstract_t* p_this)  override;
+    // void vEventHndlKey_enter    (tuiGraphicAbstract_t* p_this)  override;  --> implemented in derived class tuiUnitListAbstract_t
     void vEventHndlKey_home     (tuiGraphicAbstract_t* p_this)  override;
     // --------------------- Events handler section - END
 

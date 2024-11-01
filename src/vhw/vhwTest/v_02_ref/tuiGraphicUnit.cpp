@@ -80,7 +80,18 @@ bool tuiGraphicUnit_t::selectByMouse    (void)  {
 }
 
 bool tuiGraphicUnit_t::selectTst        (void)  {
-    return g_pUnit->selectTst(this);
+    return (g_status == tuiMode_t::select) || (g_status == tuiMode_t::eventOn);
+}
+
+void tuiGraphicUnit_t::dbgState_01          (void)  {
+    mvwprintw   (stdscr, 2, 100, "*** deselect status debug: sts %02d - stsX %02d ***", g_debugStatus, g_debugStatusX);
+}
+
+void tuiGraphicUnit_t::dbgState_01          (bool p_test)  {
+    if(p_test)
+        mvwprintw   (stdscr, 2, 80, "*** deselect status debug: sts %02d - stsX %02d - parent match---", g_debugStatus, g_debugStatusX);
+    else
+        mvwprintw   (stdscr, 2, 80, "*** deselect status debug: sts %02d - stsX %02d - parent NO match", g_debugStatus, g_debugStatusX);
 }
 
 void tuiGraphicUnit_t::vEventHndlKey_down	        (tuiGraphicAbstract_t* p_this)  {

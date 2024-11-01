@@ -84,8 +84,8 @@ bool tuiUnitDebugList_t::select     	        (tuiGraphicAbstract_t* p_this)  {
     return p_this->frameNnameTest(tuiMode_t::select, g_strName);
 }
 
-bool tuiUnitDebugList_t::deSelect   	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-    return true;
+bool tuiUnitDebugList_t::deSelect   	        (tuiGraphicAbstract_t* p_this)  {
+    return p_this->frameNnameTest(tuiMode_t::deselect, g_strName);
 }
 
 void tuiUnitDebugList_t::eventOn    	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
@@ -93,13 +93,6 @@ void tuiUnitDebugList_t::eventOn    	        ([[maybe_unused]] tuiGraphicAbstrac
     p_this->frameNnameTest(tuiMode_t::eventOn, g_strName);
 }
 
-bool tuiUnitDebugList_t::selectTst              ([[maybe_unused]] tuiGraphicAbstract_t* p_this) {
-    return true;
-}
-
-bool tuiUnitDebugList_t::eventOnTst             ([[maybe_unused]] tuiGraphicAbstract_t* p_this) {
-    return true;
-}
 
 
 // --------------------- State management section - END
@@ -110,9 +103,6 @@ void tuiUnitDebugList_t::vEventHndlKey_left	([[maybe_unused]] tuiGraphicAbstract
 }
 
 void tuiUnitDebugList_t::vEventHndlKey_right	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-}
-
-void tuiUnitDebugList_t::vEventHndlKey_enter	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
 }
 
 void tuiUnitDebugList_t::vEventHndlKey_home	(tuiGraphicAbstract_t* p_this)  {

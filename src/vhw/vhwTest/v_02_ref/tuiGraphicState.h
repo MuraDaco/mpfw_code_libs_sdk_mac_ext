@@ -31,10 +31,11 @@
 #ifndef TUI_GRAPHIC_STATE_H
 #define TUI_GRAPHIC_STATE_H
 
-#include "tuiGraphicParent.h"
-#include "tuiGraphicStateInterface.h"
 
-class tuiGraphicState_t: public virtual tuiGraphicParent_t, public virtual tuiGraphicStateInterface_t {
+#include "tuiGraphicTypes.h"
+#include "uyTypesDefs.h"
+
+class tuiGraphicState_t {
 
 public:
 
@@ -42,11 +43,26 @@ public:
     // common functions
     void deselectBackNeventOn               (void);
     void deselectBackNselect                (void);
+    void setParent                          (tuiGraphicState_t* p_pParent);
+    tuiGraphicState_t* getParent            (void);
+    void parentDeselectBackNeventOn         (void);
 
+
+    virtual bool select     	        (void) = 0;
+    virtual bool deSelect   	        (void) = 0;
+    virtual void eventOn    	        (void) = 0;
+    virtual bool selectByMouse 	        (void) = 0;
+    virtual bool selectTst              (void) = 0;
+    virtual bool eventOnTst             (void) = 0;
+
+    virtual void dbgState_01            (void) = 0;    
+    virtual void dbgState_01            (bool p_test) = 0;    
 
 protected:
     tuiMode_t g_mode;
     tuiMode_t g_status;
+private:
+    tuiGraphicState_t* g_pParent;
 
 private:
     void selectBack                            (void);
@@ -75,11 +91,11 @@ private:
 public:
     // debug
     virtual void debug_01    	(void) = 0;
+    static uint8_t g_debugStatus;
+    static uint8_t g_debugStatusX;
 
 private:
     void debugDeselectBack (tuiGraphicState_t* p_poCommonAncestor, bool p_commonAncestorIsNextEventON);
-    static uint8_t g_debugStatus;
-    static uint8_t g_debugStatusX;
 
 // **** --------------------- Debug section - END
 

@@ -146,6 +146,15 @@ void tuiUnitListAbstract_t::vEventHndlKey_down	([[maybe_unused]] tuiGraphicAbstr
 
 }
 
+void tuiUnitListAbstract_t::vEventHndlKey_enter	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
+    if(g_bChildrenSetEmpty) return;
+
+    if(g_pChildCurrent->selectTst()) {
+        g_pChildCurrent->deselectBackNeventOn();
+    }
+
+}
+
 //void tuiUnitListAbstract_t::updCoordNboundsChilds    ([[maybe_unused]] tuiGraphicAbstract_t* p_this)       {
 //    tuiGraphicAbstract_t* l_child = g_childrenSet;
 //
