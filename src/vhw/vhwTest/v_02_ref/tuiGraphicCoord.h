@@ -48,28 +48,21 @@ private:
 
 public:
 
-    int32_t g_lvl1X0r, g_lvl1Y0r, g_lvl1X0a, g_lvl1Y0a, g_x0Win, g_y0Win;
-    uint16_t g_displayBoxW, g_displayBoxH;
-    uint8_t g_marginLeft;
-    uint8_t g_marginRight;
-    uint8_t g_marginTop;
-    uint8_t g_marginBottom;
-    uint16_t g_boundLeft;
-    uint16_t g_boundRight;
-    uint16_t g_boundUpper;
-    uint16_t g_boundLower;
-
-
     // to be add
-    int32_t getDistanceFromUpperBound   (void);
-    int32_t getDistanceFromLowerBound   (void);
-    int32_t getDistanceFromBound        (void);
-    bool bVisibleCompletely             (void);
-    void updCoordNboundsAfterParentMod  (void);
+//    int32_t getDistanceFromUpperBound   (void);
+//    int32_t getDistanceFromLowerBound   (void);
+//    int32_t getDistanceFromBound        (void);
+//    bool bVisibleCompletely             (void);
+//    void updCoordNboundsAfterParentMod  (void);
     virtual void updCoordNboundsChilds  (void);
 
     // element init procedure
-    void initCoord          (void);
+    void initCoordBase      (void);
+    void initCoordWin       (void);
+    void initCoordNdspBox   (void);
+    void initBoundsBase     (void);
+    void initBoundsWin      (void);
+    void initBoundsWinRoot  (void);
     void setParent          (tuiGraphicCoord_t* p_pParent);
     tuiGraphicCoord_t* getParent            (void);
     void updParams          (void);

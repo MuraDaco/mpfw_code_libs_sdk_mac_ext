@@ -22,70 +22,78 @@
 //  *******************************************************************************
 
 /*
- * tuiGraphicUnitBase.cpp
+ * tuiGraphicUnitWin.cpp
  *
  *  Created on: Oct, 28th 2024
  *      Author: Marco Dau
  */
  
 
-#include "tuiGraphicUnitBase.h"
+#include "tuiGraphicUnitWin.h"
 
 #define MIN(a,b) (a < b) ? a : b
 #define MAX(a,b) (a > b) ? a : b
 
-tuiGraphicUnitBase_t::tuiGraphicUnitBase_t      (tuiUnitAbstract_t* p_pUnit )   :
+tuiGraphicUnitWin_t::tuiGraphicUnitWin_t      (tuiUnitAbstract_t* p_pUnit )   :
      tuiGraphicUnit_t       (p_pUnit    )
 {}
 
-tuiGraphicUnitBase_t::tuiGraphicUnitBase_t      (tuiUnitAbstract_t* p_pUnit ,box_t p_box    )   :
+tuiGraphicUnitWin_t::tuiGraphicUnitWin_t      (tuiUnitAbstract_t* p_pUnit ,box_t p_box    )   :
      tuiGraphicUnit_t       (p_pUnit    ,p_box)
 {}
 
-tuiGraphicUnitBase_t::tuiGraphicUnitBase_t      (tuiUnitAbstract_t* p_pUnit ,box_t p_box    ,margins_t p_margin )   :
+tuiGraphicUnitWin_t::tuiGraphicUnitWin_t      (tuiUnitAbstract_t* p_pUnit ,box_t p_box    ,margins_t p_margin )   :
      tuiGraphicUnit_t       (p_pUnit    ,p_box  ,p_margin)
 {}
 
-bool tuiGraphicUnitBase_t::init       (void) 	{
+bool tuiGraphicUnitWin_t::init       (void) 	{
     return true;
 }
 
-bool tuiGraphicUnitBase_t::initChildren       (void) 	{
+bool tuiGraphicUnitWin_t::initChildren       (void) 	{
     return true;
 }
 
-bool tuiGraphicUnitBase_t::init       (tuiGraphicUnit_t* p_pParent) 	{
-    tuiGraphicState_t::setParent(static_cast<tuiGraphicState_t*>(p_pParent));
-    tuiGraphicCoord_t::setParent(static_cast<tuiGraphicCoord_t*>(p_pParent));
+#define P_P_PARENT_STATE static_cast<tuiGraphicState_t*>(p_pParent)
+#define P_P_PARENT_COORD static_cast<tuiGraphicCoord_t*>(p_pParent)
 
-    initCoordBase();
-    setNcursesWindow(p_pParent);
+bool tuiGraphicUnitWin_t::init       (tuiGraphicUnit_t* p_pParent) 	{
+    tuiGraphicState_t::setParent(P_P_PARENT_STATE);
+    tuiGraphicCoord_t::setParent(P_P_PARENT_COORD);
+
+
+    initCoordWin();
+
+    initWin();
+
     g_status = tuiMode_t::undefined;
 
+    g_pUnit->initChildren(this);
+
     return true;
 }
 
-bool tuiGraphicUnitBase_t::loopChildren    (void)  {
+bool tuiGraphicUnitWin_t::loopChildren    (void)  {
     return true;
 }
 
-bool tuiGraphicUnitBase_t::loop            (void)  {
+bool tuiGraphicUnitWin_t::loop            (void)  {
     return false;
 }
 
 
-void tuiGraphicUnitBase_t::end 	        (void)      {
+void tuiGraphicUnitWin_t::end 	        (void)      {
 }
 
-void tuiGraphicUnitBase_t::endChildren  (void)      {
+void tuiGraphicUnitWin_t::endChildren  (void)      {
 }
 
 
-bool tuiGraphicUnitBase_t::eventOnTst       (void)  {
+bool tuiGraphicUnitWin_t::eventOnTst       (void)  {
     return true;
 }
 
-void tuiGraphicUnitBase_t::debug_01         (void)  {
+void tuiGraphicUnitWin_t::debug_01         (void)  {
 
 }
 

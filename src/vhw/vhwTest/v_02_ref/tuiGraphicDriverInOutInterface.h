@@ -48,18 +48,8 @@ public:
 
     // OUTPUT
 
-    virtual void content                            (char* p_str, uint8_t p_size) = 0;
-    virtual void content                            (uint8_t p_begin) = 0;
-    virtual void content                            (char* p_str, uint8_t p_begin, uint8_t p_size) = 0;
-
-    virtual void frameBox                           (const char* g_strName) = 0;
-    virtual bool frameBox                           (tuiMode_t p_mode, const char* g_strName) = 0;
     virtual void frameClear                         (void) = 0;
 
-    virtual void frameNname                         (const char* g_strName) = 0;
-    virtual bool frameNname                         (tuiMode_t p_mode, const char* g_strName) = 0;
-    virtual void frameNameNstatus                   (const char* g_strName, char* p_str) = 0;
-    virtual bool frameNameNstatus                   (tuiMode_t p_mode, const char* g_strName, char* p_str) = 0;
     virtual void frameNnameTest                     (const char* g_strName) = 0;
     virtual bool frameNnameTest                     (tuiMode_t p_mode, const char* g_strName) = 0;
 
@@ -67,15 +57,28 @@ public:
     virtual bool nameNstatus                        (tuiMode_t p_mode, const char* p_strName, uint8_t p_status) = 0;
     virtual bool nameNstatus                        (tuiMode_t p_mode, const char* p_strName, uint8_t p_status, bool p_repaint) = 0;
 
-    virtual void nameOnly                           (const char* g_strName) = 0;
-    virtual void nameOnly                           (tuiMode_t p_mode, const char* g_strName) = 0;
+//    virtual void content                            (char* p_str, uint8_t p_size) = 0;
+//    virtual void content                            (uint8_t p_begin) = 0;
+//    virtual void content                            (char* p_str, uint8_t p_begin, uint8_t p_size) = 0;
+//
+//    virtual void frameBox                           (const char* g_strName) = 0;
+//    virtual bool frameBox                           (tuiMode_t p_mode, const char* g_strName) = 0;
+//
+//    virtual void frameNname                         (const char* g_strName) = 0;
+//    virtual bool frameNname                         (tuiMode_t p_mode, const char* g_strName) = 0;
+//    virtual void frameNameNstatus                   (const char* g_strName, char* p_str) = 0;
+//    virtual bool frameNameNstatus                   (tuiMode_t p_mode, const char* g_strName, char* p_str) = 0;
+//
+//
+//    virtual void nameOnly                           (const char* g_strName) = 0;
+//    virtual void nameOnly                           (tuiMode_t p_mode, const char* g_strName) = 0;
+//
+//    virtual void rowPrint                           (uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength) = 0;
+//    virtual void rowPrintX                          (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize) = 0;
+//    virtual void statusPrintX                       (void) = 0;
+//    virtual void statusPrintX                       (char* p_pStr, uint32_t p_strSize) = 0;
 
     virtual void positionCursor                     (bool p_status, uint8_t p_position) = 0;
-    virtual void rowPrint                           (uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength) = 0;
-    virtual void rowPrintX                          (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize) = 0;
-    virtual void statusPrintX                       (void) = 0;
-    virtual void statusPrintX                       (char* p_pStr, uint32_t p_strSize) = 0;
-
     virtual bool isSelected                         (void) = 0;
     virtual bool isSelectedOrEventOn                (void) = 0;
 

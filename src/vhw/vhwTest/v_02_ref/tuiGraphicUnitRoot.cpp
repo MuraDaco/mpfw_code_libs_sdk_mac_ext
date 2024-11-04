@@ -54,7 +54,9 @@ bool tuiGraphicUnitRoot_t::init       (void) 	{
     tuiGraphicCoord_t::setParent(nullptr);
     initGraphEnv();
     initGraphEnvColor();
-    initDimsNbounds();
+
+    initWinRootDims();
+    initBoundsWinRoot();
 
     // 2. init children and nephew graphic unit (recursive procedure)
     g_pUnit->initChildren(this);
@@ -133,6 +135,12 @@ void tuiGraphicUnitRoot_t::end 	        (void)      {
 }
 
 void tuiGraphicUnitRoot_t::endChildren  (void)      {
+}
+
+
+void tuiGraphicUnitRoot_t::refreshWinChildren       (void)  {
+    //g_pUnit->refreshChildren(this, false);
+    g_pUnit->displayChildren(this, false);
 }
 
 

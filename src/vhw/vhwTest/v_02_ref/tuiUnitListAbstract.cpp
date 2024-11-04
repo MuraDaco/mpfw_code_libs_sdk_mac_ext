@@ -76,6 +76,8 @@ bool tuiUnitListAbstract_t::initChildren       (tuiGraphicUnit_t* p_this) 	{
 
 
 void tuiUnitListAbstract_t::displayChildren     ([[maybe_unused]] tuiGraphicAbstract_t* p_this, bool p_recursively)    {
+    if(g_bChildrenSetEmpty) return;
+
     tuiGraphicUnit_t* l_child = g_childrenSet;
 
     while(l_child->bNotNull())    {
@@ -85,10 +87,12 @@ void tuiUnitListAbstract_t::displayChildren     ([[maybe_unused]] tuiGraphicAbst
 }
 
 void tuiUnitListAbstract_t::refreshChildren     ([[maybe_unused]] tuiGraphicAbstract_t* p_this)    {
+    if(g_bChildrenSetEmpty) return;
+
     tuiGraphicUnit_t* l_child = g_childrenSet;
 
     while(l_child->bNotNull())    {
-        l_child->display();
+        l_child->refreshWin();
         l_child++;
     }
 }
@@ -103,6 +107,8 @@ bool tuiUnitListAbstract_t::selectByMouse     (tuiGraphicAbstract_t* p_this)    
 }
 
 bool tuiUnitListAbstract_t::clickingChild     ([[maybe_unused]] tuiGraphicAbstract_t* p_this)    {
+    if(g_bChildrenSetEmpty) return false;
+
     bool l_result = false;
 
     tuiGraphicUnit_t* l_child = g_childrenSet;

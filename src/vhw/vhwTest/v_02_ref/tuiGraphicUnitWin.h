@@ -22,24 +22,24 @@
 //  *******************************************************************************
 
 /*
- * tuiGraphicUnitRoot.h
+ * tuiGraphicUnitWin.h
  *
- *  Created on: Oct, 23rd 2024
+ *  Created on: Nov, 3rd 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_GRAPHIC_UNIT_ROOT_H
-#define TUI_GRAPHIC_UNIT_ROOT_H
+#ifndef TUI_GRAPHIC_UNIT_WIN_H
+#define TUI_GRAPHIC_UNIT_WIN_H
 
 #include "tuiGraphicUnit.h"
 
-class tuiGraphicUnitRoot_t : public tuiGraphicUnit_t  {
+class tuiGraphicUnitWin_t : public tuiGraphicUnit_t  {
 
 public:
 
-    tuiGraphicUnitRoot_t        (tuiUnitAbstract_t* p_pUnit = nullptr    );
-    tuiGraphicUnitRoot_t        (tuiUnitAbstract_t* p_pUnit ,box_t p_box    );
-    tuiGraphicUnitRoot_t        (tuiUnitAbstract_t* p_pUnit                             ,margins_t p_margin );
+    tuiGraphicUnitWin_t        (tuiUnitAbstract_t* p_pUnit = nullptr);
+    tuiGraphicUnitWin_t        (tuiUnitAbstract_t* p_pUnit ,box_t p_box    );
+    tuiGraphicUnitWin_t        (tuiUnitAbstract_t* p_pUnit ,box_t p_box    ,margins_t p_margin);
 
 
     // --------------------- Process section - START
@@ -52,10 +52,6 @@ public:
     void endChildren            (void)      override;
     // --------------------- Process section - START
 
-    // --------------------- Display section - START
-    void refreshWinChildren     (void)      override;
-    // --------------------- Display section - END
-
     // --------------------- State management section - START
     bool eventOnTst    	        (void) override;
     void debug_01               (void) override;
@@ -65,4 +61,4 @@ public:
 };
 
 
-#endif 	// TUI_GRAPHIC_UNIT_ROOT_H
+#endif 	// TUI_GRAPHIC_UNIT_WIN_H

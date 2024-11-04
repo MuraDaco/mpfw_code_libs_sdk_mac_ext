@@ -102,6 +102,7 @@ set(SOURCE_FILES_CPP
     tuiDrvGraphic.cpp
     tuiGraphicUnit.cpp
     tuiGraphicUnitRoot.cpp
+    tuiGraphicUnitWin.cpp
     tuiGraphicUnitBase.cpp
     tuiGraphicAppMain.cpp
     tuiUnitDgtInOut.cpp

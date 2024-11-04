@@ -36,9 +36,11 @@ class tuiGraphicDisplayInterface_t {
 
 public:
 
-    virtual void clear   	    (void)  = 0;
-    virtual void display        (void)  = 0;
-    virtual void display        (bool p_recursively)  = 0;
+    virtual void clear   	            (void)  = 0;
+    virtual void display                (void)  = 0;
+    virtual void display                (bool p_recursively)  = 0;
+    virtual void refreshWin             (void)  = 0;
+    virtual void refreshWinChildren     (void)  {};
 
 };
 

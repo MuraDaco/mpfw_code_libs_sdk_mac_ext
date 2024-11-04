@@ -112,8 +112,8 @@ public:
 
     void initWin                            (void)                                                                                          override;
     void initWin                            (uint16_t p_rootX0a, uint16_t p_rootY0a)                                                        override;
+    void initWinRootDims                    (void);
     void initGraphEnv                       (void)                                                                                          override;
-    void initDimsNbounds                    (void)                                                                                          ;
     void initGraphEnvColor                  (void)                                                                                          override;
     void deinitGraphEnv                     (void)                                                                                          override;
     void endGraphEnv                        (void)                                                                                          override;
@@ -125,29 +125,16 @@ public:
 
     public:
 
-    void content                            (char* p_str, uint8_t p_size)                                                                   override;
-    void content                            (uint8_t p_begin)                                                                               override;
-    void content                            (char* p_str, uint8_t p_begin, uint8_t p_size)                                                  override;
-
-    void frameBox                           (const char* g_strName)                                                                         override;
-    bool frameBox                           (tuiMode_t p_mode, const char* g_strName)                                                       override;
+    void refreshWin                         (void)                                                                                          override;
     void frameClear                         (void)                                                                                          override;
-    void frameNname                         (const char* g_strName)                                                                         override;
-    bool frameNname                         (tuiMode_t p_mode, const char* g_strName)                                                       override;
-    void frameNameNstatus                   (const char* g_strName, char* p_str)                                                            override;
-    bool frameNameNstatus                   (tuiMode_t p_mode, const char* g_strName, char* p_str)                                          override;
+
     void frameNnameTest                     (const char* g_strName)                                                                         override;
     bool frameNnameTest                     (tuiMode_t p_mode, const char* g_strName)                                                       override;
+
     void nameNstatus                        (const char* p_strName, uint8_t p_status)                                                       override;
     bool nameNstatus                        (tuiMode_t p_mode, const char* p_strName, uint8_t p_status)                                     override;
     bool nameNstatus                        (tuiMode_t p_mode, const char* p_strName, uint8_t p_status, bool p_repaint)                     override;
-    void nameOnly                           (const char* g_strName)                                                                         override;
-    void nameOnly                           (tuiMode_t p_mode, const char* g_strName)                                                       override;
 
-    void rowPrint                           (uint8_t b_row, bool p_bRowBegin, uint8_t p_rowMarker, char* p_pRowStr, uint8_t p_rowLength)    override;
-    void rowPrintX                          (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize)                          override;
-    void statusPrintX                       (void)                                                                                          override;
-    void statusPrintX                       (char* p_pStr, uint32_t p_strSize)                                                              override;
     void positionCursor                     (bool p_status, uint8_t p_position)                                                             override;
 
     bool isSelected                         (void) override;
