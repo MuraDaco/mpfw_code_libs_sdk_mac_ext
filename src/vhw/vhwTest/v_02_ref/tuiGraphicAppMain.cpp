@@ -46,9 +46,9 @@ tuiGraphicUnitBase_t    tuiGraphicAppMain_t::g_setDebug[] = {
     {}  // null element to mark the and of array; 
 };
 
-tuiUnitDebugList_t      tuiGraphicAppMain_t::g_unitDebugWin_1("Unit debug Window 1", g_setDebug);
-tuiUnitDebugList_t      tuiGraphicAppMain_t::g_unitDebugWin_2("Unit debug Window 2");
-tuiUnitDebugList_t      tuiGraphicAppMain_t::g_unitDebugWin_3("Unit debug Window 3");
+tuiUnitListDebug_t      tuiGraphicAppMain_t::g_unitDebugWin_1("Unit debug Window 1", g_setDebug);
+tuiUnitListDebug_t      tuiGraphicAppMain_t::g_unitDebugWin_2("Unit debug Window 2");
+tuiUnitListDebug_t      tuiGraphicAppMain_t::g_unitDebugWin_3("Unit debug Window 3");
 
 tuiGraphicUnitWin_t    tuiGraphicAppMain_t::g_setWinDebug[] = {
     {   &g_unitDebugWin_1,  box_t({35, 130,   0,   0})                         },
@@ -57,7 +57,7 @@ tuiGraphicUnitWin_t    tuiGraphicAppMain_t::g_setWinDebug[] = {
     {}  // null element to mark the and of array; 
 };
 
-tuiUnitDebugList_t      tuiGraphicAppMain_t::g_unitDebugList("Unit debug List", g_setWinDebug);
+tuiUnitListDebug_t      tuiGraphicAppMain_t::g_unitDebugList("Unit debug List", g_setWinDebug);
 
 tuiUnitDebug_t          tuiGraphicAppMain_t::g_unitDebug    ("Unit Debug");
 tuiGraphicUnitRoot_t    tuiGraphicAppMain_t::g_boxRoot      (&g_unitDebugList   ,margins_t({5,2,1,1}));

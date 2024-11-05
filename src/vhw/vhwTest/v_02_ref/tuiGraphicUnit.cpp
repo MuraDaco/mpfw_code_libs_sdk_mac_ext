@@ -63,6 +63,14 @@ void tuiGraphicUnit_t::display          (bool p_recursively)  {
     if(p_recursively)   g_pUnit->displayChildren(this, p_recursively);
 }
 
+// --------------------- Container section - START
+void tuiGraphicUnit_t::updCoordNboundsChilds    (void)       {
+    
+    g_pUnit->updCoordNboundsChilds();
+}
+// --------------------- Container section - END
+
+
 bool tuiGraphicUnit_t::select           (void)  {
     return g_pUnit->select(this);
 }

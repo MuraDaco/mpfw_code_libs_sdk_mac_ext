@@ -80,6 +80,14 @@ void tuiGraphicUnitBase_t::end 	        (void)      {
 void tuiGraphicUnitBase_t::endChildren  (void)      {
 }
 
+// --------------------- Container section - START
+
+void tuiGraphicUnitBase_t::updParamsAfterParentMod    (void)       {
+    updAbsCoords();
+    tuiGraphicCoord_t::updParamsAfterParentMod();
+}
+
+// --------------------- Container section - END
 
 bool tuiGraphicUnitBase_t::eventOnTst       (void)  {
     return true;

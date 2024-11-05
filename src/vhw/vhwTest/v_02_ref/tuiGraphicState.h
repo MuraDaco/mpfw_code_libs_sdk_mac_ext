@@ -37,17 +37,9 @@
 
 class tuiGraphicState_t {
 
-public:
 
-
-    // common functions
-    void deselectBackNeventOn               (void);
-    void deselectBackNselect                (void);
-    void setParent                          (tuiGraphicState_t* p_pParent);
-    tuiGraphicState_t* getParent            (void);
-    void parentDeselectBackNeventOn         (void);
-
-
+    // ---------------------  INTERFACE section - START
+    protected:
     virtual bool select     	        (void) = 0;
     virtual bool deSelect   	        (void) = 0;
     virtual void eventOn    	        (void) = 0;
@@ -57,6 +49,16 @@ public:
 
     virtual void dbgState_01            (void) = 0;    
     virtual void dbgState_01            (bool p_test) = 0;    
+    // ---------------------  INTERFACE section -   END
+
+public:
+    // common functions
+    void deselectBackNeventOn               (void);
+    void deselectBackNselect                (void);
+    void setParent                          (tuiGraphicState_t* p_pParent);
+    tuiGraphicState_t* getParent            (void);
+    void parentDeselectBackNeventOn         (void);
+
 
 protected:
     tuiMode_t g_mode;

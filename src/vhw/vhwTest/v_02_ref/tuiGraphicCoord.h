@@ -36,35 +36,35 @@
 
 class tuiGraphicCoord_t  {
 
-public:
-
+    // ---------------------  CONSTRUCTOR section - START
+    protected:
     tuiGraphicCoord_t ();
     tuiGraphicCoord_t (box_t p_box  );
     tuiGraphicCoord_t (              margins_t p_margin);
     tuiGraphicCoord_t (box_t p_box  ,margins_t p_margin);
+    // ---------------------  CONSTRUCTOR section - END
+
+    // ---------------------  INTERFACE section - START
+    public:
+    virtual void updParamsAfterParentMod            (void);    
+    // ---------------------  INTERFACE section - END
 
 private:
     tuiGraphicCoord_t* g_pParent;
 
 public:
 
-    // to be add
-//    int32_t getDistanceFromUpperBound   (void);
-//    int32_t getDistanceFromLowerBound   (void);
-//    int32_t getDistanceFromBound        (void);
-//    bool bVisibleCompletely             (void);
-//    void updCoordNboundsAfterParentMod  (void);
-    virtual void updCoordNboundsChilds  (void);
 
     // element init procedure
+    void setParent          (tuiGraphicCoord_t* p_pParent);
+    tuiGraphicCoord_t* getParent            (void);
+
     void initCoordBase      (void);
     void initCoordWin       (void);
     void initCoordNdspBox   (void);
     void initBoundsBase     (void);
     void initBoundsWin      (void);
     void initBoundsWinRoot  (void);
-    void setParent          (tuiGraphicCoord_t* p_pParent);
-    tuiGraphicCoord_t* getParent            (void);
     void updParams          (void);
     void updCoordNboundX    (void);
     void updCoordNboundY    (void);
@@ -154,15 +154,31 @@ public:
     void        updBounds           (void) ;
 
 
-    bool bMouseClickInsideBounds    (void);
 
-protected:
+    // - cursor management
+    protected:
     static uint16_t g_position;
-
-    static uint16_t g_xMouse;
-    static uint16_t g_yMouse;
     static uint16_t g_xCursor;
     static uint16_t g_yCursor;
+
+    // - mouse management
+
+    public:
+    bool bMouseClickInsideBounds    (void);
+    static void updAbsMouseCoordX          (int16_t p_deltaY);
+    static void updAbsMouseCoordY          (int16_t p_deltaY);
+
+    protected:
+    static uint16_t g_xMouse;
+    static uint16_t g_yMouse;
+
+    // functions called by container
+    public:
+    int32_t getDistanceFromBound                (void);
+    int16_t getDisplayMaxH                      (void);
+    bool    bVisibleCompletely                  (void);
+    virtual void updCoordNboundsChilds          (void);
+    virtual void updCoordNboundsForNewFather    (void);
 
 };
 

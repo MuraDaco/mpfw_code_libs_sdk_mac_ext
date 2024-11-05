@@ -52,6 +52,10 @@ public:
     void endChildren            (void)      override;
     // --------------------- Process section - START
 
+    // --------------------- Container section - START
+    void updParamsAfterParentMod        (void)  override;
+    // --------------------- Container section - END
+
     // --------------------- State management section - START
     bool eventOnTst    	        (void) override;
     void debug_01               (void) override;

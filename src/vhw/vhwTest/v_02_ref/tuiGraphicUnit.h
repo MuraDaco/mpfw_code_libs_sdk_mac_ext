@@ -57,6 +57,10 @@ public:
     void display            (bool p_recursively)    override;
     // --------------------- Display section - START
 
+    // --------------------- Container section - START
+    void updCoordNboundsChilds          (void)  override;
+    // --------------------- Container section - END
+
     // --------------------- State management section - START
     bool select             (void)                  override;
     bool deSelect           (void)                  override;

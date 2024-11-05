@@ -32,7 +32,7 @@
 #define TUI_GRAPHIC_APP_MAIN_H
 
 #include "tuiUnitDebug.h"
-#include "tuiUnitDebugList.h"
+#include "tuiUnitListDebug.h"
 #include "tuiGraphicUnitBase.h"
 #include "tuiGraphicUnitWin.h"
 #include "tuiGraphicUnitRoot.h"
@@ -47,10 +47,10 @@ public:
     static tuiUnitDebug_t           g_unitDebug_3;
     static tuiUnitDebug_t           g_unitDebug_4;
     static tuiUnitDebug_t           g_unitDebug;
-    static tuiUnitDebugList_t       g_unitDebugWin_1;
-    static tuiUnitDebugList_t       g_unitDebugWin_2;
-    static tuiUnitDebugList_t       g_unitDebugWin_3;
-    static tuiUnitDebugList_t       g_unitDebugList;
+    static tuiUnitListDebug_t       g_unitDebugWin_1;
+    static tuiUnitListDebug_t       g_unitDebugWin_2;
+    static tuiUnitListDebug_t       g_unitDebugWin_3;
+    static tuiUnitListDebug_t       g_unitDebugList;
     static tuiGraphicUnitRoot_t     g_boxRoot;
 
 };

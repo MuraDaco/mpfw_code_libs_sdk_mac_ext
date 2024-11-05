@@ -22,26 +22,25 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitDebugList.h
+ * tuiUnitCntrList.h
  *
- *  Created on: Oct, 27th 2024
+ *  Created on: Nov,  5th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_UNIT_DEBUG_LIST_H
-#define TUI_UNIT_DEBUG_LIST_H
+#ifndef TUI_UNIT_CNTR_LIST_H
+#define TUI_UNIT_CNTR_LIST_H
 
-#include "tuiUnitListAbstract.h"
+#include "tuiUnitCntrAbstract.h"
 
-#include "tuiGraphicAbstract.h" // cross dependency - top
 #include "tuiGraphicUnit.h"     // cross dependency - top
 
 
-class tuiUnitDebugList_t :    public tuiUnitListAbstract_t
+class tuiUnitCntrList_t :    public tuiUnitCntrAbstract_t
 {
 
 public:
-    tuiUnitDebugList_t       (const char* p_strName  ,tuiGraphicUnit_t* p_childrenSet = nullptr  );
+    tuiUnitCntrList_t       (const char* p_strName  ,dtyBaseCntnrUnitX_t* p_pCntr = nullptr  );
 
 protected:
    
@@ -70,15 +69,16 @@ protected:
     // bool clickingChild           (tuiGraphicAbstract_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
     // --------------------- State management section - END
 
-    // --------------------- Events handler section - START
-	// ..................... Events handler: functions
+    // --------------------- KEY Events handler section - START
+	// ..................... KEY Events handler: functions
     // void vEventHndlKey_down      (tuiGraphicAbstract_t* p_this)  override; --> implemented in derived class tuiUnitListAbstract_t
     // void vEventHndlKey_up        (tuiGraphicAbstract_t* p_this)  override; --> implemented in derived class tuiUnitListAbstract_t
     void vEventHndlKey_left     (tuiGraphicAbstract_t* p_this)  override;
     void vEventHndlKey_right    (tuiGraphicAbstract_t* p_this)  override;
     // void vEventHndlKey_enter    (tuiGraphicAbstract_t* p_this)  override;  --> implemented in derived class tuiUnitListAbstract_t
     void vEventHndlKey_home     (tuiGraphicAbstract_t* p_this)  override;
-    // --------------------- Events handler section - END
+    // --------------------- KEY Events handler section - END
+
 
 private:
 
@@ -89,4 +89,4 @@ private:
 };
 
 
-#endif 	// TUI_UNIT_DEBUG_LIST_H
+#endif 	// TUI_UNIT_CNTR_LIST_H

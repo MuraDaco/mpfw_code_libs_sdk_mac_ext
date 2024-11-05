@@ -107,12 +107,30 @@ tuiGraphicCoord_t::tuiGraphicCoord_t    (box_t p_box    ,margins_t p_margin)    
 {}
 
 
+// ---------------------  INTERFACE section - START
+void tuiGraphicCoord_t::updParamsAfterParentMod   (void)     {
+    initCoordNdspBox();
+    initBoundsBase();
+
+    updCoordNboundsChilds();
+}
+
+// ---------------------  INTERFACE section - END
+
 #define G_P_PARENT  static_cast<tuiGraphicCoord_t*>(g_pParent)
 
 
 // *************
 
 // element init procedure
+
+void tuiGraphicCoord_t::setParent                       (tuiGraphicCoord_t* p_pParent) {
+    g_pParent = p_pParent;
+}
+
+tuiGraphicCoord_t* tuiGraphicCoord_t::getParent         (void)  {
+    return g_pParent;
+}
 
 void tuiGraphicCoord_t::initCoordBase       (void) 	{
 // - // -    updParams();
@@ -194,16 +212,6 @@ void tuiGraphicCoord_t::initBoundsWinRoot (void)    {
     g_boundYlower = g_h - 1;
 }
 
-
-
-void tuiGraphicCoord_t::setParent                       (tuiGraphicCoord_t* p_pParent) {
-    g_pParent = p_pParent;
-}
-
-tuiGraphicCoord_t* tuiGraphicCoord_t::getParent         (void)  {
-    return g_pParent;
-}
-
 void tuiGraphicCoord_t::updCoordNboundX   (void)     {
     updAbsCoordX();
     updBoundX();
@@ -224,6 +232,8 @@ void tuiGraphicCoord_t::updParams   (void)     {
     updAbsCoords();
     updDspBoxDims();
     updBounds();
+
+    updCoordNboundsChilds();
 }
 
 // element parameters
@@ -243,6 +253,7 @@ void tuiGraphicCoord_t::setRelCoordX                (int32_t p_x)       {
 void tuiGraphicCoord_t::incRelCoordX                (int32_t p_delta)       {
     g_x0r += p_delta;
     updCoordNboundX();
+    updCoordNboundsChilds();
 }
 
 void tuiGraphicCoord_t::initRelCoordY               (int32_t p_y)       {
@@ -257,6 +268,7 @@ void tuiGraphicCoord_t::setRelCoordY                (int32_t p_y)       {
 void tuiGraphicCoord_t::incRelCoordY                (int32_t p_delta)       {
     g_y0r += p_delta;
     updCoordNboundY();
+    updCoordNboundsChilds();
 }
 
 void tuiGraphicCoord_t::initRelCoordS               (int32_t p_x, int32_t p_y)      {
@@ -413,10 +425,6 @@ void tuiGraphicCoord_t::updBounds                    (void)        {
 }
 
 
-void tuiGraphicCoord_t::updCoordNboundsChilds    (void)       {
-    // g_cntr->updCoordNboundsChilds();
-}
-
 bool tuiGraphicCoord_t::bMouseClickInsideBounds (void)      {
     bool l_result = false;
 
@@ -437,3 +445,48 @@ bool tuiGraphicCoord_t::bMouseClickInsideBounds (void)      {
     }
     return l_result;
 }
+
+void tuiGraphicCoord_t::updAbsMouseCoordX       (int16_t p_deltaX)   {
+    g_xMouse += p_deltaX;
+}
+
+void tuiGraphicCoord_t::updAbsMouseCoordY       (int16_t p_deltaY)   {
+    g_yMouse += p_deltaY;
+}
+
+int32_t tuiGraphicCoord_t::getDistanceFromBound   (void)   {
+    if(g_y0a < g_boundYupper)
+        return g_boundYupper - g_y0a;
+
+    //  parent bounds         ----U-L---------
+    //  select element box    -------o--------  o = u & l (element with g_h=1)
+    //  select element bounds ------Lu--------
+    if((g_boundYlower + 1) < (g_y0a + g_h))
+        return (g_boundYlower + 1) - (g_y0a + g_h);
+        
+    return 0;
+}
+
+
+int16_t tuiGraphicCoord_t::getDisplayMaxH      (void)  {
+    return g_h - (g_marginYtop + g_marginYbottom);
+}
+
+bool tuiGraphicCoord_t::bVisibleCompletely   (void)  {
+    return (
+                ( g_boundYupper    ==  g_y0a)
+            &&  ((g_boundYlower+1) == (g_y0a + g_h))
+    );
+}
+
+void tuiGraphicCoord_t::updCoordNboundsForNewFather   (void) {
+    // by tuiGraphicUnitBase element -> initCoordBase();
+    // by tuiGraphicUnitWin  element -> initCoordWin();
+    // updCoordNboundsChilds();
+}
+
+void tuiGraphicCoord_t::updCoordNboundsChilds    (void)       {
+    // g_cntr->updCoordNboundsChilds();
+}
+
+
