@@ -22,21 +22,20 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitCntrInterface_t.h
+ * tuiUnitAbstract.cpp
  *
- *  Created on: Nov,  5th 2024
+ *  Created on: Nov, 6th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_UNIT_CNTR_INTERFACE_H
-#define TUI_UNIT_CNTR_INTERFACE_H
 
-class tuiUnitCntrInterface_t {
+#include "tuiUnitAbstract.h"
 
-public:
 
-    virtual void updCoordNboundsChilds          (void) {};
+tuiUnitAbstract_t::tuiUnitAbstract_t      (const char* p_strName)   :
+     g_strName          {p_strName}
+{}
 
-};
-
-#endif 	// TUI_UNIT_CNTR_INTERFACE_H
+const char* tuiUnitAbstract_t::getName   (void)      {
+    return g_strName;
+}

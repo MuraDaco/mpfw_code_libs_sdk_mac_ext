@@ -115,6 +115,10 @@ void tuiGraphicCoord_t::updParamsAfterParentMod   (void)     {
     updCoordNboundsChilds();
 }
 
+void tuiGraphicCoord_t::updCoordNboundsChilds    (void)       {
+    // g_cntr->updCoordNboundsChilds();
+}
+
 // ---------------------  INTERFACE section - END
 
 #define G_P_PARENT  static_cast<tuiGraphicCoord_t*>(g_pParent)
@@ -479,14 +483,5 @@ bool tuiGraphicCoord_t::bVisibleCompletely   (void)  {
     );
 }
 
-void tuiGraphicCoord_t::updCoordNboundsForNewFather   (void) {
-    // by tuiGraphicUnitBase element -> initCoordBase();
-    // by tuiGraphicUnitWin  element -> initCoordWin();
-    // updCoordNboundsChilds();
-}
-
-void tuiGraphicCoord_t::updCoordNboundsChilds    (void)       {
-    // g_cntr->updCoordNboundsChilds();
-}
 
 

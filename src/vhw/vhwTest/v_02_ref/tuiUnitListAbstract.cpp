@@ -32,8 +32,9 @@
 #include "tuiUnitListAbstract.h"
 
 
-tuiUnitListAbstract_t::tuiUnitListAbstract_t      (tuiGraphicUnit_t* p_childrenSet) :
-     g_childrenSet              {p_childrenSet}
+tuiUnitListAbstract_t::tuiUnitListAbstract_t      (const char* p_strName, tuiGraphicUnit_t* p_childrenSet) :
+    tuiUnitAbstract_t           (p_strName)
+    ,g_childrenSet              {p_childrenSet}
     ,g_pChildCurrent            {p_childrenSet}
     ,g_pChildLast               {p_childrenSet}
     ,g_bChildrenSetEmpty        {true}
@@ -160,13 +161,3 @@ void tuiUnitListAbstract_t::vEventHndlKey_enter	([[maybe_unused]] tuiGraphicAbst
     }
 
 }
-
-//void tuiUnitListAbstract_t::updCoordNboundsChilds    ([[maybe_unused]] tuiGraphicAbstract_t* p_this)       {
-//    tuiGraphicAbstract_t* l_child = g_childrenSet;
-//
-//    while(l_child->g_pUnit)    {
-//        l_child->updCoordNboundsForNewFather();
-//        l_child++;
-//    }
-//}
-

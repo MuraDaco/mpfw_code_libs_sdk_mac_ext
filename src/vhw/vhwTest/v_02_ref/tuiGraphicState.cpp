@@ -63,9 +63,12 @@ void  tuiGraphicState_t::deselectBackNselect        (void) {
         if(g_poSelected->g_pParent == g_pParent)  {
             // the selected element is a brother of the selecting element
             g_poSelected->deSelect();
+            dbgState_01();
         } else {
             tuiGraphicState_t* l_poCommonAncestor = searchCommonAncestor();
+            g_poSelected->debugDeselectBack(l_poCommonAncestor, (l_poCommonAncestor == this));
             g_poSelected->deselectBack(l_poCommonAncestor, (g_pParent == l_poCommonAncestor));
+            dbgState_01((l_poCommonAncestor == this));
         }
         g_poSelected = this;
         selectBack();
@@ -93,6 +96,7 @@ tuiGraphicState_t* tuiGraphicState_t::deselectBack (tuiGraphicState_t* p_poCommo
     if(p_poCommonAncestor == this) {
         // the current element is the common ancestor, therefore ...
 
+
         // check its status
         if(p_commonAncestorIsNextEventON)  {
             if(g_poEventOn == this) {
@@ -117,7 +121,6 @@ tuiGraphicState_t* tuiGraphicState_t::deselectBack (tuiGraphicState_t* p_poCommo
 
                     // the father of the current element is the current event management
                     // therefore ...
-                    // updateStatusParent(tuiMode_t::select);      // if(g_pParent) g_pParent->select();
                     if(g_pParent) g_pParent->select();
                 } else {
                     // STATUS 4

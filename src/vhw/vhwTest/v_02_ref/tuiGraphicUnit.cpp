@@ -31,7 +31,7 @@
 
 #include "tuiGraphicUnit.h"
 
-
+#include <stdio.h>
 
 tuiGraphicUnit_t::tuiGraphicUnit_t       (tuiUnitAbstract_t* p_pUnit    )    :
      tuiDrvGraphic_t    (p_pUnit)
@@ -92,14 +92,22 @@ bool tuiGraphicUnit_t::selectTst        (void)  {
 }
 
 void tuiGraphicUnit_t::dbgState_01          (void)  {
-    mvwprintw   (stdscr, 2, 100, "*** deselect status debug: sts %02d - stsX %02d ***", g_debugStatus, g_debugStatusX);
+    char l_str[100];
+    snprintf(l_str, sizeof(l_str),"sts %02d - stsX %02d - %s", g_debugStatus, g_debugStatusX, g_pUnit->getName());
+    //mvwprintw   (stdscr, 2, 100, "*** deselect status debug: sts %02d - stsX %02d ***", g_debugStatus, g_debugStatusX);
+    dbgPrint    (l_str);
 }
 
 void tuiGraphicUnit_t::dbgState_01          (bool p_test)  {
+    char l_str[100];
     if(p_test)
-        mvwprintw   (stdscr, 2, 80, "*** deselect status debug: sts %02d - stsX %02d - parent match---", g_debugStatus, g_debugStatusX);
+        // mvwprintw   (stdscr, 2, 80, "*** deselect status debug: sts %02d - stsX %02d - parent match---", g_debugStatus, g_debugStatusX);
+        snprintf(l_str, sizeof(l_str),"sts %02d - stsX %02d - %s -  true", g_debugStatus, g_debugStatusX, g_pUnit->getName());
     else
-        mvwprintw   (stdscr, 2, 80, "*** deselect status debug: sts %02d - stsX %02d - parent NO match", g_debugStatus, g_debugStatusX);
+        // mvwprintw   (stdscr, 2, 80, "*** deselect status debug: sts %02d - stsX %02d - parent NO match", g_debugStatus, g_debugStatusX);
+        snprintf(l_str, sizeof(l_str),"sts %02d - stsX %02d - %s - false", g_debugStatus, g_debugStatusX, g_pUnit->getName());
+
+    dbgPrint    (l_str);
 }
 
 void tuiGraphicUnit_t::vEventHndlKey_down	        (tuiGraphicAbstract_t* p_this)  {

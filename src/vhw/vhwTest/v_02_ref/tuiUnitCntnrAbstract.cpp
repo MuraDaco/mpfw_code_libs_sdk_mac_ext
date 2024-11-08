@@ -22,27 +22,28 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitCntrAbstract.cpp
+ * tuiUnitCntnrAbstract.cpp
  *
  *  Created on: Nov,  5th 2024
  *      Author: Marco Dau
  */
  
 
-#include "tuiUnitCntrAbstract.h"
+#include "tuiUnitCntnrAbstract.h"
 
 #define RECURSIVELY         true
 #define NOT_RECURSIVELY     false
 
-tuiUnitCntrAbstract_t::tuiUnitCntrAbstract_t      (dtyBaseCntnrUnitX_t* p_pCntr     )   :
-    ,g_pCntr                  {p_pCntr}
+tuiUnitCntnrAbstract_t::tuiUnitCntnrAbstract_t      (const char* p_strName, dtyBaseCntnrUnitX_t* p_pCntnr     )   :
+    tuiUnitAbstract_t           (p_strName)
+    ,g_pCntnr                   {p_pCntnr}
 {}
 
-bool tuiUnitCntrAbstract_t::init   	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+bool tuiUnitCntnrAbstract_t::init   	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
     return true;
 }
 
-bool tuiUnitCntrAbstract_t::initChildren       (tuiGraphicUnit_t* p_this) 	{
+bool tuiUnitCntnrAbstract_t::initChildren       (tuiGraphicUnit_t* p_this) 	{
     g_pCntnr->initDisplayBox(p_this);
 
     return true;
@@ -50,22 +51,22 @@ bool tuiUnitCntrAbstract_t::initChildren       (tuiGraphicUnit_t* p_this) 	{
 
 // --------------------- Container section - START
 
-void tuiUnitCntrAbstract_t::updCoordNboundsChilds      (void)  {
-    g_pCntr->updCoordNboundsChilds();
+void tuiUnitCntnrAbstract_t::updCoordNboundsChilds      (void)  {
+    g_pCntnr->updCoordNboundsChilds();
 }
 
 // --------------------- Container section - END
 
-void tuiUnitCntrAbstract_t::displayChildren     ([[maybe_unused]] tuiGraphicAbstract_t* p_this, bool p_recursively)    {
+void tuiUnitCntnrAbstract_t::displayChildren     ([[maybe_unused]] tuiGraphicAbstract_t* p_this, bool p_recursively)    {
     g_pCntnr->displayChilds(p_recursively);
 }
 
-void tuiUnitCntrAbstract_t::refreshChildren     ([[maybe_unused]] tuiGraphicAbstract_t* p_this)    {
-    g_pCntnr->displayChilds();
+void tuiUnitCntnrAbstract_t::refreshChildren     ([[maybe_unused]] tuiGraphicAbstract_t* p_this)    {
+    g_pCntnr->displayChilds(NOT_RECURSIVELY);
 }
 
 
-bool tuiUnitCntrAbstract_t::selectByMouse     (tuiGraphicAbstract_t* p_this)    {
+bool tuiUnitCntnrAbstract_t::selectByMouse     (tuiGraphicAbstract_t* p_this)    {
 
     if(!g_pCntnr->selectElementsByMouse()) {
         p_this->deselectBackNeventOn();
@@ -73,22 +74,22 @@ bool tuiUnitCntrAbstract_t::selectByMouse     (tuiGraphicAbstract_t* p_this)    
     return true;
 }
 
-bool tuiUnitCntrAbstract_t::clickingChild               ([[maybe_unused]] tuiGraphicAbstract_t* p_this)    {
+bool tuiUnitCntnrAbstract_t::clickingChild               ([[maybe_unused]] tuiGraphicAbstract_t* p_this)    {
 
     return g_pCntnr->selectElementsByMouse();
 }
 
-void tuiUnitCntrAbstract_t::vEventHndlKey_up            ([[maybe_unused]] tuiGraphicAbstract_t* p_this)    {
+void tuiUnitCntnrAbstract_t::vEventHndlKey_up            ([[maybe_unused]] tuiGraphicAbstract_t* p_this)    {
     g_pCntnr->selectSubBoxUp();
     g_pCntnr->displayChilds(RECURSIVELY);
 }
 
-void tuiUnitCntrAbstract_t::vEventHndlKey_down	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
+void tuiUnitCntnrAbstract_t::vEventHndlKey_down	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
     g_pCntnr->selectSubBoxDown();
     g_pCntnr->displayChilds(RECURSIVELY);
 }
 
-void tuiUnitCntrAbstract_t::vEventHndlKey_enter	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
+void tuiUnitCntnrAbstract_t::vEventHndlKey_enter	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
     tuiGraphicUnit_t* l_element = static_cast<tuiGraphicUnit_t*>(g_pCntnr->getSelect());
     if(l_element->isSelected())  {
        l_element->deselectBackNeventOn();
@@ -96,13 +97,13 @@ void tuiUnitCntrAbstract_t::vEventHndlKey_enter	        ([[maybe_unused]] tuiGra
 
 }
 
-void tuiUnitCntrAbstract_t::vEventHndlMouse_rollUp      ([[maybe_unused]] tuiGraphicAbstract_t* p_this)    {
+void tuiUnitCntnrAbstract_t::vEventHndlMouse_rollUp      ([[maybe_unused]] tuiGraphicAbstract_t* p_this)    {
     g_pCntnr->displayBoxRollUp();
     g_pCntnr->displayChilds(RECURSIVELY);
 
 }
 
-void tuiUnitCntrAbstract_t::vEventHndlMouse_rollDown	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
+void tuiUnitCntnrAbstract_t::vEventHndlMouse_rollDown	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
     g_pCntnr->displayBoxRollDown();
     g_pCntnr->displayChilds(RECURSIVELY);
 

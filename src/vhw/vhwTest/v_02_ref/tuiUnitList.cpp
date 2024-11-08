@@ -33,8 +33,8 @@
 
 
 tuiUnitList_t::tuiUnitList_t      (const char* p_strName   ,dtyUint8_t* p_pDtyStatus   )   :
-     g_strName          {p_strName}
-    ,g_pDtyStatus       {p_pDtyStatus}
+    tuiUnitAbstract_t       (p_strName)
+    ,g_pDtyStatus           {p_pDtyStatus}
 {}
 
 

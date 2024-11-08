@@ -72,7 +72,7 @@ protected:
 private:
 
     // --------------------- Generic  Data section - START
-    const char* g_strName;
+    //const char* g_strName;
     // --------------------- Generic  Data section - END
 
     // --------------------- Specific Data section - START

@@ -95,21 +95,11 @@ public:
     // ************************************************************************
 
     // ************************************************************************
-    // GENERAL section - START
-
+    // INIT function section - START
     public:
     void    setNcursesWindow    (tuiDrvGraphic_t* p_pParent);
 
-    private:
-    WINDOW* g_pNcursWin;
-
-    // GENERAL section - END
-    // ************************************************************************
-
-    // ************************************************************************
-    // INIT function section - START
     protected:
-
     void initWin                            (void)                                                                                          override;
     void initWin                            (uint16_t p_rootX0a, uint16_t p_rootY0a)                                                        override;
     void initWinRootDims                    (void);
@@ -117,6 +107,10 @@ public:
     void initGraphEnvColor                  (void)                                                                                          override;
     void deinitGraphEnv                     (void)                                                                                          override;
     void endGraphEnv                        (void)                                                                                          override;
+
+    private:
+    WINDOW* g_pNcursWin;
+
     // INIT function section - END
     // ************************************************************************
 
@@ -139,6 +133,8 @@ public:
 
     bool isSelected                         (void) override;
     bool isSelectedOrEventOn                (void) override;
+
+    void dbgPrint                           (char* p_str) override;
 
     private:
 

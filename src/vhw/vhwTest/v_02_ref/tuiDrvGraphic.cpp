@@ -80,9 +80,6 @@ void tuiDrvGraphic_t::dbgSetChildrenNumber    (uint8_t p_childrenNumber)     {
 // ************************************************************************************************************************************************
 // GENERAL section - START
 
-void tuiDrvGraphic_t::setNcursesWindow    (tuiDrvGraphic_t* p_pParent)     {
-    g_pNcursWin     = p_pParent->g_pNcursWin;
-}
 
 
 // GENERAL section - END
@@ -96,6 +93,9 @@ void tuiDrvGraphic_t::setNcursesWindow    (tuiDrvGraphic_t* p_pParent)     {
 // INIT function section - START
 
 
+void tuiDrvGraphic_t::setNcursesWindow    (tuiDrvGraphic_t* p_pParent)     {
+    g_pNcursWin     = p_pParent->g_pNcursWin;
+}
 
 void tuiDrvGraphic_t::initGraphEnv        (void)     {
     initscr();                          /* Start curses mode            */
@@ -194,21 +194,35 @@ void tuiDrvGraphic_t::frameNnameTest (const char* p_strName)   {
 
         g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
 
-    	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper      );
-    	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper      );
+        if(g_boundYupper < g_boundYlower)  {
+        	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper      );
+        	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper      );
+        }
 
         if(g_boundYupper == g_y0a)   {
         	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a               ,ACS_ULCORNER       );
         	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a + g_w - 1     ,ACS_URCORNER       );
         	mvwhline    (g_pNcursWin, g_boundYupper     ,g_x0a + 1           ,0    ,g_w - 2      );
             //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " *~ %s ~*~ %04x - %04x | %04x - %04x ~* ", p_strName,  g_lvl1Y0a,  g_h, g_w, g_boundYlower);
-            mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " __ dsp - TEST __*~ %s ~*~ %04x - %04x - %04x - %04x ~* ", p_strName, g_boundYupper,  g_boundYlower, g_boundXleft,  g_boundXright);
+            //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " __ dsp - TEST __*~ %s ~*~ %04x - %04x - %04x - %04x ~* ", p_strName, g_boundYupper,  g_boundYlower, g_boundXleft,  g_boundXright);
+            mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 1, "~ %s ~", p_strName);
+            if(((g_boundYupper+1) <= g_boundYlower))
+                mvwprintw   (g_pNcursWin, g_boundYupper+1 ,g_x0a + 1, "~ %04x - %04x ~", g_boundYupper,  g_boundYlower);
         }
+
+        if(
+            (    
+                    (g_boundYupper == (g_y0a+1))
+                &&  ((g_boundYupper+1) <= g_boundYlower)
+            )
+        )
+            mvwprintw   (g_pNcursWin, g_boundYupper   ,g_x0a + 1, "~ %04x - %04x ~", g_boundYupper,  g_boundYlower);
 
         if((g_boundYlower+1) == (g_y0a + g_h))   {
         	mvwaddch    (g_pNcursWin, g_boundYlower     ,g_x0a               ,ACS_LLCORNER       );
         	mvwaddch    (g_pNcursWin, g_boundYlower     ,g_x0a + g_w - 1     ,ACS_LRCORNER       );
         	mvwhline    (g_pNcursWin, g_boundYlower     ,g_x0a + 1           ,0    ,g_w - 2      );
+            mvwprintw   (g_pNcursWin, g_boundYlower     ,g_x0a + 1, "~ %04x - %04x ~", g_boundXleft,   g_boundXright);
         }
 
 
@@ -226,21 +240,33 @@ bool tuiDrvGraphic_t::frameNnameTest (tuiMode_t p_mode, const char* p_strName)  
 
         g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
 
-    	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper      );
-    	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper      );
+        if(g_boundYupper < g_boundYlower)  {
+        	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper      );
+        	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper      );
+        }
 
         if(g_boundYupper == g_y0a)   {
         	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a               ,ACS_ULCORNER       );
         	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a + g_w - 1     ,ACS_URCORNER       );
         	mvwhline    (g_pNcursWin, g_boundYupper     ,g_x0a + 1           ,0    ,g_w - 2      );
             //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " *~ %s ~*~ %04x - %04x | %04x - %04x ~* ", p_strName,  g_lvl1Y0a,  g_h, g_w, g_boundYlower);
-            mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " __ sts - TEST __*~ %s ~*~ %04x - %04x - %04x - %04x ~* ", p_strName, g_boundYupper,  g_boundYlower, g_boundXleft,  g_boundXright);
+            //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " __ sts - TEST __*~ %s ~*~ %04x - %04x - %04x - %04x ~* ", p_strName, g_boundYupper,  g_boundYlower, g_boundXleft,  g_boundXright);
+            mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 1, "~ %s ~", p_strName);
+            if(((g_boundYupper+1) <= g_boundYlower))
+                mvwprintw   (g_pNcursWin, g_boundYupper+1 ,g_x0a + 1, "~ %04x - %04x ~", g_boundYupper,  g_boundYlower);
         }
+
+        if(
+                (g_boundYupper == (g_y0a+1))
+            &&  ((g_boundYupper+1) <= g_boundYlower)
+        )
+            mvwprintw   (g_pNcursWin, g_boundYupper   ,g_x0a + 1, "~ %04x - %04x ~", g_boundYupper,  g_boundYlower);
 
         if((g_boundYlower+1) == (g_y0a + g_h))   {
         	mvwaddch    (g_pNcursWin, g_boundYlower     ,g_x0a               ,ACS_LLCORNER       );
         	mvwaddch    (g_pNcursWin, g_boundYlower     ,g_x0a + g_w - 1     ,ACS_LRCORNER       );
         	mvwhline    (g_pNcursWin, g_boundYlower     ,g_x0a + 1           ,0    ,g_w - 2      );
+            mvwprintw   (g_pNcursWin, g_boundYlower     ,g_x0a + 1, "~ %04x - %04x ~", g_boundXleft,   g_boundXright);
         }
 
 
@@ -331,6 +357,19 @@ bool tuiDrvGraphic_t::isSelectedOrEventOn             (void)  {
 bool tuiDrvGraphic_t::isSelected             (void)  {
     return (tuiMode_t::select == g_status);
 }
+
+void tuiDrvGraphic_t::dbgPrint             (char* p_str)       {
+    [[maybe_unused]] uint16_t l_h;
+    uint16_t l_w;
+    getmaxyx(stdscr, l_h, l_w);
+    if(80 < l_w)    {
+        mvwhline    (stdscr, 2, 80, ' '         , l_w - 80);
+        mvwprintw   (stdscr, 2, 80, "*** %s ***", p_str);
+        refreshWin();
+    }
+}
+
+
 
 // PRIVATE sub-section
 

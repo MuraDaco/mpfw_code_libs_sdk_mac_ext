@@ -33,6 +33,9 @@
 
 #include "tuiUnitDebug.h"
 #include "tuiUnitListDebug.h"
+#include "dtyTuiGraphic.h"
+#include "tuiUnitCntnrList.h"
+
 #include "tuiGraphicUnitBase.h"
 #include "tuiGraphicUnitWin.h"
 #include "tuiGraphicUnitRoot.h"
@@ -40,17 +43,28 @@
 class tuiGraphicAppMain_t {
 
 public:
-    static tuiGraphicUnitBase_t     g_setDebug[];
-    static tuiGraphicUnitWin_t      g_setWinDebug[];
     static tuiUnitDebug_t           g_unitDebug_1;
     static tuiUnitDebug_t           g_unitDebug_2;
     static tuiUnitDebug_t           g_unitDebug_3;
     static tuiUnitDebug_t           g_unitDebug_4;
+    static tuiUnitDebug_t           g_unitDebug_5;
+    static tuiUnitDebug_t           g_unitDebug_6;
+    static tuiUnitDebug_t           g_unitDebug_7;
     static tuiUnitDebug_t           g_unitDebug;
+    static tuiUnitDebug_t           g_unitDebugA;
+
+    static tuiGraphicUnitBase_t     g_setDebug[];
+    static tuiGraphicUnitBase_t     g_arrayCntnrDebug[];
+    static tuiGraphicUnitWin_t      g_setWinDebug[];
+
+    static dtyTuiGraphic_t          g_CntnrDebug;
+
     static tuiUnitListDebug_t       g_unitDebugWin_1;
     static tuiUnitListDebug_t       g_unitDebugWin_2;
     static tuiUnitListDebug_t       g_unitDebugWin_3;
+    static tuiUnitCntnrList_t        g_unitCntnrWin_A;
     static tuiUnitListDebug_t       g_unitDebugList;
+
     static tuiGraphicUnitRoot_t     g_boxRoot;
 
 };

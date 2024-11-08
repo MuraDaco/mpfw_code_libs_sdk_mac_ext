@@ -68,7 +68,7 @@ public:
     bool selectByMouse      (void)                  override;
     bool selectTst          (void)                  override;
     void dbgState_01        (void)                  override;
-    void dbgState_01        (bool p_test)                  override;
+    void dbgState_01        (bool p_test)           override;
     
     // --------------------- State management section - END
 

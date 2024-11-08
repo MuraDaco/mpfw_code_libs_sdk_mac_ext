@@ -22,36 +22,35 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitCntrList.cpp
+ * tuiUnitCntnrList.cpp
  *
  *  Created on: Nov, 5th 2024
  *      Author: Marco Dau
  */
  
 
-#include "tuiUnitCntrList.h"
+#include "tuiUnitCntnrList.h"
 
 
-tuiUnitCntrList_t::tuiUnitCntrList_t      (const char* p_strName   ,dtyBaseCntnrUnitX_t* p_pCntr     )   :
-     tuiUnitCntrAbstract_t      (p_pCntr)
-    ,g_strName                  {p_strName}
+tuiUnitCntnrList_t::tuiUnitCntnrList_t      (const char* p_strName   ,dtyBaseCntnrUnitX_t* p_pCntnr     )   :
+     tuiUnitCntnrAbstract_t         (p_strName, p_pCntnr)
 {}
 
 // --------------------- Process section - START
 
-bool tuiUnitCntrList_t::loop   	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+bool tuiUnitCntnrList_t::loop   	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
     return true;
 }
 
-bool tuiUnitCntrList_t::loopChildren           ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+bool tuiUnitCntnrList_t::loopChildren           ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
     return true;
 }
 
-void tuiUnitCntrList_t::end       	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+void tuiUnitCntnrList_t::end       	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
 
 }
 
-void tuiUnitCntrList_t::endChildren            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+void tuiUnitCntnrList_t::endChildren            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
 
 }
 
@@ -60,16 +59,17 @@ void tuiUnitCntrList_t::endChildren            ([[maybe_unused]] tuiGraphicUnit_
 
 // --------------------- Display section - START
 
-void tuiUnitCntrList_t::clear     	        (tuiGraphicAbstract_t* p_this)  {
+void tuiUnitCntnrList_t::clear     	        (tuiGraphicAbstract_t* p_this)  {
     p_this->frameClear();
 }
 
-void tuiUnitCntrList_t::display     	    (tuiGraphicAbstract_t* p_this)  {
+void tuiUnitCntnrList_t::display     	    (tuiGraphicAbstract_t* p_this)  {
     p_this->frameNnameTest(g_strName);
 }
 
-void tuiUnitCntrList_t::display     	    (tuiGraphicAbstract_t* p_this, [[maybe_unused]] bool p_recursively)  {
+void tuiUnitCntnrList_t::display     	    (tuiGraphicAbstract_t* p_this, [[maybe_unused]] bool p_recursively)  {
     display(p_this);
+
 }
 
 
@@ -79,15 +79,15 @@ void tuiUnitCntrList_t::display     	    (tuiGraphicAbstract_t* p_this, [[maybe_
 
 // --------------------- State management section - START
 
-bool tuiUnitCntrList_t::select     	        (tuiGraphicAbstract_t* p_this)  {
+bool tuiUnitCntnrList_t::select     	        (tuiGraphicAbstract_t* p_this)  {
     return p_this->frameNnameTest(tuiMode_t::select, g_strName);
 }
 
-bool tuiUnitCntrList_t::deSelect   	        (tuiGraphicAbstract_t* p_this)  {
+bool tuiUnitCntnrList_t::deSelect   	        (tuiGraphicAbstract_t* p_this)  {
     return p_this->frameNnameTest(tuiMode_t::deselect, g_strName);
 }
 
-void tuiUnitCntrList_t::eventOn    	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
+void tuiUnitCntnrList_t::eventOn    	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
     p_this->frameNnameTest(tuiMode_t::eventOn, g_strName);
 }
 
@@ -97,13 +97,13 @@ void tuiUnitCntrList_t::eventOn    	        ([[maybe_unused]] tuiGraphicAbstract
 
 // --------------------- Events handler section - START
 
-void tuiUnitCntrList_t::vEventHndlKey_left	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
+void tuiUnitCntnrList_t::vEventHndlKey_left	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
 }
 
-void tuiUnitCntrList_t::vEventHndlKey_right	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
+void tuiUnitCntnrList_t::vEventHndlKey_right	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
 }
 
-void tuiUnitCntrList_t::vEventHndlKey_home	(tuiGraphicAbstract_t* p_this)  {
+void tuiUnitCntnrList_t::vEventHndlKey_home	(tuiGraphicAbstract_t* p_this)  {
     p_this->parentDeselectBackNeventOn();
 
 }

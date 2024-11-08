@@ -47,6 +47,7 @@ class tuiGraphicCoord_t  {
     // ---------------------  INTERFACE section - START
     public:
     virtual void updParamsAfterParentMod            (void);    
+    virtual void updCoordNboundsChilds              (void);
     // ---------------------  INTERFACE section - END
 
 private:
@@ -113,10 +114,10 @@ public:
     void updDims        (void);
 
     //  - bounds (N.B.: to set these bounds you must use "updBound" functions)
-    uint16_t g_boundXleft;
-    uint16_t g_boundXright;
-    uint16_t g_boundYupper;
-    uint16_t g_boundYlower;
+    int16_t g_boundXleft;
+    int16_t g_boundXright;
+    int16_t g_boundYupper;
+    int16_t g_boundYlower;
 
 
     // element
@@ -177,8 +178,6 @@ public:
     int32_t getDistanceFromBound                (void);
     int16_t getDisplayMaxH                      (void);
     bool    bVisibleCompletely                  (void);
-    virtual void updCoordNboundsChilds          (void);
-    virtual void updCoordNboundsForNewFather    (void);
 
 };
 

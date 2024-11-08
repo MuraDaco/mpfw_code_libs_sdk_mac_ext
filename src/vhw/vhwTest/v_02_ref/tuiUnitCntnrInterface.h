@@ -22,46 +22,21 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitAbstract.h
+ * tuiUnitCntnrInterface_t.h
  *
- *  Created on: Oct, 22nd 2024
+ *  Created on: Nov,  5th 2024
  *      Author: Marco Dau
-
-    - genealogical & dependence tree
-        - [dr] tuiGraphicEvent_t
-            - [dp] tuiGraphicAbstract_t
-        - [dr] tuiGraphicStateInterface2_t
-        - [dp] dtyUint8_t
-            - [dp] tuiGraphicAbstract_t
-
  */
  
-#ifndef TUI_UNIT_ABSTRACT_H
-#define TUI_UNIT_ABSTRACT_H
+#ifndef TUI_UNIT_CNTNR_INTERFACE_H
+#define TUI_UNIT_CNTNR_INTERFACE_H
 
-#include "tuiMacroDefine.h"
-#include "tuiUnitEvent.h"
-#include "tuiUnitDisplayInterface.h"
-#include "tuiUnitStateInterface.h"
-#include "tuiUnitProcessInterface.h"
-#include "tuiUnitCntnrInterface.h"
+class tuiUnitCntnrInterface_t {
 
+public:
 
-class tuiUnitAbstract_t :    public tuiUnitEvent_t 
-                            ,public tuiUnitDisplayInterface_t  
-                            ,public tuiUnitStateInterface_t  
-                            ,public tuiUnitProcessInterface_t  
-                            ,public tuiUnitCntnrInterface_t  
-{
-    protected:
-    tuiUnitAbstract_t   (const char* p_strName);
-
-    public:
-    const char* getName   (void);
-    protected:
-    const char* g_strName;
+    virtual void updCoordNboundsChilds          (void) {};
 
 };
 
-
-#endif 	// TUI_UNIT_ABSTRACT_H
+#endif 	// TUI_UNIT_CNTNR_INTERFACE_H

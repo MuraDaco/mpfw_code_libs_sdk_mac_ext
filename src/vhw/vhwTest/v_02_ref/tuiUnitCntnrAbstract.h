@@ -22,23 +22,25 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitCntrAbstract.h
+ * tuiUnitCntnrAbstract.h
  *
  *  Created on: Nov, 4th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_UNIT_CNTR_ABSTRACT_H
-#define TUI_UNIT_CNTR_ABSTRACT_H
+#ifndef TUI_UNIT_CNTNR_ABSTRACT_H
+#define TUI_UNIT_CNTNR_ABSTRACT_H
 
 #include "tuiUnitAbstract.h"
 #include "dtyBaseCntnrUnitX.h"
 
-class tuiUnitCntrAbstract_t :    public tuiUnitAbstract_t 
+#include "tuiGraphicUnit.h"     // cross dependency - top
+
+class tuiUnitCntnrAbstract_t :    public tuiUnitAbstract_t 
 {
 
 protected:
-    tuiUnitCntrAbstract_t      (dtyBaseCntnrUnitX_t* p_pCntr     );
+    tuiUnitCntnrAbstract_t      (const char* p_strName, dtyBaseCntnrUnitX_t* p_pCntnr     );
 
     // --------------------- Process section - START
     bool init                   (tuiGraphicUnit_t* p_this) override;
@@ -52,7 +54,7 @@ protected:
     // --------------------- Container section - START
     void updCoordNboundsChilds      (void) override;
 
-    dtyBaseCntnrUnitX_t* g_cntr;
+    dtyBaseCntnrUnitX_t* g_pCntnr;
     // --------------------- Container section - END
 
     // --------------------- Display section - START
@@ -90,4 +92,4 @@ protected:
 };
 
 
-#endif 	// TUI_UNIT_CNTR_ABSTRACT_H
+#endif 	// TUI_UNIT_CNTNR_ABSTRACT_H

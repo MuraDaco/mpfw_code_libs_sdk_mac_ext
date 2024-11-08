@@ -43,7 +43,7 @@ public:
     // ****************************************************
     // section start **** GENERAL *****
 
-    dtyTuiGraphic_t   (tuiGraphicUnit_t** p_array);
+    dtyTuiGraphic_t   (tuiGraphicUnit_t* p_array);
 
     // section end   **** GENERAL ***** 
     // ****************************************************
@@ -125,7 +125,7 @@ private:
 
     void resetSelectElement         (void);
 
-    tuiGraphicUnit_t** g_array;
+    tuiGraphicUnit_t* g_array;
     tuiGraphicUnit_t*  g_poParent;
     uint8_t     g_arraySize;
     uint8_t     g_selectIdElement;

@@ -42,7 +42,7 @@ class tuiUnitListAbstract_t :    public tuiUnitAbstract_t   {
 
 protected:
 
-    tuiUnitListAbstract_t      (tuiGraphicUnit_t* p_childrenSet);
+    tuiUnitListAbstract_t      (const char* p_strName, tuiGraphicUnit_t* p_childrenSet);
 
     // --------------------- Element pointers section - START
     // pointer to the list of uiBase objects belonging to one

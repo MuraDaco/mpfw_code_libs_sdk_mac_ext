@@ -33,7 +33,7 @@
 
 
 tuiUnitDgtInOut_t::tuiUnitDgtInOut_t      (const char* p_strName   ,dtyUint8_t* p_pDtyStatus   )   :
-     g_strName          {p_strName}
+    tuiUnitAbstract_t           (p_strName)
     ,g_pDtyStatus       {p_pDtyStatus}
 {}
 

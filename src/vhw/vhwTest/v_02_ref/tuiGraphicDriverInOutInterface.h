@@ -82,6 +82,8 @@ public:
     virtual bool isSelected                         (void) = 0;
     virtual bool isSelectedOrEventOn                (void) = 0;
 
+    virtual void dbgPrint                          (char* p_str) = 0;
+
     // INPUT
     virtual bool uiEventStatus                      (void) = 0;
     virtual int uiEventKeyCode                      (void) = 0;

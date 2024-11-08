@@ -33,8 +33,7 @@
 
 
 tuiUnitListDebug_t::tuiUnitListDebug_t      (const char* p_strName   ,tuiGraphicUnit_t* p_childrenSet     )   :
-     tuiUnitListAbstract_t      (p_childrenSet)
-    ,g_strName                  {p_strName}
+     tuiUnitListAbstract_t      (p_strName, p_childrenSet)
 {}
 
 // --------------------- Process section - START

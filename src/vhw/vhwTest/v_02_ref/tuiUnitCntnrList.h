@@ -22,25 +22,24 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitCntrList.h
+ * tuiUnitCntnrList.h
  *
  *  Created on: Nov,  5th 2024
  *      Author: Marco Dau
  */
  
-#ifndef TUI_UNIT_CNTR_LIST_H
-#define TUI_UNIT_CNTR_LIST_H
+#ifndef TUI_UNIT_CNTNR_LIST_H
+#define TUI_UNIT_CNTNR_LIST_H
 
-#include "tuiUnitCntrAbstract.h"
-
-#include "tuiGraphicUnit.h"     // cross dependency - top
+#include "tuiUnitCntnrAbstract.h"
 
 
-class tuiUnitCntrList_t :    public tuiUnitCntrAbstract_t
+
+class tuiUnitCntnrList_t :    public tuiUnitCntnrAbstract_t
 {
 
 public:
-    tuiUnitCntrList_t       (const char* p_strName  ,dtyBaseCntnrUnitX_t* p_pCntr = nullptr  );
+    tuiUnitCntnrList_t       (const char* p_strName  ,dtyBaseCntnrUnitX_t* p_pCntnr = nullptr  );
 
 protected:
    
@@ -83,10 +82,10 @@ protected:
 private:
 
     // --------------------- Generic  Data section - START
-    const char* g_strName;
+    //const char* g_strName;
     // --------------------- Generic  Data section - END
 
 };
 
 
-#endif 	// TUI_UNIT_CNTR_LIST_H
+#endif 	// TUI_UNIT_CNTNR_LIST_H

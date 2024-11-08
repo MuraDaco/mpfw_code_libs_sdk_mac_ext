@@ -37,7 +37,7 @@
 
 
 
-dtyTuiGraphic_t::dtyTuiGraphic_t   (tuiGraphicUnit_t** p_array) :
+dtyTuiGraphic_t::dtyTuiGraphic_t   (tuiGraphicUnit_t* p_array) :
      g_array        {p_array}
     ,g_y0r          {0}
 {
@@ -47,7 +47,7 @@ dtyTuiGraphic_t::dtyTuiGraphic_t   (tuiGraphicUnit_t** p_array) :
 
 void dtyTuiGraphic_t::resetSelectElement         (void)    {
     uint8_t l_id = 0;
-    while (g_array[l_id])   {
+    while (g_array[l_id].bNotNull())   {
         l_id++;
     }
     g_arraySize   = l_id;
@@ -58,32 +58,38 @@ bool dtyTuiGraphic_t::resetLoopElement         (void)    {
     bool l_result = false;  // "false" means empty list
     g_loopIdElement = 0;
     // check whether the list is empty
-    if(g_array[g_loopIdElement]) l_result = true;
+    if(g_array[g_loopIdElement].bNotNull()) l_result = true;
     return l_result;
 }
 
-bool dtyTuiGraphic_t::bLoopInitDisplay           (uint8_t p_id, void* p_pParent)    {
-    bool l_result = false;
-    if(g_array[p_id])   {
-
-        // init "g_loopY0rElement" global parameter
-        g_loopY0rElement = (p_id) ? g_loopY0rElement : 0;
-
-        // set data to element
-        g_array[p_id]->tuiGraphicCoord_t::setParent(static_cast<tuiGraphicCoord_t*>(p_pParent));
-        g_array[p_id]->initRelCoordS(0, g_loopY0rElement);
-
-        // determine the "g_loopY0rElement" (global parameter) for the next cycle
-        g_loopY0rElement += g_array[p_id]->getDimH();
-
-        l_result = true;
-    } else {
-        // Be carefull!! it seems wrong
-        g_h = g_loopY0rElement;
-    }
-    return l_result;
+bool dtyTuiGraphic_t::bLoopInitDisplay           ([[maybe_unused]] uint8_t p_id, [[maybe_unused]] void* p_pParent)    {
+    // to be implemented - see below
+    return true;
 }
-
+// bool dtyTuiGraphic_t::bLoopInitDisplay           (uint8_t p_id, void* p_pParent)    {
+//     bool l_result = false;
+//     if(g_array[p_id].bNotNull())   {
+// 
+//         // init "g_loopY0rElement" global parameter
+//         g_loopY0rElement = (p_id) ? g_loopY0rElement : 0;
+// 
+//         // set data to element
+//         g_array[p_id].tuiGraphicCoord_t::setParent(static_cast<tuiGraphicCoord_t*>(p_pParent));
+//         g_array[p_id].setNcursesWindow(static_cast<tuiDrvGraphic_t*>(p_pParent));
+// 
+//         g_array[p_id].initRelCoordS(0, g_loopY0rElement);
+// 
+//         // determine the "g_loopY0rElement" (global parameter) for the next cycle
+//         g_loopY0rElement += g_array[p_id].getDimH();
+// 
+//         l_result = true;
+//     } else {
+//         // Be carefull!! it seems wrong
+//         g_h = g_loopY0rElement;
+//     }
+//     return l_result;
+// }
+// 
 
 uint8_t dtyTuiGraphic_t::getLoopInitCycles       (void)    {
     return g_arraySize;
@@ -96,18 +102,20 @@ void dtyTuiGraphic_t::initDisplay                (uint8_t p_id, void* p_pParent)
     g_loopY0rElement = (p_id) ? g_loopY0rElement : 0;
 
     // set data to element
-    g_array[p_id]->tuiGraphicCoord_t::setParent(static_cast<tuiGraphicCoord_t*>(p_pParent));
-    g_array[p_id]->initRelCoordS(0, g_loopY0rElement);
-
+    g_array[p_id].init(g_poParent);
+    //g_array[p_id].tuiGraphicCoord_t::setParent(static_cast<tuiGraphicCoord_t*>(p_pParent));
+    //g_array[p_id].setNcursesWindow(static_cast<tuiDrvGraphic_t*>(p_pParent));
+    g_array[p_id].initRelCoordS(0, g_loopY0rElement);
+    g_array[p_id].updParamsAfterParentMod();
     // determine the "g_loopY0rElement" (global parameter) for the next cycle
-    g_loopY0rElement += g_array[p_id]->getDimH();
+    g_loopY0rElement += g_array[p_id].getDimH();
     g_h = g_loopY0rElement;
 }
 
 #define RECURSIVELY     true
 bool dtyTuiGraphic_t::selectElementByMouse      (void)      {
     bool l_result = false;
-    if(g_array[g_loopIdElement]->bMouseClickInsideBounds()) {
+    if(g_array[g_loopIdElement].bMouseClickInsideBounds()) {
         //if(g_pCurrentElement) g_pCurrentElement->element->deSelect();   // because of mouse event management
         g_selectIdElement = g_loopIdElement;
         if(!bSelectVisibleCompletely()) {
@@ -132,30 +140,30 @@ bool dtyTuiGraphic_t::selectElementByMouse      (void)      {
             for(uint8_t l_id = 0; l_id < g_arraySize; l_id++)   {
                 if(l_delta) {
                     // update relative coord of element recursively
-                    g_array[l_id]->incRelCoordY(l_delta);
+                    g_array[l_id].incRelCoordY(l_delta);
                     // refresh element content recursively
-                    g_array[l_id]->display(RECURSIVELY);
+                    g_array[l_id].display(RECURSIVELY);
                 }
             }
 
         }
-        l_result = g_array[g_loopIdElement]->selectByMouse();
+        l_result = g_array[g_loopIdElement].selectByMouse();
     }
     return l_result;
 }
 
 int32_t dtyTuiGraphic_t::getDeltaShiftBySelect           (void)    {
     // determine the delta
-    return g_array[g_selectIdElement]->getDistanceFromBound();
+    return g_array[g_selectIdElement].getDistanceFromBound();
 }
 
 void dtyTuiGraphic_t::shiftLoopElementBySelect       (int32_t p_delta)    {
 
-    if(p_delta) g_array[g_loopIdElement]->incRelCoordY(p_delta);
+    if(p_delta) g_array[g_loopIdElement].incRelCoordY(p_delta);
 }
 
 void dtyTuiGraphic_t::updSelectElement       (void)    {
-    g_array[g_selectIdElement]->deselectBackNselect();
+    g_array[g_selectIdElement].deselectBackNselect();
 }
 
 void dtyTuiGraphic_t::clearDisplayBox       (void)    {
@@ -182,22 +190,22 @@ bool dtyTuiGraphic_t::updCntnrRelCoord           (int32_t p_delta)    {
 // it is equivalent to shift the display box down (to the bottom) therefore ...
 // increment the display box relative coords
 void dtyTuiGraphic_t::shiftLoopElementRollUp       (void)    {
-    g_array[g_loopIdElement]->incRelCoordY(-1);    
+    g_array[g_loopIdElement].incRelCoordY(-1);    
 }
 
 // shift the content down (to the bottom) to see the content that is higher
 // it is equivalent to shift the display box up (to high) therefore ...
 // decrememt the display box relative coords
 void dtyTuiGraphic_t::shiftLoopElementRollDown       (void)    {
-    g_array[g_loopIdElement]->incRelCoordY(1);
+    g_array[g_loopIdElement].incRelCoordY(1);
 }
 
 void dtyTuiGraphic_t::updElementCoordNbounds       (void)    {
-    g_array[g_loopIdElement]->updParamsAfterParentMod();
+    g_array[g_loopIdElement].updParamsAfterParentMod();
 }
 
 void dtyTuiGraphic_t::dspElement                 (bool p_recursively)  {
-    g_array[g_loopIdElement]->display(p_recursively);
+    g_array[g_loopIdElement].display(p_recursively);
 }
 
 bool dtyTuiGraphic_t::nextLoopElement          (void)    {
@@ -232,7 +240,7 @@ bool dtyTuiGraphic_t::nextLoopElement          (void)    {
 // section start **** SELECT *****
 
 void* dtyTuiGraphic_t::getSelectedItem               (void)      {
-    return g_array[g_selectIdElement];
+    return &g_array[g_selectIdElement];
 }
 
 bool dtyTuiGraphic_t::setSelectPrev                  (void)    {
@@ -275,7 +283,7 @@ bool dtyTuiGraphic_t::setSelectNext                  (void)    {
 
 bool dtyTuiGraphic_t::bSelectVisibleCompletely       (void)    {
 
-    return g_array[g_selectIdElement]->bVisibleCompletely();
+    return g_array[g_selectIdElement].bVisibleCompletely();
 }
 
 
