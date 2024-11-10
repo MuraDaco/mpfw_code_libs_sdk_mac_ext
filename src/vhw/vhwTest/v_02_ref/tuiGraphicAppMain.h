@@ -33,6 +33,8 @@
 
 #include "tuiUnitDebug.h"
 #include "tuiUnitListDebug.h"
+#include "tuiUnitEbox.h"
+#include "tuiUnitSet.h"
 #include "dtyTuiGraphic.h"
 #include "tuiUnitCntnrList.h"
 
@@ -53,6 +55,10 @@ public:
     static tuiUnitDebug_t           g_unitDebug;
     static tuiUnitDebug_t           g_unitDebugA;
 
+    static char                     usartBuffer[1000];
+    static dtyBaseArray_t           usartString;
+    static tuiUnitEbox_t            g_unitEbox_1;
+
     static tuiGraphicUnitBase_t     g_setDebug[];
     static tuiGraphicUnitBase_t     g_arrayCntnrDebug[];
     static tuiGraphicUnitWin_t      g_setWinDebug[];
@@ -62,8 +68,8 @@ public:
     static tuiUnitListDebug_t       g_unitDebugWin_1;
     static tuiUnitListDebug_t       g_unitDebugWin_2;
     static tuiUnitListDebug_t       g_unitDebugWin_3;
-    static tuiUnitCntnrList_t        g_unitCntnrWin_A;
-    static tuiUnitListDebug_t       g_unitDebugList;
+    static tuiUnitCntnrList_t       g_unitCntnrWin_A;
+    static tuiUnitSet_t             g_unitDebugList;
 
     static tuiGraphicUnitRoot_t     g_boxRoot;
 

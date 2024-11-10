@@ -24,62 +24,66 @@
 /*
  * tuiUnitSet.h
  *
- *  Created on: Oct, 24th 2024
+ *  Created on: Nov, 8th 2024
  *      Author: Marco Dau
  */
  
 #ifndef TUI_UNIT_SET_H
 #define TUI_UNIT_SET_H
 
-#include "tuiUnitAbstract.h"
-#include "dtyUint8.h"
+#include "tuiUnitListAbstract.h"
 
-#include "tuiGraphicAbstract.h" // cross dependency - completed
+#include "tuiGraphicAbstract.h" // cross dependency - top
+#include "tuiGraphicUnit.h"     // cross dependency - top
 
 
-class tuiUnitSet_t :    public tuiUnitAbstract_t
+class tuiUnitSet_t :    public tuiUnitListAbstract_t
 {
 
 public:
-    tuiUnitSet_t       (const char* p_strName  ,dtyUint8_t* p_pDtyStatus   );
+    tuiUnitSet_t       (const char* p_strName  ,tuiGraphicUnit_t* p_childrenSet = nullptr  );
 
 protected:
    
+    // --------------------- Process section - START
+    // bool init                    (tuiGraphicUnit_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
+    // bool initChildren            (tuiGraphicUnit_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
+    bool loop                    (tuiGraphicUnit_t* p_this) override;
+    bool loopChildren            (tuiGraphicUnit_t* p_this) override;
+    void end                     (tuiGraphicUnit_t* p_this) override;
+    void endChildren             (tuiGraphicUnit_t* p_this) override;
+    // --------------------- Process section - START
 
     // --------------------- Display section - START
     void clear                  (tuiGraphicAbstract_t* p_this) override;
     void display                (tuiGraphicAbstract_t* p_this) override;
     void display                (tuiGraphicAbstract_t* p_this, bool p_recursively) override;
+    // void displayChildren        (tuiGraphicAbstract_t* p_this, bool p_recursively) override; --> implemented in derived class tuiUnitListAbstract_t
+    // void refreshChildren        (tuiGraphicAbstract_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
     // --------------------- Display section - END
 
     // --------------------- State management section - START
-    bool select     	        (tuiGraphicAbstract_t* p_this) override;
-    bool deSelect   	        (tuiGraphicAbstract_t* p_this) override;
-    void eventOn    	        (tuiGraphicAbstract_t* p_this) override;
-    bool selectByMouse 	        (tuiGraphicAbstract_t* p_this) override;
+    bool select                  (tuiGraphicAbstract_t* p_this) override;
+    bool deSelect                (tuiGraphicAbstract_t* p_this) override;
+    void eventOn                 (tuiGraphicAbstract_t* p_this) override;
+    // bool selectByMouse           (tuiGraphicAbstract_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
+    // bool clickingChild           (tuiGraphicAbstract_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
     // --------------------- State management section - END
 
     // --------------------- Events handler section - START
 	// ..................... Events handler: functions
-    void vEventHndlKey_down	    (tuiGraphicAbstract_t* p_this)  override;
-    void vEventHndlKey_up	    (tuiGraphicAbstract_t* p_this)  override;
-    void vEventHndlKey_left	    (tuiGraphicAbstract_t* p_this)  override;
-    void vEventHndlKey_right	(tuiGraphicAbstract_t* p_this)  override;
-    void vEventHndlKey_enter	(tuiGraphicAbstract_t* p_this)  override;
-    void vEventHndlKey_home	    (tuiGraphicAbstract_t* p_this)  override;
+    // void vEventHndlKey_down      (tuiGraphicAbstract_t* p_this)  override; --> implemented in derived class tuiUnitListAbstract_t
+    // void vEventHndlKey_up        (tuiGraphicAbstract_t* p_this)  override; --> implemented in derived class tuiUnitListAbstract_t
+    void vEventHndlKey_left     (tuiGraphicAbstract_t* p_this)  override;
+    void vEventHndlKey_right    (tuiGraphicAbstract_t* p_this)  override;
+    // void vEventHndlKey_enter    (tuiGraphicAbstract_t* p_this)  override;  --> implemented in derived class tuiUnitListAbstract_t
+    void vEventHndlKey_home     (tuiGraphicAbstract_t* p_this)  override;
     // --------------------- Events handler section - END
 
 private:
 
-    // --------------------- Generic  Data section - START
-    //const char* g_strName;
-    // --------------------- Generic  Data section - END
-
-    // --------------------- Specific Data section - START
-    dtyUint8_t* g_pDtyStatus;
-    // --------------------- Specific Data section - END
 
 };
 
 
-#endif 	// TUI_UNIT_DGT_IN_OUT_H
+#endif 	// TUI_UNIT_SET_H

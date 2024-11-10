@@ -40,12 +40,17 @@ tuiUnitDebug_t          tuiGraphicAppMain_t::g_unitDebug_5    ("Unit Debug 555")
 tuiUnitDebug_t          tuiGraphicAppMain_t::g_unitDebug_6    ("Unit Debug 666");
 tuiUnitDebug_t          tuiGraphicAppMain_t::g_unitDebug_7    ("Unit Debug 777");
 
+
+char tuiGraphicAppMain_t::usartBuffer[1000] = "Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor";
+dtyBaseArray_t  tuiGraphicAppMain_t::usartString    (usartBuffer, sizeof(usartBuffer));
+tuiUnitEbox_t   tuiGraphicAppMain_t::g_unitEbox_1   ("Unit Ebox 1", usartString);
+
 tuiGraphicUnitBase_t    tuiGraphicAppMain_t::g_setDebug[] = {
     {   &g_unitDebug_1, box_t({10, 30,  0,  0})                         },
     {   &g_unitDebug_2, box_t({10, 30, 10, 30}), margins_t({2,1,2,1})   },
     {   &g_unitDebug_3, box_t({10, 30, 10, 60}), margins_t({1,2,1,1})   },
     {   &g_unitDebug_2, box_t({10, 30,  0, 90}), margins_t({1,1,1,2})   },
-    {   &g_unitDebug_4, box_t({10, 30, 20, 60}), margins_t({2,1,1,2})   },
+    {   &g_unitEbox_1,  box_t({10, 30, 20, 60}), margins_t({2,1,1,2})   },
     {}  // null element to mark the and of array; 
 };
 
@@ -77,7 +82,7 @@ tuiGraphicUnitWin_t    tuiGraphicAppMain_t::g_setWinDebug[] = {
     {}  // null element to mark the and of array; 
 };
 
-tuiUnitListDebug_t      tuiGraphicAppMain_t::g_unitDebugList("Unit debug List", g_setWinDebug);
+tuiUnitSet_t      tuiGraphicAppMain_t::g_unitDebugList("Unit debug List", g_setWinDebug);
 
 tuiUnitDebug_t          tuiGraphicAppMain_t::g_unitDebug    ("Unit Debug");
 tuiGraphicUnitRoot_t    tuiGraphicAppMain_t::g_boxRoot      (&g_unitDebugList   ,margins_t({5,2,5,5}));

@@ -190,13 +190,19 @@ void tuiDrvGraphic_t::frameClear (void)   {
 
 
 void tuiDrvGraphic_t::frameNnameTest (const char* p_strName)   {
+    frameNnameTest(g_status, p_strName);
     if(g_boundYupper <= g_boundYlower)  {
 
         g_attributeMode_Frame[static_cast<uint8_t>(g_status)](this, ON);
 
         if(g_boundYupper < g_boundYlower)  {
-        	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper      );
-        	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper      );
+            if((g_boundYlower+1) == (g_y0a + g_h))   {
+            	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper      );
+            	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper      );
+            } else {
+            	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper + 1      );
+            	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper + 1      );
+            }
         }
 
         if(g_boundYupper == g_y0a)   {
@@ -236,47 +242,8 @@ bool tuiDrvGraphic_t::frameNnameTest (tuiMode_t p_mode, const char* p_strName)  
     if(g_status == p_mode) return false; 
     g_status = p_mode;
 
-    if(g_boundYupper <= g_boundYlower)  {
+    frameNnameTest(p_strName);
 
-        g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, ON);
-
-        if(g_boundYupper < g_boundYlower)  {
-        	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper      );
-        	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper      );
-        }
-
-        if(g_boundYupper == g_y0a)   {
-        	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a               ,ACS_ULCORNER       );
-        	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a + g_w - 1     ,ACS_URCORNER       );
-        	mvwhline    (g_pNcursWin, g_boundYupper     ,g_x0a + 1           ,0    ,g_w - 2      );
-            //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " *~ %s ~*~ %04x - %04x | %04x - %04x ~* ", p_strName,  g_lvl1Y0a,  g_h, g_w, g_boundYlower);
-            //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " __ sts - TEST __*~ %s ~*~ %04x - %04x - %04x - %04x ~* ", p_strName, g_boundYupper,  g_boundYlower, g_boundXleft,  g_boundXright);
-            mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 1, "~ %s ~", p_strName);
-            if(((g_boundYupper+1) <= g_boundYlower))
-                mvwprintw   (g_pNcursWin, g_boundYupper+1 ,g_x0a + 1, "~ %04x - %04x ~", g_boundYupper,  g_boundYlower);
-        }
-
-        if(
-                (g_boundYupper == (g_y0a+1))
-            &&  ((g_boundYupper+1) <= g_boundYlower)
-        )
-            mvwprintw   (g_pNcursWin, g_boundYupper   ,g_x0a + 1, "~ %04x - %04x ~", g_boundYupper,  g_boundYlower);
-
-        if((g_boundYlower+1) == (g_y0a + g_h))   {
-        	mvwaddch    (g_pNcursWin, g_boundYlower     ,g_x0a               ,ACS_LLCORNER       );
-        	mvwaddch    (g_pNcursWin, g_boundYlower     ,g_x0a + g_w - 1     ,ACS_LRCORNER       );
-        	mvwhline    (g_pNcursWin, g_boundYlower     ,g_x0a + 1           ,0    ,g_w - 2      );
-            mvwprintw   (g_pNcursWin, g_boundYlower     ,g_x0a + 1, "~ %04x - %04x ~", g_boundXleft,   g_boundXright);
-        }
-
-
-        g_attributeMode_Frame[static_cast<uint8_t>(p_mode)](this, OFF);
-
-        refreshWin();
-
-        return true;
-    }
-    
     return false;
 }
 
@@ -326,23 +293,68 @@ bool tuiDrvGraphic_t::nameNstatus (tuiMode_t p_mode, const char* p_strName, uint
     return true;
 }
 
+void tuiDrvGraphic_t::content (char* p_str, uint8_t p_size)   {
+    int16_t l_row = getBoundYupper();
+    if(
+            (g_boundYupper <= l_row)  
+        &&  (                 l_row <= g_boundYlower)
+    )    {
+
+        uint16_t l_dspBoxW = getDspBoxDimXw();
+        mvwaddnstr  (g_pNcursWin, l_row          ,g_x0a + 1        ,p_str  ,p_size);
+        if(p_size < l_dspBoxW)
+            mvwhline    (g_pNcursWin, l_row          ,g_x0a + 1 + p_size           ,' '    ,l_dspBoxW - p_size      );
+
+        refreshWin();
+    }
+}
+
+void tuiDrvGraphic_t::content (char* p_str, uint8_t p_begin, uint8_t p_size)   {
+    int16_t l_row = getBoundYupper();
+    if(
+            (g_boundYupper <= l_row)  
+        &&  (                 l_row <= g_boundYlower)  
+    )    {
+        uint16_t l_dspBoxW = getDspBoxDimXw();
+        mvwaddnstr  (g_pNcursWin, l_row          ,g_x0a + 1 + p_begin       ,p_str  ,p_size);
+        if(p_size < l_dspBoxW)
+            mvwhline    (g_pNcursWin, l_row          ,g_x0a + 1 + p_begin + p_size           ,' '    ,l_dspBoxW - (p_begin + p_size)      );
+
+        refreshWin();
+    }
+}
+
+void tuiDrvGraphic_t::content (uint8_t p_begin)   {
+    int16_t l_row = getBoundYupper();
+    if(
+            (g_boundYupper <= l_row)  
+        &&  (                 l_row <= g_boundYlower)  
+    )    {
+        uint16_t l_dspBoxW = getDspBoxDimXw();
+        mvwhline    (g_pNcursWin, l_row          ,g_x0a + 1 + p_begin           ,' '    ,l_dspBoxW - p_begin      );
+
+        refreshWin();
+    }
+}
+
 
 void tuiDrvGraphic_t::positionCursor     (bool p_status, uint8_t p_position)    {
+    int16_t l_row = getBoundYupper();
     if(
-            (g_boundYupper <= g_y0a + 1)  
-        &&  (                g_y0a + 1 <= g_boundYlower)
+            (g_boundYupper <= l_row)  
+        &&  (                l_row <= g_boundYlower)
     )    {
         if(p_status)    {
             if(g_position != p_position)    {
-                mvwchgat(g_pNcursWin, g_y0a + 1          ,g_x0a + 1 + g_position,1, A_NORMAL, 0, NULL);
+                mvwchgat(g_pNcursWin, l_row          ,g_x0a + 1 + g_position,1, A_NORMAL, 0, NULL);
                 g_position = p_position;
             }
-            mvwchgat(g_pNcursWin, g_y0a + 1          ,g_x0a + 1 + g_position,1, A_BLINK | A_UNDERLINE, 0, NULL);
+            mvwchgat(g_pNcursWin, l_row          ,g_x0a + 1 + g_position,1, A_BLINK | A_UNDERLINE, 0, NULL);
         } else {
             g_position = p_position;
-            mvwchgat(g_pNcursWin, g_y0a + 1          ,g_x0a + 1 + p_position,1, A_NORMAL, 0, NULL);    
+            mvwchgat(g_pNcursWin, l_row          ,g_x0a + 1 + p_position,1, A_NORMAL, 0, NULL);    
         }
-        wrefresh(g_pNcursWin);
+        refreshWin();
     }
 }
 

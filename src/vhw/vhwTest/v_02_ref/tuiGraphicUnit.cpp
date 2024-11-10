@@ -135,15 +135,15 @@ void tuiGraphicUnit_t::vEventHndlKey_home	        (tuiGraphicAbstract_t* p_this)
 }
 
 void tuiGraphicUnit_t::vEventHndlKey_del            (tuiGraphicAbstract_t* p_this)  {
-    p_this->g_pUnit->vEventHndlKey_home(p_this);
+    p_this->g_pUnit->vEventHndlKey_del(p_this);
 }
 
 void tuiGraphicUnit_t::vEventHndlKey_backSpace      (tuiGraphicAbstract_t* p_this)  {
-    p_this->g_pUnit->vEventHndlKey_home(p_this);
+    p_this->g_pUnit->vEventHndlKey_backSpace(p_this);
 }
 
 void tuiGraphicUnit_t::vEventHndlKey_typeChar       (tuiGraphicAbstract_t* p_this)  {
-    p_this->g_pUnit->vEventHndlKey_home(p_this);
+    p_this->g_pUnit->vEventHndlKey_typeChar(p_this);
 }
 
 tuiGraphicUnit_t::eventHandler_t tuiGraphicUnit_t::g_eventKeyArray[]  = {

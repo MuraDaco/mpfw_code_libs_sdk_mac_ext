@@ -346,7 +346,7 @@ void tuiGraphicCoord_t::updAbsCoordX                 (void)      {
 //      - vertical coords
 
 int32_t tuiGraphicCoord_t::getDspBoxAbsRefY      (void)      {
-    return g_x0a + g_marginYtop;
+    return g_y0a + g_marginYtop;
 }
 
 int32_t tuiGraphicCoord_t::getMouseAbsRefY       (void)      {
@@ -406,11 +406,11 @@ void tuiGraphicCoord_t::updBoundX                    (void)      {
 //      - vertical coords
 
 int32_t tuiGraphicCoord_t::getBoundYupper            (void)      {
-    return (g_boundYupper == g_y0a)                  ? g_boundYupper + 1 : g_boundYupper;
+    return MAX(g_boundYupper, (g_y0a + g_marginYtop));
 }
 
 int32_t tuiGraphicCoord_t::getBoundYlower            (void)      {
-    return ((g_boundYlower + 1)  == (g_y0a + g_h))   ? g_boundYlower - 1 : g_boundYlower;
+    return MIN(g_boundYlower, ((g_y0a + g_h - 1) - g_marginYbottom));
 }
 
 void tuiGraphicCoord_t::updBoundY                    (void)      {

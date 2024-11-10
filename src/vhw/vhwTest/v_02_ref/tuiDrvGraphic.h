@@ -129,6 +129,10 @@ public:
     bool nameNstatus                        (tuiMode_t p_mode, const char* p_strName, uint8_t p_status)                                     override;
     bool nameNstatus                        (tuiMode_t p_mode, const char* p_strName, uint8_t p_status, bool p_repaint)                     override;
 
+    void content                            (char* p_str, uint8_t p_size)                                                                   override;
+    void content                            (uint8_t p_begin)                                                                               override;
+    void content                            (char* p_str, uint8_t p_begin, uint8_t p_size)                                                  override;
+
     void positionCursor                     (bool p_status, uint8_t p_position)                                                             override;
 
     bool isSelected                         (void) override;

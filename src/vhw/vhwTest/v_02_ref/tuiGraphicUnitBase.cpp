@@ -62,6 +62,7 @@ bool tuiGraphicUnitBase_t::init       (tuiGraphicUnit_t* p_pParent) 	{
     setNcursesWindow(p_pParent);
     g_status = tuiMode_t::undefined;
 
+    g_pUnit->init(this);
     return true;
 }
 

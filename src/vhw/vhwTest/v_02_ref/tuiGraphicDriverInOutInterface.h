@@ -57,9 +57,9 @@ public:
     virtual bool nameNstatus                        (tuiMode_t p_mode, const char* p_strName, uint8_t p_status) = 0;
     virtual bool nameNstatus                        (tuiMode_t p_mode, const char* p_strName, uint8_t p_status, bool p_repaint) = 0;
 
-//    virtual void content                            (char* p_str, uint8_t p_size) = 0;
-//    virtual void content                            (uint8_t p_begin) = 0;
-//    virtual void content                            (char* p_str, uint8_t p_begin, uint8_t p_size) = 0;
+    virtual void content                            (char* p_str, uint8_t p_size) = 0;
+    virtual void content                            (uint8_t p_begin) = 0;
+    virtual void content                            (char* p_str, uint8_t p_begin, uint8_t p_size) = 0;
 //
 //    virtual void frameBox                           (const char* g_strName) = 0;
 //    virtual bool frameBox                           (tuiMode_t p_mode, const char* g_strName) = 0;

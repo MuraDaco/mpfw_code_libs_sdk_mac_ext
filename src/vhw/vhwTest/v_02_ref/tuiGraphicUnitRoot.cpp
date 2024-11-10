@@ -58,11 +58,10 @@ bool tuiGraphicUnitRoot_t::init       (void) 	{
     initWinRootDims();
     initBoundsWinRoot();
 
-    // 2. init children and nephew graphic unit (recursive procedure)
+    // init its unit "friend"
+    // 2.a init children and nephew graphic unit (recursive procedure)
     g_pUnit->initChildren(this);
-
-
-    // 3. activate the handler event array of the current root window
+    // 2.b activate the handler event array of the current root window
     selectNeventOnInit();
     g_pUnit->eventOn(this);
 

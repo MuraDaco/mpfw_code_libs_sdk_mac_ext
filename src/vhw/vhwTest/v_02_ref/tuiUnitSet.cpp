@@ -22,9 +22,9 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitSet.h
+ * tuiUnitSet.cpp
  *
- *  Created on: Oct, 22nd 2024
+ *  Created on: Nov, 8th 2024
  *      Author: Marco Dau
  */
  
@@ -32,45 +32,69 @@
 #include "tuiUnitSet.h"
 
 
-tuiUnitSet_t::tuiUnitSet_t      (const char* p_strName   ,dtyUint8_t* p_pDtyStatus   )   :
-    tuiUnitAbstract_t       (p_strName)
-    ,g_pDtyStatus           {p_pDtyStatus}
+tuiUnitSet_t::tuiUnitSet_t      (const char* p_strName   ,tuiGraphicUnit_t* p_childrenSet     )   :
+     tuiUnitListAbstract_t      (p_strName, p_childrenSet)
 {}
 
+// --------------------- Process section - START
 
-void tuiUnitSet_t::clear     	    (tuiGraphicAbstract_t* p_this)  {
+bool tuiUnitSet_t::loop   	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+    return true;
+}
+
+bool tuiUnitSet_t::loopChildren           ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+    return true;
+}
+
+void tuiUnitSet_t::end       	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+
+}
+
+void tuiUnitSet_t::endChildren            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+
+}
+
+// --------------------- Process section - END
+
+
+// --------------------- Display section - START
+
+void tuiUnitSet_t::clear     	        (tuiGraphicAbstract_t* p_this)  {
     p_this->frameClear();
 }
 
 void tuiUnitSet_t::display     	    (tuiGraphicAbstract_t* p_this)  {
-    p_this->nameNstatus(g_strName, *g_pDtyStatus->g_pValue);
+    p_this->frameNnameTest(g_strName);
 }
 
 void tuiUnitSet_t::display     	    (tuiGraphicAbstract_t* p_this, [[maybe_unused]] bool p_recursively)  {
     display(p_this);
 }
 
-bool tuiUnitSet_t::select     	    (tuiGraphicAbstract_t* p_this)  {
-    return p_this->nameNstatus(tuiMode_t::select, g_strName, *g_pDtyStatus->g_pValue);
+
+
+// --------------------- Display section - END
+
+
+// --------------------- State management section - START
+
+bool tuiUnitSet_t::select     	        (tuiGraphicAbstract_t* p_this)  {
+    return p_this->frameNnameTest(tuiMode_t::select, g_strName);
 }
 
-bool tuiUnitSet_t::deSelect   	    ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-    return true;
+bool tuiUnitSet_t::deSelect   	        (tuiGraphicAbstract_t* p_this)  {
+    return p_this->frameNnameTest(tuiMode_t::deselect, g_strName);
 }
 
-void tuiUnitSet_t::eventOn    	    ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-
+void tuiUnitSet_t::eventOn    	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
+    p_this->frameNnameTest(tuiMode_t::eventOn, g_strName);
 }
 
-bool tuiUnitSet_t::selectByMouse   ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-    return true;
-}
 
-void tuiUnitSet_t::vEventHndlKey_down	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-}
 
-void tuiUnitSet_t::vEventHndlKey_up	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-}
+// --------------------- State management section - END
+
+// --------------------- Events handler section - START
 
 void tuiUnitSet_t::vEventHndlKey_left	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
 }
@@ -78,11 +102,9 @@ void tuiUnitSet_t::vEventHndlKey_left	([[maybe_unused]] tuiGraphicAbstract_t* p_
 void tuiUnitSet_t::vEventHndlKey_right	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
 }
 
-void tuiUnitSet_t::vEventHndlKey_enter	([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-    g_pDtyStatus->vInc();
-}
-
 void tuiUnitSet_t::vEventHndlKey_home	(tuiGraphicAbstract_t* p_this)  {
     p_this->parentDeselectBackNeventOn();
 
 }
+
+// --------------------- Events handler section - START

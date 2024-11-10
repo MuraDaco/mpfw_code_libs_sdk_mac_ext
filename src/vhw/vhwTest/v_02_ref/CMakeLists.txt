@@ -106,9 +106,11 @@ set(SOURCE_FILES_CPP
     tuiGraphicUnitWin.cpp
     tuiGraphicUnitBase.cpp
     tuiGraphicAppMain.cpp
+    
     tuiUnitAbstract.cpp
-    tuiUnitDgtInOut.cpp
-    tuiUnitList.cpp
+    #--- tuiUnitDgtInOut.cpp
+    #--- tuiUnitList.cpp
+    tuiUnitEbox.cpp
     tuiUnitSet.cpp
     tuiUnitDebug.cpp
     tuiUnitCntnrAbstract.cpp
