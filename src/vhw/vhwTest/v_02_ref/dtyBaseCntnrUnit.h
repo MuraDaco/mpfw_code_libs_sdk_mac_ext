@@ -32,7 +32,7 @@
 #define DTY_BASE_CNTR_UNIT_H
 
 #include "uyTypesDefs.h"
-#include "dtyTypesDefs.h"
+#include "dtyBuffer.h"
 
 
 class dtyBaseCntnrUnit_t   {

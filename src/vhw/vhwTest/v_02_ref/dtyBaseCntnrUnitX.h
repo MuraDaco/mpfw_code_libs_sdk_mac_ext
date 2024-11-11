@@ -31,8 +31,7 @@
 #ifndef DTY_BASE_CNTR_UNIT_X_H
 #define DTY_BASE_CNTR_UNIT_X_H
 
-#include "uyTypesDefs.h"
-#include "dtyTypesDefs.h"
+#include <cstdint>
 
 
 class dtyBaseCntnrUnitX_t   {
@@ -55,21 +54,21 @@ private:
 protected:
 
     // section **** GENERAL ****
-    virtual uint8_t getLoopInitCycles       (void) = 0;
-    virtual bool bLoopInitDisplay           (uint8_t p_id, void* p_poFather) = 0;
-    virtual void initDisplay                (uint8_t p_id, void* p_poFather) = 0;
-    virtual bool resetLoopElement           (void) = 0;
-    virtual bool selectElementByMouse       (void) = 0;
-    virtual int32_t getDeltaShiftBySelect   (void) = 0;
-    virtual void shiftLoopElementBySelect   (int32_t p_delta) = 0;
-    virtual void updSelectElement           (void) = 0;
-    virtual void clearDisplayBox            (void) = 0;
-    virtual bool updCntnrRelCoord           (int32_t p_delta) = 0;
-    virtual void shiftLoopElementRollUp     (void) = 0;
-    virtual void shiftLoopElementRollDown   (void) = 0;
-    virtual void updElementCoordNbounds     (void) = 0;
-    virtual void dspElement                 (bool p_recursively) = 0;
-    virtual bool nextLoopElement            (void) = 0;
+    virtual uint8_t getLoopInitCycles           (void) = 0;
+    virtual bool    bLoopInitDisplay            (uint8_t p_id, void* p_poFather) = 0;
+    virtual void    initDisplay                 (uint8_t p_id, void* p_poFather) = 0;
+    virtual bool    resetLoopElement            (void) = 0;
+    virtual bool    selectElementByMouse        (void) = 0;
+    virtual int32_t getDeltaShiftBySelect       (void) = 0;
+    virtual void    shiftLoopElementBySelect    (int32_t p_delta) = 0;
+    virtual void    updSelectElement            (void) = 0;
+    virtual void    clearDisplayBox             (void) = 0;
+    virtual bool    updCntnrRelCoord            (int32_t p_delta) = 0;
+    virtual void    shiftLoopElementRollUp      (void) = 0;
+    virtual void    shiftLoopElementRollDown    (void) = 0;
+    virtual void    updElementCoordNbounds      (void) = 0;
+    virtual void    dspElement                  (bool p_recursively) = 0;
+    virtual bool    nextLoopElement             (void) = 0;
 
 
     // section **** WRITE ****

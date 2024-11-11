@@ -135,6 +135,9 @@ public:
 
     void positionCursor                     (bool p_status, uint8_t p_position)                                                             override;
 
+    void stringPrint                        (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize)                          override;
+    void debugPrint                         (uint32_t p_dbgParam1, uint32_t p_dbgParam2, char* p_pStr)                                      override;
+
     bool isSelected                         (void) override;
     bool isSelectedOrEventOn                (void) override;
 

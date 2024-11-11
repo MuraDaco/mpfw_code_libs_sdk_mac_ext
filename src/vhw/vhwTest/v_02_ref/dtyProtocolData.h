@@ -22,9 +22,9 @@
 //  *******************************************************************************
 
 /*
- * dtyStufX.h
+ * dtyProtocolData.h
  *
- *  Created on: Sep, 25th 2024
+ *  Created on: Nov, 10th 2024
  *      Author: Marco Dau
  *
 
@@ -48,36 +48,34 @@
 
  */
  
-#ifndef DTY_STUF_X_H
-#define DTY_STUF_X_H
+#ifndef DTY_PROTOCOL_DATA_H
+#define DTY_PROTOCOL_DATA_H
 
 #include <cstdint>
-#include "tuiData.h"
-#include "dtyBaseCntnrUnitX.h"
-#include "dtyStufXTypesDefs.h"
+#include "tuiUnitProtocolData.h"
+#include "tuiGraphicUnitBase.h"
 #include "dtyBuffer.h"
+#include "dtyBaseCntnrUnitX.h"
+#include "dtyProtocolDataTypesDefs.h"
 
-class dtyStufX_t : public dtyBaseCntnrUnitX_t, public dtyStufXTypesDefs_t  {
+class dtyProtocolData_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataTypesDefs_t  {
 
-public:
+// ****************************************************
+// section start **** CONBSTRUCTOR *****
+    public:
+
+    dtyProtocolData_t  (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize);
+
+    // section end   **** CONBSTRUCTOR ***** 
     // ****************************************************
-    // section start **** GENERAL *****
-
-    enum kPosition_t: int8_t  {
-         top
-        ,topButLastRowOnly
-        ,bottom
-        };
-
-
-    dtyStufX_t  (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize);
-
-    void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize)                                             ;
-    void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType) ;
+    // --------------------------
+// ****************************************************
+// section start **** INTERFACE *****
+    private:
 
     uint8_t getLoopInitCycles               (void)  override;
-    bool    bLoopInitDisplay                (uint8_t p_id, void* p_poFather)    override;
-    void    initDisplay                     (uint8_t p_id, void* p_poFather)    override;
+    bool    bLoopInitDisplay                (uint8_t p_id, void* p_pParent)    override;
+    void    initDisplay                     (uint8_t p_id, void* p_pParent)    override;
     bool    resetLoopElement                (void)  override;
     bool    selectElementByMouse            (void)  override;
     int32_t getDeltaShiftBySelect           (void)  override;
@@ -92,10 +90,44 @@ public:
     bool    nextLoopElement                 (void)  override;
 
 
+    // section end   **** INTERFACE ***** 
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** DATA MANAGEMENT: READ/WRITE *****
+
+    // sub-section ** READ **
+    private:
+    uint32_t    getBlockDataIdHeaderPrev        (uint32_t p_idHeader);
+    uint32_t    getBlockDataIdHeaderNext        (uint32_t p_idHeader);
+    uint32_t    getBlockDataId                  (uint32_t p_idHeader);
+    uint16_t    getBlockDataSize                (uint32_t p_idHeader);
+    kMarker_t   getBlockDataMarker              (uint32_t p_idHeader);
+
+    // sub-section ** WRITE **
+    public:
+    void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize)                                             ;
+    void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType) ;
+
+    private:
+    uint32_t    getWriteHeaderIdNext            (uint32_t p_idHeader);
+
     uint8_t*    g_pBuf;
     uint32_t    g_bufSize;
 
-    tuiData_t   g_dBLoop;           // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to update its g_pBuf & g_bufSize paramters every time you use it
+    uint32_t g_writeHeaderIdCurrent;
+    uint32_t g_writeDataIdCurrent;
+
+
+    // section end   **** DATA MANAGEMENT: READ/WRITE ***** 
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** LOOP MANAGEMENT *****
+    private:
+
+    tuiUnitProtocolData_t   g_dBLoopTuiUnit;              // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to update its g_pBuf & g_bufSize paramters every time you start to use it
+    tuiGraphicUnitBase_t    g_dBLoopTuiGraphic;           // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to call init procedure every time you start to use it
     uint32_t    g_loopIdHeader;     // it can be defined as static; it is a temporary variable
     uint32_t    g_loopIdData;       // it can be defined as static; it is a temporary variable
     uint32_t    g_loopDataSize;     // it can be defined as static; it is a temporary variable
@@ -105,21 +137,27 @@ public:
     bool        g_loopSelect;       // it can be defined as static; it is a temporary variable
     int32_t     g_loopRows;         // it can be defined as static; it is a temporary variable
 
+    void        loopTuiParamSet                 (void);
+    bool        loopInit                        (uint32_t p_idHeader, int32_t p_y0r);
+    bool        loopDisplayBegin                (void);
+    bool        loopDisplayEnd                  (void);
 
-    // section end   **** GENERAL ***** 
+    // section end   **** LOOP MANAGEMENT ***** 
     // ****************************************************
     // --------------------------
-    // ****************************************************
-    // section start **** WRITE *****
+// ****************************************************
+// section start **** DISPLAY *****
+    private:
 
-    uint32_t g_writeIdHeaderCurrent;
-    uint32_t g_writeIdDataCurrent;
+    enum kPosition_t: int8_t  {
+         top
+        ,topButLastRowOnly
+        ,bottom
+        };
 
-    // section end   **** WRITE ***** 
-    // ****************************************************
-    // --------------------------
-    // ****************************************************
-    // section start **** DISPLAY *****
+    bool initDisplayBeginParams             (uint32_t p_idHeader);
+    void setDisplayBeginParams              (uint32_t p_idHeader, kPosition_t p_position);
+    bool bDisplayLastRowVsLowerBound        (void);
 
     uint8_t  g_displayBoxH;
     uint8_t  g_displayBoxW;
@@ -129,70 +167,20 @@ public:
     uint32_t g_displayBeginDataSize;
     int32_t  g_displayBeginY0r;
     uint32_t g_displayBeginH;
-    kMarker_t  g_displayBeginMarker;
 
     // section end   **** DISPLAY ***** 
     // ****************************************************
     // --------------------------
-    // ****************************************************
-    // section start **** SELECT *****
+// ****************************************************
+// section start **** SELECT *****
 
+    private:
     bool setSelectPrev                  (void) override;
     bool setSelectNext                  (void) override;
     bool bSelectVisibleCompletely       (void) override;
 
-    uint32_t g_selectIdHeader;
-    uint32_t g_selectIdData;
-
-    uint32_t g_selectOldIdHeader;
-    uint32_t g_selectOldIdData;
-
-    // section end   **** SELECT ***** 
-    // ****************************************************
-
-private:
-
-    // ****************************************************
-    // section start **** GENERAL *****
-
-    
-    uint32_t    getWriteIdHeaderNext            (uint32_t p_idHeader);
-    uint32_t    getBlockDataIdHeaderPrev        (uint32_t p_idHeader);
-    uint32_t    getBlockDataIdHeaderNext        (uint32_t p_idHeader);
-    uint32_t    getBlockIdData                  (uint32_t p_idHeader);
-    uint16_t    getBlockDataSize                (uint32_t p_idHeader);
-    kMarker_t   getBlockDataMarker              (uint32_t p_idHeader);
-
-    bool bDisplayLastRowVsLowerBound           (void);
-
-    void        loopTuiParamSet                 (void);
-    bool        loopInit                        (uint32_t p_idHeader, int32_t p_y0r);
-    bool        loopDisplayBegin                (void);
-    bool        loopDisplayEnd                  (void);
-
-
-    // section end   **** GENERAL ***** 
-    // ****************************************************
-    // --------------------------
-    // ****************************************************
-    // section start **** WRITE *****
-
-
-    // section end   **** WRITE ***** 
-    // ****************************************************
-    // --------------------------
-    // ****************************************************
-    // section start **** DISPLAY *****
-
-    bool        initDisplayBeginParams          (uint32_t p_idHeader);
-    void        setDisplayBeginParams           (uint32_t p_idHeader, kPosition_t p_position);
-
-    // section end   **** DISPLAY ***** 
-    // ****************************************************
-    // --------------------------
-    // ****************************************************
-    // section start **** SELECT *****
-
+    uint32_t g_selectHeaderId;
+    uint32_t g_selectHeaderIdOld;
 
     // section end   **** SELECT ***** 
     // ****************************************************
@@ -201,4 +189,4 @@ private:
 };
 
 
-#endif 	// DTY_STUF_X_H
+#endif 	// DTY_PROTOCOL_DATA_H

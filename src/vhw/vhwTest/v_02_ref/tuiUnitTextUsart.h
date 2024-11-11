@@ -22,42 +22,45 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitDgtInOut.h
+ * tuiUnitTextUsart.h
  *
- *  Created on: Oct, 22nd 2024
+ *  Created on: Oct, 25th 2024
  *      Author: Marco Dau
-
-    - genealogical & dependence tree
-        - [dr] tuiGraphicEvent_t
-            - [dp] tuiGraphicAbstract_t
-        - [dr] tuiGraphicStateInterface2_t
-        - [dp] dtyUint8_t
-            - [dp] tuiGraphicAbstract_t
-
  */
  
-#ifndef TUI_UNIT_DGT_IN_OUT_H
-#define TUI_UNIT_DGT_IN_OUT_H
+#ifndef TUI_UNIT_DEBUG_H
+#define TUI_UNIT_DEBUG_H
 
 #include "tuiUnitAbstract.h"
 #include "dtyUint8.h"
 
 #include "tuiGraphicAbstract.h" // cross dependency - top
+#include "tuiGraphicUnit.h"     // cross dependency - top
 
 
-class tuiUnitDgtInOut_t :    public tuiUnitAbstract_t
+class tuiUnitTextUsart_t :    public tuiUnitAbstract_t
 {
 
 public:
-    tuiUnitDgtInOut_t       (const char* p_strName  ,dtyUint8_t* p_pDtyStatus   );
+    tuiUnitTextUsart_t       (const char* p_strName  ,dtyUint8_t* p_pDtyStatus = nullptr   );
 
 protected:
    
+    // --------------------- Process section - START
+    bool init   	            (tuiGraphicUnit_t* p_this) override;
+    bool initChildren           (tuiGraphicUnit_t* p_this) override;
+    bool loop   	            (tuiGraphicUnit_t* p_this) override;
+    bool loopChildren           (tuiGraphicUnit_t* p_this) override;
+    void end       	            (tuiGraphicUnit_t* p_this) override;
+    void endChildren            (tuiGraphicUnit_t* p_this) override;
+    // --------------------- Process section - START
 
     // --------------------- Display section - START
     void clear                  (tuiGraphicAbstract_t* p_this) override;
     void display                (tuiGraphicAbstract_t* p_this) override;
     void display                (tuiGraphicAbstract_t* p_this, bool p_recursively) override;
+    void displayChildren        (tuiGraphicAbstract_t* p_this, bool p_recursively) override;
+    void refreshChildren        (tuiGraphicAbstract_t* p_this) override;
     // --------------------- Display section - END
 
     // --------------------- State management section - START
@@ -65,6 +68,7 @@ protected:
     bool deSelect   	        (tuiGraphicAbstract_t* p_this) override;
     void eventOn    	        (tuiGraphicAbstract_t* p_this) override;
     bool selectByMouse 	        (tuiGraphicAbstract_t* p_this) override;
+    bool clickingChild          (tuiGraphicAbstract_t* p_this) override;
     // --------------------- State management section - END
 
     // --------------------- Events handler section - START
@@ -80,14 +84,14 @@ protected:
 private:
 
     // --------------------- Generic  Data section - START
-    //const char* g_strName;
+    // const char* g_strName;
     // --------------------- Generic  Data section - END
 
     // --------------------- Specific Data section - START
-    dtyUint8_t* g_pDtyStatus;
+    [[maybe_unused]] dtyUint8_t* g_pDtyStatus;
     // --------------------- Specific Data section - END
 
 };
 
 
-#endif 	// TUI_UNIT_DGT_IN_OUT_H
+#endif 	// TUI_UNIT_DEBUG_H

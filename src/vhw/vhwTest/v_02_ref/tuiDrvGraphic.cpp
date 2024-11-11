@@ -209,7 +209,7 @@ void tuiDrvGraphic_t::frameNnameTest (const char* p_strName)   {
         	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a               ,ACS_ULCORNER       );
         	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a + g_w - 1     ,ACS_URCORNER       );
         	mvwhline    (g_pNcursWin, g_boundYupper     ,g_x0a + 1           ,0    ,g_w - 2      );
-            //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " *~ %s ~*~ %04x - %04x | %04x - %04x ~* ", p_strName,  g_lvl1Y0a,  g_h, g_w, g_boundYlower);
+            //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " *~ %s ~*~ %04x - %04x | %04x - %04x ~* ", p_strName,  g_y0a,  g_h, g_w, g_boundYlower);
             //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " __ dsp - TEST __*~ %s ~*~ %04x - %04x - %04x - %04x ~* ", p_strName, g_boundYupper,  g_boundYlower, g_boundXleft,  g_boundXright);
             mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 1, "~ %s ~", p_strName);
             if(((g_boundYupper+1) <= g_boundYlower))
@@ -300,7 +300,7 @@ void tuiDrvGraphic_t::content (char* p_str, uint8_t p_size)   {
         &&  (                 l_row <= g_boundYlower)
     )    {
 
-        uint16_t l_dspBoxW = getDspBoxDimXw();
+        uint16_t l_dspBoxW = getDspAreaDimXw();
         mvwaddnstr  (g_pNcursWin, l_row          ,g_x0a + 1        ,p_str  ,p_size);
         if(p_size < l_dspBoxW)
             mvwhline    (g_pNcursWin, l_row          ,g_x0a + 1 + p_size           ,' '    ,l_dspBoxW - p_size      );
@@ -315,7 +315,7 @@ void tuiDrvGraphic_t::content (char* p_str, uint8_t p_begin, uint8_t p_size)   {
             (g_boundYupper <= l_row)  
         &&  (                 l_row <= g_boundYlower)  
     )    {
-        uint16_t l_dspBoxW = getDspBoxDimXw();
+        uint16_t l_dspBoxW = getDspAreaDimXw();
         mvwaddnstr  (g_pNcursWin, l_row          ,g_x0a + 1 + p_begin       ,p_str  ,p_size);
         if(p_size < l_dspBoxW)
             mvwhline    (g_pNcursWin, l_row          ,g_x0a + 1 + p_begin + p_size           ,' '    ,l_dspBoxW - (p_begin + p_size)      );
@@ -330,7 +330,7 @@ void tuiDrvGraphic_t::content (uint8_t p_begin)   {
             (g_boundYupper <= l_row)  
         &&  (                 l_row <= g_boundYlower)  
     )    {
-        uint16_t l_dspBoxW = getDspBoxDimXw();
+        uint16_t l_dspBoxW = getDspAreaDimXw();
         mvwhline    (g_pNcursWin, l_row          ,g_x0a + 1 + p_begin           ,' '    ,l_dspBoxW - p_begin      );
 
         refreshWin();
@@ -358,6 +358,69 @@ void tuiDrvGraphic_t::positionCursor     (bool p_status, uint8_t p_position)    
     }
 }
 
+void tuiDrvGraphic_t::stringPrint  (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize) {
+    if(g_boundYupper <= g_boundYlower)  {
+        wattron (g_pNcursWin,COLOR_PAIR(p_rowMarker));
+        if(p_select) wattron (g_pNcursWin,A_UNDERLINE);
+
+
+        uint16_t l_strSize = p_strSize;
+        uint16_t l_lenghtStrMax = g_dspAreaW - 1; // the first column is reserved for info about string (if it is the first row or not)
+
+        // synchronization between row and string id to display
+        uint16_t l_row0     = (g_y0r < 0) ? (0 + (-g_y0r)) : 0;
+        uint16_t l_strId    = (g_y0r < 0) ? (l_lenghtStrMax*(-g_y0r)) : 0;
+        l_strSize          -= (g_y0r < 0) ?  l_strId         : 0;
+        uint16_t l_strSizeRow  = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
+
+        uint16_t l_rowAbs = g_y0a + l_row0;
+        for(;;)    {
+            if(g_boundYupper <= l_rowAbs)    {
+                // the row to display is inside the bounds, therefore ...
+
+                // display it
+                if(0 == l_strId) 
+                    mvwaddch(g_pNcursWin,   l_rowAbs          ,g_x0a    ,'1'       );
+                else
+                    mvwaddch(g_pNcursWin,   l_rowAbs          ,g_x0a    ,' '       );
+
+                // ---------------------
+
+                mvwaddnstr  (g_pNcursWin, l_rowAbs     ,g_x0a + 1     ,&p_pStr[l_strId]  ,l_strSizeRow);
+                if(l_strSizeRow < l_lenghtStrMax)    {
+                    if(p_select) wattroff (g_pNcursWin,A_UNDERLINE);
+                    wattron (g_pNcursWin,A_NORMAL);
+              	    mvwhline    (g_pNcursWin, l_rowAbs          ,g_x0a + 1 + l_strSizeRow           ,' '    ,l_lenghtStrMax - l_strSizeRow);
+                    // the last row is displayed, therefore ...
+                }
+            }
+
+            if(g_boundYlower == l_rowAbs) break;
+
+            l_rowAbs++;
+            l_strId         += l_lenghtStrMax;
+            l_strSize       -= (l_strSize < l_lenghtStrMax) ? 0         : l_lenghtStrMax;
+            l_strSizeRow     = (l_strSize < l_lenghtStrMax) ? l_strSize : l_lenghtStrMax;
+
+        }
+
+        if(p_select) wattroff (g_pNcursWin,A_UNDERLINE);
+        wattron (g_pNcursWin,A_NORMAL);
+        wattroff(g_pNcursWin,COLOR_PAIR(p_rowMarker));
+
+        refreshWin();
+    }
+}
+
+void tuiDrvGraphic_t::debugPrint     (uint32_t p_dbgParam1, uint32_t p_dbgParam2, char* p_pStr)       {
+    uint16_t l_lenghtStrMax = g_dspAreaW - 1; // the first column is reserved for info about string (if it is the first row or not)
+    uint16_t l_strId    = (g_y0r < 0) ? (l_lenghtStrMax*(-g_y0r)) : 0;
+    uint16_t l_rowUp    = (g_y0r < 0) ? (0 + (-g_y0r)) : 0;
+
+    mvwprintw   (g_pNcursWin, g_y0a + l_rowUp     ,g_x0a      ,"~ %08x - %08x - %04x ~", p_dbgParam1, p_dbgParam2, l_lenghtStrMax);
+    mvwaddnstr  (g_pNcursWin, g_y0a + l_rowUp     ,g_x0a + 8 , &p_pStr[l_strId]  ,5);
+
+}
 
 bool tuiDrvGraphic_t::isSelectedOrEventOn             (void)  {
     return (

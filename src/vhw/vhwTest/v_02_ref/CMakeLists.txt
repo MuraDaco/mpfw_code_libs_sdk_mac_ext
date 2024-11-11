@@ -95,6 +95,7 @@ set(SOURCE_FILES_CPP
     dtyStufX.cpp
     dtyTuiBase.cpp
     dtyTuiGraphic.cpp
+    dtyProtocolData.cpp
     dtyUint8.cpp
 
     tuiGraphicCoord.cpp
@@ -113,6 +114,7 @@ set(SOURCE_FILES_CPP
     tuiUnitEbox.cpp
     tuiUnitSet.cpp
     tuiUnitDebug.cpp
+    tuiUnitProtocolData.cpp
     tuiUnitCntnrAbstract.cpp
     tuiUnitCntnrList.cpp
     tuiUnitListAbstract.cpp

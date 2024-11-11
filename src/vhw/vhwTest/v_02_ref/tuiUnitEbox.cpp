@@ -40,7 +40,7 @@ tuiUnitEbox_t::tuiUnitEbox_t      (const char* p_strName  ,dtyBaseArray_t& p_rDt
 // --------------------- Process section - START
 
 bool tuiUnitEbox_t::init   	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
-    g_rDtyStr.initDsplyBox(p_this->getDspBoxDimXw());
+    g_rDtyStr.initDsplyBox(p_this->getDspAreaDimXw());
 
     return true;
 }

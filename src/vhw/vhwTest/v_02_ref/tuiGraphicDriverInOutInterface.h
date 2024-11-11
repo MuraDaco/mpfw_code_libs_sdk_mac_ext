@@ -60,6 +60,9 @@ public:
     virtual void content                            (char* p_str, uint8_t p_size) = 0;
     virtual void content                            (uint8_t p_begin) = 0;
     virtual void content                            (char* p_str, uint8_t p_begin, uint8_t p_size) = 0;
+
+    virtual void stringPrint                        ([[maybe_unused]] uint8_t p_rowMarker, [[maybe_unused]] bool p_select, [[maybe_unused]] char* p_pStr, [[maybe_unused]] uint32_t p_strSize) {};
+    virtual void debugPrint                         ([[maybe_unused]] uint32_t p_dbgParam1, [[maybe_unused]] uint32_t p_dbgParam2, [[maybe_unused]] char* p_pStr) {};
 //
 //    virtual void frameBox                           (const char* g_strName) = 0;
 //    virtual bool frameBox                           (tuiMode_t p_mode, const char* g_strName) = 0;
@@ -82,7 +85,7 @@ public:
     virtual bool isSelected                         (void) = 0;
     virtual bool isSelectedOrEventOn                (void) = 0;
 
-    virtual void dbgPrint                          (char* p_str) = 0;
+    virtual void dbgPrint                           (char* p_str) = 0;
 
     // INPUT
     virtual bool uiEventStatus                      (void) = 0;

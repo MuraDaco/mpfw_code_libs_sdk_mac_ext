@@ -67,7 +67,7 @@
 #define DTY_BASE_ARRAY_H
 
 #include "uyTypesDefs.h"
-#include "dtyTypesDefs.h"
+#include "dtyBuffer.h"
 
 
 class dtyBaseArray_t   {

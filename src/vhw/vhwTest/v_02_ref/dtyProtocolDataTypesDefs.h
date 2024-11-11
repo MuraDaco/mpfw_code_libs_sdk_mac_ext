@@ -22,23 +22,33 @@
 //  *******************************************************************************
 
 /*
- * dtyTypesDefs.h
+ * dtyProtocolDataTypesDefs.h
  *
- *  Created on: Aug, 19th 2024
+ *  Created on: Nov, 10th 2024
  *      Author: Marco Dau
  */
  
-#ifndef DTY_TYPES_DEFS_H
-#define DTY_TYPES_DEFS_H
+#ifndef DTY_PPROTOCOL_DATA_TYPES_DEFS_H
+#define DTY_PPROTOCOL_DATA_TYPES_DEFS_H
 
 #include <stddef.h>
+#include <cstdint>
 
-struct dtyBuffer_t {
+class dtyProtocolDataTypesDefs_t  {
 
 public:
-    uint8_t* pBuf;
-    size_t   size;
+    enum kMarker_t: int8_t  {
+         defaultX = 0x18      // end marker = 0xe8
+        ,deviceRx = 0x07      // end marker = 0xf9
+        ,deviceTx = 0x06      // end marker = 0xfa
+        ,testTx   = 0x15      // end marker = 0xeb
+    };
+
+    enum kDataType_t: int8_t  {
+         ascii
+        ,binary
+    };
 };
 
 
-#endif 	// DTY_TYPES_DEFS_H
+#endif 	// DTY_PPROTOCOL_DATA_TYPES_DEFS_H

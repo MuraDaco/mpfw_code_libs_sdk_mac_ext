@@ -36,46 +36,74 @@
 
 class tuiGraphicCoord_t  {
 
-    // ---------------------  CONSTRUCTOR section - START
+// ****************************************************
+// section start **** CONSTRUCTOR *****
     protected:
     tuiGraphicCoord_t ();
     tuiGraphicCoord_t (box_t p_box  );
     tuiGraphicCoord_t (              margins_t p_margin);
     tuiGraphicCoord_t (box_t p_box  ,margins_t p_margin);
-    // ---------------------  CONSTRUCTOR section - END
+    // section end   **** CONSTRUCTOR *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** INIT *****
 
-    // ---------------------  INTERFACE section - START
     public:
-    virtual void updParamsAfterParentMod            (void);    
-    virtual void updCoordNboundsChilds              (void);
-    // ---------------------  INTERFACE section - END
-
-private:
-    tuiGraphicCoord_t* g_pParent;
-
-public:
-
-
-    // element init procedure
-    void setParent          (tuiGraphicCoord_t* p_pParent);
-    tuiGraphicCoord_t* getParent            (void);
-
     void initCoordBase      (void);
     void initCoordWin       (void);
     void initCoordNdspBox   (void);
     void initBoundsBase     (void);
     void initBoundsWin      (void);
     void initBoundsWinRoot  (void);
+
+    void                setParent   (tuiGraphicCoord_t* p_pParent);
+    tuiGraphicCoord_t*  getParent   (void);
+
+    private:
+    tuiGraphicCoord_t* g_pParent;
+
+    // section end   **** INIT *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** AVAILABLE DISPLAY/MOUSE AREA *****
+
+    // - parent available display area dimensions
+    public:
+    int32_t     getDspAreaAbsRefX       (void);
+    int32_t     getDspAreaAbsRefY       (void);
+    int32_t     getMouseAreaAbsRefX     (void);
+    int32_t     getMouseAreaAbsRefY     (void);
+    uint16_t    getDspAreaDimXw         (void);
+    uint16_t    getDspAreaDimYh         (void);
+    void        updDspAreaDims          (void);
+
+    protected:
+    uint16_t g_dspAreaW; 
+    uint16_t g_dspAreaH;
+    // section end   **** AVAILABLE DISPLAY/MOUSE AREA *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** PARAMETERS *****
+
     void updParams          (void);
     void updCoordNboundX    (void);
     void updCoordNboundY    (void);
     void updCoordNboundS    (void);
 
-    // element parameters
-    //  - coords
-    //      - relative
-    int32_t g_x0r;  
-    int32_t g_y0r;
+    // sub-section ** VIRTUAL **
+    public:
+    virtual void updParamsAfterParentMod            (void);    
+
+    // section end   **** PARAMETERS *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** COORDINATES *****
+
+    public:    
     void initRelCoordX      (int32_t p_x);
     void setRelCoordX       (int32_t p_x);
     void incRelCoordX       (int32_t p_delta);
@@ -85,6 +113,15 @@ public:
     void initRelCoordS      (int32_t p_x, int32_t p_y);
     void setRelCoords       (int32_t p_x, int32_t p_y);
 
+    void updAbsCoordX       (void);
+    void updAbsCoordY       (void);
+    void updAbsCoords       (void);
+
+    protected:
+    //      - relative respect parent window (N.B.: parent window can be different than root window)
+    int32_t g_x0r;  
+    int32_t g_y0r;
+
     //      - absolute respect parent window (N.B.: to set these coords you must use "updAbsCoord" functions)
     int32_t g_x0a;  
     int32_t g_y0a;
@@ -93,15 +130,23 @@ public:
     int32_t g_mouseX0a;
     int32_t g_mouseY0a;
 
+    // section end   **** COORDINATES *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** MARGINS *****
+
     //  - margins (N.B. these parameters are set by the class constructor)
     uint8_t g_marginXleft;
     uint8_t g_marginXright;
     uint8_t g_marginYtop;
     uint8_t g_marginYbottom;
-
-    //  - dimensions
-    uint16_t g_w; 
-    uint16_t g_h;
+    // section end   **** MARGINS *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** DIMENSIONS *****
+    public:    
     void setDimW        (uint16_t p_w);
     void updDimW        (void);
     uint16_t getDimW    (void);
@@ -113,36 +158,14 @@ public:
     void setDims        (uint16_t p_w, uint16_t p_h);
     void updDims        (void);
 
-    //  - bounds (N.B.: to set these bounds you must use "updBound" functions)
-    int16_t g_boundXleft;
-    int16_t g_boundXright;
-    int16_t g_boundYupper;
-    int16_t g_boundYlower;
-
-
-    // element
-
-    // - parent parameters
-    //  - coords
-    //      - horizontal coords
-    int32_t     getDspBoxAbsRefX    (void) ;
-    int32_t     getMouseAbsRefX     (void) ;
-    void        updAbsCoordX        (void) ;
-    //      - vertical coords
-    int32_t     getDspBoxAbsRefY    (void) ;
-    int32_t     getMouseAbsRefY     (void) ;
-    void        updAbsCoordY        (void) ;
-    //      - all coords
-    void        updAbsCoords        (void) ;
-
-    // - display box dimensions
-    uint16_t g_dspBoxW; 
-    uint16_t g_dspBoxH;
-    uint16_t    getDspBoxDimXw      (void) ;
-    uint16_t    getDspBoxDimYh      (void) ;
-    void        updDspBoxDims       (void) ;
-
-    //  - bounds
+    protected:
+    uint16_t g_w; 
+    uint16_t g_h;
+    // section end   **** DIMENSIONS *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** BOUNDS *****
     //      - horizontal coords
     int32_t     getBoundXleft       (void) ;
     int32_t     getBoundXright      (void) ;
@@ -154,16 +177,16 @@ public:
     //      - all coords
     void        updBounds           (void) ;
 
-
-
-    // - cursor management
-    protected:
-    static uint16_t g_position;
-    static uint16_t g_xCursor;
-    static uint16_t g_yCursor;
-
-    // - mouse management
-
+    //  - bounds (N.B.: to set these bounds you must use "updBound" functions)
+    int16_t g_boundXleft;
+    int16_t g_boundXright;
+    int16_t g_boundYupper;
+    int16_t g_boundYlower;
+    // section end   **** BOUNDS *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** MOUSE CLICK MANAGEMENT *****
     public:
     bool bMouseClickInsideBounds    (void);
     static void updAbsMouseCoordX          (int16_t p_deltaY);
@@ -172,12 +195,36 @@ public:
     protected:
     static uint16_t g_xMouse;
     static uint16_t g_yMouse;
+    // section end   **** MOUSE CLICK MANAGEMENT *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** CURSOR MANAGEMENT *****
+
+    protected:
+    static uint16_t g_position;
+    static uint16_t g_xCursor;
+    static uint16_t g_yCursor;
+    // section end   **** CURSOR MANAGEMENT *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** CONTAINER FUNCTION INTERFACE *****
 
     // functions called by container
     public:
     int32_t getDistanceFromBound                (void);
     int16_t getDisplayMaxH                      (void);
     bool    bVisibleCompletely                  (void);
+
+    // sub-section ** VIRTUAL **
+    virtual void updCoordNboundsChilds              (void);
+
+    // section end   **** CONTAINER FUNCTION INTERFACE *****
+    // ****************************************************
+    // --------------------------
+
+
 
 };
 
