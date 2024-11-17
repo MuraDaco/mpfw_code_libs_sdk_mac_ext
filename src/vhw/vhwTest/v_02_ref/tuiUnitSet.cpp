@@ -63,13 +63,14 @@ void tuiUnitSet_t::clear     	        (tuiGraphicAbstract_t* p_this)  {
     p_this->frameClear();
 }
 
-void tuiUnitSet_t::display     	    (tuiGraphicAbstract_t* p_this)  {
-    p_this->frameNnameTest(g_strName);
-}
-
-void tuiUnitSet_t::display     	    (tuiGraphicAbstract_t* p_this, [[maybe_unused]] bool p_recursively)  {
-    display(p_this);
-}
+// void tuiUnitSet_t::display     	    (tuiGraphicAbstract_t* p_this)  {
+//     p_this->frameNnameTest(g_strName);
+// }
+// 
+// void tuiUnitSet_t::display     	    (tuiGraphicAbstract_t* p_this, bool p_recursively)  {
+//     display(p_this);
+//     if(p_recursively) displayChildren(p_this, p_recursively);
+// }
 
 
 

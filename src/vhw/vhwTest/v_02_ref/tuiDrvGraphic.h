@@ -40,20 +40,6 @@
 #include "tuiGraphicAbstract.h"
 
 
-#define TUI_KEY_CTRL_Q              0x0011
-#define TUI_KEY_CTRL_X              0x0018
-#define TUI_KEY_BACKSPACE           0x007f
-#define TUI_KEY_DEL                 0x014a
-#define TUI_KEY_TAB                 0x0009
-#define TUI_KEY_SHIFT_TAB           0x0161
-#define TUI_KEY_RETURN              0x000A
-#define TUI_KEY_ESC                 0x001b
-
-#define TUI_MOUSE_ROLL_UP           0x08000000
-#define TUI_MOUSE_ROLL_DOWN         0x00080000
-
-#define NCURS_MOUSE_TRACKING_ENABLE     // printf("\033[?1003h");            // Makes the terminal report mouse movement events           
-#define NCURS_MOUSE_TRACKING_DISABLE    // printf("\033[?1003l");            // Disable mouse movement events, as l = low
 
 #define tuiBaseDrawer__mvprintw(y, x, strFrmt, strName)       \
         mvwprintw(g_pNcursWin, g_y0r + y, g_x0r + x, strFrmt, strName);     wrefresh(g_pNcursWin)
@@ -72,8 +58,28 @@ class  tuiDrvGraphic_t : public tuiGraphicAbstract_t {
 
 public:
 
-    // ************************************************************************
-    // CONSTRUCTOR function section - START
+
+// ****************************************************
+// section start **** DEFINES *****
+    #define TUI_KEY_CTRL_Q              0x0011
+    #define TUI_KEY_CTRL_X              0x0018
+    #define TUI_KEY_BACKSPACE           0x007f
+    #define TUI_KEY_DEL                 0x014a
+    #define TUI_KEY_TAB                 0x0009
+    #define TUI_KEY_SHIFT_TAB           0x0161
+    #define TUI_KEY_RETURN              0x000A
+    #define TUI_KEY_ESC                 0x001b
+
+    #define TUI_MOUSE_ROLL_UP           0x08000000
+    #define TUI_MOUSE_ROLL_DOWN         0x00080000
+
+    #define NCURS_MOUSE_TRACKING_ENABLE     // printf("\033[?1003h");            // Makes the terminal report mouse movement events
+    #define NCURS_MOUSE_TRACKING_DISABLE    // printf("\033[?1003l");            // Disable mouse movement events, as l = low
+    // section end   **** DEFINES *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** CONSTRUCTOR *****
 
     protected:
     tuiDrvGraphic_t (tuiUnitAbstract_t* p_pUnit     );
@@ -81,21 +87,11 @@ public:
     tuiDrvGraphic_t (tuiUnitAbstract_t* p_pUnit                     ,margins_t p_margin );
     tuiDrvGraphic_t (tuiUnitAbstract_t* p_pUnit     ,box_t p_box    ,margins_t p_margin );
 
-    // CONSTRUCTOR function section - START
-    // ************************************************************************
-
-    // ************************************************************************
-    // DEBUG section - START
-
-    public:
-    void    dbgSetChildrenNumber    (uint8_t p_childrenNumber);
-
-    uint8_t g_childrenNumber;
-    // DEBUG section - END
-    // ************************************************************************
-
-    // ************************************************************************
-    // INIT function section - START
+    // section end   **** CONSTRUCTOR *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** INIT *****
     public:
     void    setNcursesWindow    (tuiDrvGraphic_t* p_pParent);
 
@@ -111,11 +107,31 @@ public:
     private:
     WINDOW* g_pNcursWin;
 
-    // INIT function section - END
-    // ************************************************************************
+    // section end   **** INIT *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** DISPLAY STATUS *****
+    public:
+    bool isSelected                         (void) override;
+    bool isSelectedOrEventOn                (void) override;
 
-    // ************************************************************************
-    // OUTPUT function section - START
+    private:
+    typedef void (* attributeFunc_t)    (tuiDrvGraphic_t*, uint8_t);
+    static attributeFunc_t  g_attributeMode_Frame[static_cast<uint8_t>(tuiMode_t::num)];
+    static void attributeMode_frameDeselect     (tuiDrvGraphic_t* p_this, uint8_t p_status);
+    static void attributeMode_frameSelect       (tuiDrvGraphic_t* p_this, uint8_t p_status);
+    static void attributeMode_frameEventOn      (tuiDrvGraphic_t* p_this, uint8_t p_status);
+    static attributeFunc_t  g_attributeMode_Line[static_cast<uint8_t>(tuiMode_t::num)];
+    static void attributeMode_lineDeselect      (tuiDrvGraphic_t* p_this, uint8_t p_status);
+    static void attributeMode_lineSelect        (tuiDrvGraphic_t* p_this, uint8_t p_status);
+    static void attributeMode_lineEventOn       (tuiDrvGraphic_t* p_this, uint8_t p_status);
+
+    // section end   **** DISPLAY STATUS *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** OUTPUT/DISPLAY functions *****
 
     public:
 
@@ -129,53 +145,60 @@ public:
     bool nameNstatus                        (tuiMode_t p_mode, const char* p_strName, uint8_t p_status)                                     override;
     bool nameNstatus                        (tuiMode_t p_mode, const char* p_strName, uint8_t p_status, bool p_repaint)                     override;
 
-    void content                            (char* p_str, uint8_t p_size)                                                                   override;
     void content                            (uint8_t p_begin)                                                                               override;
+    void content                            (char* p_str, uint8_t p_size)                                                                   override;
+    bool content                            (tuiMode_t p_mode, char* p_str, uint8_t p_size)                                                 override;
     void content                            (char* p_str, uint8_t p_begin, uint8_t p_size)                                                  override;
 
     void positionCursor                     (bool p_status, uint8_t p_position)                                                             override;
 
     void stringPrint                        (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize)                          override;
+    bool stringPrint                        (tuiMode_t p_mode, uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize)        override;
+    void stringPrint2                       (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize)                          override;
+    bool stringPrint2                       (tuiMode_t p_mode, uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize)        override;
+
+    // section end   **** OUTPUT/DISPLAY functions *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** DEBUG OUTPUT/DISPLAY functions *****
+    public:
     void debugPrint                         (uint32_t p_dbgParam1, uint32_t p_dbgParam2, char* p_pStr)                                      override;
-
-    bool isSelected                         (void) override;
-    bool isSelectedOrEventOn                (void) override;
-
     void dbgPrint                           (char* p_str) override;
-
-    private:
-
-    typedef void (* attributeFunc_t)    (tuiDrvGraphic_t*, uint8_t);
-    static attributeFunc_t  g_attributeMode_Frame[static_cast<uint8_t>(tuiMode_t::num)];
-    static void attributeMode_frameDeselect     (tuiDrvGraphic_t* p_this, uint8_t p_status);
-    static void attributeMode_frameSelect       (tuiDrvGraphic_t* p_this, uint8_t p_status);
-    static void attributeMode_frameEventOn      (tuiDrvGraphic_t* p_this, uint8_t p_status);
-    static attributeFunc_t  g_attributeMode_Line[static_cast<uint8_t>(tuiMode_t::num)];
-    static void attributeMode_lineDeselect      (tuiDrvGraphic_t* p_this, uint8_t p_status);
-    static void attributeMode_lineSelect        (tuiDrvGraphic_t* p_this, uint8_t p_status);
-    static void attributeMode_lineEventOn       (tuiDrvGraphic_t* p_this, uint8_t p_status);
-
-    // OUTPUT function section - END
-    // ************************************************************************
-
-    // ************************************************************************
-    // INPUT function section - START
+    void dbgPrint                           (uint16_t p_x, uint16_t p_y, char* p_str) override;
+    // section end   **** DEBUG OUTPUT/DISPLAY functions *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** INPUT/(KEYBOARD-MOUSE) functions *****
 
     protected:
 
-    bool uiEventStatus                      (void) override;
-    int uiEventKeyCode                      (void) override;
-    tuiEventCode_t  uiHandlerEventCode      (void) override;
-    bool uiMouseEventStatus                 (void) override;
-    bool uiMouseEventCode_ButtonPressed     (void) override;
+    bool    uiEventStatus                       (void) override;
+    int     uiEventKeyCode                      (void) override;
+    tuiEventCode_t  uiHandlerEventCode          (void) override;
+    bool    uiMouseEventStatus                  (void) override;
+    bool    uiMouseEventCode_ButtonPressed      (void) override;
 
     private:
 
     static int g_ncursEventCode;
     static MEVENT g_mouseEvent;
 
-    // INPUT function section - END
-    // ************************************************************************
+    // section end   **** INPUT/(KEYBOARD-MOUSE) functions *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** DEBUG *****
+
+    public:
+    void    dbgSetChildrenNumber    (uint8_t p_childrenNumber);
+
+    uint8_t g_childrenNumber;
+    // section end   **** DEBUG *****
+    // ****************************************************
+    // --------------------------
+
 
 
 };

@@ -59,10 +59,15 @@ public:
 
     virtual void content                            (char* p_str, uint8_t p_size) = 0;
     virtual void content                            (uint8_t p_begin) = 0;
+    virtual bool content                            (tuiMode_t p_mode, char* p_str, uint8_t p_size) = 0;
     virtual void content                            (char* p_str, uint8_t p_begin, uint8_t p_size) = 0;
 
-    virtual void stringPrint                        ([[maybe_unused]] uint8_t p_rowMarker, [[maybe_unused]] bool p_select, [[maybe_unused]] char* p_pStr, [[maybe_unused]] uint32_t p_strSize) {};
-    virtual void debugPrint                         ([[maybe_unused]] uint32_t p_dbgParam1, [[maybe_unused]] uint32_t p_dbgParam2, [[maybe_unused]] char* p_pStr) {};
+    virtual void stringPrint                        (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize) = 0;
+    virtual bool stringPrint                        (tuiMode_t p_mode, uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize) = 0;
+    virtual void stringPrint2                       (uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize) = 0;
+    virtual bool stringPrint2                       (tuiMode_t p_mode, uint8_t p_rowMarker, bool p_select, char* p_pStr, uint32_t p_strSize) = 0;
+
+    virtual void debugPrint                         ([[maybe_unused]] uint32_t p_dbgParam1, [[maybe_unused]] uint32_t p_dbgParam2, [[maybe_unused]] char* p_pStr) = 0;
 //
 //    virtual void frameBox                           (const char* g_strName) = 0;
 //    virtual bool frameBox                           (tuiMode_t p_mode, const char* g_strName) = 0;
@@ -86,6 +91,7 @@ public:
     virtual bool isSelectedOrEventOn                (void) = 0;
 
     virtual void dbgPrint                           (char* p_str) = 0;
+    virtual void dbgPrint                           (uint16_t p_x, uint16_t p_y, char* p_str) = 0;
 
     // INPUT
     virtual bool uiEventStatus                      (void) = 0;

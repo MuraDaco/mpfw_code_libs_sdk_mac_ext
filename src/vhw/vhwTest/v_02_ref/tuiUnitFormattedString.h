@@ -22,27 +22,27 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitTextUsart.h
+ * tuiUnitFormattedString.h
  *
- *  Created on: Oct, 25th 2024
+ *  Created on: Nov, 15th 2024 (Fri) 
  *      Author: Marco Dau
  */
  
-#ifndef TUI_UNIT_DEBUG_H
-#define TUI_UNIT_DEBUG_H
+#ifndef TUI_UNIT_FORMATTED_STRING_H
+#define TUI_UNIT_FORMATTED_STRING_H
 
 #include "tuiUnitAbstract.h"
-#include "dtyUint8.h"
+#include "dtyString.h"
 
 #include "tuiGraphicAbstract.h" // cross dependency - top
 #include "tuiGraphicUnit.h"     // cross dependency - top
 
 
-class tuiUnitTextUsart_t :    public tuiUnitAbstract_t
+class tuiUnitFormattedString_t :    public tuiUnitAbstract_t
 {
 
 public:
-    tuiUnitTextUsart_t       (const char* p_strName  ,dtyUint8_t* p_pDtyStatus = nullptr   );
+    tuiUnitFormattedString_t       (const char* p_strName  ,dtyString_t* p_pString = nullptr   );
 
 protected:
    
@@ -88,10 +88,10 @@ private:
     // --------------------- Generic  Data section - END
 
     // --------------------- Specific Data section - START
-    [[maybe_unused]] dtyUint8_t* g_pDtyStatus;
+    dtyString_t* g_pString;
     // --------------------- Specific Data section - END
 
 };
 
 
-#endif 	// TUI_UNIT_DEBUG_H
+#endif 	// TUI_UNIT_FORMATTED_STRING_H

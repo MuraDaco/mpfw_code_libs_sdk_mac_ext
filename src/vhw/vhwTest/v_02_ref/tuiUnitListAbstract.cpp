@@ -41,6 +41,7 @@ tuiUnitListAbstract_t::tuiUnitListAbstract_t      (const char* p_strName, tuiGra
 {}
 
 bool tuiUnitListAbstract_t::init   	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+    initChildren(p_this);
     return true;
 }
 
@@ -75,6 +76,14 @@ bool tuiUnitListAbstract_t::initChildren       (tuiGraphicUnit_t* p_this) 	{
     return true;
 }
 
+void tuiUnitListAbstract_t::display     	    (tuiGraphicAbstract_t* p_this)  {
+    p_this->frameNnameTest(g_strName);
+}
+
+void tuiUnitListAbstract_t::display     	    (tuiGraphicAbstract_t* p_this, bool p_recursively)  {
+    display(p_this);
+    if(p_recursively) displayChildren(p_this, p_recursively);
+}
 
 void tuiUnitListAbstract_t::displayChildren     ([[maybe_unused]] tuiGraphicAbstract_t* p_this, bool p_recursively)    {
     if(g_bChildrenSetEmpty) return;

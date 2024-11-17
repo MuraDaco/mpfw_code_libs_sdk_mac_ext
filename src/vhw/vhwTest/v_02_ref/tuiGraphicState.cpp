@@ -41,6 +41,9 @@ tuiGraphicState_t*    tuiGraphicState_t::g_poEventOn  = nullptr;
 uint8_t             tuiGraphicState_t::g_debugStatus = 0;
 uint8_t             tuiGraphicState_t::g_debugStatusX = 0;
 
+tuiGraphicState_t::tuiGraphicState_t       (void)   :
+    g_eventStatus   {true}
+{}
 
 void tuiGraphicState_t::selectNeventOnInit          (void)  {
     g_poSelected    = this;
@@ -419,7 +422,7 @@ void tuiGraphicState_t::deselectBackNeventOn     (void)    {
         return; // the current eventOn element is equal to the next eventOn element, therefore ... do nothing!!! exit
 
     
-    if(eventOnTst())    {
+    if(getEventStatus())    {
         // the current element has a plenty event array
         if(g_poSelected)    {
             tuiGraphicState_t* l_poCommonAncestor = searchCommonAncestor();
@@ -460,3 +463,12 @@ void tuiGraphicState_t::parentDeselectBackNeventOn     	    (void)  {
     if(g_pParent)
         g_pParent->deselectBackNeventOn();
 }
+
+bool tuiGraphicState_t::getEventStatus                     (void)   {
+    return g_eventStatus;
+}
+
+void tuiGraphicState_t::setEventStatus                     (bool p_eventStatus) {
+    g_eventStatus = p_eventStatus;
+}
+

@@ -77,16 +77,14 @@ class dtyProtocolData_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataType
     bool    bLoopInitDisplay                (uint8_t p_id, void* p_pParent)    override;
     void    initDisplay                     (uint8_t p_id, void* p_pParent)    override;
     bool    resetLoopElement                (void)  override;
-    bool    selectElementByMouse            (void)  override;
     int32_t getDeltaShiftBySelect           (void)  override;
-    void    shiftLoopElementBySelect        (int32_t p_delta)  override;
     void    updSelectElement                (void)  override;
     void    clearDisplayBox                 (void)  override;
     bool    updCntnrRelCoord                (int32_t p_delta)  override;
-    void    shiftLoopElementRollUp          (void)  override;
-    void    shiftLoopElementRollDown        (void)  override;
+    void    shiftLoopElementRollUp          (void)  override; // test
+    void    shiftLoopElementRollDown        (void)  override; // test
     void    updElementCoordNbounds          (void)  override;
-    void    dspElement                      ([[maybe_unused]] bool p_recursively)   override;
+    void    dspElement                      ([[maybe_unused]] bool p_recursively)   override; // test
     bool    nextLoopElement                 (void)  override;
 
 
@@ -126,8 +124,8 @@ class dtyProtocolData_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataType
 // section start **** LOOP MANAGEMENT *****
     private:
 
-    tuiUnitProtocolData_t   g_dBLoopTuiUnit;              // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to update its g_pBuf & g_bufSize paramters every time you start to use it
     tuiGraphicUnitBase_t    g_dBLoopTuiGraphic;           // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to call init procedure every time you start to use it
+    tuiUnitProtocolData_t   g_dBLoopTuiUnit;              // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to update its g_pBuf & g_bufSize paramters every time you start to use it
     uint32_t    g_loopIdHeader;     // it can be defined as static; it is a temporary variable
     uint32_t    g_loopIdData;       // it can be defined as static; it is a temporary variable
     uint32_t    g_loopDataSize;     // it can be defined as static; it is a temporary variable
@@ -175,6 +173,9 @@ class dtyProtocolData_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataType
 // section start **** SELECT *****
 
     private:
+
+    bool selectElementByMouse           (void) override;
+    void shiftLoopElementBySelect       (int32_t p_delta)  override;
     bool setSelectPrev                  (void) override;
     bool setSelectNext                  (void) override;
     bool bSelectVisibleCompletely       (void) override;

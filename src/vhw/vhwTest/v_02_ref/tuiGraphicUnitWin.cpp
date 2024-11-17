@@ -68,7 +68,7 @@ bool tuiGraphicUnitWin_t::init       (tuiGraphicUnit_t* p_pParent) 	{
 
     g_status = tuiMode_t::undefined;
 
-    g_pUnit->initChildren(this);
+    g_pUnit->init(this);
 
     return true;
 }
@@ -88,10 +88,6 @@ void tuiGraphicUnitWin_t::end 	        (void)      {
 void tuiGraphicUnitWin_t::endChildren  (void)      {
 }
 
-
-bool tuiGraphicUnitWin_t::eventOnTst       (void)  {
-    return true;
-}
 
 void tuiGraphicUnitWin_t::debug_01         (void)  {
 

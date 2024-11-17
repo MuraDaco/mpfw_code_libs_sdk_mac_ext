@@ -32,9 +32,11 @@
 #define TUI_GRAPHIC_APP_MAIN_H
 
 #include "tuiUnitDebug.h"
+#include "tuiUnitFormattedString.h"
 #include "tuiUnitListDebug.h"
 #include "tuiUnitEbox.h"
 #include "tuiUnitSet.h"
+#include "dtyProtocolData.h"
 #include "dtyTuiGraphic.h"
 #include "tuiUnitCntnrList.h"
 
@@ -54,15 +56,31 @@ public:
     static tuiUnitDebug_t           g_unitDebug_7;
     static tuiUnitDebug_t           g_unitDebug;
     static tuiUnitDebug_t           g_unitDebugA;
+    static char                     g_fmtString[150];
+    static dtyString_t              g_dtyStringA;
+    static tuiUnitFormattedString_t g_unitStringA;
 
     static char                     usartBuffer[1000];
     static dtyBaseArray_t           usartString;
     static tuiUnitEbox_t            g_unitEbox_1;
 
+    static tuiGraphicUnitBase_t     g_arraySubCntnrDebug[];
+    static dtyTuiGraphic_t          g_SubCntnrDebug;
+    static tuiUnitCntnrList_t       g_unitSubCntnrWin_T;
+
+
+    static uint8_t                  g_initBufferIn1[];
+    static uint8_t                  g_initBufferIn2[];
+    static uint8_t                  g_initBufferIn3[];
+    static dtyBuffer_t              g_initUsartTextCntnr[];
+    static uint8_t                  g_stringBuffer[1000000];
+    static dtyProtocolData_t        g_cntrString;
+    static tuiUnitCntnrList_t       g_unitTextUsart_1;
+
     static tuiGraphicUnitBase_t     g_setDebug[];
     static tuiGraphicUnitBase_t     g_arrayCntnrDebug[];
     static tuiGraphicUnitWin_t      g_setWinDebug[];
-
+    static tuiGraphicUnitBase_t     g_setSubDebug2[];
     static dtyTuiGraphic_t          g_CntnrDebug;
 
     static tuiUnitListDebug_t       g_unitDebugWin_1;

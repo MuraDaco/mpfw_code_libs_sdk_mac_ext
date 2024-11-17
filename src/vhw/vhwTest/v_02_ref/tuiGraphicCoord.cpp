@@ -108,6 +108,7 @@
 
         initCoordNdspBox();
         initBoundsBase();
+        if(!g_w) updDimW();
     }
 
     void tuiGraphicCoord_t::initCoordWin       (void) 	{

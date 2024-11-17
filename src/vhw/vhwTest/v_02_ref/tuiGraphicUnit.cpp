@@ -58,9 +58,7 @@ void tuiGraphicUnit_t::display          (void)  {
 }
 
 void tuiGraphicUnit_t::display          (bool p_recursively)  {
-    g_pUnit->display(this);
-
-    if(p_recursively)   g_pUnit->displayChildren(this, p_recursively);
+    g_pUnit->display(this, p_recursively);
 }
 
 // --------------------- Container section - START

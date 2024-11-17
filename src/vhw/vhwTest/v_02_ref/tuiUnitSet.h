@@ -56,8 +56,8 @@ protected:
 
     // --------------------- Display section - START
     void clear                  (tuiGraphicAbstract_t* p_this) override;
-    void display                (tuiGraphicAbstract_t* p_this) override;
-    void display                (tuiGraphicAbstract_t* p_this, bool p_recursively) override;
+    // void display                (tuiGraphicAbstract_t* p_this) override;
+    // void display                (tuiGraphicAbstract_t* p_this, bool p_recursively) override;
     // void displayChildren        (tuiGraphicAbstract_t* p_this, bool p_recursively) override; --> implemented in derived class tuiUnitListAbstract_t
     // void refreshChildren        (tuiGraphicAbstract_t* p_this) override; --> implemented in derived class tuiUnitListAbstract_t
     // --------------------- Display section - END

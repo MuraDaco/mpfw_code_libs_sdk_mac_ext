@@ -166,6 +166,7 @@ class tuiGraphicCoord_t  {
     // --------------------------
 // ****************************************************
 // section start **** BOUNDS *****
+    public:
     //      - horizontal coords
     int32_t     getBoundXleft       (void) ;
     int32_t     getBoundXright      (void) ;
@@ -177,6 +178,7 @@ class tuiGraphicCoord_t  {
     //      - all coords
     void        updBounds           (void) ;
 
+    protected:
     //  - bounds (N.B.: to set these bounds you must use "updBound" functions)
     int16_t g_boundXleft;
     int16_t g_boundXright;

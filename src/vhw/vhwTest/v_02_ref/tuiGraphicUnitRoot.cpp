@@ -60,13 +60,13 @@ bool tuiGraphicUnitRoot_t::init       (void) 	{
 
     // init its unit "friend"
     // 2.a init children and nephew graphic unit (recursive procedure)
-    g_pUnit->initChildren(this);
+    g_pUnit->init(this);
     // 2.b activate the handler event array of the current root window
     selectNeventOnInit();
     g_pUnit->eventOn(this);
 
     // 4. display children and nephew graphic unit (recursive procedure) 
-    g_pUnit->displayChildren(this, RECURSIVE_DISPLAY);
+    g_pUnit->display(this, true);
 
 
     return true;
@@ -142,10 +142,6 @@ void tuiGraphicUnitRoot_t::refreshWinChildren       (void)  {
     g_pUnit->displayChildren(this, false);
 }
 
-
-bool tuiGraphicUnitRoot_t::eventOnTst       (void)  {
-    return true;
-}
 
 void tuiGraphicUnitRoot_t::debug_01         (void)  {
 

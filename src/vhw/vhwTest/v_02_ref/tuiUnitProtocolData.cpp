@@ -36,7 +36,7 @@
 #define MIN(a,b) (a < b) ? a : b
 
 tuiUnitProtocolData_t::tuiUnitProtocolData_t (uint8_t* p_pBuf, uint32_t p_bufSize) :
-    tuiUnitAbstract_t       (nullptr)    
+    tuiUnitAbstract_t       ("-")    
     ,g_pBuf         {p_pBuf         }
     ,g_bufSize      {p_bufSize      }
 {}

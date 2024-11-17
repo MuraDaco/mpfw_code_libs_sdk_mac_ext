@@ -57,7 +57,6 @@ public:
     // --------------------- Display section - END
 
     // --------------------- State management section - START
-    bool eventOnTst    	        (void) override;
     void debug_01               (void) override;
     // --------------------- State management section - END
 

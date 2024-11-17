@@ -67,9 +67,9 @@ void tuiUnitCntnrList_t::display     	    (tuiGraphicAbstract_t* p_this)  {
     p_this->frameNnameTest(g_strName);
 }
 
-void tuiUnitCntnrList_t::display     	    (tuiGraphicAbstract_t* p_this, [[maybe_unused]] bool p_recursively)  {
+void tuiUnitCntnrList_t::display     	    (tuiGraphicAbstract_t* p_this, bool p_recursively)  {
     display(p_this);
-
+    if(p_recursively) displayChildren(p_this, p_recursively);
 }
 
 

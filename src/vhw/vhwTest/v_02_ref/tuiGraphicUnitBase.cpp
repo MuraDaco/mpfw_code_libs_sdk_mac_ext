@@ -90,10 +90,6 @@ void tuiGraphicUnitBase_t::updParamsAfterParentMod    (void)       {
 
 // --------------------- Container section - END
 
-bool tuiGraphicUnitBase_t::eventOnTst       (void)  {
-    return true;
-}
-
 void tuiGraphicUnitBase_t::debug_01         (void)  {
 
 }

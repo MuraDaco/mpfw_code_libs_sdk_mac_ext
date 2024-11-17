@@ -40,6 +40,7 @@ tuiUnitCntnrAbstract_t::tuiUnitCntnrAbstract_t      (const char* p_strName, dtyB
 {}
 
 bool tuiUnitCntnrAbstract_t::init   	            ([[maybe_unused]] tuiGraphicUnit_t* p_this)  {
+    initChildren(p_this);
     return true;
 }
 
@@ -68,9 +69,9 @@ void tuiUnitCntnrAbstract_t::refreshChildren     ([[maybe_unused]] tuiGraphicAbs
 
 bool tuiUnitCntnrAbstract_t::selectByMouse     (tuiGraphicAbstract_t* p_this)    {
 
-    if(!g_pCntnr->selectElementsByMouse()) {
-        p_this->deselectBackNeventOn();
-    }
+    g_pCntnr->selectElementsByMouse();
+    p_this->deselectBackNeventOn();
+
     return true;
 }
 
@@ -91,8 +92,10 @@ void tuiUnitCntnrAbstract_t::vEventHndlKey_down	        ([[maybe_unused]] tuiGra
 
 void tuiUnitCntnrAbstract_t::vEventHndlKey_enter	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
     tuiGraphicUnit_t* l_element = static_cast<tuiGraphicUnit_t*>(g_pCntnr->getSelect());
-    if(l_element->isSelected())  {
-       l_element->deselectBackNeventOn();
+    if(l_element)   {
+        if(l_element->isSelected())  {
+           l_element->deselectBackNeventOn();
+        }
     }
 
 }

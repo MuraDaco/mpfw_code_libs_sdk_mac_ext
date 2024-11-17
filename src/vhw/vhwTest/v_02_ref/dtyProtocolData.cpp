@@ -27,22 +27,29 @@
  *  Created on: Nov, 10th 2024
  *      Author: Marco Dau
  */
- 
+
+// debug 
+#include <iostream>
+#include <stdexcept>
 
 #include "dtyProtocolData.h"
 
-#define DB_HEADER_UNDEFINED         0xFFFFFFFF
 
 // ****************************************************
 // section start **** CONSTRUCTOR *****
 
+    #define DB_HEADER_UNDEFINED         0xFFFFFFFF
+
     dtyProtocolData_t::dtyProtocolData_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize) :
+    // section - DATA MANAGEMENT
          g_pBuf                         {p_pBuf             }
         ,g_bufSize                      {p_bufSize          }
         ,g_writeHeaderIdCurrent         {0                  }
         ,g_writeDataIdCurrent           {p_bufSize          }
+    // section - LOOP MANAGEMENT
+        ,g_dBLoopTuiGraphic             {&g_dBLoopTuiUnit,box_t({8,0,0,0})   }
         ,g_dBLoopTuiUnit                {p_pBuf, p_bufSize  }
-        ,g_dBLoopTuiGraphic             {&g_dBLoopTuiUnit   }
+    // section - SELECT
         ,g_selectHeaderId               {DB_HEADER_UNDEFINED}
         ,g_selectHeaderIdOld            {DB_HEADER_UNDEFINED}
     {
@@ -141,13 +148,26 @@
     }
 
     //void    initDisplay                     (uint8_t p_id, void* p_pParent)    override;
+    // to be improved
     void dtyProtocolData_t::initDisplay                ([[maybe_unused]] uint8_t p_id, void* p_pParent)  {
         g_dBLoopTuiGraphic.init(P_P_PARENT);
+
         g_displayBoxW = P_P_PARENT->getDspAreaDimXw();
         g_displayBoxH = P_P_PARENT->getDspAreaDimYh();
+        // // test
+        // g_displayBoxW = 20;
+        // g_displayBoxH = 8;
 
         initDisplayBeginParams(getBlockDataIdHeaderPrev(g_writeHeaderIdCurrent));    
         g_selectHeaderId = getBlockDataIdHeaderPrev(g_writeHeaderIdCurrent);
+
+        //try { 
+        //    if(g_displayBoxW != 20) throw 42; 
+        //} catch (int i) {
+        //    std::cout << " the integer exception was caught, with value: " << i << '\n';
+        //    std::exit(i);
+        //}
+
     }
 
 
@@ -164,10 +184,10 @@
 
             // start the procedure/loop to display elments of the container
             for(;;) {
-
                 g_dBLoopTuiGraphic.setDimH(g_loopH);
-                g_dBLoopTuiGraphic.setRelCoordY(g_loopY0r);
-                g_dBLoopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
+                g_dBLoopTuiGraphic.initRelCoordS(0, g_loopY0r);
+                g_dBLoopTuiGraphic.updParamsAfterParentMod();
+                //g_dBLoopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
 
                 if(g_dBLoopTuiGraphic.bMouseClickInsideBounds()) {
                     g_selectHeaderId = g_loopIdHeader;
@@ -180,8 +200,9 @@
                         shiftLoopElementBySelect(0);
                     }
 
+                    // BE CAREFUL !!! The following instruction modifies the "loop" parameters (g_dBLoopTuiGraphic), therefore ...
                     dspElement(false);
-                    // important !!! here you must break the loop because "loop" parameters have been modified by prevoius functions
+                    // ... you must break the "for" loop
                     return true;
                 }
 
@@ -221,7 +242,6 @@
             // select-Element is different than displayBegin-element
             setDisplayBeginParams(g_selectHeaderId, kPosition_t::bottom);
         }
-
     }
 
     // void    updSelectElement                (void)  override;
@@ -239,7 +259,6 @@
 
     // void    shiftLoopElementRollUp          (void)  override;
     void dtyProtocolData_t::shiftLoopElementRollUp           (void)    {
-
         if(!bDisplayLastRowVsLowerBound())   {
             // shift up the current display-begin element
             g_displayBeginY0r--;
@@ -291,7 +310,6 @@
             }
 
         }
-
     }
 
     // void    updElementCoordNbounds          (void)  override;
@@ -307,6 +325,14 @@
 
     // void    dspElement                      ([[maybe_unused]] bool p_recursively)   override;
     void dtyProtocolData_t::dspElement                   ([[maybe_unused]] bool p_recursively)  {
+
+        //try { 
+        //    if(g_displayBoxW != 20) throw 42;
+        //} catch (int i) {
+        //    std::cout << " the g_displayBoxW was modified with value: " << static_cast<uint16_t>(g_displayBoxW) << '\n';
+        //    std::exit(i);
+        //}
+
 
         if(loopInit(g_displayBeginIdHeader, g_displayBeginY0r))    {
             // container is NOT empty, therefore ...
@@ -479,6 +505,7 @@
     // void        loopTuiParamSet                 (void);
     void dtyProtocolData_t::loopTuiParamSet   (void) {
             // set all parameters to display element
+            //g_displayBoxW = 20; // test
             g_loopY0r       = g_loopRows;
             g_loopMarker    = getBlockDataMarker(g_loopIdHeader);
             g_loopIdData    = getBlockDataId    (g_loopIdHeader);

@@ -37,7 +37,8 @@
 
 class tuiGraphicState_t {
 
-
+    protected:
+    tuiGraphicState_t       (void);
     // ---------------------  INTERFACE section - START
     protected:
     virtual bool select     	        (void) = 0;
@@ -45,7 +46,6 @@ class tuiGraphicState_t {
     virtual void eventOn    	        (void) = 0;
     virtual bool selectByMouse 	        (void) = 0;
     virtual bool selectTst              (void) = 0;
-    virtual bool eventOnTst             (void) = 0;
 
     virtual void dbgState_01            (void) = 0;    
     virtual void dbgState_01            (bool p_test) = 0;    
@@ -58,9 +58,12 @@ public:
     void setParent                          (tuiGraphicState_t* p_pParent);
     tuiGraphicState_t* getParent            (void);
     void parentDeselectBackNeventOn         (void);
+    bool getEventStatus                     (void);
+    void setEventStatus                     (bool p_eventStatus);
 
 
 protected:
+    bool g_eventStatus;
     tuiMode_t g_mode;
     tuiMode_t g_status;
 private:
