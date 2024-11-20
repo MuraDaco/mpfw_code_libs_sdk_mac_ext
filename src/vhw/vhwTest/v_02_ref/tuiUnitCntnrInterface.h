@@ -31,11 +31,34 @@
 #ifndef TUI_UNIT_CNTNR_INTERFACE_H
 #define TUI_UNIT_CNTNR_INTERFACE_H
 
+class dtyString_t;
+class dtyStringInfo_t;
+class tuiGraphicAbstract_t;
+
 class tuiUnitCntnrInterface_t {
 
 public:
 
+// ****************************************************
+// section start **** CHILDREN MANAGEMENT *****
+
+    // to be implemented whether the class manages children
     virtual void updCoordNboundsChilds          (void) {};
+
+    // section end   **** CONSTRUCTOR *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** STREAM CONTAINER DATA BLOCK MANAGEMENT *****
+
+    virtual void cntnrInit           ([[maybe_unused]] dtyString_t* p_pString, [[maybe_unused]] dtyStringInfo_t* p_pStringInfo) {};
+    virtual void cntnrUpdParams      ([[maybe_unused]] tuiGraphicAbstract_t* p_this) {};
+
+    // section end   **** STREAM CONTAINER DATA BLOCK MANAGEMENT *****
+    // ****************************************************
+    // --------------------------
+
+
 
 };
 

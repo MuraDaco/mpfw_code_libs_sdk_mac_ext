@@ -35,7 +35,7 @@
 #include <cstdint>
 
 
-struct dtyString_t {
+class dtyString_t {
 
     public:
     dtyString_t (void);

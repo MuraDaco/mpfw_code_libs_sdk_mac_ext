@@ -97,8 +97,8 @@ class tuiUnitFormattedStringCntnr_t :    public tuiUnitAbstract_t, dtyProtocolDa
 // section start **** CONTAINER *****
 
     public:
-    void cntnrInit           (dtyString_t* p_pString, dtyStringInfo_t* p_pStringInfo);
-    void cntnrUpdParams      (tuiGraphicAbstract_t* p_this);
+    void cntnrInit           (dtyString_t* p_pString, dtyStringInfo_t* p_pStringInfo) override;
+    void cntnrUpdParams      (tuiGraphicAbstract_t* p_this) override;
 
     // section end   **** CONTAINER *****
     // ****************************************************

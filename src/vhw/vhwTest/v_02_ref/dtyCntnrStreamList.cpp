@@ -40,15 +40,15 @@
 
     #define DB_HEADER_UNDEFINED         0xFFFFFFFF
 
-    dtyCntnrStreamList_t::dtyCntnrStreamList_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize) :
+    dtyCntnrStreamList_t::dtyCntnrStreamList_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize, tuiUnitAbstract_t*  p_loopPTuiUnit, tuiGraphicAbstract_t*  p_loopPTuiGraphic) :
     // section - DATA MANAGEMENT
          g_pBuf                         {p_pBuf             }
         ,g_bufSize                      {p_bufSize          }
         ,g_writeHeaderIdCurrent         {0                  }
         ,g_writeDataIdCurrent           {p_bufSize          }
     // section - LOOP MANAGEMENT
-        ,g_loopTuiGraphic               {&g_loopTuiUnit,box_t({8,0,0,0})   }
-        //,g_loopTuiUnit                  {p_pBuf, p_bufSize  }
+        ,g_loopPTuiUnit                 {p_loopPTuiUnit}
+        ,g_loopPTuiGraphic               {p_loopPTuiGraphic}
     // section - SELECT
         ,g_selectHeaderId               {DB_HEADER_UNDEFINED}
         ,g_selectHeaderIdOld            {DB_HEADER_UNDEFINED}
@@ -75,7 +75,7 @@
     // ****************************************************
     // --------------------------
 // ****************************************************
-// section start **** DATA MANAGEMENT: READ/WRITE *****
+// section start **** STRUCT & DATA STREAM MANAGEMENT: READ/WRITE *****
 
     #define MARKER_START_POS        0   // 2-byte
     #define DATA_LENGTH_POS         2   // 2-byte
@@ -199,7 +199,7 @@
 
 
 
-    // section end   **** DATA MANAGEMENT: READ/WRITE ***** 
+    // section end   **** STRUCT & DATA STREAM MANAGEMENT: READ/WRITE ***** 
     // ****************************************************
     // --------------------------
 // ****************************************************
@@ -223,8 +223,8 @@
 
     // void        loopTuiParamSet                 (void);
     void dtyCntnrStreamList_t::loopTuiParamSet   (void) {
+
             // set all parameters to display element
-            //g_displayBoxW = 20; // test
             g_loopY0r       = g_loopRows;
             g_loopSelect    = (g_loopIdHeader == g_selectHeaderId);
             g_loopMarker    = getBlockDataMarker(g_loopIdHeader);
@@ -232,59 +232,15 @@
             g_loopPStringInfo.g_marker  = g_loopMarker;
             g_loopPString.setString(reinterpret_cast<char*>(&g_pBuf[getBlockDataId    (g_loopIdHeader)]));
             g_loopPString.setLength(getBlockDataSize  (g_loopIdHeader));
-            // g_loopH         =   (g_loopDataSize / g_displayBoxW);
-            // g_loopH         +=  (g_loopDataSize % g_displayBoxW) ? 1 : 0;
-            g_loopTuiUnit.cntnrUpdParams(&g_loopTuiGraphic);
-            g_loopH = g_loopTuiGraphic.getDimH();
+
+            g_loopPTuiUnit->cntnrUpdParams(g_loopPTuiGraphic);
+            g_loopPTuiGraphic->setRelCoordY(g_loopY0r);
+            g_loopH = g_loopPTuiGraphic->getDimH();
 
             g_loopRows      +=  g_loopH;
 
-            
-            // // **************
-            //     g_loopTuiGraphic.setDimH(g_loopH);
-            //     g_loopTuiGraphic.initRelCoordS(0, g_loopY0r);
-            //     g_loopTuiGraphic.updParamsAfterParentMod();
-            //     //g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
-            //     if(g_loopTuiGraphic.bMouseClickInsideBounds()) {
-
-            // // **************
-            //     g_loopTuiGraphic.setDimH(g_loopH);
-            //     g_loopTuiGraphic.setRelCoordY(g_loopY0r);
-            //     g_loopTuiUnit.updParams(&g_loopTuiGraphic, &g_pBuf[g_loopIdData], g_loopDataSize, g_loopSelect, g_loopMarker);
-            //     // display tui element
-            //     g_loopTuiGraphic.display();
-
-            // // **************
-            //     g_loopTuiGraphic.setDimH(g_loopH);
-            //     g_loopTuiGraphic.setRelCoordY(g_loopY0r);
-            //     g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker); // maybe unuseful, it can be remove
-            //     // check status of the loop
-            //     if(loopDisplayEnd()) break;
-
     }
 
-    /*
-    void dtyCntnrStreamList_t::loopTuiParamSet   (void) {
-            // set all parameters to display element
-            //g_displayBoxW = 20; // test
-            g_loopY0r       = g_loopRows;
-            g_loopMarker    = getBlockDataMarker(g_loopIdHeader);
-            g_loopIdData    = getBlockDataId    (g_loopIdHeader);
-            g_loopDataSize  = getBlockDataSize  (g_loopIdHeader);
-            g_loopSelect    = (g_loopIdHeader == g_selectHeaderId);
-
-            // update data 
-            g_loopTuiGraphic.setRelCoordY(g_loopY0r);
-            g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
-
-            // get element height dimension
-            // g_loopH         =   (g_loopDataSize / g_displayBoxW);
-            // g_loopH         +=  (g_loopDataSize % g_displayBoxW) ? 1 : 0;
-            g_loopH = g_loopTuiGraphic.getDimH();
-
-            g_loopRows      +=  g_loopH;
-    }
-    */
     // bool        loopInit                        (uint32_t p_idHeader, int32_t p_y0r);
     bool dtyCntnrStreamList_t::loopInit   (uint32_t p_idHeader, int32_t p_y0r) {
         // check header position
@@ -344,7 +300,7 @@
     void dtyCntnrStreamList_t::updElementCoordNbounds       (void)    {
         // the display-BOX (that is the display-BOX of the owner of the current container) has been modified, so
         // the initialization params of tui element associate to container data block must be done
-        g_loopTuiGraphic.updParamsAfterParentMod();
+        g_loopPTuiGraphic->updParamsAfterParentMod();
 
         // N.B.: the relative coords of display-BEGIN element (that is, the data block begin) remain the same, therefore ...
         // do not other things
@@ -352,87 +308,80 @@
     }
 
 
-    //    // bool    bLoopInitDisplay                (uint8_t p_id, void* p_pParent)    override;
-    //    bool dtyCntnrStreamList_t::bLoopInitDisplay           (uint8_t p_id, void* p_pParent)    {
-    //        bool l_result = false;
-    //        if(p_id)    {
-    //            // run body loop step
-    //
-    //            // the container is NOT empty, 
-    //            // the display-BEGIN parameters are already set to <p_idHeader> header, therefore ...
-    //
-    //            // start the procedure/loop to determine the "dispaly-begin" data block
-    //            // N.B. the "dispaly-BEGIN" data block must be such that 
-    //            //      1. the header of dispaly-END data block is equal to p_idHeader
-    //            //      and
-    //            //      2. the last row of display-BOX contains the last data trunk of dispaly-END data block
-    //
-    //            // run loop to determine the display-begin data block
-    //            if(!loopDisplayBegin()){
-    //                g_loopIdHeader    = getBlockDataIdHeaderPrev(g_loopIdHeader);
-    //                loopTuiParamSet();
-    //
-    //                l_result = true;
-    //            } else {
-    //                // determine the relative coord to associate to the current loop data block (that is the dispaly-begin data block) that respects the second condition reported above
-    //                //      that is: "2. the last row of display-box contains the last data trunk of dispaly-end data block"
-    //                if(g_displayBoxH > g_loopRows)  {
-    //                    // g_loopIdHeader (and so also g_displayBeginIdHeader) is equal to zero, therefore ...
-    //                    g_loopY0r = 0;
-    //                } else {
-    //                    // N.B.: g_displayBoxH <= g_loopRows so g_loopY0r <= 0
-    //                    //       but (g_loopY0r + g_displayBeginH) > 0 because 
-    //                    //       (g_loopY0r + g_displayBeginH) = (g_displayBoxH - (g_loopRows - g_displayBeginH)) = (g_displayBoxH - g_loopRows[minus one step]) > 0 
-    //                    //       so the display-Begin element will be partially displayed
-    //                    g_loopY0r = static_cast<int32_t>(g_displayBoxH - g_loopRows);
-    //                }
-    //
-    //                // 1. update the display-BEGIN parameters
-    //                g_displayBeginIdHeader      = g_loopIdHeader;
-    //                g_displayBeginIdData        = g_loopIdData;
-    //                g_displayBeginDataSize      = g_loopDataSize;
-    //                g_displayBeginH             = g_loopH;
-    //                g_displayBeginY0r           = g_loopY0r;
-    //
-    //                // it can be omitted
-    //                l_result = false;
-    //            }
-    //
-    //
-    //        }   else {
-    //            // run the frist loop step (that is init step)
-    //            g_loopTuiGraphic.init(P_P_PARENT);
-    //            g_displayBoxW = P_P_PARENT->getDspAreaDimXw();
-    //            g_displayBoxH = P_P_PARENT->getDspAreaDimYh();
-    //
-    //            g_selectHeaderId = getBlockDataIdHeaderPrev(g_writeHeaderIdCurrent);
-    //
-    //            loopInit(g_selectHeaderId,0);
-    //
-    //            l_result = true;
-    //        }
-    //        return l_result;
-    //    }
-
+    /* / bool    bLoopInitDisplay                (uint8_t p_id, void* p_pParent)    override;
+    bool dtyCntnrStreamList_t::bLoopInitDisplay           (uint8_t p_id, void* p_pParent)    {
+        bool l_result = false;
+        if(p_id)    {
+            // run body loop step
+    
+            // the container is NOT empty, 
+            // the display-BEGIN parameters are already set to <p_idHeader> header, therefore ...
+    
+            // start the procedure/loop to determine the "dispaly-begin" data block
+            // N.B. the "dispaly-BEGIN" data block must be such that 
+            //      1. the header of dispaly-END data block is equal to p_idHeader
+            //      and
+            //      2. the last row of display-BOX contains the last data trunk of dispaly-END data block
+    
+            // run loop to determine the display-begin data block
+            if(!loopDisplayBegin()){
+                g_loopIdHeader    = getBlockDataIdHeaderPrev(g_loopIdHeader);
+                loopTuiParamSet();
+    
+                l_result = true;
+            } else {
+                // determine the relative coord to associate to the current loop data block (that is the dispaly-begin data block) that respects the second condition reported above
+                //      that is: "2. the last row of display-box contains the last data trunk of dispaly-end data block"
+                if(g_displayBoxH > g_loopRows)  {
+                    // g_loopIdHeader (and so also g_displayBeginIdHeader) is equal to zero, therefore ...
+                    g_loopY0r = 0;
+                } else {
+                    // N.B.: g_displayBoxH <= g_loopRows so g_loopY0r <= 0
+                    //       but (g_loopY0r + g_displayBeginH) > 0 because 
+                    //       (g_loopY0r + g_displayBeginH) = (g_displayBoxH - (g_loopRows - g_displayBeginH)) = (g_displayBoxH - g_loopRows[minus one step]) > 0 
+                    //       so the display-Begin element will be partially displayed
+                    g_loopY0r = static_cast<int32_t>(g_displayBoxH - g_loopRows);
+                }
+    
+                // 1. update the display-BEGIN parameters
+                g_displayBeginIdHeader      = g_loopIdHeader;
+                g_displayBeginIdData        = g_loopIdData;
+                g_displayBeginDataSize      = g_loopDataSize;
+                g_displayBeginH             = g_loopH;
+                g_displayBeginY0r           = g_loopY0r;
+    
+                // it can be omitted
+                l_result = false;
+            }
+    
+    
+        }   else {
+            // run the frist loop step (that is init step)
+            g_loopPTuiGraphic->init(P_P_PARENT);
+            g_displayBoxW = P_P_PARENT->getDspAreaDimXw();
+            g_displayBoxH = P_P_PARENT->getDspAreaDimYh();
+    
+            g_selectHeaderId = getBlockDataIdHeaderPrev(g_writeHeaderIdCurrent);
+    
+            loopInit(g_selectHeaderId,0);
+    
+            l_result = true;
+        }
+        return l_result;
+    }
+    */
 
     //void    initDisplay                     (uint8_t p_id, void* p_pParent)    override;
     void dtyCntnrStreamList_t::initDisplay                ([[maybe_unused]] uint8_t p_id, void* p_pParent)  {
         // N.B.: this function is run inside a loop of only one cycle
-        g_loopTuiGraphic.init(P_P_PARENT);
-        g_loopTuiUnit.cntnrInit(&g_loopPString, &g_loopPStringInfo);
+        g_loopPTuiGraphic->init(P_P_PARENT);
+        g_loopPTuiUnit->cntnrInit(&g_loopPString, &g_loopPStringInfo);
 
-        g_displayBoxW = P_P_PARENT->getDspAreaDimXw();
-        g_displayBoxH = P_P_PARENT->getDspAreaDimYh();
+        g_displayBoxW = static_cast<tuiGraphicAbstract_t*>(p_pParent)->getDspAreaDimXw();
+        g_displayBoxH = static_cast<tuiGraphicAbstract_t*>(p_pParent)->getDspAreaDimYh();
 
         initDisplayBeginParams(getBlockDataIdHeaderPrev(g_writeHeaderIdCurrent));    
         g_selectHeaderId = getBlockDataIdHeaderPrev(g_writeHeaderIdCurrent);
-
-        //try { 
-        //    if(g_displayBoxW != 20) throw 42; 
-        //} catch (int i) {
-        //    std::cout << " the integer exception was caught, with value: " << i << '\n';
-        //    std::exit(i);
-        //}
 
     }
 
@@ -447,12 +396,9 @@
 
             // start the procedure/loop to display elments of the container
             for(;;) {
-                // init tui element
-                g_loopTuiGraphic.setDimH(g_loopH);
-                g_loopTuiGraphic.setRelCoordY(g_loopY0r);
-                // *** g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
+
                 // display tui element
-                g_loopTuiGraphic.display();
+                g_loopPTuiGraphic->display();
 
                 // check status of the loop
                 if(loopDisplayEnd()) break;
@@ -464,7 +410,7 @@
             }
         } else {
             // display tui element
-            g_loopTuiUnit.displayDebug(&g_loopTuiGraphic, g_writeHeaderIdCurrent, g_displayBeginIdHeader);
+            //g_loopPTuiUnit->displayDebug(&g_loopTuiGraphic, g_writeHeaderIdCurrent, g_displayBeginIdHeader);
         }
     }
 
@@ -542,10 +488,6 @@
             // start the procedure/loop to display elments of the container
             for(;;) {
 
-                g_loopTuiGraphic.setDimH(g_loopH);
-                g_loopTuiGraphic.setRelCoordY(g_loopY0r);
-                //****g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker); // maybe unuseful, it can be remove
-
                 // check status of the loop
                 if(loopDisplayEnd()) break;
 
@@ -622,65 +564,17 @@
 
         }
     }
-    /*
-    // old version; this version is OK
-    bool dtyCntnrStreamList_t::selectElementByMouse      (void)      {
-        if(loopInit(g_displayBeginIdHeader, g_displayBeginY0r))    {
-            // container is NOT empty, therefore ...
 
-            // start the procedure/loop to display elments of the container
-            for(;;) {
-                g_loopTuiGraphic.setDimH(g_loopH);
-                g_loopTuiGraphic.initRelCoordS(0, g_loopY0r);
-                g_loopTuiGraphic.updParamsAfterParentMod();
-                //g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
-
-                if(g_loopTuiGraphic.bMouseClickInsideBounds()) {
-                    g_selectHeaderId = g_loopIdHeader;
-
-                    // be carefull !!! "bSelectVisibleCompletely" function resets "loop" parameters
-                    if(bSelectVisibleCompletely())    {
-                        // element shift is not necessary
-                    } else {
-                        // be carefull !!! "bSelectVisibleCompletely" function resets "loop" parameters
-                        shiftLoopElementBySelect(0);
-                    }
-
-                    // BE CAREFUL !!! The following instruction modifies the "loop" parameters (g_loopTuiGraphic), therefore ...
-                    dspElement(false);
-                    // ... you must break the "for" loop
-                    return true;
-                }
-
-                // check status of the loop
-                if(loopDisplayEnd()) break;
-
-                // go to the next element to display
-                g_loopIdHeader      = getBlockDataIdHeaderNext(g_loopIdHeader);
-                // update tui element parameter
-                loopTuiParamSet();
-            }
-
-        }
-
-        return false;
-    }
-    */
-
-    // new version; this version seems OK but it must be tested deeply
-    bool dtyCntnrStreamList_t::selectElementByMouse      (void)      {
+    bool dtyCntnrStreamList_t::bFindSelectedElement     (void)  {
         bool l_result = false;
         if(loopInit(g_displayBeginIdHeader, g_displayBeginY0r))    {
             // container is NOT empty, therefore ...
 
             // start the procedure/loop to display elments of the container
             for(;;) {
-                g_loopTuiGraphic.setDimH(g_loopH);
-                g_loopTuiGraphic.initRelCoordS(0, g_loopY0r);
-                g_loopTuiGraphic.updParamsAfterParentMod();
-                //g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
 
-                if(g_loopTuiGraphic.bMouseClickInsideBounds()) {
+                g_loopPTuiGraphic->updParamsAfterParentMod();
+                if(g_loopPTuiGraphic->bMouseClickInsideBounds()) {
                     g_selectHeaderId = g_loopIdHeader;
                     l_result = true;
                     break;
@@ -694,26 +588,27 @@
                 // update tui element parameter
                 loopTuiParamSet();
             }
+        }
+        return l_result;
+    }
 
-            if(l_result)    {
-                // check the visibility status of element
-                if(
-                        (0 <= g_loopY0r)
-                    &&  (     g_loopY0r + g_loopH <= g_displayBoxH)
-                )   {
-                    // element is completely visible, therefore ...
-                    // element shift is not necessary,
-                    // do nothing
-                } else {
-                    // element is NOT completely visible, therefore ...
+    // new version; this version seems OK but it must be tested deeply
+    bool dtyCntnrStreamList_t::selectElementByMouse      (void)      {
+        bool l_result = bFindSelectedElement();
+        if(l_result)    {
+            // check the visibility status of element
+            if(bSelectVisibleCompletely())   {
+                // element is completely visible, therefore ...
+                // element shift is not necessary,
+                // do nothing
+            } else {
+                // element is NOT completely visible, therefore ...
 
-                    // shift element to the suitable position
-                    shiftLoopElementBySelect(0);
-                }
-
-                dspElement(false);
+                // shift element to the suitable position
+                shiftLoopElementBySelect(0);
             }
 
+            dspElement(false);
         }
 
         return l_result;
@@ -780,17 +675,9 @@
         bool l_result = false;
         if(loopInit(g_displayBeginIdHeader, g_displayBeginY0r))    {
             for(;;) {
-                // init tui element
                 if(g_loopSelect) {
-                    if(
-                            (0 <= g_loopY0r)
-                        &&  (     g_loopY0r + g_loopH <= g_displayBoxH)
-                    )
-                    {
-                        l_result = true;
-                        // exit from loop
-                        break;
-                    }
+                    l_result = g_loopPTuiGraphic->bVisibleCompletely();
+                    break;
                 }
 
                 // check status of the loop

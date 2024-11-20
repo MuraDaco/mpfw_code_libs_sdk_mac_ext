@@ -79,6 +79,9 @@ public:
     static uint8_t                  g_stringBuffer[1000000];
     static dtyProtocolData_t        g_cntrString;
     static tuiUnitCntnrList_t       g_unitTextUsart_1;
+
+    static tuiUnitFormattedStringCntnr_t    g_cntnrStreamString;
+    static tuiGraphicUnitBase_t             g_cntnrStreamGraphicUnit;
     static dtyCntnrStreamList_t     g_cntrStreamData_1;
     static tuiUnitCntnrList_t       g_unitTextUsart_2;
 

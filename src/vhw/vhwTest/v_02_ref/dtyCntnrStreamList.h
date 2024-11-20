@@ -52,13 +52,17 @@
 #define DTY_CNTNR_STREAM_LIST_H
 
 #include <cstdint>
-#include "tuiUnitFormattedStringCntnr.h"
-#include "tuiGraphicUnitBase.h"
+//#include "tuiUnitFormattedStringCntnr.h"
+#include "tuiUnitAbstract.h"
+//#include "tuiGraphicUnitBase.h"
+#include "tuiGraphicAbstract.h"
 #include "dtyBuffer.h"
 #include "dtyString.h"
 #include "dtyStringInfo.h"
 #include "dtyBaseCntnrUnitX.h"
 #include "dtyProtocolDataTypesDefs.h"
+
+class tuiGraphicUnit_t;
 
 class dtyCntnrStreamList_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataTypesDefs_t  {
 
@@ -66,13 +70,13 @@ class dtyCntnrStreamList_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataT
 // section start **** CONBSTRUCTOR *****
     public:
 
-    dtyCntnrStreamList_t  (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize);
+    dtyCntnrStreamList_t  (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize, tuiUnitAbstract_t*  p_loopPTuiUnit, tuiGraphicAbstract_t*  p_loopPTuiGraphic);
 
     // section end   **** CONBSTRUCTOR ***** 
     // ****************************************************
     // --------------------------
 // ****************************************************
-// section start **** DATA MANAGEMENT: READ/WRITE *****
+// section start **** STRUCT & DATA STREAM MANAGEMENT: READ/WRITE *****
 
     // sub-section ** READ **
     private:
@@ -97,7 +101,7 @@ class dtyCntnrStreamList_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataT
     uint32_t g_writeDataIdCurrent;
 
 
-    // section end   **** DATA MANAGEMENT: READ/WRITE ***** 
+    // section end   **** STRUCT & DATA STREAM MANAGEMENT: READ/WRITE ***** 
     // ****************************************************
     // --------------------------
 // ****************************************************
@@ -106,8 +110,8 @@ class dtyCntnrStreamList_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataT
 
     dtyString_t                     g_loopPString;
     dtyStringInfo_t                 g_loopPStringInfo;
-    tuiGraphicUnitBase_t            g_loopTuiGraphic;           // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to call init procedure every time you start to use it
-    tuiUnitFormattedStringCntnr_t   g_loopTuiUnit;              // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to update its g_pBuf & g_bufSize paramters every time you start to use it
+    tuiUnitAbstract_t*              g_loopPTuiUnit;             // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to update its g_pBuf & g_bufSize paramters every time you start to use it
+    tuiGraphicAbstract_t*           g_loopPTuiGraphic;          // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to call init procedure every time you start to use it
     uint32_t    g_loopIdHeader;     // it can be defined as static; it is a temporary variable
     uint32_t    g_loopIdData;       // it can be defined as static; it is a temporary variable
     uint32_t    g_loopDataSize;     // it can be defined as static; it is a temporary variable
@@ -170,8 +174,8 @@ class dtyCntnrStreamList_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataT
 
     private:
     // roll
-    void    shiftLoopElementRollUp          (void)  override; // test
-    void    shiftLoopElementRollDown        (void)  override; // test
+    void    shiftLoopElementRollUp          (void)  override;
+    void    shiftLoopElementRollDown        (void)  override;
     // select
     bool    selectElementByMouse            (void) override;
     void    shiftLoopElementBySelect        (int32_t p_delta)  override;
@@ -180,6 +184,7 @@ class dtyCntnrStreamList_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataT
     bool    setSelectPrev                   (void) override;
     bool    setSelectNext                   (void) override;
     bool    bSelectVisibleCompletely        (void) override;
+    bool    bFindSelectedElement            (void);
 
     uint32_t g_selectHeaderId;
     uint32_t g_selectHeaderIdOld;

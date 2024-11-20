@@ -62,7 +62,10 @@ uint8_t tuiGraphicAppMain_t::g_stringBuffer[1000000];
 dtyProtocolData_t tuiGraphicAppMain_t::g_cntrString (g_stringBuffer, sizeof(g_stringBuffer), g_initUsartTextCntnr, sizeof(g_initUsartTextCntnr));
 tuiUnitCntnrList_t  tuiGraphicAppMain_t::g_unitTextUsart_1("Text Usart 1", &g_cntrString);
 
-dtyCntnrStreamList_t tuiGraphicAppMain_t::g_cntrStreamData_1    (g_stringBuffer, sizeof(g_stringBuffer), g_initUsartTextCntnr, sizeof(g_initUsartTextCntnr));
+tuiUnitFormattedStringCntnr_t    tuiGraphicAppMain_t::g_cntnrStreamString;
+tuiGraphicUnitBase_t             tuiGraphicAppMain_t::g_cntnrStreamGraphicUnit  (&g_cntnrStreamString, box_t({8, 0, 0,  0}));
+
+dtyCntnrStreamList_t tuiGraphicAppMain_t::g_cntrStreamData_1    (g_stringBuffer, sizeof(g_stringBuffer), g_initUsartTextCntnr, sizeof(g_initUsartTextCntnr), &g_cntnrStreamString, &g_cntnrStreamGraphicUnit);
 tuiUnitCntnrList_t  tuiGraphicAppMain_t::g_unitTextUsart_2("New Text Usart 2", &g_cntrStreamData_1);
 
 

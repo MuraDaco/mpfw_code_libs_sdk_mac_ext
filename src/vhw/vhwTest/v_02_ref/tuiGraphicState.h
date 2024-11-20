@@ -40,11 +40,13 @@ class tuiGraphicState_t {
     protected:
     tuiGraphicState_t       (void);
     // ---------------------  INTERFACE section - START
+    public:
+    virtual bool selectByMouse 	        (void) = 0;
+
     protected:
     virtual bool select     	        (void) = 0;
     virtual bool deSelect   	        (void) = 0;
     virtual void eventOn    	        (void) = 0;
-    virtual bool selectByMouse 	        (void) = 0;
     virtual bool selectTst              (void) = 0;
 
     virtual void dbgState_01            (void) = 0;    
