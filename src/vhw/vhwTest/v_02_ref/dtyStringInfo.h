@@ -22,34 +22,26 @@
 //  *******************************************************************************
 
 /*
- * dtyString.h
+ * dtyStringInfo.h
  *
- *  Created on: Nov, 15h 2024 (Fri)
+ *  Created on: Nov, 18h 2024 (Mon)
  *      Author: Marco Dau
  */
  
-#ifndef DTY_STRING_H
-#define DTY_STRING_H
+#ifndef DTY_STRING_INFO_H
+#define DTY_STRING_INFO_H
 
 #include <stddef.h>
 #include <cstdint>
 
+#include "dtyProtocolDataTypesDefs.h"
 
-struct dtyString_t {
+class dtyStringInfo_t: public dtyProtocolDataTypesDefs_t {
 
     public:
-    dtyString_t (void);
-    dtyString_t (char* p_pChar, size_t p_size);
-    uint16_t    getLength(void);
-    void        setLength(uint16_t);
-
-    char*       getString(void);
-    void        setString(char* p_pChar);
-
-    private:
-    char*   g_pChar;
-    size_t  g_size;
+    bool        g_select;
+    kMarker_t   g_marker;
 };
 
 
-#endif 	// DTY_STRING_H
+#endif 	// DTY_STRING_INFO_H

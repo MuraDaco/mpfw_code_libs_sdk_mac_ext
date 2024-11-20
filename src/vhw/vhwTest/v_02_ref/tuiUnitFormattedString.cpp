@@ -120,7 +120,8 @@ void tuiUnitFormattedString_t::eventOn    	        ([[maybe_unused]] tuiGraphicA
 }
 
 bool tuiUnitFormattedString_t::selectByMouse        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
-    p_this->deselectBackNeventOn();
+        p_this->deselectBackNselect();
+        p_this->parentDeselectBackNeventOn();
     return true;
 }
 

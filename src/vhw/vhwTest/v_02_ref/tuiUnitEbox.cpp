@@ -98,14 +98,18 @@ void tuiUnitEbox_t::refreshChildren    ([[maybe_unused]] tuiGraphicAbstract_t* p
 
 
 // --------------------- State management section - START
+#define CURSOR_HIDE false
+#define CURSOR_SHOW true
 
 bool tuiUnitEbox_t::select     	        (tuiGraphicAbstract_t* p_this)  {
     uint8_t l_position = g_rDtyStr.positionDsplyGet();
-    p_this->positionCursor(false,l_position);
+    p_this->positionCursor(CURSOR_HIDE,l_position);
     return p_this->frameNnameTest(tuiMode_t::select, g_strName);    
 }
 
 bool tuiUnitEbox_t::deSelect   	        ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {
+    uint8_t l_position = g_rDtyStr.positionDsplyGet();
+    p_this->positionCursor(CURSOR_HIDE,l_position);
     return p_this->frameNnameTest(tuiMode_t::deselect, g_strName);
 }
 
@@ -113,7 +117,7 @@ void tuiUnitEbox_t::eventOn    	        ([[maybe_unused]] tuiGraphicAbstract_t* 
     p_this->frameNnameTest(tuiMode_t::eventOn, g_strName);
     // cursor management
     uint8_t l_position = g_rDtyStr.positionDsplyGet();
-    p_this->positionCursor(true,l_position);
+    p_this->positionCursor(CURSOR_SHOW,l_position);
 }
 
 bool tuiUnitEbox_t::selectByMouse          ([[maybe_unused]] tuiGraphicAbstract_t* p_this)  {

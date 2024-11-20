@@ -142,9 +142,12 @@
     void tuiGraphicCoord_t::initBoundsWin       (void) 	{
 
         // -     updBounds();
-        // g_boundXleft    = MAX(G_P_PARENT->getBoundXleft(),  g_mouseX0a           );
+        g_boundXleft    = MAX(G_P_PARENT->getBoundXleft(),  g_mouseX0a           );
+        //g_boundXleft = 0;
+        g_boundXright   = MIN(G_P_PARENT->getBoundXright(), g_mouseX0a + g_w - 1 );
+        //g_boundXright = g_w - 1;
+        g_w = g_boundXright - g_boundXleft + 1;
         g_boundXleft = 0;
-        // g_boundXright   = MIN(G_P_PARENT->getBoundXright(), g_mouseX0a + g_w - 1 );
         g_boundXright = g_w - 1;
 
         // g_boundYupper   = MAX(G_P_PARENT->getBoundYupper(), g_mouseY0a           );
@@ -360,11 +363,13 @@
 // section start **** BOUNDS *****
 
     int32_t tuiGraphicCoord_t::getBoundXleft             (void)      {
-        return (g_boundXleft  == g_x0a)                  ? g_boundXleft + 1 : g_boundXleft;
+        //return (g_boundXleft  == g_x0a)                  ? g_boundXleft + 1 : g_boundXleft;
+        return MAX(g_boundXleft, (g_x0a + g_marginXleft));
     }
 
     int32_t tuiGraphicCoord_t::getBoundXright            (void)      {
-        return ((g_boundXright + 1)  == (g_x0a + g_w))   ? g_boundXright - 1 : g_boundXright;
+        //return ((g_boundXright + 1)  == (g_x0a + g_w))   ? g_boundXright - 1 : g_boundXright;
+        return MIN(g_boundXright, ((g_x0a + g_w - 1) - g_marginXright));
     }
 
     void tuiGraphicCoord_t::updBoundX                    (void)      {

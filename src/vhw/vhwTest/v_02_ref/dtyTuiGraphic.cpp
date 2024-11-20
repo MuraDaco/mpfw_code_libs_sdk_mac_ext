@@ -62,10 +62,6 @@ bool dtyTuiGraphic_t::resetLoopElement         (void)    {
     return l_result;
 }
 
-bool dtyTuiGraphic_t::bLoopInitDisplay           ([[maybe_unused]] uint8_t p_id, [[maybe_unused]] void* p_pParent)    {
-    // to be implemented - see below
-    return true;
-}
 // bool dtyTuiGraphic_t::bLoopInitDisplay           (uint8_t p_id, void* p_pParent)    {
 //     bool l_result = false;
 //     if(g_array[p_id].bNotNull())   {

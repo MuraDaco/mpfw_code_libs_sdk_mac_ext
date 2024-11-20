@@ -22,7 +22,7 @@
 //  *******************************************************************************
 
 /*
- * dtyProtocolData.cpp
+ * dtyCntnrStreamList.cpp
  *
  *  Created on: Nov, 10th 2024
  *      Author: Marco Dau
@@ -32,7 +32,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "dtyProtocolData.h"
+#include "dtyCntnrStreamList.h"
 
 
 // ****************************************************
@@ -40,15 +40,15 @@
 
     #define DB_HEADER_UNDEFINED         0xFFFFFFFF
 
-    dtyProtocolData_t::dtyProtocolData_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize) :
+    dtyCntnrStreamList_t::dtyCntnrStreamList_t   (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize) :
     // section - DATA MANAGEMENT
          g_pBuf                         {p_pBuf             }
         ,g_bufSize                      {p_bufSize          }
         ,g_writeHeaderIdCurrent         {0                  }
         ,g_writeDataIdCurrent           {p_bufSize          }
     // section - LOOP MANAGEMENT
-        ,g_dBLoopTuiGraphic             {&g_dBLoopTuiUnit,box_t({8,0,0,0})   }
-        ,g_dBLoopTuiUnit                {p_pBuf, p_bufSize  }
+        ,g_loopTuiGraphic               {&g_loopTuiUnit,box_t({8,0,0,0})   }
+        //,g_loopTuiUnit                  {p_pBuf, p_bufSize  }
     // section - SELECT
         ,g_selectHeaderId               {DB_HEADER_UNDEFINED}
         ,g_selectHeaderIdOld            {DB_HEADER_UNDEFINED}
@@ -94,19 +94,19 @@
     // READ section
     // private:
     // uint32_t    getBlockDataIdHeaderPrev        (uint32_t p_idHeader);
-    uint32_t dtyProtocolData_t::getBlockDataIdHeaderPrev    (uint32_t p_idHeader)  {                            
+    uint32_t dtyCntnrStreamList_t::getBlockDataIdHeaderPrev    (uint32_t p_idHeader)  {                            
         return (HEADER_SIZE < p_idHeader) ? (p_idHeader - HEADER_SIZE) : 0;
     }
 
     // uint32_t    getBlockDataIdHeaderNext        (uint32_t p_idHeader);
-    uint32_t dtyProtocolData_t::getBlockDataIdHeaderNext    (uint32_t p_idHeader)  {         
+    uint32_t dtyCntnrStreamList_t::getBlockDataIdHeaderNext    (uint32_t p_idHeader)  {         
 
         return ((p_idHeader + HEADER_SIZE) < g_writeHeaderIdCurrent) ? p_idHeader + HEADER_SIZE : p_idHeader;
         // return ((p_idHeader + HEADER_SIZE) < g_writeHeaderIdCurrent) ? p_idHeader + HEADER_SIZE : p_idHeader;
     }
 
     // uint32_t    getBlockDataId                  (uint32_t p_idHeader);
-    uint32_t dtyProtocolData_t::getBlockDataId  (uint32_t p_idHeader) {                           
+    uint32_t dtyCntnrStreamList_t::getBlockDataId  (uint32_t p_idHeader) {                           
         uint32_t l_byteHH = (g_pBuf[p_idHeader+HEADER_DATA_BEGIN_POS  ] << 24) & 0xFF000000;
         uint32_t l_byteH_ = (g_pBuf[p_idHeader+HEADER_DATA_BEGIN_POS+1] << 16) & 0x00FF0000;
         uint32_t l_byteL_ = (g_pBuf[p_idHeader+HEADER_DATA_BEGIN_POS+2] <<  8) & 0x0000FF00;
@@ -116,14 +116,14 @@
 
 
     // uint16_t    getBlockDataSize                (uint32_t p_idHeader);
-    uint16_t dtyProtocolData_t::getBlockDataSize   (uint32_t p_idHeader) {                              
+    uint16_t dtyCntnrStreamList_t::getBlockDataSize   (uint32_t p_idHeader) {                              
         uint16_t l_byteH = (g_pBuf[p_idHeader+HEADER_DATA_LENGTH_POS  ] <<  8) & 0xFF00;
         uint16_t l_byteL = (g_pBuf[p_idHeader+HEADER_DATA_LENGTH_POS+1]      ) & 0x00FF;
         return (l_byteH + l_byteL);
     }
 
     // kMarker_t   getBlockDataMarker              (uint32_t p_idHeader);
-    dtyProtocolData_t::kMarker_t dtyProtocolData_t::getBlockDataMarker  (uint32_t p_idHeader) {                 
+    dtyCntnrStreamList_t::kMarker_t dtyCntnrStreamList_t::getBlockDataMarker  (uint32_t p_idHeader) {                 
         uint16_t l_byteH = (g_pBuf[p_idHeader+HEADER_MARKER_POS  ] <<  8) & 0xFF00;
         uint16_t l_byteL = (g_pBuf[p_idHeader+HEADER_MARKER_POS+1]      ) & 0x00FF;
         return static_cast<kMarker_t> (l_byteH + l_byteL);
@@ -134,12 +134,12 @@
 
     // public:
     // void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize)                                             ;
-    void dtyProtocolData_t::add         (uint8_t* p_pBufIn, uint16_t p_bufInSize)   {
+    void dtyCntnrStreamList_t::add         (uint8_t* p_pBufIn, uint16_t p_bufInSize)   {
         add(p_pBufIn, p_bufInSize, kMarker_t::defaultX, kDataType_t::binary);
     }
 
     // void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType) ;
-    void dtyProtocolData_t::add         (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType)   {
+    void dtyCntnrStreamList_t::add         (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType)   {
 
         uint8_t* l_pBuf = g_pBuf + g_writeHeaderIdCurrent;
         uint16_t l_bufInSize = kDataType_t::ascii == p_dataType ? p_bufInSize : (p_bufInSize << 1);
@@ -192,7 +192,7 @@
 
     //private:
     // uint32_t    getWriteHeaderIdNext            (uint32_t p_idHeader);
-    uint32_t dtyProtocolData_t::getWriteHeaderIdNext    (uint32_t p_idHeader)  {         
+    uint32_t dtyCntnrStreamList_t::getWriteHeaderIdNext    (uint32_t p_idHeader)  {         
 
         return ((p_idHeader + HEADER_SIZE) < g_bufSize) ? p_idHeader + HEADER_SIZE : p_idHeader;
     }
@@ -207,37 +207,64 @@
     // private:
 
     // uint8_t getLoopInitCycles               (void)  override;
-    uint8_t dtyProtocolData_t::getLoopInitCycles       (void)    {
+    uint8_t dtyCntnrStreamList_t::getLoopInitCycles       (void)    {
         return 1;
     }
 
     //bool    resetLoopElement                (void)  override;
-    bool dtyProtocolData_t::resetLoopElement           (void)    {
+    bool dtyCntnrStreamList_t::resetLoopElement           (void)    {
         return true;
     }
 
     // bool    nextLoopElement                 (void)  override;
-    bool dtyProtocolData_t::nextLoopElement              (void)    {
+    bool dtyCntnrStreamList_t::nextLoopElement              (void)    {
         return false;
     }
 
     // void        loopTuiParamSet                 (void);
-    void dtyProtocolData_t::loopTuiParamSet   (void) {
-        // set all parameters to display element
-        //g_displayBoxW = 20; // test
-        g_loopY0r       = g_loopRows;
-        g_loopMarker    = getBlockDataMarker(g_loopIdHeader);
-        g_loopIdData    = getBlockDataId    (g_loopIdHeader);
-        g_loopDataSize  = getBlockDataSize  (g_loopIdHeader);
-        g_loopH         =   (g_loopDataSize / g_displayBoxW);
-        g_loopH         +=  (g_loopDataSize % g_displayBoxW) ? 1 : 0;
-        g_loopRows      +=  g_loopH;
-        g_loopSelect    = (g_loopIdHeader == g_selectHeaderId);
+    void dtyCntnrStreamList_t::loopTuiParamSet   (void) {
+            // set all parameters to display element
+            //g_displayBoxW = 20; // test
+            g_loopY0r       = g_loopRows;
+            g_loopSelect    = (g_loopIdHeader == g_selectHeaderId);
+            g_loopMarker    = getBlockDataMarker(g_loopIdHeader);
+            g_loopPStringInfo.g_select  = g_loopSelect;
+            g_loopPStringInfo.g_marker  = g_loopMarker;
+            g_loopPString.setString(reinterpret_cast<char*>(&g_pBuf[getBlockDataId    (g_loopIdHeader)]));
+            g_loopPString.setLength(getBlockDataSize  (g_loopIdHeader));
+            // g_loopH         =   (g_loopDataSize / g_displayBoxW);
+            // g_loopH         +=  (g_loopDataSize % g_displayBoxW) ? 1 : 0;
+            g_loopTuiUnit.cntnrUpdParams(&g_loopTuiGraphic);
+            g_loopH = g_loopTuiGraphic.getDimH();
+
+            g_loopRows      +=  g_loopH;
+
+            
+            // // **************
+            //     g_loopTuiGraphic.setDimH(g_loopH);
+            //     g_loopTuiGraphic.initRelCoordS(0, g_loopY0r);
+            //     g_loopTuiGraphic.updParamsAfterParentMod();
+            //     //g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
+            //     if(g_loopTuiGraphic.bMouseClickInsideBounds()) {
+
+            // // **************
+            //     g_loopTuiGraphic.setDimH(g_loopH);
+            //     g_loopTuiGraphic.setRelCoordY(g_loopY0r);
+            //     g_loopTuiUnit.updParams(&g_loopTuiGraphic, &g_pBuf[g_loopIdData], g_loopDataSize, g_loopSelect, g_loopMarker);
+            //     // display tui element
+            //     g_loopTuiGraphic.display();
+
+            // // **************
+            //     g_loopTuiGraphic.setDimH(g_loopH);
+            //     g_loopTuiGraphic.setRelCoordY(g_loopY0r);
+            //     g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker); // maybe unuseful, it can be remove
+            //     // check status of the loop
+            //     if(loopDisplayEnd()) break;
 
     }
 
     /*
-    void dtyProtocolData_t::loopTuiParamSet   (void) {
+    void dtyCntnrStreamList_t::loopTuiParamSet   (void) {
             // set all parameters to display element
             //g_displayBoxW = 20; // test
             g_loopY0r       = g_loopRows;
@@ -247,19 +274,19 @@
             g_loopSelect    = (g_loopIdHeader == g_selectHeaderId);
 
             // update data 
-            g_dBLoopTuiGraphic.setRelCoordY(g_loopY0r);
-            g_dBLoopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
+            g_loopTuiGraphic.setRelCoordY(g_loopY0r);
+            g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
 
             // get element height dimension
             // g_loopH         =   (g_loopDataSize / g_displayBoxW);
             // g_loopH         +=  (g_loopDataSize % g_displayBoxW) ? 1 : 0;
-            g_loopH = g_dBLoopTuiGraphic.getDimH();
+            g_loopH = g_loopTuiGraphic.getDimH();
 
             g_loopRows      +=  g_loopH;
     }
     */
     // bool        loopInit                        (uint32_t p_idHeader, int32_t p_y0r);
-    bool dtyProtocolData_t::loopInit   (uint32_t p_idHeader, int32_t p_y0r) {
+    bool dtyCntnrStreamList_t::loopInit   (uint32_t p_idHeader, int32_t p_y0r) {
         // check header position
         if(g_writeHeaderIdCurrent != p_idHeader) {
             // idHeader is OK
@@ -274,7 +301,7 @@
     }
 
     // bool        loopDisplayBegin                (void);
-    bool dtyProtocolData_t::loopDisplayBegin   (void) {
+    bool dtyCntnrStreamList_t::loopDisplayBegin   (void) {
         // the loop-DISPLAY reached the begin/top when
         // 1. the first data block of container is seeked; the first data block is the one that idHeader = 0
         // OR
@@ -286,7 +313,7 @@
     }
 
     // bool        loopDisplayEnd                  (void);
-    bool dtyProtocolData_t::loopDisplayEnd   (void) {
+    bool dtyCntnrStreamList_t::loopDisplayEnd   (void) {
         // the loop-DISPLAY reached the end/bottom when
         // 1. the next header is equal to the first header to write (that is g_writeHeaderIdCurrent)
         // OR
@@ -309,15 +336,15 @@
     // private:
 
     // bool    updCntnrRelCoord                (int32_t p_delta)  override;
-    bool dtyProtocolData_t::updCntnrRelCoord           ([[maybe_unused]]int32_t p_delta)    {
+    bool dtyCntnrStreamList_t::updCntnrRelCoord           ([[maybe_unused]]int32_t p_delta)    {
         return true;
     }
 
     // void    updElementCoordNbounds          (void)  override;
-    void dtyProtocolData_t::updElementCoordNbounds       (void)    {
+    void dtyCntnrStreamList_t::updElementCoordNbounds       (void)    {
         // the display-BOX (that is the display-BOX of the owner of the current container) has been modified, so
         // the initialization params of tui element associate to container data block must be done
-        g_dBLoopTuiGraphic.updParamsAfterParentMod();
+        g_loopTuiGraphic.updParamsAfterParentMod();
 
         // N.B.: the relative coords of display-BEGIN element (that is, the data block begin) remain the same, therefore ...
         // do not other things
@@ -326,7 +353,7 @@
 
 
     //    // bool    bLoopInitDisplay                (uint8_t p_id, void* p_pParent)    override;
-    //    bool dtyProtocolData_t::bLoopInitDisplay           (uint8_t p_id, void* p_pParent)    {
+    //    bool dtyCntnrStreamList_t::bLoopInitDisplay           (uint8_t p_id, void* p_pParent)    {
     //        bool l_result = false;
     //        if(p_id)    {
     //            // run body loop step
@@ -374,7 +401,7 @@
     //
     //        }   else {
     //            // run the frist loop step (that is init step)
-    //            g_dBLoopTuiGraphic.init(P_P_PARENT);
+    //            g_loopTuiGraphic.init(P_P_PARENT);
     //            g_displayBoxW = P_P_PARENT->getDspAreaDimXw();
     //            g_displayBoxH = P_P_PARENT->getDspAreaDimYh();
     //
@@ -389,9 +416,10 @@
 
 
     //void    initDisplay                     (uint8_t p_id, void* p_pParent)    override;
-    void dtyProtocolData_t::initDisplay                ([[maybe_unused]] uint8_t p_id, void* p_pParent)  {
+    void dtyCntnrStreamList_t::initDisplay                ([[maybe_unused]] uint8_t p_id, void* p_pParent)  {
         // N.B.: this function is run inside a loop of only one cycle
-        g_dBLoopTuiGraphic.init(P_P_PARENT);
+        g_loopTuiGraphic.init(P_P_PARENT);
+        g_loopTuiUnit.cntnrInit(&g_loopPString, &g_loopPStringInfo);
 
         g_displayBoxW = P_P_PARENT->getDspAreaDimXw();
         g_displayBoxH = P_P_PARENT->getDspAreaDimYh();
@@ -409,31 +437,22 @@
     }
 
     // void    clearDisplayBox                 (void)  override;
-    void dtyProtocolData_t::clearDisplayBox       (void)    {
+    void dtyCntnrStreamList_t::clearDisplayBox       (void)    {
     }
 
     // void    dspElement                      ([[maybe_unused]] bool p_recursively)   override;
-    void dtyProtocolData_t::dspElement                   ([[maybe_unused]] bool p_recursively)  {
-
-        //try { 
-        //    if(g_displayBoxW != 20) throw 42;
-        //} catch (int i) {
-        //    std::cout << " the g_displayBoxW was modified with value: " << static_cast<uint16_t>(g_displayBoxW) << '\n';
-        //    std::exit(i);
-        //}
-
-
+    void dtyCntnrStreamList_t::dspElement                   ([[maybe_unused]] bool p_recursively)  {
         if(loopInit(g_displayBeginIdHeader, g_displayBeginY0r))    {
             // container is NOT empty, therefore ...
 
             // start the procedure/loop to display elments of the container
             for(;;) {
                 // init tui element
-                g_dBLoopTuiGraphic.setDimH(g_loopH);
-                g_dBLoopTuiGraphic.setRelCoordY(g_loopY0r);
-                g_dBLoopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
+                g_loopTuiGraphic.setDimH(g_loopH);
+                g_loopTuiGraphic.setRelCoordY(g_loopY0r);
+                // *** g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
                 // display tui element
-                g_dBLoopTuiGraphic.display();
+                g_loopTuiGraphic.display();
 
                 // check status of the loop
                 if(loopDisplayEnd()) break;
@@ -445,14 +464,13 @@
             }
         } else {
             // display tui element
-            g_dBLoopTuiUnit.displayDebug(&g_dBLoopTuiGraphic, g_writeHeaderIdCurrent, g_displayBeginIdHeader);
+            g_loopTuiUnit.displayDebug(&g_loopTuiGraphic, g_writeHeaderIdCurrent, g_displayBeginIdHeader);
         }
-
     }
 
 
     // bool initDisplayBeginParams             (uint32_t p_idHeader);
-    bool dtyProtocolData_t::initDisplayBeginParams     (uint32_t p_idHeader)      {
+    bool dtyCntnrStreamList_t::initDisplayBeginParams     (uint32_t p_idHeader)      {
 
         // check the position of header
         if(loopInit(p_idHeader,0))   {
@@ -499,7 +517,7 @@
     }
 
     // void setDisplayBeginParams              (uint32_t p_idHeader, kPosition_t p_position);
-    void dtyProtocolData_t::setDisplayBeginParams                (uint32_t p_idHeader, kPosition_t p_position)    {
+    void dtyCntnrStreamList_t::setDisplayBeginParams                (uint32_t p_idHeader, kPosition_t p_position)    {
             if(kPosition_t::bottom == p_position)   {
                 initDisplayBeginParams(p_idHeader);
             } else {
@@ -516,7 +534,7 @@
     }
 
     // bool bDisplayLastRowVsLowerBound        (void);
-    bool dtyProtocolData_t::bDisplayLastRowVsLowerBound           (void)    {
+    bool dtyCntnrStreamList_t::bDisplayLastRowVsLowerBound           (void)    {
         // 
         if(loopInit(g_displayBeginIdHeader, g_displayBeginY0r))    {
             // container is NOT empty, therefore ...
@@ -524,9 +542,9 @@
             // start the procedure/loop to display elments of the container
             for(;;) {
 
-                g_dBLoopTuiGraphic.setDimH(g_loopH);
-                g_dBLoopTuiGraphic.setRelCoordY(g_loopY0r);
-                g_dBLoopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker); // maybe unuseful, it can be remove
+                g_loopTuiGraphic.setDimH(g_loopH);
+                g_loopTuiGraphic.setRelCoordY(g_loopY0r);
+                //****g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker); // maybe unuseful, it can be remove
 
                 // check status of the loop
                 if(loopDisplayEnd()) break;
@@ -551,7 +569,7 @@
 // section start **** INPUT EVENTS: SELECTION & MOUSE ROLL *****
 
     // void    shiftLoopElementRollUp          (void)  override;
-    void dtyProtocolData_t::shiftLoopElementRollUp           (void)    {
+    void dtyCntnrStreamList_t::shiftLoopElementRollUp           (void)    {
         if(!bDisplayLastRowVsLowerBound())   {
             // shift up the current display-begin element
             g_displayBeginY0r--;
@@ -579,7 +597,7 @@
 
 
     // void    shiftLoopElementRollDown        (void)  override;
-    void dtyProtocolData_t::shiftLoopElementRollDown           (void)    {
+    void dtyCntnrStreamList_t::shiftLoopElementRollDown           (void)    {
 
         // shift down the current display-begin element
         g_displayBeginY0r++;
@@ -604,21 +622,20 @@
 
         }
     }
-
     /*
     // old version; this version is OK
-    bool dtyProtocolData_t::selectElementByMouse      (void)      {
+    bool dtyCntnrStreamList_t::selectElementByMouse      (void)      {
         if(loopInit(g_displayBeginIdHeader, g_displayBeginY0r))    {
             // container is NOT empty, therefore ...
 
             // start the procedure/loop to display elments of the container
             for(;;) {
-                g_dBLoopTuiGraphic.setDimH(g_loopH);
-                g_dBLoopTuiGraphic.initRelCoordS(0, g_loopY0r);
-                g_dBLoopTuiGraphic.updParamsAfterParentMod();
-                //g_dBLoopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
+                g_loopTuiGraphic.setDimH(g_loopH);
+                g_loopTuiGraphic.initRelCoordS(0, g_loopY0r);
+                g_loopTuiGraphic.updParamsAfterParentMod();
+                //g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
 
-                if(g_dBLoopTuiGraphic.bMouseClickInsideBounds()) {
+                if(g_loopTuiGraphic.bMouseClickInsideBounds()) {
                     g_selectHeaderId = g_loopIdHeader;
 
                     // be carefull !!! "bSelectVisibleCompletely" function resets "loop" parameters
@@ -629,7 +646,7 @@
                         shiftLoopElementBySelect(0);
                     }
 
-                    // BE CAREFUL !!! The following instruction modifies the "loop" parameters (g_dBLoopTuiGraphic), therefore ...
+                    // BE CAREFUL !!! The following instruction modifies the "loop" parameters (g_loopTuiGraphic), therefore ...
                     dspElement(false);
                     // ... you must break the "for" loop
                     return true;
@@ -650,20 +667,20 @@
     }
     */
 
-    // new version; this version seems OK but it must be tested better
-    bool dtyProtocolData_t::selectElementByMouse      (void)      {
+    // new version; this version seems OK but it must be tested deeply
+    bool dtyCntnrStreamList_t::selectElementByMouse      (void)      {
         bool l_result = false;
         if(loopInit(g_displayBeginIdHeader, g_displayBeginY0r))    {
             // container is NOT empty, therefore ...
 
             // start the procedure/loop to display elments of the container
             for(;;) {
-                g_dBLoopTuiGraphic.setDimH(g_loopH);
-                g_dBLoopTuiGraphic.initRelCoordS(0, g_loopY0r);
-                g_dBLoopTuiGraphic.updParamsAfterParentMod();
-                //g_dBLoopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
+                g_loopTuiGraphic.setDimH(g_loopH);
+                g_loopTuiGraphic.initRelCoordS(0, g_loopY0r);
+                g_loopTuiGraphic.updParamsAfterParentMod();
+                //g_loopTuiUnit.updParams(g_loopIdData, g_loopDataSize, g_loopSelect, g_loopMarker);
 
-                if(g_dBLoopTuiGraphic.bMouseClickInsideBounds()) {
+                if(g_loopTuiGraphic.bMouseClickInsideBounds()) {
                     g_selectHeaderId = g_loopIdHeader;
                     l_result = true;
                     break;
@@ -704,12 +721,12 @@
 
 
     // int32_t getDeltaShiftBySelect           (void)  override;
-    int32_t dtyProtocolData_t::getDeltaShiftBySelect                ()    {
+    int32_t dtyCntnrStreamList_t::getDeltaShiftBySelect                ()    {
         return 0;
     }
 
     // void    shiftLoopElementBySelect        (int32_t p_delta)  override;
-    void dtyProtocolData_t::shiftLoopElementBySelect                ([[maybe_unused]] int32_t p_delta)    {
+    void dtyCntnrStreamList_t::shiftLoopElementBySelect                ([[maybe_unused]] int32_t p_delta)    {
         // set display-Element parameters to select-Element parameters
         // and 
         // determine the postion inside the display-BOX of the display-Element
@@ -728,12 +745,12 @@
     }
 
     // void    updSelectElement                (void)  override;
-    void dtyProtocolData_t::updSelectElement                (void)    {
+    void dtyCntnrStreamList_t::updSelectElement                (void)    {
     }
 
 
     // bool setSelectPrev                  (void) override;
-    bool dtyProtocolData_t::setSelectPrev                  (void)    {
+    bool dtyCntnrStreamList_t::setSelectPrev                  (void)    {
 
         uint32_t l_idHeader = getBlockDataIdHeaderPrev(g_selectHeaderId);    
         // N.B.:  (l_idHeader == g_selectHeaderId) means that the select element is the first one
@@ -746,7 +763,7 @@
     }
 
     // bool setSelectNext                  (void) override;
-    bool dtyProtocolData_t::setSelectNext                  (void)    {
+    bool dtyCntnrStreamList_t::setSelectNext                  (void)    {
 
         uint32_t l_idHeader = getBlockDataIdHeaderNext(g_selectHeaderId);
         // N.B.:  (l_idHeader == g_selectHeaderId) means that the select element is the last one
@@ -759,7 +776,7 @@
     }
 
     // bool bSelectVisibleCompletely       (void) override;
-    bool dtyProtocolData_t::bSelectVisibleCompletely     (void)      {
+    bool dtyCntnrStreamList_t::bSelectVisibleCompletely     (void)      {
         bool l_result = false;
         if(loopInit(g_displayBeginIdHeader, g_displayBeginY0r))    {
             for(;;) {

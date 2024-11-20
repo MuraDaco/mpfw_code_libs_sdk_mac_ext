@@ -31,6 +31,11 @@
 #include "dtyString.h"
 
 
+dtyString_t::dtyString_t (void) :
+     g_pChar    {nullptr}
+    ,g_size     {0}
+{}
+
 dtyString_t::dtyString_t (char* p_pChar, size_t p_size) :
      g_pChar    {p_pChar}
     ,g_size     {p_size}
@@ -39,11 +44,20 @@ dtyString_t::dtyString_t (char* p_pChar, size_t p_size) :
 uint16_t dtyString_t::getLength(void)   {
     uint16_t l_length = 0;
     if(g_pChar)
-        for(uint16_t i = 0; (g_pChar[i] != 0) && (i < g_size); i++) {l_length = (i < g_size) ? ++i : i;}
+        for(uint16_t i = 0; (g_pChar[i] != 0) && (i < g_size); i++) 
+            {l_length = (i < g_size) ? ++i : i;}
         
     return l_length;
 }
 
+void dtyString_t::setLength(uint16_t p_length)   {
+    g_size   = p_length;
+}
+
 char* dtyString_t::getString(void)   {
     return g_pChar;
+}
+
+void dtyString_t::setString(char* p_pChar)   {
+    g_pChar = p_pChar;
 }

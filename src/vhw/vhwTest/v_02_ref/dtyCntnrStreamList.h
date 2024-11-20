@@ -22,7 +22,7 @@
 //  *******************************************************************************
 
 /*
- * dtyProtocolData.h
+ * dtyCntnrStreamList.h
  *
  *  Created on: Nov, 10th 2024
  *      Author: Marco Dau
@@ -48,23 +48,25 @@
 
  */
  
-#ifndef DTY_PROTOCOL_DATA_H
-#define DTY_PROTOCOL_DATA_H
+#ifndef DTY_CNTNR_STREAM_LIST_H
+#define DTY_CNTNR_STREAM_LIST_H
 
 #include <cstdint>
-#include "tuiUnitProtocolData.h"
+#include "tuiUnitFormattedStringCntnr.h"
 #include "tuiGraphicUnitBase.h"
 #include "dtyBuffer.h"
+#include "dtyString.h"
+#include "dtyStringInfo.h"
 #include "dtyBaseCntnrUnitX.h"
 #include "dtyProtocolDataTypesDefs.h"
 
-class dtyProtocolData_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataTypesDefs_t  {
+class dtyCntnrStreamList_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataTypesDefs_t  {
 
 // ****************************************************
 // section start **** CONBSTRUCTOR *****
     public:
 
-    dtyProtocolData_t  (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize);
+    dtyCntnrStreamList_t  (uint8_t* p_pBuf, uint32_t p_bufSize, dtyBuffer_t* p_pArrayBufIn, uint16_t p_arrayBufInSize);
 
     // section end   **** CONBSTRUCTOR ***** 
     // ****************************************************
@@ -102,8 +104,10 @@ class dtyProtocolData_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataType
 // section start **** LOOP MANAGEMENT *****
     private:
 
-    tuiGraphicUnitBase_t    g_dBLoopTuiGraphic;           // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to call init procedure every time you start to use it
-    tuiUnitProtocolData_t   g_dBLoopTuiUnit;              // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to update its g_pBuf & g_bufSize paramters every time you start to use it
+    dtyString_t                     g_loopPString;
+    dtyStringInfo_t                 g_loopPStringInfo;
+    tuiGraphicUnitBase_t            g_loopTuiGraphic;           // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to call init procedure every time you start to use it
+    tuiUnitFormattedStringCntnr_t   g_loopTuiUnit;              // it can be defined as static; it is a temporary variable BUT to make it static you MUST remember to update its g_pBuf & g_bufSize paramters every time you start to use it
     uint32_t    g_loopIdHeader;     // it can be defined as static; it is a temporary variable
     uint32_t    g_loopIdData;       // it can be defined as static; it is a temporary variable
     uint32_t    g_loopDataSize;     // it can be defined as static; it is a temporary variable
@@ -179,6 +183,9 @@ class dtyProtocolData_t : public dtyBaseCntnrUnitX_t, public dtyProtocolDataType
 
     uint32_t g_selectHeaderId;
     uint32_t g_selectHeaderIdOld;
+
+    //tuiGraphicUnitBase_t    g_selectTuiGraphic;
+    //tuiUnitProtocolData_t   g_selectTuiUnit;
 
     // section end   **** INPUT EVENTS: SELECTION & MOUSE ROLL ***** 
     // ****************************************************

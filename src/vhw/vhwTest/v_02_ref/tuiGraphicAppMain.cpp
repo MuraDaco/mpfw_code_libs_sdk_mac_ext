@@ -62,6 +62,9 @@ uint8_t tuiGraphicAppMain_t::g_stringBuffer[1000000];
 dtyProtocolData_t tuiGraphicAppMain_t::g_cntrString (g_stringBuffer, sizeof(g_stringBuffer), g_initUsartTextCntnr, sizeof(g_initUsartTextCntnr));
 tuiUnitCntnrList_t  tuiGraphicAppMain_t::g_unitTextUsart_1("Text Usart 1", &g_cntrString);
 
+dtyCntnrStreamList_t tuiGraphicAppMain_t::g_cntrStreamData_1    (g_stringBuffer, sizeof(g_stringBuffer), g_initUsartTextCntnr, sizeof(g_initUsartTextCntnr));
+tuiUnitCntnrList_t  tuiGraphicAppMain_t::g_unitTextUsart_2("New Text Usart 2", &g_cntrStreamData_1);
+
 
 tuiUnitDebug_t              tuiGraphicAppMain_t::g_unitDebug_1      ("Unit Debug 111");
 tuiUnitDebug_t              tuiGraphicAppMain_t::g_unitDebug_2      ("Unit Debug 222");
@@ -76,7 +79,8 @@ char                        tuiGraphicAppMain_t::g_fmtString[150] =  "Test about
 //char                        tuiGraphicAppMain_t::g_fmtString[10] =  "012345678";
 dtyString_t                 tuiGraphicAppMain_t::g_dtyStringA = {g_fmtString, sizeof(g_fmtString)};
 //dtyString_t                 tuiGraphicAppMain_t::g_dtyStringA = {nullptr, 0};
-tuiUnitFormattedString_t    tuiGraphicAppMain_t::g_unitStringA      ("Unit Formatted string", &g_dtyStringA);
+tuiUnitFormattedString_t        tuiGraphicAppMain_t::g_unitStringA      ("Unit Formatted string", &g_dtyStringA);
+tuiUnitFormattedStringCntnr_t   tuiGraphicAppMain_t::g_unitStringZ      ("Unit Formatted string suitable inside a container", &g_dtyStringA);
 
 char tuiGraphicAppMain_t::usartBuffer[1000] = "Gennaro Pasquale Natale Nando Nunzio Nicandro Nicodemo Nabi alias Nabuccodonosor";
 dtyBaseArray_t  tuiGraphicAppMain_t::usartString    (usartBuffer, sizeof(usartBuffer));
@@ -94,10 +98,10 @@ tuiGraphicUnitBase_t    tuiGraphicAppMain_t::g_arraySubCntnrDebug[] = {
 dtyTuiGraphic_t         tuiGraphicAppMain_t::g_SubCntnrDebug(g_arraySubCntnrDebug);
 
 tuiGraphicUnitBase_t    tuiGraphicAppMain_t::g_setSubDebug2[] = {
-    {   &g_unitStringA,         box_t({10, 30, 20, 30})                         },
+    {   &g_unitStringZ,         box_t({10, 30, 20, 30})                         },
 //    {   &g_unitSubWinDebug_1,         box_t({10, 30,  0,  0})                         },
     {   &g_unitDebug_1,         box_t({10, 30,  0,  0})                         },
-    {   &g_unitDebug_2,         box_t({10, 30, 10, 30}), margins_t({2,1,2,1})   },
+    {   &g_unitDebug_2,         box_t({10, 30, 10, 30})   },
     {}  // null element to mark the and of array; 
 };
 tuiUnitListDebug_t      tuiGraphicAppMain_t::g_unitDebugWin_2       ("Unit debug Window 2", g_setSubDebug2);
@@ -105,14 +109,15 @@ tuiUnitListDebug_t      tuiGraphicAppMain_t::g_unitDebugWin_2       ("Unit debug
 
 tuiGraphicUnitBase_t    tuiGraphicAppMain_t::g_setDebug[] = {
     {   &g_unitTextUsart_1,     box_t({10, 30, 20,  0})                         },
+    {   &g_unitTextUsart_2,     box_t({10, 30,  0, 30})                         },
     {   &g_unitStringA,         box_t({10, 30, 20, 30})                         },
 //    {   &g_unitSubCntnrWin_T,   box_t({20, 30, 10, 90})                         },
     {   &g_unitDebug_1,         box_t({10, 30,  0,  0})                         },
     {   &g_unitDebug_2,         box_t({10, 30, 10, 30}), margins_t({2,1,2,1})   },
     {   &g_unitDebug_3,         box_t({10, 30, 10, 60}), margins_t({1,2,1,1})   },
     {   &g_unitDebug_2,         box_t({10, 30,  0, 60}), margins_t({1,1,1,2})   },
-    {   &g_unitEbox_1,          box_t({10, 30, 20, 60}), margins_t({2,1,1,2})   },
-    {   &g_unitDebugWin_2,      box_t({34,  92,  31,   0})                          },
+    {   &g_unitEbox_1,          box_t({10, 30, 20, 60}), margins_t({2,1,1,3})   },
+    {   &g_unitDebugWin_2,      box_t({34,  92,  31,   0}),  margins_t({2,1,2,2})                          },
     {}  // null element to mark the and of array; 
 };
 
@@ -136,7 +141,7 @@ tuiUnitCntnrList_t      tuiGraphicAppMain_t::g_unitCntnrWin_A       ("Unit debug
 tuiUnitListDebug_t      tuiGraphicAppMain_t::g_unitDebugWin_3       ("Unit debug Window 3");
 
 tuiGraphicUnitWin_t    tuiGraphicAppMain_t::g_setWinDebug[] = {
-    {   &g_unitDebugWin_1,      box_t({69,  95,   0,   0})                          },
+    {   &g_unitDebugWin_1,      box_t({69,  95,   0,   0}), margins_t({2,1,2,2})                          },
     {   &g_unitSubCntnrWin_T,   box_t({35,  35,   0,  95})                          },
 //    {   &g_unitCntnrWin_A,      box_t({35,  32,   0, 130})                          },
 //    {   &g_unitDebugWin_2,      box_t({34,  95,  35,   0})                          },

@@ -35,23 +35,9 @@
 
 #include "tuiGraphicTypes.h"
 #include "uyTypesDefs.h"
-#include "tuiBaseDrawerColor.h"
+#include "tuiDrvGraphicColor.h"
 
 #include "tuiGraphicAbstract.h"
-
-
-
-#define tuiBaseDrawer__mvprintw(y, x, strFrmt, strName)       \
-        mvwprintw(g_pNcursWin, g_y0r + y, g_x0r + x, strFrmt, strName);     wrefresh(g_pNcursWin)
-
-#define tuiBaseDrawer__mvwprintw_string(y, x, strFrmt, strName)       \
-        mvwprintw(g_pNcursWin, g_y0r + y, g_x0r + x, strFrmt, strName);     wrefresh(g_pNcursWin)
-
-#define tuiBaseDrawer__mvwprintw_keyCode(y, x, strFrmt, strName)       \
-        mvwprintw(g_pNcursWin, g_y0r + y, g_x0r + x, strFrmt, strName);     wrefresh(g_pNcursWin)
-
-#define tuiBaseDrawer__name(y, x)       \
-        mvwprintw(g_pNcursWin, g_y0r + y, g_x0r + x, " *~ %s ~* ", tuiBaseDrawer_t::g_strName);     wrefresh(g_pNcursWin)
 
 
 class  tuiDrvGraphic_t : public tuiGraphicAbstract_t {

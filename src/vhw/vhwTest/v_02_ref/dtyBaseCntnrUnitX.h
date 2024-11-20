@@ -55,7 +55,7 @@ protected:
 
     // section **** GENERAL ****
     virtual uint8_t getLoopInitCycles           (void) = 0;
-    virtual bool    bLoopInitDisplay            (uint8_t p_id, void* p_poFather) = 0;
+    //virtual bool    bLoopInitDisplay            (uint8_t p_id, void* p_poFather) = 0;
     virtual void    initDisplay                 (uint8_t p_id, void* p_poFather) = 0;
     virtual bool    resetLoopElement            (void) = 0;
     virtual bool    selectElementByMouse        (void) = 0;

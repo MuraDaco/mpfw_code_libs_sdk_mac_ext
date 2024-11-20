@@ -76,7 +76,7 @@ protected:
 
     bool    resetLoopElement            (void)  override;
     uint8_t getLoopInitCycles           (void)  override;
-    bool    bLoopInitDisplay            (uint8_t p_id, void* p_poFather)    override;
+    // bool    bLoopInitDisplay            (uint8_t p_id, void* p_poFather)    override;
     void    initDisplay                 (uint8_t p_id, void* p_poFather)    override;
     bool    selectElementByMouse        (void)  override;
     int32_t getDeltaShiftBySelect       (void)  override;

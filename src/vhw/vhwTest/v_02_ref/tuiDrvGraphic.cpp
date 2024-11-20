@@ -222,20 +222,26 @@
 
             if(g_boundYupper < g_boundYlower)  {
                 if((g_boundYlower+1) == (g_y0a + g_h))   {
-                	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper      );
-                	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper      );
+                	mvwvline(g_pNcursWin, g_boundYupper          ,g_boundXleft      ,0    ,g_boundYlower - g_boundYupper      );
+                	mvwvline(g_pNcursWin, g_boundYupper          ,g_boundXright     ,0    ,g_boundYlower - g_boundYupper      );
+                	//mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper      );
+                	//mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper      );
                 } else {
-                	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper + 1      );
-                	mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper + 1      );
+                	mvwvline(g_pNcursWin, g_boundYupper          ,g_boundXleft      ,0    ,g_boundYlower - g_boundYupper + 1      );
+                	mvwvline(g_pNcursWin, g_boundYupper          ,g_boundXright     ,0    ,g_boundYlower - g_boundYupper + 1      );
+                	//mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a               ,0    ,g_boundYlower - g_boundYupper + 1      );
+                	//mvwvline(g_pNcursWin, g_boundYupper          ,g_x0a + g_w - 1     ,0    ,g_boundYlower - g_boundYupper + 1      );
                 }
             }
 
             if(g_boundYupper == g_y0a)   {
-            	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a               ,ACS_ULCORNER       );
-            	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a + g_w - 1     ,ACS_URCORNER       );
-            	mvwhline    (g_pNcursWin, g_boundYupper     ,g_x0a + 1           ,0    ,g_w - 2      );
-                //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " *~ %s ~*~ %04x - %04x | %04x - %04x ~* ", p_strName,  g_y0a,  g_h, g_w, g_boundYlower);
-                //mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 4, " __ dsp - TEST __*~ %s ~*~ %04x - %04x - %04x - %04x ~* ", p_strName, g_boundYupper,  g_boundYlower, g_boundXleft,  g_boundXright);
+            	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_boundXleft      ,ACS_ULCORNER       );
+            	mvwaddch    (g_pNcursWin, g_boundYupper     ,g_boundXright     ,ACS_URCORNER       );
+            	mvwhline    (g_pNcursWin, g_boundYupper     ,g_boundXleft + 1           ,0    ,g_boundXright - g_boundXleft - 1      );
+            	// mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a               ,ACS_ULCORNER       );
+            	// mvwaddch    (g_pNcursWin, g_boundYupper     ,g_x0a + g_w - 1     ,ACS_URCORNER       );
+            	// mvwhline    (g_pNcursWin, g_boundYupper     ,g_x0a + 1           ,0    ,g_w - 2      );
+
                 mvwprintw   (g_pNcursWin, g_boundYupper     ,g_x0a + 1, "~ %s ~", p_strName);
                 if(((g_boundYupper+1) <= g_boundYlower))
                     mvwprintw   (g_pNcursWin, g_boundYupper+1 ,g_x0a + 1, "~ %04x - %04x ~", g_boundYupper,  g_boundYlower);
@@ -250,10 +256,15 @@
                 mvwprintw   (g_pNcursWin, g_boundYupper   ,g_x0a + 1, "~ %04x - %04x ~", g_boundYupper,  g_boundYlower);
 
             if((g_boundYlower+1) == (g_y0a + g_h))   {
-            	mvwaddch    (g_pNcursWin, g_boundYlower     ,g_x0a               ,ACS_LLCORNER       );
-            	mvwaddch    (g_pNcursWin, g_boundYlower     ,g_x0a + g_w - 1     ,ACS_LRCORNER       );
-            	mvwhline    (g_pNcursWin, g_boundYlower     ,g_x0a + 1           ,0    ,g_w - 2      );
-                mvwprintw   (g_pNcursWin, g_boundYlower     ,g_x0a + 1, "~ %04x - %04x ~", g_boundXleft,   g_boundXright);
+            	mvwaddch    (g_pNcursWin, g_boundYlower     ,g_boundXleft       ,ACS_LLCORNER       );
+            	mvwaddch    (g_pNcursWin, g_boundYlower     ,g_boundXright      ,ACS_LRCORNER       );
+            	mvwhline    (g_pNcursWin, g_boundYlower     ,g_boundXleft + 1   ,0    ,g_boundXright - g_boundXleft - 1      );
+                mvwprintw   (g_pNcursWin, g_boundYlower     ,g_boundXleft + 1, "~ %04x - %04x ~", g_boundXleft,   g_boundXright);
+
+            	//mvwaddch    (g_pNcursWin, g_boundYlower     ,g_x0a               ,ACS_LLCORNER       );
+            	//mvwaddch    (g_pNcursWin, g_boundYlower     ,g_x0a + g_w - 1     ,ACS_LRCORNER       );
+            	//mvwhline    (g_pNcursWin, g_boundYlower     ,g_x0a + 1           ,0    ,g_w - 2      );
+                //mvwprintw   (g_pNcursWin, g_boundYlower     ,g_x0a + 1, "~ %04x - %04x ~", g_boundXleft,   g_boundXright);
             }
 
 

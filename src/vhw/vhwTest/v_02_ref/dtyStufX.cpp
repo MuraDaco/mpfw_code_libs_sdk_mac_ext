@@ -286,66 +286,66 @@ void dtyStufX_t::setDisplayBeginParams                (uint32_t p_idHeader, kPos
         }
 }
 
-bool dtyStufX_t::bLoopInitDisplay           (uint8_t p_id, void* p_poFather)    {
-    bool l_result = false;
-    if(p_id)    {
-        // run body loop step
-
-        // the container is NOT empty, 
-        // the display-BEGIN parameters are already set to <p_idHeader> header, therefore ...
-
-        // start the procedure/loop to determine the "dispaly-begin" data block
-        // N.B. the "dispaly-BEGIN" data block must be such that 
-        //      1. the header of dispaly-END data block is equal to p_idHeader
-        //      and
-        //      2. the last row of display-BOX contains the last data trunk of dispaly-END data block
-
-        // run loop to determine the display-begin data block
-        if(!loopDisplayBegin()){
-            g_loopIdHeader    = getBlockDataIdHeaderPrev(g_loopIdHeader);
-            loopTuiParamSet();
-
-            l_result = true;
-        } else {
-            // determine the relative coord to associate to the current loop data block (that is the dispaly-begin data block) that respects the second condition reported above
-            //      that is: "2. the last row of display-box contains the last data trunk of dispaly-end data block"
-            if(g_displayBoxH > g_loopRows)  {
-                // g_loopIdHeader (and so also g_displayBeginIdHeader) is equal to zero, therefore ...
-                g_loopY0r = 0;
-            } else {
-                // N.B.: g_displayBoxH <= g_loopRows so g_loopY0r <= 0
-                //       but (g_loopY0r + g_displayBeginH) > 0 because 
-                //       (g_loopY0r + g_displayBeginH) = (g_displayBoxH - (g_loopRows - g_displayBeginH)) = (g_displayBoxH - g_loopRows[minus one step]) > 0 
-                //       so the display-Begin element will be partially displayed
-                g_loopY0r = static_cast<int32_t>(g_displayBoxH - g_loopRows);
-            }
-
-            // 1. update the display-BEGIN parameters
-            g_displayBeginIdHeader      = g_loopIdHeader;
-            g_displayBeginIdData        = g_loopIdData;
-            g_displayBeginDataSize      = g_loopDataSize;
-            g_displayBeginH             = g_loopH;
-            g_displayBeginY0r           = g_loopY0r;
-
-            // it can be omitted
-            l_result = false;
-        }
-
-        
-    }   else {
-        // run the frist loop step (that is init step)
-        g_dBLoop.init(p_poFather);
-
-        g_displayBoxH = P_PO_FATHER->getDisplayMaxH();
-        g_displayBoxW = P_PO_FATHER->getDisplayMaxW();
-        g_selectIdHeader = getBlockDataIdHeaderPrev(g_writeIdHeaderCurrent);
-
-        loopInit(g_selectIdHeader,0);
-
-        l_result = true;
-    }
-    return l_result;
-}
+    // bool dtyStufX_t::bLoopInitDisplay           (uint8_t p_id, void* p_poFather)    {
+    //     bool l_result = false;
+    //     if(p_id)    {
+    //         // run body loop step
+    // 
+    //         // the container is NOT empty, 
+    //         // the display-BEGIN parameters are already set to <p_idHeader> header, therefore ...
+    // 
+    //         // start the procedure/loop to determine the "dispaly-begin" data block
+    //         // N.B. the "dispaly-BEGIN" data block must be such that 
+    //         //      1. the header of dispaly-END data block is equal to p_idHeader
+    //         //      and
+    //         //      2. the last row of display-BOX contains the last data trunk of dispaly-END data block
+    // 
+    //         // run loop to determine the display-begin data block
+    //         if(!loopDisplayBegin()){
+    //             g_loopIdHeader    = getBlockDataIdHeaderPrev(g_loopIdHeader);
+    //             loopTuiParamSet();
+    // 
+    //             l_result = true;
+    //         } else {
+    //             // determine the relative coord to associate to the current loop data block (that is the dispaly-begin data block) that respects the second condition reported above
+    //             //      that is: "2. the last row of display-box contains the last data trunk of dispaly-end data block"
+    //             if(g_displayBoxH > g_loopRows)  {
+    //                 // g_loopIdHeader (and so also g_displayBeginIdHeader) is equal to zero, therefore ...
+    //                 g_loopY0r = 0;
+    //             } else {
+    //                 // N.B.: g_displayBoxH <= g_loopRows so g_loopY0r <= 0
+    //                 //       but (g_loopY0r + g_displayBeginH) > 0 because 
+    //                 //       (g_loopY0r + g_displayBeginH) = (g_displayBoxH - (g_loopRows - g_displayBeginH)) = (g_displayBoxH - g_loopRows[minus one step]) > 0 
+    //                 //       so the display-Begin element will be partially displayed
+    //                 g_loopY0r = static_cast<int32_t>(g_displayBoxH - g_loopRows);
+    //             }
+    // 
+    //             // 1. update the display-BEGIN parameters
+    //             g_displayBeginIdHeader      = g_loopIdHeader;
+    //             g_displayBeginIdData        = g_loopIdData;
+    //             g_displayBeginDataSize      = g_loopDataSize;
+    //             g_displayBeginH             = g_loopH;
+    //             g_displayBeginY0r           = g_loopY0r;
+    // 
+    //             // it can be omitted
+    //             l_result = false;
+    //         }
+    // 
+    //         
+    //     }   else {
+    //         // run the frist loop step (that is init step)
+    //         g_dBLoop.init(p_poFather);
+    // 
+    //         g_displayBoxH = P_PO_FATHER->getDisplayMaxH();
+    //         g_displayBoxW = P_PO_FATHER->getDisplayMaxW();
+    //         g_selectIdHeader = getBlockDataIdHeaderPrev(g_writeIdHeaderCurrent);
+    // 
+    //         loopInit(g_selectIdHeader,0);
+    // 
+    //         l_result = true;
+    //     }
+    //     return l_result;
+    // }
 
 uint8_t dtyStufX_t::getLoopInitCycles       (void)    {
     return 1;

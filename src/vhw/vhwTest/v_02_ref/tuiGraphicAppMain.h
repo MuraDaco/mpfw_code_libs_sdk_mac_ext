@@ -33,10 +33,12 @@
 
 #include "tuiUnitDebug.h"
 #include "tuiUnitFormattedString.h"
+#include "tuiUnitFormattedStringCntnr.h"
 #include "tuiUnitListDebug.h"
 #include "tuiUnitEbox.h"
 #include "tuiUnitSet.h"
 #include "dtyProtocolData.h"
+#include "dtyCntnrStreamList.h"
 #include "dtyTuiGraphic.h"
 #include "tuiUnitCntnrList.h"
 
@@ -58,7 +60,8 @@ public:
     static tuiUnitDebug_t           g_unitDebugA;
     static char                     g_fmtString[150];
     static dtyString_t              g_dtyStringA;
-    static tuiUnitFormattedString_t g_unitStringA;
+    static tuiUnitFormattedString_t         g_unitStringA;
+    static tuiUnitFormattedStringCntnr_t    g_unitStringZ;
 
     static char                     usartBuffer[1000];
     static dtyBaseArray_t           usartString;
@@ -76,6 +79,8 @@ public:
     static uint8_t                  g_stringBuffer[1000000];
     static dtyProtocolData_t        g_cntrString;
     static tuiUnitCntnrList_t       g_unitTextUsart_1;
+    static dtyCntnrStreamList_t     g_cntrStreamData_1;
+    static tuiUnitCntnrList_t       g_unitTextUsart_2;
 
     static tuiGraphicUnitBase_t     g_setDebug[];
     static tuiGraphicUnitBase_t     g_arrayCntnrDebug[];

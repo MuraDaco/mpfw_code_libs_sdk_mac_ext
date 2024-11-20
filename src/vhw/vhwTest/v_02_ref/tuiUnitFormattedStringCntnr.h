@@ -22,88 +22,111 @@
 //  *******************************************************************************
 
 /*
- * tuiUnitProtocolData.h
+ * tuiUnitFormattedStringCntnr.h
  *
- *  Created on: Nov, 10th 2024
+ *  Created on: Nov, 15th 2024 (Fri) 
  *      Author: Marco Dau
  */
-
-
-
-#ifndef TUI_UNIT_PROTOCOL_DATA_H
-#define TUI_UNIT_PROTOCOL_DATA_H
-
+ 
+#ifndef TUI_UNIT_FORMATTED_STRING_CNTNR_H
+#define TUI_UNIT_FORMATTED_STRING_CNTNR_H
 
 #include "tuiUnitAbstract.h"
+#include "dtyString.h"
+#include "dtyStringInfo.h"
 #include "dtyProtocolDataTypesDefs.h"
 
+//#include "tuiGraphicAbstract.h" // cross dependency - top
 #include "tuiGraphicUnit.h"     // cross dependency - top
 
-class tuiUnitProtocolData_t : public tuiUnitAbstract_t,  dtyProtocolDataTypesDefs_t {
+
+class tuiUnitFormattedStringCntnr_t :    public tuiUnitAbstract_t, dtyProtocolDataTypesDefs_t
+{
+
+// ****************************************************
+// section start **** CONSTRUCTOR *****
 
     public:
-    tuiUnitProtocolData_t (uint8_t* p_pBuf, uint32_t p_bufSize);
+    tuiUnitFormattedStringCntnr_t       (void);
+    tuiUnitFormattedStringCntnr_t       (const char* p_strName  ,dtyString_t* p_pString = nullptr   );
+
+    // section end   **** CONSTRUCTOR *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** PROCESS MANAGEMENT *****
 
     protected:
-    // --------------------- Process section - START
     bool init   	            (tuiGraphicUnit_t* p_this) override;
     bool initChildren           (tuiGraphicUnit_t* p_this) override;
     bool loop   	            (tuiGraphicUnit_t* p_this) override;
     bool loopChildren           (tuiGraphicUnit_t* p_this) override;
     void end       	            (tuiGraphicUnit_t* p_this) override;
     void endChildren            (tuiGraphicUnit_t* p_this) override;
-    // --------------------- Process section - START
 
-    // --------------------- Display section - START
+    // section end   **** PROCESS MANAGEMENT *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** DISPLAY *****
+
+    protected:
     void clear                  (tuiGraphicAbstract_t* p_this) override;
     void display                (tuiGraphicAbstract_t* p_this) override;
     void display                (tuiGraphicAbstract_t* p_this, bool p_recursively) override;
     void displayChildren        (tuiGraphicAbstract_t* p_this, bool p_recursively) override;
     void refreshChildren        (tuiGraphicAbstract_t* p_this) override;
-    // --------------------- Display section - END
 
-    // --------------------- State management section - START
+    // section end   **** DISPLAY *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** STATE MANAGEMENT *****
+
+    protected:
     bool select     	        (tuiGraphicAbstract_t* p_this) override;
     bool deSelect   	        (tuiGraphicAbstract_t* p_this) override;
     void eventOn    	        (tuiGraphicAbstract_t* p_this) override;
     bool selectByMouse 	        (tuiGraphicAbstract_t* p_this) override;
     bool clickingChild          (tuiGraphicAbstract_t* p_this) override;
-    // --------------------- State management section - END
 
-    // // --------------------- Events handler section - START
-	// // ..................... Events handler: functions
-    // void vEventHndlKey_down	    (tuiGraphicAbstract_t* p_this)  override;
-    // void vEventHndlKey_up	    (tuiGraphicAbstract_t* p_this)  override;
-    // void vEventHndlKey_left	    (tuiGraphicAbstract_t* p_this)  override;
-    // void vEventHndlKey_right     (tuiGraphicAbstract_t* p_this)  override;
-    // void vEventHndlKey_enter     (tuiGraphicAbstract_t* p_this)  override;
-    // void vEventHndlKey_home	    (tuiGraphicAbstract_t* p_this)  override;
-    // // --------------------- Events handler section - END
+    // section end   **** STATE MANAGEMENT *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** CONTAINER *****
 
-    // --------------------- Custom section - START
     public:
-    void updParams          (uint32_t p_loopIData, uint32_t p_loopDataSize, bool p_loopSelect, kMarker_t p_loopMarker);
+    void cntnrInit           (dtyString_t* p_pString, dtyStringInfo_t* p_pStringInfo);
+    void cntnrUpdParams      (tuiGraphicAbstract_t* p_this);
+
+    // section end   **** CONTAINER *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** DATA MANAGEMENT *****
 
     private:
+
+    dtyString_t*        g_pString;
+    dtyStringInfo_t*    g_pStringInfo;
+
     uint8_t markerToColor     (kMarker_t p_marker);
 
-    uint8_t*    g_pBuf;
-    uint32_t    g_bufSize;
-    uint32_t    g_idData;
-    uint32_t    g_dataSize;
-    bool        g_select;
-    kMarker_t   g_marker;
-
-    // --------------------- Custom section - END
+    // section end   **** DATA MANAGEMENT *****
+    // ****************************************************
+    // --------------------------
+// ****************************************************
+// section start **** DEBUG *****
 
     public:
-    // --------------------- Custom debug section - START
     void displayDebug       (tuiGraphicAbstract_t* p_this, uint32_t p_dbgParam1, uint32_t p_dbgParam2);
-    // --------------------- Custom debug section - END
 
-
+    // section end   **** DEBUG *****
+    // ****************************************************
+    // --------------------------
 
 };
 
 
-#endif 	// TUI_UNIT_PROTOCOL_DATA_H
+#endif 	// TUI_UNIT_FORMATTED_STRING_H

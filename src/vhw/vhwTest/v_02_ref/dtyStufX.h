@@ -76,7 +76,7 @@ public:
     void        add             (uint8_t* p_pBufIn, uint16_t p_bufInSize, kMarker_t p_marker, kDataType_t p_dataType) ;
 
     uint8_t getLoopInitCycles               (void)  override;
-    bool    bLoopInitDisplay                (uint8_t p_id, void* p_poFather)    override;
+    //bool    bLoopInitDisplay                (uint8_t p_id, void* p_poFather)    override;
     void    initDisplay                     (uint8_t p_id, void* p_poFather)    override;
     bool    resetLoopElement                (void)  override;
     bool    selectElementByMouse            (void)  override;

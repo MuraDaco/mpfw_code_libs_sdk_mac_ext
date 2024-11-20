@@ -118,7 +118,8 @@ bool tuiUnitProtocolData_t::clickingChild          ([[maybe_unused]] tuiGraphicA
 
 void tuiUnitProtocolData_t::updParams      (uint32_t p_loopIdData, uint32_t p_loopDataSize, bool p_loopSelect, kMarker_t p_loopMarker)   {
     g_idData        = p_loopIdData;
-    g_dataSize      = p_loopDataSize;
+    g_dataSize      = (p_loopDataSize < g_bufSize) ? p_loopDataSize : g_bufSize;
+
 
     g_select        = p_loopSelect;
     g_marker        = p_loopMarker;
