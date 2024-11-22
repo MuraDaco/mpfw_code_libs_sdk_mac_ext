@@ -208,7 +208,7 @@
 
         for(uint16_t l_row = g_boundYupper+1; l_row < g_boundYlower; l_row++)  {
             wattron  (g_pNcursWin,A_NORMAL);
-            mvwhline    (g_pNcursWin, l_row          ,g_x0a + 1           ,' '    ,g_w - 2);
+            mvwhline    (g_pNcursWin, l_row          ,g_boundXleft + 1           ,' '    ,g_boundXright - g_boundXleft - 1);
         }
         refreshWin();
     }

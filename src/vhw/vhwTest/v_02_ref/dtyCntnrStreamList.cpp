@@ -611,7 +611,8 @@
             dspElement(false);
         }
 
-        return l_result;
+        // N.B.: if "selectyByMouse" function of the selected item is not called then return value is false
+        return false;
     }
 
 

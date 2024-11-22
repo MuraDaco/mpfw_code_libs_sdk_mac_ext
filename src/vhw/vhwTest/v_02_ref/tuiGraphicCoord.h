@@ -105,11 +105,13 @@ class tuiGraphicCoord_t  {
 
     public:    
     void initRelCoordX      (int32_t p_x);
+    int32_t getRelCoordX       (void);
     void setRelCoordX       (int32_t p_x);
     void incRelCoordX       (int32_t p_delta);
+    void initRelCoordY      (int32_t p_y);
+    int32_t getRelCoordY       (void);
     void setRelCoordY       (int32_t p_y);
     void incRelCoordY       (int32_t p_delta);
-    void initRelCoordY      (int32_t p_y);
     void initRelCoordS      (int32_t p_x, int32_t p_y);
     void setRelCoords       (int32_t p_x, int32_t p_y);
 

@@ -69,8 +69,8 @@ void tuiUnitCntnrAbstract_t::refreshChildren     ([[maybe_unused]] tuiGraphicAbs
 
 bool tuiUnitCntnrAbstract_t::selectByMouse     (tuiGraphicAbstract_t* p_this)    {
 
-    g_pCntnr->selectElementsByMouse();
-    p_this->deselectBackNeventOn();
+    if(!g_pCntnr->selectElementsByMouse())
+        p_this->deselectBackNeventOn();
 
     return true;
 }

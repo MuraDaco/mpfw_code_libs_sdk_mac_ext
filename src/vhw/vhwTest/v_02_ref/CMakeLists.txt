@@ -96,6 +96,9 @@ set(SOURCE_FILES_CPP
     dtyTuiBase.cpp
     dtyTuiGraphic.cpp
     dtyCntnrStreamList.cpp
+    dtyCntnrStreamOfFormattedString.cpp
+    dtyCntnrArrayList.cpp
+    dtyCntnrArraySet.cpp
     dtyProtocolData.cpp
     dtyString.cpp
     dtyUint8.cpp

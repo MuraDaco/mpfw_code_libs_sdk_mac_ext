@@ -255,6 +255,10 @@
         g_x0r       = p_x;
     }
 
+    int32_t tuiGraphicCoord_t::getRelCoordX       (void)   {
+        return g_x0r;
+    }
+
     void tuiGraphicCoord_t::setRelCoordX                (int32_t p_x)       {
         g_x0r = p_x;
         updCoordNboundX();
@@ -268,6 +272,10 @@
 
     void tuiGraphicCoord_t::initRelCoordY               (int32_t p_y)       {
         g_y0r       = p_y;
+    }
+
+    int32_t tuiGraphicCoord_t::getRelCoordY       (void)   {
+        return g_y0r;
     }
 
     void tuiGraphicCoord_t::setRelCoordY                (int32_t p_y)       {
